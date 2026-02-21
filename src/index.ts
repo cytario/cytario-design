@@ -71,5 +71,8 @@ export type { ToggleButtonProps, ToggleButtonVariant, ToggleButtonSize } from ".
 export { Menu } from "./components/Menu";
 export type { MenuProps, MenuItemData } from "./components/Menu";
 
+export { Tabs, TabList, Tab, TabPanel } from "./components/Tabs";
+export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabsVariant, TabsSize } from "./components/Tabs";
+
 // Design tokens (TypeScript constants)
 export * from "./tokens/tokens";
