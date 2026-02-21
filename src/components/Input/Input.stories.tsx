@@ -10,6 +10,14 @@ const meta: Meta<typeof Input> = {
       control: "select",
       options: ["text", "email", "password", "number"],
     },
+    size: {
+      control: "select",
+      options: ["sm", "md", "lg"],
+    },
+    align: {
+      control: "select",
+      options: ["left", "center", "right"],
+    },
     isDisabled: { control: "boolean" },
     isRequired: { control: "boolean" },
   },
@@ -59,6 +67,56 @@ export const Password: Story = {
   args: { label: "Password", type: "password", placeholder: "Enter password" },
 };
 
+// --- Without label (raw mode) ---
+
+export const WithoutLabel: Story = {
+  args: { placeholder: "Raw input without label", "aria-label": "Raw input" },
+};
+
+// --- Sizes ---
+
+export const Small: Story = {
+  args: { label: "Small input", size: "sm", placeholder: "Small" },
+};
+
+export const Medium: Story = {
+  args: { label: "Medium input", size: "md", placeholder: "Medium (default)" },
+};
+
+export const Large: Story = {
+  args: { label: "Large input", size: "lg", placeholder: "Large" },
+};
+
+export const AllSizes: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "24px", maxWidth: "360px" }}>
+      <Input label="Small" size="sm" placeholder="Small input" />
+      <Input label="Medium" size="md" placeholder="Medium input" />
+      <Input label="Large" size="lg" placeholder="Large input" />
+    </div>
+  ),
+};
+
+// --- Prefix ---
+
+export const WithPrefix: Story = {
+  args: { label: "Price", prefix: "$", placeholder: "0.00", type: "number" },
+};
+
+export const WithUrlPrefix: Story = {
+  args: { label: "Website", prefix: "https://", placeholder: "example.com" },
+};
+
+// --- Text alignment ---
+
+export const AlignCenter: Story = {
+  args: { label: "Centered", align: "center", placeholder: "Centered text" },
+};
+
+export const AlignRight: Story = {
+  args: { label: "Right-aligned", align: "right", placeholder: "Right-aligned text" },
+};
+
 // --- Playground ---
 
 export const Playground: Story = {
@@ -67,6 +125,8 @@ export const Playground: Story = {
     placeholder: "Type here...",
     description: "Helper text goes here.",
     type: "text",
+    size: "md",
+    align: "left",
     isDisabled: false,
     isRequired: false,
   },
@@ -83,6 +143,9 @@ export const AllStates: Story = {
       <Input label="Disabled" isDisabled value="Cannot edit" />
       <Input label="Error" value="bad value" errorMessage="Something went wrong." />
       <Input label="Password" type="password" placeholder="Enter password" />
+      <Input placeholder="Without label" aria-label="No label" />
+      <Input label="With prefix" prefix="$" placeholder="0.00" />
+      <Input label="Right-aligned" align="right" placeholder="Right" />
     </div>
   ),
 };

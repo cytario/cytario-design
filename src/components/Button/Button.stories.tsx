@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, fn, userEvent, within } from "storybook/test";
+import { ArrowRight, Download, Mail, Trash2 } from "lucide-react";
 import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
@@ -8,7 +9,15 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["primary", "secondary", "ghost", "destructive"],
+      options: [
+        "primary",
+        "secondary",
+        "ghost",
+        "destructive",
+        "default",
+        "success",
+        "info",
+      ],
     },
     size: {
       control: "select",
@@ -44,6 +53,18 @@ export const Destructive: Story = {
   args: { variant: "destructive", children: "Delete" },
 };
 
+export const Default: Story = {
+  args: { variant: "default", children: "Default" },
+};
+
+export const Success: Story = {
+  args: { variant: "success", children: "Success" },
+};
+
+export const Info: Story = {
+  args: { variant: "info", children: "Info" },
+};
+
 // --- Size stories ---
 
 export const Small: Story = {
@@ -54,6 +75,24 @@ export const Large: Story = {
   args: { size: "lg", children: "Large" },
 };
 
+// --- Icon stories ---
+
+export const WithIconLeft: Story = {
+  args: { iconLeft: Mail, children: "Send Email" },
+};
+
+export const WithIconRight: Story = {
+  args: { iconRight: ArrowRight, children: "Next" },
+};
+
+export const WithBothIcons: Story = {
+  args: { iconLeft: Download, iconRight: ArrowRight, children: "Download" },
+};
+
+export const DestructiveWithIcon: Story = {
+  args: { variant: "destructive", iconLeft: Trash2, children: "Delete" },
+};
+
 // --- State stories ---
 
 export const Disabled: Story = {
@@ -61,7 +100,11 @@ export const Disabled: Story = {
 };
 
 export const Loading: Story = {
-  args: { isLoading: true, children: "Loading…" },
+  args: { isLoading: true, children: "Loading\u2026" },
+};
+
+export const LoadingWithIcon: Story = {
+  args: { isLoading: true, iconLeft: Mail, children: "Sending\u2026" },
 };
 
 // --- Playground ---
@@ -78,7 +121,15 @@ export const Playground: Story = {
 
 // --- All variants grid ---
 
-const variants = ["primary", "secondary", "ghost", "destructive"] as const;
+const variants = [
+  "primary",
+  "secondary",
+  "ghost",
+  "destructive",
+  "default",
+  "success",
+  "info",
+] as const;
 const sizes = ["sm", "md", "lg"] as const;
 
 export const AllVariants: Story = {

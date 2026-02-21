@@ -1,0 +1,79 @@
+import type { Meta, StoryObj } from "storybook/react";
+import { fn } from "storybook/test";
+import {
+  Copy,
+  Edit,
+  MoreVertical,
+  Settings,
+  Trash2,
+  Download,
+} from "lucide-react";
+import { Menu } from "./Menu";
+import { Button } from "../Button";
+import { IconButton } from "../IconButton";
+
+const meta: Meta<typeof Menu> = {
+  title: "Components/Menu",
+  component: Menu,
+};
+
+export default meta;
+type Story = StoryObj<typeof Menu>;
+
+export const Default: Story = {
+  args: {
+    items: [
+      { id: "edit", label: "Edit", icon: Edit, onAction: fn() },
+      { id: "copy", label: "Copy", icon: Copy, onAction: fn() },
+      { id: "download", label: "Download", icon: Download, onAction: fn() },
+      { id: "delete", label: "Delete", icon: Trash2, isDanger: true, onAction: fn() },
+    ],
+    children: <Button variant="secondary">Actions</Button>,
+  },
+};
+
+export const WithIconButtonTrigger: Story = {
+  args: {
+    items: [
+      { id: "edit", label: "Edit", icon: Edit },
+      { id: "settings", label: "Settings", icon: Settings },
+      { id: "delete", label: "Delete", icon: Trash2, isDanger: true },
+    ],
+    children: (
+      <IconButton icon={MoreVertical} aria-label="More actions" variant="ghost" />
+    ),
+  },
+};
+
+export const WithDisabledItems: Story = {
+  args: {
+    items: [
+      { id: "edit", label: "Edit", icon: Edit },
+      { id: "copy", label: "Copy", icon: Copy, isDisabled: true },
+      { id: "download", label: "Download", icon: Download },
+    ],
+    children: <Button variant="secondary">Options</Button>,
+  },
+};
+
+export const TextOnly: Story = {
+  args: {
+    items: [
+      { id: "option-1", label: "Option 1" },
+      { id: "option-2", label: "Option 2" },
+      { id: "option-3", label: "Option 3" },
+    ],
+    children: <Button variant="ghost">Menu</Button>,
+  },
+};
+
+export const Playground: Story = {
+  args: {
+    items: [
+      { id: "edit", label: "Edit", icon: Edit },
+      { id: "copy", label: "Copy", icon: Copy },
+      { id: "delete", label: "Delete", icon: Trash2, isDanger: true },
+    ],
+    children: <Button>Open Menu</Button>,
+  },
+};

@@ -1,11 +1,19 @@
 import type React from "react";
+import type { LucideIcon } from "lucide-react";
 import {
   Button as AriaButton,
   type ButtonProps as AriaButtonProps,
 } from "react-aria-components";
+import {
+  type ButtonVariant,
+  type ButtonSize,
+  variantStyles,
+  sizeStyles,
+} from "../_shared/styles";
+import { Icon } from "../Icon";
+import { Spinner } from "../Spinner";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "destructive";
-export type ButtonSize = "sm" | "md" | "lg";
+export type { ButtonVariant, ButtonSize };
 
 export interface ButtonProps extends AriaButtonProps {
   /** Visual style variant */
@@ -14,43 +22,25 @@ export interface ButtonProps extends AriaButtonProps {
   size?: ButtonSize;
   /** Shows a spinner and disables interaction */
   isLoading?: boolean;
+  /** Lucide icon rendered before children */
+  iconLeft?: LucideIcon;
+  /** Lucide icon rendered after children */
+  iconRight?: LucideIcon;
 }
 
-const variantStyles: Record<ButtonVariant, string> = {
-  primary: [
-    "bg-[var(--color-action-primary)] text-[var(--color-text-inverse)]",
-    "hover:bg-[var(--color-action-primary-hover)]",
-    "pressed:bg-[var(--color-action-primary-active)]",
-  ].join(" "),
-  secondary: [
-    "bg-transparent text-[var(--color-action-secondary)]",
-    "border border-[var(--color-border-brand)]",
-    "hover:bg-[var(--color-purple-50)]",
-    "pressed:bg-[var(--color-purple-100)]",
-  ].join(" "),
-  ghost: [
-    "bg-transparent text-[var(--color-text-primary)]",
-    "hover:bg-[var(--color-neutral-100)]",
-    "pressed:bg-[var(--color-neutral-200)]",
-  ].join(" "),
-  destructive: [
-    "bg-[var(--color-action-danger)] text-[var(--color-text-inverse)]",
-    "hover:bg-[var(--color-action-danger-hover)]",
-    "pressed:bg-[var(--color-action-danger-hover)]",
-  ].join(" "),
-};
-
-const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-2 text-base",
-  lg: "px-6 py-3 text-lg",
-};
+const iconSizeMap = {
+  sm: "sm",
+  md: "sm",
+  lg: "md",
+} as const;
 
 export function Button({
   variant = "primary",
   size = "md",
   isLoading = false,
   isDisabled,
+  iconLeft,
+  iconRight,
   className,
   children,
   ...props
@@ -75,33 +65,10 @@ export function Button({
         .filter(Boolean)
         .join(" ")}
     >
-      {isLoading && <Spinner />}
+      {isLoading && <Spinner size={iconSizeMap[size]} />}
+      {!isLoading && iconLeft && <Icon icon={iconLeft} size={iconSizeMap[size]} />}
       {children as React.ReactNode}
+      {!isLoading && iconRight && <Icon icon={iconRight} size={iconSizeMap[size]} />}
     </AriaButton>
-  );
-}
-
-function Spinner() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="h-4 w-4 animate-spin"
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-      />
-    </svg>
   );
 }
