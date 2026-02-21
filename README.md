@@ -138,4 +138,6 @@ Both colors have a full 50--900 scale defined in `tokens/base.json` for use in h
 
 ## License
 
-UNLICENSED -- private, all rights reserved.
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+
+"cytario" and the cytario logo are trademarks of Slash-m GmbH. See [TRADEMARK.md](TRADEMARK.md).
