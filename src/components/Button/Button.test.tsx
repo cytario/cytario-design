@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { ArrowRight, Mail } from "lucide-react";
 import { Button } from "./Button";
 
 describe("Button", () => {
@@ -46,6 +47,48 @@ describe("Button", () => {
 
     await userEvent.click(button);
     expect(onPress).not.toHaveBeenCalled();
+  });
+
+  it("hides icons when loading", () => {
+    const { container } = render(
+      <Button isLoading iconLeft={Mail}>
+        Send
+      </Button>,
+    );
+
+    // Should have exactly one SVG (the spinner), not two
+    const svgs = container.querySelectorAll("svg");
+    expect(svgs).toHaveLength(1);
+  });
+
+  it("renders iconLeft", () => {
+    const { container } = render(
+      <Button iconLeft={Mail}>Send Email</Button>,
+    );
+
+    const svgs = container.querySelectorAll("svg");
+    expect(svgs).toHaveLength(1);
+    expect(svgs[0]?.getAttribute("aria-hidden")).toBe("true");
+  });
+
+  it("renders iconRight", () => {
+    const { container } = render(
+      <Button iconRight={ArrowRight}>Next</Button>,
+    );
+
+    const svgs = container.querySelectorAll("svg");
+    expect(svgs).toHaveLength(1);
+  });
+
+  it("renders both icons", () => {
+    const { container } = render(
+      <Button iconLeft={Mail} iconRight={ArrowRight}>
+        Send
+      </Button>,
+    );
+
+    const svgs = container.querySelectorAll("svg");
+    expect(svgs).toHaveLength(2);
   });
 
   it("has accessible role='button'", () => {

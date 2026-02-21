@@ -9,6 +9,12 @@ describe("Input", () => {
     expect(screen.getByLabelText("Full name")).toBeDefined();
   });
 
+  it("renders without label", () => {
+    render(<Input aria-label="Raw input" placeholder="No label" />);
+    expect(screen.getByRole("textbox")).toBeDefined();
+    expect(screen.queryByText("Full name")).toBeNull();
+  });
+
   it("accepts text input", async () => {
     render(<Input label="Name" />);
     const input = screen.getByRole("textbox");
@@ -48,5 +54,36 @@ describe("Input", () => {
     );
     expect(screen.queryByText("We will not share this")).toBeNull();
     expect(screen.getByText("Invalid")).toBeDefined();
+  });
+
+  it("applies small size classes", () => {
+    render(<Input label="Small" size="sm" />);
+    const input = screen.getByRole("textbox");
+    expect(input.className).toContain("py-1.5");
+    expect(input.className).toContain("text-sm");
+  });
+
+  it("applies large size classes", () => {
+    render(<Input label="Large" size="lg" />);
+    const input = screen.getByRole("textbox");
+    expect(input.className).toContain("py-3");
+    expect(input.className).toContain("text-lg");
+  });
+
+  it("renders prefix text", () => {
+    render(<Input label="Price" prefix="$" />);
+    expect(screen.getByText("$")).toBeDefined();
+  });
+
+  it("applies text alignment", () => {
+    render(<Input label="Right" align="right" />);
+    const input = screen.getByRole("textbox");
+    expect(input.className).toContain("text-right");
+  });
+
+  it("applies center alignment", () => {
+    render(<Input label="Center" align="center" />);
+    const input = screen.getByRole("textbox");
+    expect(input.className).toContain("text-center");
   });
 });

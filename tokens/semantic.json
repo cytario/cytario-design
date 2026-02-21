@@ -12,8 +12,14 @@
       "primaryActive": { "$value": "{color.teal.700}" },
       "secondary": { "$value": "{color.purple.700}" },
       "secondaryHover": { "$value": "{color.purple.600}" },
-      "danger": { "$value": "#dc2626" },
-      "dangerHover": { "$value": "#b91c1c" }
+      "danger": { "$value": "{color.rose.600}" },
+      "dangerHover": { "$value": "{color.rose.700}" },
+      "success": { "$value": "{color.green.600}" },
+      "successHover": { "$value": "{color.green.700}" },
+      "info": { "$value": "{color.slate.600}" },
+      "infoHover": { "$value": "{color.slate.700}" },
+      "default": { "$value": "{color.slate.800}" },
+      "defaultHover": { "$value": "{color.slate.700}" }
     },
     "text": {
       "$type": "color",
@@ -23,8 +29,10 @@
       "inverse": { "$value": "{color.neutral.0}" },
       "brand": { "$value": "{color.purple.700}" },
       "accent": { "$value": "{color.teal.500}" },
-      "danger": { "$value": "#dc2626" },
-      "success": { "$value": "#16a34a" }
+      "danger": { "$value": "{color.rose.600}" },
+      "success": { "$value": "{color.green.600}" },
+      "info": { "$value": "{color.slate.600}" },
+      "warning": { "$value": "#d97706" }
     },
     "surface": {
       "$type": "color",
@@ -33,10 +41,11 @@
       "muted": { "$value": "{color.neutral.100}" },
       "brand": { "$value": "{color.purple.700}" },
       "accent": { "$value": "{color.teal.500}" },
-      "danger": { "$value": "#fef2f2" },
-      "success": { "$value": "#f0fdf4" },
+      "danger": { "$value": "{color.rose.50}" },
+      "success": { "$value": "{color.green.50}" },
       "warning": { "$value": "#fffbeb" },
-      "info": { "$value": "#eff6ff" }
+      "info": { "$value": "{color.slate.50}" },
+      "overlay": { "$value": "#000000cc" }
     },
     "border": {
       "$type": "color",
@@ -45,7 +54,10 @@
       "brand": { "$value": "{color.purple.700}" },
       "accent": { "$value": "{color.teal.500}" },
       "focus": { "$value": "{color.teal.500}" },
-      "danger": { "$value": "#dc2626" }
+      "danger": { "$value": "{color.rose.600}" },
+      "success": { "$value": "{color.green.600}" },
+      "info": { "$value": "{color.slate.400}" },
+      "warning": { "$value": "#d97706" }
     },
     "overlay": {
       "$type": "color",
