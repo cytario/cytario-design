@@ -1,3 +1,4 @@
+import type React from "react";
 import {
   Button as AriaButton,
   type ButtonProps as AriaButtonProps,
@@ -75,7 +76,7 @@ export function Button({
         .join(" ")}
     >
       {isLoading && <Spinner />}
-      {children}
+      {children as React.ReactNode}
     </AriaButton>
   );
 }
