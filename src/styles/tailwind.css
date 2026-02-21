@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors — sourced from tokens/variables.css */
+  --color-purple-50: #f5f0fa;
+  --color-purple-100: #ead9f5;
+  --color-purple-200: #d4b3eb;
+  --color-purple-300: #b87ddb;
+  --color-purple-400: #9b4fcb;
+  --color-purple-500: #7a2ea8;
+  --color-purple-600: #6b2695;
+  --color-purple-700: #5c2483;
+  --color-purple-800: #4a1d6a;
+  --color-purple-900: #3a1754;
+
+  --color-teal-50: #edf9f9;
+  --color-teal-100: #d0f0f0;
+  --color-teal-200: #a1e1e2;
+  --color-teal-300: #6dd0d1;
+  --color-teal-400: #44c4c5;
+  --color-teal-500: #35b7b8;
+  --color-teal-600: #2a9b9c;
+  --color-teal-700: #217d7e;
+  --color-teal-800: #1a6364;
+  --color-teal-900: #144d4e;
+
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f9fafb;
+  --color-neutral-100: #f3f4f6;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d1d5db;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+  --color-neutral-950: #030712;
+  --color-neutral-1000: #000000;
+
+  /* Typography */
+  --font-sans: "Montserrat", system-ui, sans-serif;
+}

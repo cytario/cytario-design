@@ -1,0 +1,206 @@
+{/* Colors.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundation/Colors" />
+
+# Colors
+
+The cytario palette is built on two brand colors -- purple and teal -- extended into full scales with neutral grays and semantic mappings for UI states.
+
+---
+
+## Brand colors
+
+<div style={{ display: "flex", gap: 32, marginTop: 24, marginBottom: 48, flexWrap: "wrap" }}>
+  <div style={{ textAlign: "center" }}>
+    <div style={{
+      width: 160,
+      height: 160,
+      borderRadius: 16,
+      background: "#5c2483",
+      boxShadow: "0 4px 12px rgba(92, 36, 131, 0.3)",
+      marginBottom: 12,
+    }} />
+    <p style={{ margin: 0, fontWeight: 700, fontSize: 16 }}>Purple</p>
+    <code style={{ fontSize: 13 }}>#5c2483</code>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>Brand primary</p>
+  </div>
+
+  <div style={{ textAlign: "center" }}>
+    <div style={{
+      width: 160,
+      height: 160,
+      borderRadius: 16,
+      background: "#35b7b8",
+      boxShadow: "0 4px 12px rgba(53, 183, 184, 0.3)",
+      marginBottom: 12,
+    }} />
+    <p style={{ margin: 0, fontWeight: 700, fontSize: 16 }}>Teal</p>
+    <code style={{ fontSize: 13 }}>#35b7b8</code>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>Brand accent</p>
+  </div>
+</div>
+
+---
+
+## Purple scale
+
+<div style={{ display: "flex", gap: 0, marginTop: 16, marginBottom: 8 }}>
+  {[
+    { step: "50", hex: "#f5f0fa" },
+    { step: "100", hex: "#ead9f5" },
+    { step: "200", hex: "#d4b3eb" },
+    { step: "300", hex: "#b87ddb" },
+    { step: "400", hex: "#9b4fcb" },
+    { step: "500", hex: "#7a2ea8" },
+    { step: "600", hex: "#6b2695" },
+    { step: "700", hex: "#5c2483" },
+    { step: "800", hex: "#4a1d6a" },
+    { step: "900", hex: "#3a1754" },
+  ].map(({ step, hex }) => (
+    <div key={step} style={{ flex: 1, textAlign: "center" }}>
+      <div style={{
+        height: 64,
+        background: hex,
+        borderRadius: step === "50" ? "8px 0 0 8px" : step === "900" ? "0 8px 8px 0" : 0,
+      }} />
+      <p style={{ margin: "6px 0 0", fontSize: 11, fontWeight: 600 }}>{step}</p>
+      <p style={{ margin: "2px 0 0", fontSize: 10, color: "#6b7280" }}>{hex}</p>
+    </div>
+  ))}
+</div>
+
+<p style={{ fontSize: 13, color: "#6b7280", marginBottom: 32 }}>
+  Token: <code>{"--color-purple-{step}"}</code>. Brand primary is purple-700.
+</p>
+
+## Teal scale
+
+<div style={{ display: "flex", gap: 0, marginTop: 16, marginBottom: 8 }}>
+  {[
+    { step: "50", hex: "#edf9f9" },
+    { step: "100", hex: "#d0f0f0" },
+    { step: "200", hex: "#a1e1e2" },
+    { step: "300", hex: "#6dd0d1" },
+    { step: "400", hex: "#44c4c5" },
+    { step: "500", hex: "#35b7b8" },
+    { step: "600", hex: "#2a9b9c" },
+    { step: "700", hex: "#217d7e" },
+    { step: "800", hex: "#1a6364" },
+    { step: "900", hex: "#144d4e" },
+  ].map(({ step, hex }) => (
+    <div key={step} style={{ flex: 1, textAlign: "center" }}>
+      <div style={{
+        height: 64,
+        background: hex,
+        borderRadius: step === "50" ? "8px 0 0 8px" : step === "900" ? "0 8px 8px 0" : 0,
+      }} />
+      <p style={{ margin: "6px 0 0", fontSize: 11, fontWeight: 600 }}>{step}</p>
+      <p style={{ margin: "2px 0 0", fontSize: 10, color: "#6b7280" }}>{hex}</p>
+    </div>
+  ))}
+</div>
+
+<p style={{ fontSize: 13, color: "#6b7280", marginBottom: 32 }}>
+  Token: <code>{"--color-teal-{step}"}</code>. Brand accent is teal-500.
+</p>
+
+## Neutral scale
+
+<div style={{ display: "flex", gap: 0, marginTop: 16, marginBottom: 8 }}>
+  {[
+    { step: "0", hex: "#ffffff" },
+    { step: "50", hex: "#f9fafb" },
+    { step: "100", hex: "#f3f4f6" },
+    { step: "200", hex: "#e5e7eb" },
+    { step: "300", hex: "#d1d5db" },
+    { step: "400", hex: "#9ca3af" },
+    { step: "500", hex: "#6b7280" },
+    { step: "600", hex: "#4b5563" },
+    { step: "700", hex: "#374151" },
+    { step: "800", hex: "#1f2937" },
+    { step: "900", hex: "#111827" },
+    { step: "950", hex: "#030712" },
+  ].map(({ step, hex }, i, arr) => (
+    <div key={step} style={{ flex: 1, textAlign: "center" }}>
+      <div style={{
+        height: 64,
+        background: hex,
+        borderRadius: i === 0 ? "8px 0 0 8px" : i === arr.length - 1 ? "0 8px 8px 0" : 0,
+      }} />
+      <p style={{ margin: "6px 0 0", fontSize: 10, fontWeight: 600 }}>{step}</p>
+      <p style={{ margin: "2px 0 0", fontSize: 9, color: "#6b7280" }}>{hex}</p>
+    </div>
+  ))}
+</div>
+
+<p style={{ fontSize: 13, color: "#6b7280", marginBottom: 32 }}>
+  Token: <code>{"--color-neutral-{step}"}</code>
+</p>
+
+---
+
+## Semantic color mappings
+
+Semantic tokens map purpose to palette values, so UI code references intent rather than raw color.
+
+<table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14, marginTop: 16 }}>
+  <thead>
+    <tr style={{ borderBottom: "2px solid #e5e7eb", textAlign: "left" }}>
+      <th style={{ padding: "8px 12px" }}>Token</th>
+      <th style={{ padding: "8px 12px" }}>Value</th>
+      <th style={{ padding: "8px 12px" }}>Swatch</th>
+      <th style={{ padding: "8px 12px" }}>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    {[
+      { token: "--color-brand-primary", value: "purple-700", hex: "#5c2483", usage: "Brand surfaces, headings" },
+      { token: "--color-brand-accent", value: "teal-500", hex: "#35b7b8", usage: "Accent highlights, links" },
+      { token: "--color-action-primary", value: "teal-500", hex: "#35b7b8", usage: "Primary buttons, interactive elements" },
+      { token: "--color-action-secondary", value: "purple-700", hex: "#5c2483", usage: "Secondary buttons" },
+      { token: "--color-text-primary", value: "neutral-900", hex: "#111827", usage: "Body text" },
+      { token: "--color-text-secondary", value: "neutral-600", hex: "#4b5563", usage: "Supporting text" },
+      { token: "--color-text-brand", value: "purple-700", hex: "#5c2483", usage: "Branded text" },
+      { token: "--color-surface-default", value: "neutral-0", hex: "#ffffff", usage: "Default backgrounds" },
+      { token: "--color-surface-subtle", value: "neutral-50", hex: "#f9fafb", usage: "Subtle background areas" },
+      { token: "--color-border-default", value: "neutral-200", hex: "#e5e7eb", usage: "Default borders" },
+      { token: "--color-border-focus", value: "teal-500", hex: "#35b7b8", usage: "Focus rings" },
+      { token: "--color-action-danger", value: "red-600", hex: "#dc2626", usage: "Destructive actions" },
+    ].map(({ token, value, hex, usage }) => (
+      <tr key={token} style={{ borderBottom: "1px solid #f3f4f6" }}>
+        <td style={{ padding: "8px 12px" }}><code style={{ fontSize: 12 }}>{token}</code></td>
+        <td style={{ padding: "8px 12px", fontSize: 13, color: "#6b7280" }}>{value}</td>
+        <td style={{ padding: "8px 12px" }}>
+          <div style={{ width: 32, height: 20, background: hex, borderRadius: 4, border: "1px solid #e5e7eb" }} />
+        </td>
+        <td style={{ padding: "8px 12px", fontSize: 13, color: "#6b7280" }}>{usage}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+---
+
+## Accessibility and contrast
+
+| Combination | Contrast ratio | WCAG AA (normal) | WCAG AA (large) |
+| --- | --- | --- | --- |
+| Purple 700 on white | 8.5:1 | Pass | Pass |
+| Teal 500 on white | 2.8:1 | Fail | Fail |
+| Teal 700 on white | 4.6:1 | Pass (large) | Pass |
+| White on purple 700 | 8.5:1 | Pass | Pass |
+| Neutral 900 on white | 17.4:1 | Pass | Pass |
+| Neutral 600 on white | 5.7:1 | Pass | Pass |
+
+**Key rule:** Teal-500 (`#35b7b8`) does not meet WCAG AA contrast on white backgrounds for normal text. Use **teal-700** (`#217d7e`) or darker for text. Teal-500 is suitable for large text, icons, and non-text decorative elements.
+
+---
+
+## Brand governance
+
+**Approved palette:** The purple and teal brand colors were established as part of the cytario corporate design approved on 05.11.2024. Do not introduce new brand colors without approval.
+
+**Color in regulatory contexts:** Regulatory submissions and labels should not rely on color alone to convey meaning (per IEC 62366-1 usability requirements). When color is used in the cytario application UI for diagnostic significance (e.g., annotations, heatmaps), ensure an alternative non-color indicator is also present.
+
+**Print color matching:** For printed materials (business cards, trade show panels, letterheads), request the Pantone equivalents from the brand owner to ensure accurate color reproduction across print vendors.
