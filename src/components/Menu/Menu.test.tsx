@@ -51,6 +51,50 @@ describe("Menu", () => {
     expect(onEdit).toHaveBeenCalledTimes(1);
   });
 
+  it("renders menu item with href as a link", async () => {
+    const items = [
+      {
+        id: "link",
+        label: "Open Keycloak",
+        href: "https://keycloak.example.com",
+      },
+    ];
+
+    render(
+      <Menu items={items}>
+        <Button>Actions</Button>
+      </Menu>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Actions" }));
+    const menuItem = screen.getByRole("menuitem", { name: "Open Keycloak" });
+    expect(menuItem.tagName).toBe("A");
+    expect(menuItem.getAttribute("href")).toBe(
+      "https://keycloak.example.com",
+    );
+  });
+
+  it("sets target attribute on menu item with href and target", async () => {
+    const items = [
+      {
+        id: "link",
+        label: "External Link",
+        href: "https://example.com",
+        target: "_blank",
+      },
+    ];
+
+    render(
+      <Menu items={items}>
+        <Button>Actions</Button>
+      </Menu>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Actions" }));
+    const menuItem = screen.getByRole("menuitem", { name: "External Link" });
+    expect(menuItem.getAttribute("target")).toBe("_blank");
+  });
+
   it("does not show menu items before opening", () => {
     render(
       <Menu items={defaultItems}>

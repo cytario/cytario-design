@@ -13,6 +13,10 @@ export interface MenuItemData {
   label: string;
   icon?: LucideIcon;
   onAction?: () => void;
+  /** When set, renders the menu item as a navigational link */
+  href?: string;
+  /** Link target, e.g. "_blank" for external links */
+  target?: string;
   isDisabled?: boolean;
   isDanger?: boolean;
 }
@@ -53,6 +57,8 @@ export function Menu({ items, children, className }: MenuProps) {
           {(item) => (
             <AriaMenuItem
               id={item.id}
+              href={item.href}
+              target={item.target}
               isDisabled={item.isDisabled}
               className={[
                 "flex items-center gap-2 px-3 py-2 text-sm outline-none cursor-default",

@@ -1,3 +1,9 @@
+"use client";
+
+// React Aria re-exports for consumer integration
+export { RouterProvider } from "react-aria-components";
+export type { RouterConfig, Key } from "react-aria-components";
+
 // Components
 export { Button } from "./components/Button";
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./components/Button";
@@ -26,8 +32,8 @@ export type { DataTableProps, TableSize } from "./components/Table";
 export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";
 
-export { ToastProvider, useToast } from "./components/Toast";
-export type { ToastData, ToastVariant, ToastContextValue } from "./components/Toast";
+export { ToastProvider, useToast, createToastBridge } from "./components/Toast";
+export type { ToastData, ToastVariant, ToastContextValue, ToastBridge } from "./components/Toast";
 
 export { EmptyState } from "./components/EmptyState";
 export type { EmptyStateProps } from "./components/EmptyState";

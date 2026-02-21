@@ -3,6 +3,7 @@ import { fn } from "storybook/test";
 import {
   Copy,
   Edit,
+  ExternalLink,
   MoreVertical,
   Settings,
   Trash2,
@@ -64,6 +65,30 @@ export const TextOnly: Story = {
       { id: "option-3", label: "Option 3" },
     ],
     children: <Button variant="ghost">Menu</Button>,
+  },
+};
+
+export const WithLinks: Story = {
+  args: {
+    items: [
+      { id: "edit", label: "Edit", icon: Edit, onAction: fn() },
+      { id: "settings", label: "Settings", icon: Settings, onAction: fn() },
+      {
+        id: "keycloak",
+        label: "Open Keycloak",
+        icon: ExternalLink,
+        href: "https://keycloak.example.com/admin",
+        target: "_blank",
+      },
+      {
+        id: "docs",
+        label: "Documentation",
+        icon: ExternalLink,
+        href: "https://docs.example.com",
+        target: "_blank",
+      },
+    ],
+    children: <Button variant="secondary">User Menu</Button>,
   },
 };
 

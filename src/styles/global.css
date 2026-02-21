@@ -3,24 +3,28 @@
 
 /*
  * Additional design-system variables not yet covered by token pipeline.
+ * Wrapped in the same cascade layer as the generated tokens so that
+ * consumer app styles (unlayered) can override them via className.
  */
 
-:root {
-  /* Body text */
-  --ds-color-text-body: rgb(55, 65, 81);
-  /* Heading text */
-  --ds-color-text-heading: rgb(17, 24, 39);
+@layer cytario-design {
+  :root {
+    /* Body text */
+    --ds-color-text-body: rgb(55, 65, 81);
+    /* Heading text */
+    --ds-color-text-heading: rgb(17, 24, 39);
 
-  /* Gradients */
-  --ds-gradient-brand: linear-gradient(135deg, #5c2483 0%, #4a1d6a 100%);
-  --ds-gradient-brand-reverse: linear-gradient(135deg, #4a1d6a 0%, #5c2483 100%);
-}
+    /* Gradients */
+    --ds-gradient-brand: linear-gradient(135deg, #5c2483 0%, #4a1d6a 100%);
+    --ds-gradient-brand-reverse: linear-gradient(135deg, #4a1d6a 0%, #5c2483 100%);
+  }
 
-body {
-  font-family: "Montserrat", system-ui, sans-serif;
-  color: var(--ds-color-text-body);
-}
+  body {
+    font-family: "Montserrat", system-ui, sans-serif;
+    color: var(--ds-color-text-body);
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  color: var(--ds-color-text-heading);
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--ds-color-text-heading);
+  }
 }

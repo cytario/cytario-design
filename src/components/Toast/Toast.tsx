@@ -123,7 +123,43 @@ function ToastContainer({ toasts, removeToast }: { toasts: ToastData[]; removeTo
   );
 }
 
-export function ToastProvider({ children }: { children: ReactNode }) {
+// ---------------------------------------------------------------------------
+// Toast Bridge — allows code outside the React tree to emit toasts
+// ---------------------------------------------------------------------------
+
+export interface ToastBridge {
+  /** Call from anywhere (including outside React) to show a toast. */
+  emit: (toast: Omit<ToastData, "id">) => void;
+  /** Used internally by ToastProvider to subscribe to external emits. */
+  subscribe: (fn: (toast: Omit<ToastData, "id">) => void) => () => void;
+}
+
+export function createToastBridge(): ToastBridge {
+  const listeners = new Set<(toast: Omit<ToastData, "id">) => void>();
+  return {
+    emit: (toast) => {
+      listeners.forEach((fn) => fn(toast));
+    },
+    subscribe: (fn) => {
+      listeners.add(fn);
+      return () => {
+        listeners.delete(fn);
+      };
+    },
+  };
+}
+
+// ---------------------------------------------------------------------------
+// ToastProvider
+// ---------------------------------------------------------------------------
+
+interface ToastProviderProps {
+  children: ReactNode;
+  /** Optional bridge for receiving toasts from outside the React tree. */
+  bridge?: ToastBridge;
+}
+
+export function ToastProvider({ children, bridge }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
   const addToast = useCallback((toast: Omit<ToastData, "id">) => {
@@ -134,6 +170,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const removeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
+
+  // Subscribe to external bridge emits
+  useEffect(() => {
+    if (!bridge) return;
+    return bridge.subscribe(addToast);
+  }, [bridge, addToast]);
 
   return (
     <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
