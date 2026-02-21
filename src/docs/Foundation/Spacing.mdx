@@ -1,0 +1,120 @@
+{/* Spacing.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundation/Spacing" />
+
+# Spacing
+
+cytario uses a **4px base unit** spacing scale. Every margin, padding, and gap in the system is a multiple of 4px, producing a consistent visual rhythm across all screens.
+
+---
+
+## Spacing scale
+
+<div style={{ marginTop: 24, marginBottom: 32 }}>
+  {[
+    { token: "1", value: "4px", desc: "Tightest spacing -- inline icon gaps, border offsets" },
+    { token: "2", value: "8px", desc: "Small padding -- compact buttons, chip padding" },
+    { token: "3", value: "12px", desc: "Default inner padding -- input fields, small cards" },
+    { token: "4", value: "16px", desc: "Standard gap -- form field spacing, list items" },
+    { token: "6", value: "24px", desc: "Section inner padding -- card bodies, dialog content" },
+    { token: "8", value: "32px", desc: "Section separation -- between related content groups" },
+    { token: "12", value: "48px", desc: "Large separation -- between major page sections" },
+    { token: "16", value: "64px", desc: "Largest spacing -- page-level margins, hero padding" },
+  ].map(({ token, value, desc }) => (
+    <div key={token} style={{
+      display: "flex",
+      alignItems: "center",
+      gap: 16,
+      padding: "12px 0",
+      borderBottom: "1px solid #f3f4f6",
+    }}>
+      <code style={{ fontSize: 12, width: 130, flexShrink: 0, color: "#6b7280" }}>
+        --spacing-{token}
+      </code>
+      <span style={{ width: 48, flexShrink: 0, fontSize: 13, fontWeight: 600 }}>{value}</span>
+      <div style={{
+        width: parseInt(value),
+        height: 24,
+        background: "#35b7b8",
+        borderRadius: 4,
+        flexShrink: 0,
+      }} />
+      <span style={{ fontSize: 13, color: "#6b7280" }}>{desc}</span>
+    </div>
+  ))}
+</div>
+
+---
+
+## Visual reference
+
+<div style={{
+  background: "#f9fafb",
+  borderRadius: 12,
+  padding: 32,
+  marginTop: 16,
+  marginBottom: 32,
+}}>
+  <div style={{ display: "flex", alignItems: "flex-end", gap: 12 }}>
+    {[
+      { token: "1", value: 4 },
+      { token: "2", value: 8 },
+      { token: "3", value: 12 },
+      { token: "4", value: 16 },
+      { token: "6", value: 24 },
+      { token: "8", value: 32 },
+      { token: "12", value: 48 },
+      { token: "16", value: 64 },
+    ].map(({ token, value }) => (
+      <div key={token} style={{ textAlign: "center" }}>
+        <div style={{
+          width: 48,
+          height: value,
+          background: "linear-gradient(135deg, #5c2483 0%, #35b7b8 100%)",
+          borderRadius: 4,
+        }} />
+        <p style={{ margin: "8px 0 0", fontSize: 11, fontWeight: 600 }}>{token}</p>
+        <p style={{ margin: "2px 0 0", fontSize: 10, color: "#6b7280" }}>{value}px</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+---
+
+## Border radius scale
+
+Rounded corners follow their own token scale, separate from spacing.
+
+<div style={{ display: "flex", gap: 24, flexWrap: "wrap", marginTop: 16, marginBottom: 32 }}>
+  {[
+    { token: "none", value: "0px" },
+    { token: "sm", value: "4px" },
+    { token: "md", value: "8px" },
+    { token: "lg", value: "12px" },
+    { token: "xl", value: "16px" },
+    { token: "full", value: "9999px" },
+  ].map(({ token, value }) => (
+    <div key={token} style={{ textAlign: "center" }}>
+      <div style={{
+        width: 64,
+        height: 64,
+        background: "#5c2483",
+        borderRadius: value,
+      }} />
+      <p style={{ margin: "8px 0 0", fontSize: 11, fontWeight: 600 }}>{token}</p>
+      <p style={{ margin: "2px 0 0", fontSize: 10, color: "#6b7280" }}>{value}</p>
+    </div>
+  ))}
+</div>
+
+---
+
+## Usage guidelines
+
+- Use spacing tokens exclusively. Hard-coded pixel values break when the scale is adjusted.
+- Inner padding of interactive elements (buttons, inputs) typically uses **spacing-2** (8px) to **spacing-3** (12px).
+- Gap between form fields: **spacing-4** (16px).
+- Gap between major page sections: **spacing-12** (48px) or **spacing-16** (64px).
+- When in doubt, choose the smaller value. Pathologists work on information-dense screens -- space is at a premium.

@@ -1,0 +1,130 @@
+{/* Typography.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundation/Typography" />
+
+# Typography
+
+cytario uses **Montserrat** as its primary typeface. It is a geometric sans-serif that works well at both display and body sizes, and carries a modern, approachable tone appropriate for medical technology.
+
+---
+
+## Font family
+
+<div style={{
+  background: "#f9fafb",
+  borderRadius: 12,
+  padding: 32,
+  marginTop: 16,
+  marginBottom: 32,
+}}>
+  <p style={{ fontFamily: "'Montserrat', system-ui, sans-serif", fontSize: 36, fontWeight: 700, margin: "0 0 8px", color: "#111827" }}>
+    Montserrat
+  </p>
+  <p style={{ fontFamily: "'Montserrat', system-ui, sans-serif", fontSize: 16, margin: 0, color: "#6b7280" }}>
+    ABCDEFGHIJKLMNOPQRSTUVWXYZ<br/>
+    abcdefghijklmnopqrstuvwxyz<br/>
+    0123456789 !@#$%^&amp;*()
+  </p>
+</div>
+
+<p style={{ fontSize: 13, color: "#6b7280" }}>
+  Token: <code>font-family: "Montserrat", system-ui, sans-serif</code><br/>
+  Fallback stack: system-ui ensures readable text if the web font fails to load.
+</p>
+
+---
+
+## Type scale
+
+<table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14, marginTop: 16 }}>
+  <thead>
+    <tr style={{ borderBottom: "2px solid #e5e7eb", textAlign: "left" }}>
+      <th style={{ padding: "8px 12px", width: 120 }}>Token</th>
+      <th style={{ padding: "8px 12px", width: 60 }}>Size</th>
+      <th style={{ padding: "8px 12px" }}>Specimen</th>
+    </tr>
+  </thead>
+  <tbody>
+    {[
+      { token: "5xl", size: "48px" },
+      { token: "4xl", size: "36px" },
+      { token: "3xl", size: "30px" },
+      { token: "2xl", size: "24px" },
+      { token: "xl", size: "20px" },
+      { token: "lg", size: "18px" },
+      { token: "base", size: "16px" },
+      { token: "sm", size: "14px" },
+      { token: "xs", size: "12px" },
+    ].map(({ token, size }) => (
+      <tr key={token} style={{ borderBottom: "1px solid #f3f4f6" }}>
+        <td style={{ padding: "12px" }}>
+          <code style={{ fontSize: 12 }}>--font-size-{token}</code>
+        </td>
+        <td style={{ padding: "12px", color: "#6b7280" }}>{size}</td>
+        <td style={{ padding: "12px" }}>
+          <span style={{
+            fontFamily: "'Montserrat', system-ui, sans-serif",
+            fontSize: size,
+            fontWeight: 400,
+            lineHeight: 1.25,
+            color: "#111827",
+          }}>
+            Digital pathology
+          </span>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+---
+
+## Font weights
+
+<div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 16, marginBottom: 32 }}>
+  {[
+    { token: "light", weight: 300 },
+    { token: "regular", weight: 400 },
+    { token: "medium", weight: 500 },
+    { token: "semibold", weight: 600 },
+    { token: "bold", weight: 700 },
+    { token: "extrabold", weight: 800 },
+  ].map(({ token, weight }) => (
+    <div key={token} style={{ display: "flex", alignItems: "baseline", gap: 16 }}>
+      <code style={{ fontSize: 12, width: 200, flexShrink: 0, color: "#6b7280" }}>
+        --font-weight-{token} ({weight})
+      </code>
+      <span style={{
+        fontFamily: "'Montserrat', system-ui, sans-serif",
+        fontSize: 24,
+        fontWeight: weight,
+        color: "#111827",
+      }}>
+        The quick brown fox jumps over the lazy dog
+      </span>
+    </div>
+  ))}
+</div>
+
+---
+
+## Line heights
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--line-height-tight` | 1.25 | Headings, display text, compact UI labels |
+| `--line-height-normal` | 1.5 | Body text, paragraphs, form labels |
+| `--line-height-relaxed` | 1.625 | Long-form content, documentation prose |
+
+---
+
+## Usage guidelines
+
+**Headings** use semibold or bold weight with tight line height. Color: `--color-text-primary` (neutral-900).
+
+**Body text** uses regular weight at base size (16px) with normal line height. Color: `--color-text-secondary` (neutral-600) for supporting content, `--color-text-primary` for main content.
+
+**Captions and labels** use sm (14px) or xs (12px) at medium weight. Color: `--color-text-tertiary` (neutral-400) for least-prominent text.
+
+**Never** use light (300) weight below 18px -- it becomes hard to read on lower-resolution screens.

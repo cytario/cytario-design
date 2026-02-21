@@ -1,0 +1,88 @@
+{/* Introduction.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+<div style={{ textAlign: "center", padding: "48px 0 32px" }}>
+  <img
+    src="logos/cytario-logo-full.svg"
+    alt="cytario"
+    style={{ maxWidth: 280, marginBottom: 32 }}
+  />
+</div>
+
+# cytario design system
+
+Single source of truth for the cytario corporate identity -- from brand foundation to production-ready components.
+
+This portal documents every element of the cytario visual language: logos, color palette, typography, spacing, and the component library built on top of them. It is the reference for designers, developers, and anyone producing cytario-branded materials.
+
+---
+
+## What is in this portal
+
+<div style={{
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+  gap: 24,
+  marginTop: 24,
+  marginBottom: 48,
+}}>
+  <div style={{
+    background: "#f5f0fa",
+    borderRadius: 12,
+    padding: 24,
+    borderLeft: "4px solid #5c2483",
+  }}>
+    <h3 style={{ margin: "0 0 8px", color: "#5c2483" }}>Foundation</h3>
+    <p style={{ margin: 0, fontSize: 14, color: "#4b5563" }}>
+      Logo, colors, typography, and spacing -- the building blocks of every screen and artifact.
+    </p>
+  </div>
+
+  <div style={{
+    background: "#edf9f9",
+    borderRadius: 12,
+    padding: 24,
+    borderLeft: "4px solid #35b7b8",
+  }}>
+    <h3 style={{ margin: "0 0 8px", color: "#217d7e" }}>Components</h3>
+    <p style={{ margin: 0, fontSize: 14, color: "#4b5563" }}>
+      Buttons, inputs, cards, and other interactive elements with live examples, accessibility annotations, and API docs.
+    </p>
+  </div>
+
+  <div style={{
+    background: "#f5f0fa",
+    borderRadius: 12,
+    padding: 24,
+    borderLeft: "4px solid #5c2483",
+  }}>
+    <h3 style={{ margin: "0 0 8px", color: "#5c2483" }}>Patterns</h3>
+    <p style={{ margin: 0, fontSize: 14, color: "#4b5563" }}>
+      Recurring layouts and interaction patterns specific to digital pathology workflows.
+    </p>
+  </div>
+
+  <div style={{
+    background: "#edf9f9",
+    borderRadius: 12,
+    padding: 24,
+    borderLeft: "4px solid #35b7b8",
+  }}>
+    <h3 style={{ margin: "0 0 8px", color: "#217d7e" }}>Guidelines</h3>
+    <p style={{ margin: 0, fontSize: 14, color: "#4b5563" }}>
+      Voice and tone, content strategy, accessibility standards, and approved marketing claims.
+    </p>
+  </div>
+</div>
+
+---
+
+## How to use this portal
+
+**Designers** -- Use foundation pages as the definitive color, type, and spacing reference. Component stories show every interactive state.
+
+**Developers** -- Copy token values directly from the color and spacing pages. Every component story includes working code.
+
+**Marketing and leadership** -- The Guidelines section contains approved claims, brand voice rules, and logo usage rules.

@@ -1,0 +1,196 @@
+{/* Logo.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundation/Logo" />
+
+# Logo
+
+The cytario logo is the most recognizable element of the brand. Use it consistently and with care.
+
+---
+
+## Logo variants
+
+<div style={{
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+  gap: 24,
+  marginTop: 24,
+}}>
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#ffffff",
+  }}>
+    <img src="logos/cytario-logo-full.svg" alt="Full logo" style={{ maxWidth: 220, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Full logo</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
+      Primary variant. Use whenever space permits.
+    </p>
+  </div>
+
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#ffffff",
+  }}>
+    <img src="logos/cytario-logo-reduced.svg" alt="Reduced logo" style={{ maxWidth: 180, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Reduced logo</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
+      Compact mark for small spaces, favicons, and app icons.
+    </p>
+  </div>
+
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#ffffff",
+  }}>
+    <img src="logos/cytario-logo-black.svg" alt="Black logo" style={{ maxWidth: 220, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Black (monochrome)</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
+      Single-color printing, fax headers, and high-contrast contexts.
+    </p>
+  </div>
+
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#5c2483",
+  }}>
+    <img src="logos/cytario-logo-white.svg" alt="White logo" style={{ maxWidth: 220, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>White (reversed)</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#d4b3eb" }}>
+      Use on dark or brand-colored backgrounds.
+    </p>
+  </div>
+
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#5c2483",
+  }}>
+    <img src="logos/cytario-logo-on-purple.svg" alt="Logo on purple" style={{ maxWidth: 220, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>On purple</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#d4b3eb" }}>
+      Preferred placement on the brand purple background.
+    </p>
+  </div>
+
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#ffffff",
+  }}>
+    <img src="logos/cytario-logo-white-teal.svg" alt="White-teal logo" style={{ maxWidth: 220, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>White + teal</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
+      Alternative accent variant for special placements.
+    </p>
+  </div>
+</div>
+
+---
+
+## Clear space
+
+Maintain a minimum clear space around the logo equal to the height of the "c" in "cytario." No other graphic elements, text, or edges should encroach on this zone.
+
+<div style={{
+  background: "#f9fafb",
+  borderRadius: 12,
+  padding: 48,
+  textAlign: "center",
+  marginTop: 16,
+  marginBottom: 24,
+}}>
+  <div style={{
+    display: "inline-block",
+    border: "2px dashed #35b7b8",
+    padding: 32,
+    borderRadius: 8,
+  }}>
+    <img src="logos/cytario-logo-full.svg" alt="Logo with clear space" style={{ maxWidth: 200 }} />
+  </div>
+  <p style={{ marginTop: 12, fontSize: 13, color: "#6b7280" }}>
+    Dashed border represents minimum clear space zone.
+  </p>
+</div>
+
+---
+
+## Minimum sizes
+
+| Variant | Print minimum | Screen minimum |
+|---------|--------------|----------------|
+| Full logo | 30 mm wide | 120 px wide |
+| Reduced logo | 12 mm wide | 48 px wide |
+
+Below these sizes, the logo becomes illegible. Use the reduced variant at small sizes.
+
+---
+
+## Do / Don't
+
+<div style={{
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: 24,
+  marginTop: 16,
+}}>
+  <div style={{
+    borderRadius: 12,
+    padding: 24,
+    background: "#f0fdf4",
+    borderLeft: "4px solid #16a34a",
+  }}>
+    <p style={{ margin: "0 0 12px", fontWeight: 700, color: "#16a34a", fontSize: 13, textTransform: "uppercase", letterSpacing: "0.05em" }}>Do</p>
+    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, color: "#374151" }}>
+      <li>Use provided SVG files -- never recreate the logo</li>
+      <li>Place on solid, uncluttered backgrounds</li>
+      <li>Use the white variant on dark backgrounds</li>
+      <li>Maintain the correct aspect ratio at all times</li>
+      <li>Respect the minimum clear space</li>
+    </ul>
+  </div>
+
+  <div style={{
+    borderRadius: 12,
+    padding: 24,
+    background: "#fef2f2",
+    borderLeft: "4px solid #dc2626",
+  }}>
+    <p style={{ margin: "0 0 12px", fontWeight: 700, color: "#dc2626", fontSize: 13, textTransform: "uppercase", letterSpacing: "0.05em" }}>Don't</p>
+    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, color: "#374151" }}>
+      <li>Stretch, rotate, or skew the logo</li>
+      <li>Change the logo colors</li>
+      <li>Place on busy or low-contrast backgrounds</li>
+      <li>Add drop shadows, outlines, or effects</li>
+      <li>Crop or partially obscure the logo</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Brand governance
+
+The cytario mark, logo and visual identity are intellectual property of Slash-m GmbH. The current logo suite was approved on **05.11.2024**.
+
+**Modification requests:** Any proposed change to the logo -- including new color vaTriants, size adaptations, or co-branding lockups -- must be submitted for approval before production. Do not create new logo variants independently.
+
+**Registered trademark:** The cytario name and logo carry the registered trademark symbol (&#174;). Include the &#174; mark on first prominent use in any document or material. It is already incorporated into the approved logo files.
+
+**Regulatory use:** For regulatory submissions (Technical Documentation, Instructions for Use, Declaration of Conformity), use the **black monochrome** variant to ensure legibility in grayscale printing and archival formats.
