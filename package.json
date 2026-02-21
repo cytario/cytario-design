@@ -1,13 +1,32 @@
 {
-  "name": "cytario-design",
+  "name": "@cytario/design",
   "version": "0.1.0",
-  "private": true,
   "description": "Cytario design system and brand portal",
   "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./tokens/variables.css": "./src/tokens/variables.css",
+    "./styles/*": "./src/styles/*"
+  },
+  "files": [
+    "dist",
+    "src/tokens/variables.css",
+    "src/styles"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
     "build:tokens": "node scripts/build-tokens.ts",
+    "build:lib": "tsc --project tsconfig.build.json",
     "test": "vitest",
     "lint": "eslint src/"
   },
