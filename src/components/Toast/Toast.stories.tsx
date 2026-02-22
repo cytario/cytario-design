@@ -4,7 +4,13 @@ import { expect, userEvent, within } from "storybook/test";
 import { ToastProvider, useToast, createToastBridge } from "./Toast";
 import { Button } from "../Button";
 
-function ToastDemo({ variant, message }: { variant: "success" | "error" | "info"; message: string }) {
+function ToastDemo({
+  variant,
+  message,
+}: {
+  variant: "success" | "error" | "info";
+  message: string;
+}) {
   const { toast } = useToast();
   return (
     <Button onPress={() => toast({ variant, message })}>
@@ -27,16 +33,67 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
+// --- Real-world usage stories (from cytario-web) ---
+
+export const OverlayAdded: Story = {
+  name: "Toast: Overlay Added",
+  render: () => (
+    <ToastDemo variant="success" message="Overlay added: cells_detection.parquet" />
+  ),
+};
+
+export const OverlayFailed: Story = {
+  name: "Toast: Overlay Load Failed",
+  render: () => (
+    <ToastDemo variant="error" message="Failed to load markers for cells_detection.parquet" />
+  ),
+};
+
+export const ConnectionDeleted: Story = {
+  name: "Toast: Data Connection Deleted",
+  render: () => (
+    <ToastDemo variant="success" message="Data connection deleted." />
+  ),
+};
+
+export const ConversionStarted: Story = {
+  name: "Toast: Conversion Started",
+  render: () => (
+    <ToastDemo variant="success" message="Started conversion: overlay.csv" />
+  ),
+};
+
+export const LoadError: Story = {
+  name: "Toast: Load Error",
+  render: () => (
+    <ToastDemo
+      variant="error"
+      message="We couldn't load the objects for this bucket. Please check your connection or try again later."
+    />
+  ),
+};
+
+// --- Generic stories ---
+
 export const Success: Story = {
-  render: () => <ToastDemo variant="success" message="Changes saved successfully." />,
+  render: () => (
+    <ToastDemo variant="success" message="Changes saved successfully." />
+  ),
 };
 
 export const Error: Story = {
-  render: () => <ToastDemo variant="error" message="Failed to save changes. Please try again." />,
+  render: () => (
+    <ToastDemo
+      variant="error"
+      message="Failed to save changes. Please try again."
+    />
+  ),
 };
 
 export const Info: Story = {
-  render: () => <ToastDemo variant="info" message="A new version is available." />,
+  render: () => (
+    <ToastDemo variant="info" message="A new version is available." />
+  ),
 };
 
 export const AllVariants: Story = {
@@ -58,14 +115,20 @@ export const BridgePattern: Story = {
         <div className="flex gap-3">
           <Button
             onPress={() =>
-              bridge.emit({ variant: "error", message: "Layer failed to load (via bridge)" })
+              bridge.emit({
+                variant: "error",
+                message: "Layer failed to load (via bridge)",
+              })
             }
           >
             Emit via bridge
           </Button>
           <Button
             onPress={() =>
-              bridge.emit({ variant: "success", message: "Tile loaded (via bridge)" })
+              bridge.emit({
+                variant: "success",
+                message: "Tile loaded (via bridge)",
+              })
             }
           >
             Emit success via bridge
@@ -81,7 +144,9 @@ export const BridgePattern: Story = {
 
     const body = canvasElement.ownerDocument.body;
     const bodyCanvas = within(body);
-    const toast = await bodyCanvas.findByText("Layer failed to load (via bridge)");
+    const toast = await bodyCanvas.findByText(
+      "Layer failed to load (via bridge)",
+    );
     await expect(toast).toBeVisible();
   },
 };

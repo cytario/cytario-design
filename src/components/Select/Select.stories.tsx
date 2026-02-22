@@ -9,6 +9,19 @@ const sampleItems = [
   { id: "4", name: "Special Stain" },
 ];
 
+const awsRegionItems = [
+  { id: "us-east-1", name: "us-east-1" },
+  { id: "us-east-2", name: "us-east-2" },
+  { id: "us-west-1", name: "us-west-1" },
+  { id: "us-west-2", name: "us-west-2" },
+  { id: "eu-central-1", name: "eu-central-1" },
+  { id: "eu-west-1", name: "eu-west-1" },
+  { id: "eu-west-2", name: "eu-west-2" },
+  { id: "eu-north-1", name: "eu-north-1" },
+  { id: "ap-southeast-1", name: "ap-southeast-1" },
+  { id: "ap-northeast-1", name: "ap-northeast-1" },
+];
+
 const meta: Meta<typeof Select> = {
   title: "Components/Select",
   component: Select,
@@ -27,7 +40,27 @@ const meta: Meta<typeof Select> = {
 export default meta;
 type Story = StoryObj<typeof Select>;
 
-// --- Stories ---
+// --- Real-world usage stories (from cytario-web) ---
+
+export const AWSRegion: Story = {
+  name: "AWS Region Selector",
+  args: {
+    label: "Region",
+    items: awsRegionItems,
+    selectedKey: "eu-central-1",
+  },
+};
+
+export const AWSRegionWithError: Story = {
+  name: "AWS Region with Error",
+  args: {
+    label: "Region",
+    items: awsRegionItems,
+    errorMessage: "Please select a region.",
+  },
+};
+
+// --- Generic stories ---
 
 export const Default: Story = {};
 

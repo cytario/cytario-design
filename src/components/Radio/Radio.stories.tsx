@@ -13,6 +13,25 @@ const meta: Meta<typeof RadioGroup> = {
 export default meta;
 type Story = StoryObj<typeof RadioGroup>;
 
+// --- Real-world usage stories (from cytario-web) ---
+
+export const StorageProvider: Story = {
+  name: "Storage Provider Selection",
+  render: (args) => (
+    <RadioGroup
+      {...args}
+      aria-label="Storage provider"
+      defaultValue="aws"
+      className="flex gap-4"
+    >
+      <RadioButton value="aws">AWS S3</RadioButton>
+      <RadioButton value="other">Other</RadioButton>
+    </RadioGroup>
+  ),
+};
+
+// --- Generic stories ---
+
 export const Default: Story = {
   render: (args) => (
     <RadioGroup {...args} aria-label="Staining method">

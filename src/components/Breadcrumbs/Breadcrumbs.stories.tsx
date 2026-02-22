@@ -9,6 +9,29 @@ const meta: Meta<typeof Breadcrumbs> = {
 export default meta;
 type Story = StoryObj<typeof Breadcrumbs>;
 
+// --- Real-world usage stories (from cytario-web) ---
+
+export const BucketNavigation: Story = {
+  name: "Bucket Navigation",
+  args: {
+    items: [
+      {
+        id: "bucket",
+        label: "my-pathology-data",
+        href: "/buckets/aws/my-pathology-data",
+      },
+      {
+        id: "folder",
+        label: "slides",
+        href: "/buckets/aws/my-pathology-data/slides",
+      },
+      { id: "current", label: "batch-001" },
+    ],
+  },
+};
+
+// --- Generic stories ---
+
 export const Default: Story = {
   args: {
     items: [

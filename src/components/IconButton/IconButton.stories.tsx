@@ -1,6 +1,24 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, fn, userEvent, within } from "storybook/test";
-import { Trash2, Plus, Settings, X, Heart, Download } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  ChevronsRight,
+  Download,
+  ExternalLink,
+  Filter,
+  FilterX,
+  Fullscreen,
+  Heart,
+  Info,
+  Plus,
+  RotateCcw,
+  Settings,
+  Trash2,
+  User,
+  X,
+} from "lucide-react";
 import { IconButton } from "./IconButton";
 
 const meta: Meta<typeof IconButton> = {
@@ -41,6 +59,135 @@ const meta: Meta<typeof IconButton> = {
 export default meta;
 type Story = StoryObj<typeof IconButton>;
 
+// --- Real-world usage stories (from cytario-web) ---
+
+export const UserMenu: Story = {
+  name: "User Menu Trigger",
+  args: {
+    icon: User,
+    "aria-label": "User menu",
+    variant: "ghost",
+  },
+};
+
+export const ClearSearch: Story = {
+  name: "Clear Search",
+  args: {
+    icon: X,
+    "aria-label": "Clear search",
+    variant: "default",
+  },
+};
+
+export const ResetTable: Story = {
+  name: "Reset Table Defaults",
+  args: {
+    icon: RotateCcw,
+    "aria-label": "Reset column widths and sorting to defaults",
+    variant: "secondary",
+  },
+};
+
+export const SortColumnUnsorted: Story = {
+  name: "Sort Column (Unsorted)",
+  args: {
+    icon: ArrowUpDown,
+    "aria-label": "Sort by Name",
+    variant: "ghost",
+  },
+};
+
+export const SortColumnAscending: Story = {
+  name: "Sort Column (Ascending)",
+  args: {
+    icon: ArrowUp,
+    "aria-label": "Sort by Name",
+    variant: "ghost",
+  },
+};
+
+export const SortColumnDescending: Story = {
+  name: "Sort Column (Descending)",
+  args: {
+    icon: ArrowDown,
+    "aria-label": "Sort by Name",
+    variant: "ghost",
+  },
+};
+
+export const ShowInfo: Story = {
+  name: "Show Node Info",
+  args: {
+    icon: Info,
+    "aria-label": "Show Info",
+    variant: "ghost",
+  },
+};
+
+export const ResetViewState: Story = {
+  name: "Reset View State",
+  args: {
+    icon: Fullscreen,
+    "aria-label": "Reset View State",
+    variant: "default",
+  },
+};
+
+export const ToggleFeatureBar: Story = {
+  name: "Toggle Feature Bar",
+  args: {
+    icon: ChevronsRight,
+    "aria-label": "Toggle Feature Bar",
+    size: "lg",
+    variant: "default",
+  },
+};
+
+export const ShowDisabledChannels: Story = {
+  name: "Show Disabled Channels",
+  args: {
+    icon: FilterX,
+    "aria-label": "Show disabled channels",
+    variant: "default",
+  },
+};
+
+export const HideDisabledChannels: Story = {
+  name: "Hide Disabled Channels",
+  args: {
+    icon: Filter,
+    "aria-label": "Hide disabled channels",
+    variant: "default",
+  },
+};
+
+export const RemoveOverlay: Story = {
+  name: "Remove Overlay",
+  args: {
+    icon: X,
+    "aria-label": "Remove overlay",
+    variant: "default",
+  },
+};
+
+export const OpenExternalFile: Story = {
+  name: "Open External File",
+  args: {
+    icon: ExternalLink,
+    "aria-label": "Open file",
+    variant: "default",
+  },
+};
+
+export const ResetContrast: Story = {
+  name: "Reset Contrast",
+  args: {
+    icon: RotateCcw,
+    "aria-label": "Reset contrast",
+    variant: "default",
+  },
+};
+
 // --- Variant stories ---
 
 export const Primary: Story = {
@@ -65,10 +212,6 @@ export const Default: Story = {
 
 export const Success: Story = {
   args: { variant: "success", icon: Heart, "aria-label": "Favorite" },
-};
-
-export const Info: Story = {
-  args: { variant: "info", icon: Settings, "aria-label": "Info" },
 };
 
 // --- Size stories ---

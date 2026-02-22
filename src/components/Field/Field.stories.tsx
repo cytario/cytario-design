@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "storybook/react";
 import { Field } from "./Field";
 import { Input } from "../Input";
 import { Checkbox } from "../Checkbox";
+import { Select } from "../Select";
 
 const meta: Meta<typeof Field> = {
   title: "Components/Field",
@@ -13,6 +14,98 @@ const meta: Meta<typeof Field> = {
 
 export default meta;
 type Story = StoryObj<typeof Field>;
+
+// --- Real-world usage stories (from cytario-web) ---
+
+export const StorageProvider: Story = {
+  name: "Connect Bucket: Provider",
+  args: {
+    label: "Provider",
+    description:
+      "Choose the type of cloud storage you want to connect. Cytario supports AWS S3 and S3-compatible object storage.",
+    children: <Input placeholder="aws" aria-label="Provider" />,
+  },
+};
+
+export const ProviderName: Story = {
+  name: "Connect Bucket: Provider Name",
+  args: {
+    label: "Provider Name",
+    description:
+      "A user-friendly name to identify this storage connection.",
+    children: (
+      <Input placeholder="minio" size="lg" aria-label="Provider Name" />
+    ),
+  },
+};
+
+export const RoleARN: Story = {
+  name: "Connect Bucket: Role ARN",
+  args: {
+    label: "Role ARN",
+    description:
+      "The IAM role Cytario will assume to access your S3 data. The role must grant read access to the specified bucket and path. Cytario uses temporary credentials and does not store long-term secrets.",
+    children: (
+      <Input
+        placeholder="arn:aws:iam::123456789012:role/MyRole"
+        size="lg"
+        aria-label="Role ARN"
+      />
+    ),
+  },
+};
+
+export const Endpoint: Story = {
+  name: "Connect Bucket: Endpoint",
+  args: {
+    label: "Endpoint",
+    description:
+      "The endpoint URL of your S3-compatible storage. This is the base URL cytario will use to connect to your storage service.",
+    children: (
+      <Input
+        placeholder="http://localhost:9000"
+        size="lg"
+        aria-label="Endpoint"
+      />
+    ),
+  },
+};
+
+export const S3URI: Story = {
+  name: "Connect Bucket: S3 URI",
+  args: {
+    label: "S3 URI",
+    description:
+      "Enter the bucket name and optional path prefix where your whole-slide images are stored (e.g. my-bucket/data/images).",
+    children: (
+      <Input
+        placeholder="my-bucket/path/prefix"
+        prefix="s3://"
+        size="lg"
+        aria-label="S3 URI"
+      />
+    ),
+  },
+};
+
+export const BucketRegion: Story = {
+  name: "Connect Bucket: Region",
+  args: {
+    description: "The AWS region where this bucket is located.",
+    children: (
+      <Select
+        label="Region"
+        items={[
+          { id: "us-east-1", name: "us-east-1" },
+          { id: "eu-central-1", name: "eu-central-1" },
+          { id: "eu-west-1", name: "eu-west-1" },
+        ]}
+      />
+    ),
+  },
+};
+
+// --- Generic stories ---
 
 export const Default: Story = {
   args: {
@@ -63,7 +156,14 @@ export const WithCheckbox: Story = {
 
 export const AllStates: Story = {
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px", maxWidth: "360px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
+        maxWidth: "360px",
+      }}
+    >
       <Field label="Default">
         <Input placeholder="Default state" aria-label="Default" />
       </Field>

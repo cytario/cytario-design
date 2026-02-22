@@ -18,6 +18,20 @@ const meta: Meta<typeof Checkbox> = {
 export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
+// --- Real-world usage stories (from cytario-web) ---
+
+export const DataGridBooleanTrue: Story = {
+  name: "Data Grid: Boolean Cell (true)",
+  args: { isSelected: true, isDisabled: true, "aria-label": "marker_positive_CD3" },
+};
+
+export const DataGridBooleanFalse: Story = {
+  name: "Data Grid: Boolean Cell (false)",
+  args: { isSelected: false, isDisabled: true, "aria-label": "marker_positive_CD3" },
+};
+
+// --- Generic stories ---
+
 export const Default: Story = {
   args: { children: "Accept terms and conditions" },
 };
@@ -35,7 +49,11 @@ export const Disabled: Story = {
 };
 
 export const DisabledChecked: Story = {
-  args: { children: "Disabled checked", isDisabled: true, defaultSelected: true },
+  args: {
+    children: "Disabled checked",
+    isDisabled: true,
+    defaultSelected: true,
+  },
 };
 
 export const WithoutLabel: Story = {
@@ -49,7 +67,9 @@ export const AllStates: Story = {
       <Checkbox defaultSelected>Checked</Checkbox>
       <Checkbox isIndeterminate>Indeterminate</Checkbox>
       <Checkbox isDisabled>Disabled</Checkbox>
-      <Checkbox isDisabled defaultSelected>Disabled checked</Checkbox>
+      <Checkbox isDisabled defaultSelected>
+        Disabled checked
+      </Checkbox>
     </div>
   ),
 };

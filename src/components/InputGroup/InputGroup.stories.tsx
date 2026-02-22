@@ -14,6 +14,34 @@ const meta: Meta<typeof InputGroup> = {
 export default meta;
 type Story = StoryObj<typeof InputGroup>;
 
+// --- Real-world usage stories (from cytario-web) ---
+
+export const MagnificationButtons: Story = {
+  name: "Magnification Controls",
+  render: () => (
+    <div className="flex items-center gap-2">
+      <Input
+        isReadOnly
+        value="20.0"
+        className="w-12 text-sm text-right"
+        aria-label="Current magnification"
+      />
+      <InputGroup>
+        {[5, 10, 20, 40, 80].map((mag) => (
+          <Button
+            key={mag}
+            className="w-10 h-8 text-xs p-0 justify-center font-semibold"
+          >
+            {mag} x
+          </Button>
+        ))}
+      </InputGroup>
+    </div>
+  ),
+};
+
+// --- Generic stories ---
+
 export const WithPrefix: Story = {
   render: () => (
     <InputGroup>

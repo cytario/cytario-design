@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "storybook/react";
 import { expect, userEvent, within } from "storybook/test";
 import { Dialog } from "./Dialog";
 import { Button } from "../Button";
+import { ButtonLink } from "../ButtonLink";
 
 const meta: Meta<typeof Dialog> = {
   title: "Components/Dialog",
@@ -18,7 +19,69 @@ const meta: Meta<typeof Dialog> = {
 export default meta;
 type Story = StoryObj<typeof Dialog>;
 
-// --- Default (controlled via render) ---
+// --- Real-world usage stories (from cytario-web) ---
+
+export const NodeInfoBucket: Story = {
+  name: "Node Info: Bucket",
+  render: (args) => {
+    const [isOpen, setIsOpen] = useState(true);
+    return (
+      <>
+        <Button onPress={() => setIsOpen(true)}>Show Bucket Info</Button>
+        <Dialog {...args} isOpen={isOpen} onOpenChange={setIsOpen}>
+          <div className="flex flex-row gap-4 justify-between">
+            <ButtonLink
+              href="/buckets/aws/my-pathology-data"
+              variant="secondary"
+              size="lg"
+            >
+              Open bucket
+            </ButtonLink>
+            <Button type="submit" variant="destructive" size="lg">
+              Remove Data Connection
+            </Button>
+          </div>
+        </Dialog>
+      </>
+    );
+  },
+  args: {
+    title: "my-pathology-data",
+    size: "md",
+  },
+};
+
+export const NodeInfoFile: Story = {
+  name: "Node Info: File",
+  render: (args) => {
+    const [isOpen, setIsOpen] = useState(true);
+    return (
+      <>
+        <Button onPress={() => setIsOpen(true)}>Show File Info</Button>
+        <Dialog {...args} isOpen={isOpen} onOpenChange={setIsOpen}>
+          <div className="flex flex-row gap-4 justify-between">
+            <ButtonLink
+              href="/buckets/aws/my-bucket/slide-001.ome.tif"
+              variant="secondary"
+              size="lg"
+            >
+              Open file
+            </ButtonLink>
+            <Button size="lg" isDisabled>
+              Download file
+            </Button>
+          </div>
+        </Dialog>
+      </>
+    );
+  },
+  args: {
+    title: "slide-001.ome.tif",
+    size: "md",
+  },
+};
+
+// --- Generic stories ---
 
 export const Default: Story = {
   render: (args) => {

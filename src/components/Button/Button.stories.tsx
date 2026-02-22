@@ -36,14 +36,14 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-// --- Individual variant stories ---
+// --- Real-world usage stories (from cytario-web) ---
 
 export const Primary: Story = {
-  args: { variant: "primary", children: "Primary" },
+  args: { variant: "primary", size: "lg", children: "Submit" },
 };
 
 export const Secondary: Story = {
-  args: { variant: "secondary", children: "Secondary" },
+  args: { variant: "secondary", size: "lg", children: "Back" },
 };
 
 export const Ghost: Story = {
@@ -51,7 +51,12 @@ export const Ghost: Story = {
 };
 
 export const Destructive: Story = {
-  args: { variant: "destructive", children: "Delete" },
+  args: { variant: "destructive", size: "lg", children: "Remove Data Connection" },
+};
+
+export const DestructiveClearStorage: Story = {
+  name: "Destructive: Clear Local Storage",
+  args: { variant: "destructive", children: "Clear Local Storage" },
 };
 
 export const Default: Story = {
@@ -68,6 +73,33 @@ export const Info: Story = {
 
 export const Neutral: Story = {
   args: { variant: "neutral", children: "Neutral" },
+};
+
+// --- Real-world patterns ---
+
+export const FormWizardNext: Story = {
+  name: "Form Wizard: Next",
+  args: { variant: "primary", size: "lg", children: "Next", type: "button" },
+};
+
+export const FormWizardSubmit: Story = {
+  name: "Form Wizard: Submit",
+  args: { variant: "primary", size: "lg", children: "Connecting...", isDisabled: true },
+};
+
+export const GoBack: Story = {
+  name: "Go Back",
+  args: { variant: "default", children: "Go Back" },
+};
+
+export const ConvertToParquet: Story = {
+  name: "Convert to Parquet",
+  args: { variant: "default", children: "Convert to Parquet" },
+};
+
+export const DisabledDownload: Story = {
+  name: "Disabled Download",
+  args: { size: "lg", isDisabled: true, children: "Download file" },
 };
 
 // --- Size stories ---

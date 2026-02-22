@@ -26,6 +26,44 @@ const meta: Meta<typeof Heading> = {
 export default meta;
 type Story = StoryObj<typeof Heading>;
 
+// --- Real-world usage stories (from cytario-web) ---
+
+export const PageTitle: Story = {
+  name: "Page Title: Storage Connections",
+  render: () => <H1>Your Storage Connections</H1>,
+};
+
+export const SearchResults: Story = {
+  name: "Search Results Heading",
+  render: () => <H1>Search: ome.tif</H1>,
+};
+
+export const DirectoryTitle: Story = {
+  name: "Directory View Title",
+  render: () => (
+    <H1 className="flex-grow text-2xl sm:text-3xl md:text-4xl">
+      my-bucket
+    </H1>
+  ),
+};
+
+export const SectionHeading: Story = {
+  name: "Section: Recently Viewed",
+  render: () => <H2>Recently Viewed</H2>,
+};
+
+export const SearchResultsSection: Story = {
+  name: "Section: All Results",
+  render: () => <H2>All Results</H2>,
+};
+
+export const SubHeading: Story = {
+  name: "Sub-heading: Quick Start",
+  render: () => <H3 className="text-lg font-normal">Quick Start</H3>,
+};
+
+// --- Generic stories ---
+
 export const Default: Story = {
   args: { children: "Default Heading (h2)" },
 };
@@ -44,10 +82,6 @@ export const CustomSize: Story = {
 
 export const Size3xl: Story = {
   args: { as: "h1", size: "3xl", children: "Heading at 3xl size" },
-};
-
-export const H1Bold: Story = {
-  render: () => <H1>H1 with bold weight (default)</H1>,
 };
 
 export const AllLevels: Story = {

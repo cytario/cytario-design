@@ -4,10 +4,12 @@ import {
   Copy,
   Edit,
   ExternalLink,
+  LogOut,
   MoreVertical,
   Settings,
   Trash2,
   Download,
+  User,
 } from "lucide-react";
 import { Menu } from "./Menu";
 import { Button } from "../Button";
@@ -21,13 +23,52 @@ const meta: Meta<typeof Menu> = {
 export default meta;
 type Story = StoryObj<typeof Menu>;
 
+// --- Real-world usage stories (from cytario-web) ---
+
+export const UserMenu: Story = {
+  name: "User Menu",
+  args: {
+    items: [
+      {
+        id: "account-settings",
+        label: "Account Settings",
+        icon: Settings,
+        href: "https://auth.cytario.com/account",
+        target: "_blank",
+      },
+      {
+        id: "logout",
+        label: "Logout",
+        icon: LogOut,
+        href: "/logout",
+      },
+    ],
+    children: (
+      <IconButton
+        icon={User}
+        aria-label="User menu"
+        variant="ghost"
+        className="flex-shrink-0 w-8 h-8 text-white"
+      />
+    ),
+  },
+};
+
+// --- Generic stories ---
+
 export const Default: Story = {
   args: {
     items: [
       { id: "edit", label: "Edit", icon: Edit, onAction: fn() },
       { id: "copy", label: "Copy", icon: Copy, onAction: fn() },
       { id: "download", label: "Download", icon: Download, onAction: fn() },
-      { id: "delete", label: "Delete", icon: Trash2, isDanger: true, onAction: fn() },
+      {
+        id: "delete",
+        label: "Delete",
+        icon: Trash2,
+        isDanger: true,
+        onAction: fn(),
+      },
     ],
     children: <Button variant="secondary">Actions</Button>,
   },
@@ -41,7 +82,11 @@ export const WithIconButtonTrigger: Story = {
       { id: "delete", label: "Delete", icon: Trash2, isDanger: true },
     ],
     children: (
-      <IconButton icon={MoreVertical} aria-label="More actions" variant="ghost" />
+      <IconButton
+        icon={MoreVertical}
+        aria-label="More actions"
+        variant="ghost"
+      />
     ),
   },
 };
