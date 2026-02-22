@@ -4,18 +4,27 @@ import {
   type SwitchProps as AriaSwitchProps,
 } from "react-aria-components";
 
+type PresetColor = "primary" | "success" | "destructive";
+
 export interface SwitchProps
   extends Omit<AriaSwitchProps, "children" | "className"> {
   children?: React.ReactNode;
-  color?: "primary" | "success" | "destructive";
+  /** Preset color name or any valid CSS color string for the track when selected */
+  color?: PresetColor | (string & {});
   className?: string;
 }
 
-const trackColorMap = {
+const trackColorMap: Record<PresetColor, string> = {
   primary: "bg-[var(--color-action-primary)]",
   success: "bg-[var(--color-action-success)]",
   destructive: "bg-[var(--color-action-danger)]",
-} as const;
+};
+
+const presetColors = new Set<string>(Object.keys(trackColorMap));
+
+function isPresetColor(color: string): color is PresetColor {
+  return presetColors.has(color);
+}
 
 export function Switch({
   children,
@@ -23,6 +32,8 @@ export function Switch({
   className,
   ...props
 }: SwitchProps) {
+  const isPreset = isPresetColor(color);
+
   return (
     <AriaSwitch
       {...props}
@@ -40,10 +51,17 @@ export function Switch({
             className={[
               "w-9 h-5 rounded-full transition-colors shrink-0 p-0.5",
               "group-focus-visible:ring-2 group-focus-visible:ring-[var(--color-border-focus)] group-focus-visible:ring-offset-2",
-              isSelected
+              isSelected && isPreset
                 ? trackColorMap[color]
-                : "bg-[var(--color-border-strong)]",
+                : !isSelected
+                  ? "bg-[var(--color-border-strong)]"
+                  : "",
             ].join(" ")}
+            style={
+              isSelected && !isPreset
+                ? { backgroundColor: color }
+                : undefined
+            }
           >
             <div
               className={[

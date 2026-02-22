@@ -80,6 +80,9 @@ export type { ToggleButtonProps, ToggleButtonVariant, ToggleButtonSize } from ".
 export { Menu } from "./components/Menu";
 export type { MenuProps, MenuItemData } from "./components/Menu";
 
+export { Popover, PopoverTrigger, PopoverContent } from "./components/Popover";
+export type { PopoverProps, PopoverTriggerProps, PopoverContentProps } from "./components/Popover";
+
 export { Tabs, TabList, Tab, TabPanel } from "./components/Tabs";
 export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabsVariant, TabsSize } from "./components/Tabs";
 

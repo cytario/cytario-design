@@ -47,4 +47,43 @@ describe("Switch", () => {
     await userEvent.keyboard(" ");
     expect(onChange).toHaveBeenCalledTimes(1);
   });
+
+  it("applies arbitrary CSS color as inline style when selected", () => {
+    const { container } = render(
+      <Switch color="#FF0000" defaultSelected>
+        Red channel
+      </Switch>,
+    );
+
+    // The track is the outer div containing the thumb div
+    const track = container.querySelector(
+      "div[style*='background-color']",
+    );
+    expect(track).not.toBeNull();
+    expect(track?.getAttribute("style")).toContain("background-color");
+  });
+
+  it("does not apply inline background-color for preset color", () => {
+    const { container } = render(
+      <Switch color="primary" defaultSelected>
+        Primary
+      </Switch>,
+    );
+
+    const track = container.querySelector(
+      "div[style*='background-color']",
+    );
+    expect(track).toBeNull();
+  });
+
+  it("does not apply arbitrary color inline style when not selected", () => {
+    const { container } = render(
+      <Switch color="#FF0000">Red channel off</Switch>,
+    );
+
+    const track = container.querySelector(
+      "div[style*='background-color']",
+    );
+    expect(track).toBeNull();
+  });
 });

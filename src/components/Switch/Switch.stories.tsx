@@ -7,8 +7,7 @@ const meta: Meta<typeof Switch> = {
   component: Switch,
   argTypes: {
     color: {
-      control: "select",
-      options: ["primary", "success", "destructive"],
+      control: "text",
     },
     isDisabled: { control: "boolean" },
     isSelected: { control: "boolean" },
@@ -56,6 +55,35 @@ export const AllColors: Story = {
       <Switch color="success" defaultSelected>Success (green)</Switch>
       <Switch color="destructive" defaultSelected>Destructive (rose)</Switch>
       <Switch>Off state</Switch>
+    </div>
+  ),
+};
+
+export const ArbitraryColor: Story = {
+  args: {
+    children: "Red channel",
+    color: "#FF0000",
+    defaultSelected: true,
+  },
+};
+
+export const ArbitraryColorRgb: Story = {
+  args: {
+    children: "Green channel",
+    color: "rgb(0, 200, 83)",
+    defaultSelected: true,
+  },
+};
+
+export const ChannelColors: Story = {
+  name: "Microscopy Channel Colors",
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <Switch color="#FF0000" defaultSelected>DAPI (Red)</Switch>
+      <Switch color="#00FF00" defaultSelected>GFP (Green)</Switch>
+      <Switch color="#0088FF" defaultSelected>Cy5 (Blue)</Switch>
+      <Switch color="rgb(255, 165, 0)" defaultSelected>TRITC (Orange)</Switch>
+      <Switch color="#FF00FF">Cy3 (Magenta, off)</Switch>
     </div>
   ),
 };
