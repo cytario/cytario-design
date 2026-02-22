@@ -16,6 +16,7 @@ const meta: Meta<typeof ButtonLink> = {
         "default",
         "success",
         "info",
+        "neutral",
       ],
     },
     size: {
@@ -56,6 +57,10 @@ export const WithExternalIcon: Story = {
   args: { iconRight: ExternalLink, children: "Open External" },
 };
 
+export const Neutral: Story = {
+  args: { variant: "neutral", children: "Neutral Link" },
+};
+
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
@@ -70,6 +75,9 @@ export const AllVariants: Story = {
       </ButtonLink>
       <ButtonLink href="#" variant="destructive">
         Destructive
+      </ButtonLink>
+      <ButtonLink href="#" variant="neutral">
+        Neutral
       </ButtonLink>
     </div>
   ),

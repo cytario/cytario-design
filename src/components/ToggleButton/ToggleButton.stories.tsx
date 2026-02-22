@@ -8,13 +8,14 @@ const meta: Meta<typeof ToggleButton> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "primary"],
+      options: ["default", "primary", "outlined"],
     },
     size: {
       control: "select",
       options: ["sm", "md", "lg"],
     },
     isDisabled: { control: "boolean" },
+    isSquare: { control: "boolean" },
   },
   args: {
     children: "Toggle",
@@ -30,6 +31,27 @@ export const Default: Story = {
 
 export const Primary: Story = {
   args: { variant: "primary", children: "Primary Toggle" },
+};
+
+export const Outlined: Story = {
+  args: { variant: "outlined", children: "Outlined Toggle" },
+};
+
+export const OutlinedSelected: Story = {
+  args: {
+    variant: "outlined",
+    defaultSelected: true,
+    children: "Outlined Selected",
+  },
+};
+
+export const SquareOutlined: Story = {
+  args: {
+    variant: "outlined",
+    isSquare: true,
+    size: "md",
+    children: "A",
+  },
 };
 
 export const Selected: Story = {
@@ -67,6 +89,31 @@ export const AllVariants: Story = {
           Primary Selected
         </ToggleButton>
       </div>
+      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+        <ToggleButton variant="outlined">Outlined</ToggleButton>
+        <ToggleButton variant="outlined" defaultSelected>
+          Outlined Selected
+        </ToggleButton>
+      </div>
+    </div>
+  ),
+};
+
+export const ToggleGroup: Story = {
+  render: () => (
+    <div style={{ display: "flex", gap: "0px" }}>
+      <ToggleButton variant="outlined" isSquare size="md">
+        A
+      </ToggleButton>
+      <ToggleButton variant="outlined" isSquare size="md">
+        B
+      </ToggleButton>
+      <ToggleButton variant="outlined" isSquare size="md" defaultSelected>
+        C
+      </ToggleButton>
+      <ToggleButton variant="outlined" isSquare size="md">
+        D
+      </ToggleButton>
     </div>
   ),
 };
@@ -94,6 +141,7 @@ export const Playground: Story = {
   args: {
     variant: "default",
     size: "md",
+    isSquare: false,
     children: "Playground",
   },
 };

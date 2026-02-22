@@ -4,6 +4,7 @@ import {
   Button as AriaButton,
   type ButtonProps as AriaButtonProps,
 } from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 import {
   type ButtonVariant,
   type ButtonSize,
@@ -80,7 +81,7 @@ export function Button({
     <AriaButton
       {...props}
       isDisabled={isDisabled || isLoading}
-      className={[
+      className={twMerge(
         "inline-flex items-center justify-center gap-2 shrink-0",
         radiusClass,
         "font-[var(--font-weight-medium)]",
@@ -92,10 +93,8 @@ export function Button({
         variantStyles[variant],
         sizeStyles[size],
         marginClass,
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+        className as string,
+      )}
     >
       {isLoading && <Spinner size={iconSizeMap[size]} />}
       {!isLoading && iconLeft && (

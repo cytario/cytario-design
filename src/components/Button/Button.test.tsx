@@ -113,4 +113,11 @@ describe("Button", () => {
     await userEvent.keyboard(" ");
     expect(onPress).toHaveBeenCalledTimes(1);
   });
+
+  it("renders with neutral variant", () => {
+    render(<Button variant="neutral">Neutral</Button>);
+    const button = screen.getByRole("button", { name: "Neutral" });
+    expect(button).toBeDefined();
+    expect(button.className).toContain("bg-white");
+  });
 });

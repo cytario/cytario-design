@@ -5,7 +5,8 @@ export type ButtonVariant =
   | "destructive"
   | "default"
   | "success"
-  | "info";
+  | "info"
+  | "neutral";
 
 export type ButtonSize = "sm" | "md" | "lg";
 
@@ -45,6 +46,12 @@ export const variantStyles: Record<ButtonVariant, string> = {
     "bg-[var(--color-action-info)] text-[var(--color-text-inverse)]",
     "hover:bg-[var(--color-action-info-hover)]",
     "pressed:bg-[var(--color-slate-800)]",
+  ].join(" "),
+  neutral: [
+    "bg-white text-[var(--color-text-primary)]",
+    "border border-[var(--color-neutral-300)]",
+    "hover:bg-[var(--color-neutral-50)]",
+    "pressed:bg-[var(--color-neutral-100)]",
   ].join(" "),
 };
 

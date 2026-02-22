@@ -17,6 +17,7 @@ const meta: Meta<typeof Button> = {
         "default",
         "success",
         "info",
+        "neutral",
       ],
     },
     size: {
@@ -63,6 +64,10 @@ export const Success: Story = {
 
 export const Info: Story = {
   args: { variant: "info", children: "Info" },
+};
+
+export const Neutral: Story = {
+  args: { variant: "neutral", children: "Neutral" },
 };
 
 // --- Size stories ---
@@ -129,6 +134,7 @@ const variants = [
   "default",
   "success",
   "info",
+  "neutral",
 ] as const;
 const sizes = ["sm", "md", "lg"] as const;
 

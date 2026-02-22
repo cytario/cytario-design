@@ -38,10 +38,32 @@ describe("Heading", () => {
     expect(heading.className).toContain("mt-4");
   });
 
-  it("always has font-semibold", () => {
+  it("has font-semibold by default", () => {
     render(<Heading>Bold</Heading>);
     const heading = screen.getByRole("heading", { name: "Bold" });
     expect(heading.className).toContain("font-semibold");
+  });
+
+  it("supports bold weight", () => {
+    render(<Heading weight="bold">Heavy</Heading>);
+    const heading = screen.getByRole("heading", { name: "Heavy" });
+    expect(heading.className).toContain("font-bold");
+  });
+
+  it("renders 3xl size as text-4xl", () => {
+    render(
+      <Heading size="3xl">Extra Large</Heading>,
+    );
+    const heading = screen.getByRole("heading", { name: "Extra Large" });
+    expect(heading.className).toContain("text-4xl");
+  });
+
+  it("allows className to override internal size via twMerge", () => {
+    render(<Heading className="text-lg">Override</Heading>);
+    const heading = screen.getByRole("heading", { name: "Override" });
+    // twMerge should resolve the conflict in favor of the consumer className
+    expect(heading.className).toContain("text-lg");
+    expect(heading.className).not.toContain("text-2xl");
   });
 });
 
@@ -50,6 +72,12 @@ describe("Convenience components", () => {
     render(<H1>Title</H1>);
     const heading = screen.getByRole("heading", { name: "Title", level: 1 });
     expect(heading.className).toContain("text-3xl");
+  });
+
+  it("H1 uses font-bold by default", () => {
+    render(<H1>Bold Title</H1>);
+    const heading = screen.getByRole("heading", { name: "Bold Title" });
+    expect(heading.className).toContain("font-bold");
   });
 
   it("H2 renders as h2 with xl size", () => {
@@ -68,5 +96,12 @@ describe("Convenience components", () => {
       level: 3,
     });
     expect(heading.className).toContain("text-xl");
+  });
+
+  it("H1 className override works with twMerge", () => {
+    render(<H1 className="text-lg">Small H1</H1>);
+    const heading = screen.getByRole("heading", { name: "Small H1" });
+    expect(heading.className).toContain("text-lg");
+    expect(heading.className).not.toContain("text-3xl");
   });
 });

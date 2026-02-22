@@ -54,4 +54,45 @@ describe("ToggleButton", () => {
     await userEvent.click(button);
     expect(button).toHaveAttribute("aria-pressed", "false");
   });
+
+  it("renders outlined variant with border", () => {
+    render(<ToggleButton variant="outlined">Outlined</ToggleButton>);
+    const button = screen.getByRole("button");
+    expect(button.className).toContain("border");
+    expect(button.className).toContain("bg-white");
+  });
+
+  it("applies square dimensions when isSquare is true", () => {
+    render(
+      <ToggleButton isSquare size="md">
+        Sq
+      </ToggleButton>,
+    );
+    const button = screen.getByRole("button");
+    expect(button.className).toContain("h-8");
+    expect(button.className).toContain("w-8");
+    expect(button.className).toContain("rounded-none");
+  });
+
+  it("applies small square dimensions", () => {
+    render(
+      <ToggleButton isSquare size="sm">
+        S
+      </ToggleButton>,
+    );
+    const button = screen.getByRole("button");
+    expect(button.className).toContain("h-7");
+    expect(button.className).toContain("w-7");
+  });
+
+  it("applies large square dimensions", () => {
+    render(
+      <ToggleButton isSquare size="lg">
+        L
+      </ToggleButton>,
+    );
+    const button = screen.getByRole("button");
+    expect(button.className).toContain("h-10");
+    expect(button.className).toContain("w-10");
+  });
 });

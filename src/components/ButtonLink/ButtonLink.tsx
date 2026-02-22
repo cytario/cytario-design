@@ -4,6 +4,7 @@ import {
   Link as AriaLink,
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 import {
   type ButtonVariant,
   type ButtonSize,
@@ -46,7 +47,7 @@ export function ButtonLink({
   return (
     <AriaLink
       {...props}
-      className={[
+      className={twMerge(
         "inline-flex items-center justify-center gap-2",
         "rounded-[var(--border-radius-md)]",
         "font-[var(--font-weight-medium)]",
@@ -56,9 +57,7 @@ export function ButtonLink({
         variantStyles[variant],
         sizeStyles[size],
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      )}
     >
       {iconLeft && <Icon icon={iconLeft} size={iconSizeMap[size]} />}
       {children as React.ReactNode}
@@ -106,7 +105,7 @@ export function IconButtonLink({
     <AriaLink
       {...props}
       aria-label={ariaLabel}
-      className={[
+      className={twMerge(
         "inline-flex items-center justify-center",
         "rounded-[var(--border-radius-md)]",
         "outline-none transition-colors no-underline",
@@ -114,9 +113,7 @@ export function IconButtonLink({
         variantStyles[variant],
         squareSizeStyles[size],
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      )}
     >
       <Icon icon={icon} size={iconSizeMap[size]} />
     </AriaLink>

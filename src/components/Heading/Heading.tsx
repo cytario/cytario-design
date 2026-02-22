@@ -1,13 +1,17 @@
 import type React from "react";
+import { twMerge } from "tailwind-merge";
 
 export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-export type HeadingSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+export type HeadingSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
+export type HeadingWeight = "semibold" | "bold";
 
 export interface HeadingProps {
   /** HTML heading element to render */
   as?: HeadingLevel;
   /** Visual size (defaults to match the `as` level) */
   size?: HeadingSize;
+  /** Font weight (defaults to "semibold") */
+  weight?: HeadingWeight;
   children: React.ReactNode;
   className?: string;
 }
@@ -28,11 +32,18 @@ const sizeStyles: Record<HeadingSize, string> = {
   lg: "text-xl",
   xl: "text-2xl",
   "2xl": "text-3xl",
+  "3xl": "text-4xl",
+};
+
+const weightStyles: Record<HeadingWeight, string> = {
+  semibold: "font-semibold",
+  bold: "font-bold",
 };
 
 export function Heading({
   as: Tag = "h2",
   size,
+  weight = "semibold",
   className,
   children,
 }: HeadingProps) {
@@ -40,22 +51,28 @@ export function Heading({
 
   return (
     <Tag
-      className={[
-        "font-semibold text-[var(--color-text-primary)]",
+      className={twMerge(
+        weightStyles[weight],
+        "text-[var(--color-text-primary)]",
         sizeStyles[resolvedSize],
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      )}
     >
       {children}
     </Tag>
   );
 }
 
-/** Convenience: renders `<h1>` at 2xl size */
+/** Convenience: renders `<h1>` at 2xl size with bold weight */
 export function H1(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h1" size={props.size ?? "2xl"} />;
+  return (
+    <Heading
+      {...props}
+      as="h1"
+      size={props.size ?? "2xl"}
+      weight={props.weight ?? "bold"}
+    />
+  );
 }
 
 /** Convenience: renders `<h2>` at xl size */

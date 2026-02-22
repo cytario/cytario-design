@@ -11,7 +11,11 @@ const meta: Meta<typeof Heading> = {
     },
     size: {
       control: "select",
-      options: ["xs", "sm", "md", "lg", "xl", "2xl"],
+      options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl"],
+    },
+    weight: {
+      control: "select",
+      options: ["semibold", "bold"],
     },
   },
   args: {
@@ -36,6 +40,14 @@ export const AsH3: Story = {
 
 export const CustomSize: Story = {
   args: { as: "h3", size: "2xl", children: "H3 at 2xl size" },
+};
+
+export const Size3xl: Story = {
+  args: { as: "h1", size: "3xl", children: "Heading at 3xl size" },
+};
+
+export const H1Bold: Story = {
+  render: () => <H1>H1 with bold weight (default)</H1>,
 };
 
 export const AllLevels: Story = {
@@ -65,6 +77,7 @@ export const Playground: Story = {
   args: {
     as: "h2",
     size: "xl",
+    weight: "semibold",
     children: "Playground Heading",
   },
 };
