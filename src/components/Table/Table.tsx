@@ -99,8 +99,8 @@ export function Row<T extends object>(props: RowProps<T>) {
       {...props}
       className={[
         "border-b border-[var(--color-border-default)]",
-        "even:bg-[var(--color-neutral-50)]",
-        "hover:bg-[var(--color-teal-50)]",
+        "even:bg-[var(--color-surface-subtle)]",
+        "hover:bg-[var(--color-surface-muted)]",
         "outline-none",
         "focus-visible:outline-2 focus-visible:outline-[var(--color-border-focus)] focus-visible:outline-offset-[-2px]",
         "transition-colors",

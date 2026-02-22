@@ -86,5 +86,8 @@ export type { PopoverProps, PopoverTriggerProps, PopoverContentProps } from "./c
 export { Tabs, TabList, Tab, TabPanel } from "./components/Tabs";
 export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabsVariant, TabsSize } from "./components/Tabs";
 
+export { Tree } from "./components/Tree";
+export type { TreeProps, TreeNode, TreeApi } from "./components/Tree";
+
 // Design tokens (TypeScript constants)
 export * from "./tokens/tokens";

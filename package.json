@@ -51,6 +51,7 @@
     }
   },
   "dependencies": {
+    "react-arborist": "^3.4.3",
     "react-aria-components": "1.15.1",
     "tailwind-merge": "^3.5.0"
   },
