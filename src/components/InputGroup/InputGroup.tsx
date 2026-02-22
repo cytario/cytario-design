@@ -1,4 +1,5 @@
-import type React from "react";
+import React from "react";
+import { InputGroupContext, type GroupPosition } from "./InputGroupContext";
 
 export interface InputGroupProps {
   children: React.ReactNode;
@@ -6,20 +7,33 @@ export interface InputGroupProps {
 }
 
 export function InputGroup({ children, className }: InputGroupProps) {
+  const childArray = React.Children.toArray(children).filter(
+    React.isValidElement,
+  );
+
   return (
     <div
-      className={[
-        "flex items-stretch",
-        "[&>*:first-child]:rounded-r-none",
-        "[&>*:last-child]:rounded-l-none",
-        "[&>*:not(:first-child):not(:last-child)]:rounded-none",
-        "[&>*+*]:-ml-px",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      className={["flex items-stretch", className].filter(Boolean).join(" ")}
     >
-      {children}
+      {childArray.map((child, index) => {
+        const position: GroupPosition =
+          childArray.length === 1
+            ? "standalone"
+            : index === 0
+              ? "start"
+              : index === childArray.length - 1
+                ? "end"
+                : "middle";
+
+        return (
+          <InputGroupContext.Provider
+            key={index}
+            value={{ inGroup: true, position }}
+          >
+            {child}
+          </InputGroupContext.Provider>
+        );
+      })}
     </div>
   );
 }

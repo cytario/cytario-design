@@ -5,11 +5,18 @@ import {
   Text,
   type TextFieldProps,
 } from "react-aria-components";
+import { useInputGroup } from "../InputGroup/InputGroupContext";
 
 const sizeClasses = {
   sm: "px-3 py-1.5 text-sm",
   md: "px-4 py-2 text-base",
   lg: "px-4 py-3 text-lg",
+} as const;
+
+const prefixSizeClasses = {
+  sm: "px-3 text-sm",
+  md: "px-3 text-base",
+  lg: "px-4 text-lg",
 } as const;
 
 const alignClasses = {
@@ -40,6 +47,25 @@ export interface InputProps
   className?: string;
 }
 
+/**
+ * Returns Tailwind border-radius classes for the border-bearing element
+ * based on InputGroup position context.
+ */
+function groupRadiusClasses(
+  position: "start" | "middle" | "end" | "standalone",
+): string {
+  switch (position) {
+    case "start":
+      return "rounded-l-[var(--border-radius-md)] rounded-r-none";
+    case "middle":
+      return "rounded-none";
+    case "end":
+      return "rounded-r-[var(--border-radius-md)] rounded-l-none";
+    default:
+      return "rounded-[var(--border-radius-md)]";
+  }
+}
+
 export function Input({
   label,
   placeholder,
@@ -55,6 +81,18 @@ export function Input({
   ...props
 }: InputProps) {
   const isInvalid = !!errorMessage;
+  const { inGroup, position } = useInputGroup();
+
+  const borderColor = isInvalid
+    ? "border-[var(--color-border-danger)]"
+    : "border-[var(--color-border-default)] hover:border-[var(--color-border-strong)]";
+
+  const radiusClass = inGroup
+    ? groupRadiusClasses(position)
+    : "rounded-[var(--border-radius-md)]";
+
+  /** When not first in a group, overlap left border with previous sibling */
+  const marginClass = inGroup && position !== "start" && position !== "standalone" ? "-ml-px" : "";
 
   return (
     <TextField
@@ -63,7 +101,12 @@ export function Input({
       isDisabled={isDisabled}
       isRequired={isRequired}
       isInvalid={isInvalid}
-      className={["flex flex-col gap-[var(--spacing-1)]", className]
+      className={[
+        "flex flex-col gap-[var(--spacing-1)]",
+        inGroup ? "min-w-0 flex-1" : "",
+        marginClass,
+        className,
+      ]
         .filter(Boolean)
         .join(" ")}
     >
@@ -90,15 +133,14 @@ export function Input({
       {prefix ? (
         <div
           className={[
-            "flex items-center",
-            "rounded-[var(--border-radius-md)]",
+            "flex items-center overflow-hidden",
+            radiusClass,
             "border",
             "bg-[var(--color-surface-default)]",
             "outline-none transition-colors",
-            isInvalid
-              ? "border-[var(--color-border-danger)]"
-              : "border-[var(--color-border-default)] hover:border-[var(--color-border-strong)]",
+            borderColor,
             "focus-within:ring-2 focus-within:ring-[var(--color-border-focus)] focus-within:border-[var(--color-border-focus)]",
+            inGroup ? "focus-within:z-10" : "",
             isDisabled ? "opacity-50 pointer-events-none" : "",
           ]
             .filter(Boolean)
@@ -106,9 +148,11 @@ export function Input({
         >
           <span
             className={[
-              "shrink-0 select-none",
+              "self-stretch flex items-center shrink-0 select-none",
+              "bg-[var(--color-surface-subtle)]",
+              "border-r border-r-[var(--color-border-default)]",
               "text-[var(--color-text-secondary)]",
-              size === "sm" ? "pl-3 text-sm" : size === "lg" ? "pl-4 text-lg" : "pl-4 text-base",
+              prefixSizeClasses[size],
             ].join(" ")}
           >
             {prefix}
@@ -122,7 +166,6 @@ export function Input({
               "text-[var(--color-text-primary)]",
               "placeholder:text-[var(--color-text-tertiary)]",
               "outline-none border-none",
-              "pl-1.5",
             ].join(" ")}
           />
         </div>
@@ -133,16 +176,15 @@ export function Input({
             "w-full",
             sizeClasses[size],
             alignClasses[align],
-            "rounded-[var(--border-radius-md)]",
+            radiusClass,
             "border",
             "text-[var(--color-text-primary)]",
             "bg-[var(--color-surface-default)]",
             "placeholder:text-[var(--color-text-tertiary)]",
             "outline-none transition-colors",
-            isInvalid
-              ? "border-[var(--color-border-danger)]"
-              : "border-[var(--color-border-default)] hover:border-[var(--color-border-strong)]",
+            borderColor,
             "focus:ring-2 focus:ring-[var(--color-border-focus)] focus:border-[var(--color-border-focus)]",
+            inGroup ? "focus:z-10" : "",
             "disabled:opacity-50 disabled:pointer-events-none",
           ].join(" ")}
         />

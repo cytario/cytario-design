@@ -75,6 +75,13 @@ describe("Input", () => {
     expect(screen.getByText("$")).toBeDefined();
   });
 
+  it("renders prefix with subtle background and separator", () => {
+    render(<Input label="Price" prefix="$" />);
+    const prefixEl = screen.getByText("$");
+    expect(prefixEl.className).toContain("bg-[var(--color-surface-subtle)]");
+    expect(prefixEl.className).toContain("border-r");
+  });
+
   it("applies text alignment", () => {
     render(<Input label="Right" align="right" />);
     const input = screen.getByRole("textbox");

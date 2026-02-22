@@ -12,6 +12,7 @@ import {
 } from "../_shared/styles";
 import { Icon } from "../Icon";
 import { Spinner } from "../Spinner";
+import { useInputGroup } from "../InputGroup/InputGroupContext";
 
 export type { ButtonVariant, ButtonSize };
 
@@ -34,6 +35,21 @@ const iconSizeMap = {
   lg: "md",
 } as const;
 
+function groupRadiusClass(
+  position: "start" | "middle" | "end" | "standalone",
+): string {
+  switch (position) {
+    case "start":
+      return "rounded-l-[var(--border-radius-md)] rounded-r-none";
+    case "middle":
+      return "rounded-none";
+    case "end":
+      return "rounded-r-[var(--border-radius-md)] rounded-l-none";
+    default:
+      return "rounded-[var(--border-radius-md)]";
+  }
+}
+
 export function Button({
   variant = "primary",
   size = "md",
@@ -45,30 +61,50 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
+  const { inGroup, position } = useInputGroup();
+
+  const radiusClass = inGroup
+    ? groupRadiusClass(position)
+    : "rounded-[var(--border-radius-md)]";
+
+  const marginClass =
+    inGroup && position !== "start" && position !== "standalone"
+      ? "-ml-px"
+      : "";
+
+  const focusRing = inGroup
+    ? "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-0 focus-visible:z-10"
+    : "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2";
+
   return (
     <AriaButton
       {...props}
       isDisabled={isDisabled || isLoading}
       className={[
-        "inline-flex items-center justify-center gap-2",
-        "rounded-[var(--border-radius-md)]",
+        "inline-flex items-center justify-center gap-2 shrink-0",
+        radiusClass,
         "font-[var(--font-weight-medium)]",
         "leading-[var(--line-height-tight)]",
         "outline-none transition-colors",
-        "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+        focusRing,
         "disabled:opacity-50 disabled:pointer-events-none",
         isLoading ? "pointer-events-none" : "",
         variantStyles[variant],
         sizeStyles[size],
+        marginClass,
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
       {isLoading && <Spinner size={iconSizeMap[size]} />}
-      {!isLoading && iconLeft && <Icon icon={iconLeft} size={iconSizeMap[size]} />}
+      {!isLoading && iconLeft && (
+        <Icon icon={iconLeft} size={iconSizeMap[size]} />
+      )}
       {children as React.ReactNode}
-      {!isLoading && iconRight && <Icon icon={iconRight} size={iconSizeMap[size]} />}
+      {!isLoading && iconRight && (
+        <Icon icon={iconRight} size={iconSizeMap[size]} />
+      )}
     </AriaButton>
   );
 }

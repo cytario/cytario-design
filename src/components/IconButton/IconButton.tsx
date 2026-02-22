@@ -7,6 +7,7 @@ import { type ButtonVariant, variantStyles } from "../_shared/styles";
 import { Icon } from "../Icon";
 import { Spinner } from "../Spinner";
 import { Tooltip } from "../Tooltip";
+import { useInputGroup } from "../InputGroup/InputGroupContext";
 
 export interface IconButtonProps extends Omit<AriaButtonProps, "className"> {
   /** Lucide icon to render */
@@ -39,6 +40,21 @@ const iconSizeMap = {
   lg: "md",
 } as const;
 
+function groupRadiusClass(
+  position: "start" | "middle" | "end" | "standalone",
+): string {
+  switch (position) {
+    case "start":
+      return "rounded-l-[var(--border-radius-md)] rounded-r-none";
+    case "middle":
+      return "rounded-none";
+    case "end":
+      return "rounded-r-[var(--border-radius-md)] rounded-l-none";
+    default:
+      return "rounded-[var(--border-radius-md)]";
+  }
+}
+
 export function IconButton({
   icon,
   "aria-label": ariaLabel,
@@ -51,20 +67,36 @@ export function IconButton({
   className,
   ...props
 }: IconButtonProps) {
+  const { inGroup, position } = useInputGroup();
+
+  const radiusClass = inGroup
+    ? groupRadiusClass(position)
+    : "rounded-[var(--border-radius-md)]";
+
+  const marginClass =
+    inGroup && position !== "start" && position !== "standalone"
+      ? "-ml-px"
+      : "";
+
+  const focusRing = inGroup
+    ? "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-0 focus-visible:z-10"
+    : "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2";
+
   const button = (
     <AriaButton
       {...props}
       aria-label={ariaLabel}
       isDisabled={isDisabled || isLoading}
       className={[
-        "inline-flex items-center justify-center",
-        "rounded-[var(--border-radius-md)]",
+        "inline-flex items-center justify-center shrink-0",
+        radiusClass,
         "outline-none transition-colors",
-        "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+        focusRing,
         "disabled:opacity-50 disabled:pointer-events-none",
         isLoading ? "pointer-events-none" : "",
         variantStyles[variant],
         squareSizeStyles[size],
+        marginClass,
         className,
       ]
         .filter(Boolean)
@@ -80,10 +112,7 @@ export function IconButton({
 
   if (showTooltip) {
     return (
-      <Tooltip
-        content={ariaLabel}
-        placement={tooltipPlacement}
-      >
+      <Tooltip content={ariaLabel} placement={tooltipPlacement}>
         {button}
       </Tooltip>
     );

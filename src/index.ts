@@ -56,8 +56,11 @@ export type { FieldProps } from "./components/Field";
 export { Fieldset } from "./components/Fieldset";
 export type { FieldsetProps } from "./components/Fieldset";
 
-export { InputGroup } from "./components/InputGroup";
-export type { InputGroupProps } from "./components/InputGroup";
+export { InputGroup, InputGroupContext, useInputGroup } from "./components/InputGroup";
+export type { InputGroupProps, GroupPosition } from "./components/InputGroup";
+
+export { InputAddon } from "./components/InputAddon";
+export type { InputAddonProps } from "./components/InputAddon";
 
 export { Heading, H1, H2, H3 } from "./components/Heading";
 export type { HeadingProps, HeadingLevel, HeadingSize } from "./components/Heading";

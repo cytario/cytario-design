@@ -1,6 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { InputGroup } from "./InputGroup";
+import { useInputGroup } from "./InputGroupContext";
+
+/** Test helper that renders its position from context */
+function PositionProbe({ testId }: { testId: string }) {
+  const { inGroup, position } = useInputGroup();
+  return (
+    <div data-testid={testId} data-position={position} data-in-group={String(inGroup)} />
+  );
+}
 
 describe("InputGroup", () => {
   it("renders children", () => {
@@ -14,17 +23,45 @@ describe("InputGroup", () => {
     expect(screen.getByTestId("button-1")).toBeDefined();
   });
 
-  it("applies joining classes to wrapper", () => {
-    const { container } = render(
+  it("provides 'start' position to first child", () => {
+    render(
       <InputGroup>
-        <input />
-        <button>Go</button>
+        <PositionProbe testId="first" />
+        <PositionProbe testId="last" />
       </InputGroup>,
     );
-    const wrapper = container.firstElementChild as HTMLElement;
-    expect(wrapper.className).toContain("[&>*:first-child]:rounded-r-none");
-    expect(wrapper.className).toContain("[&>*:last-child]:rounded-l-none");
-    expect(wrapper.className).toContain("[&>*+*]:-ml-px");
+    expect(screen.getByTestId("first").getAttribute("data-position")).toBe("start");
+    expect(screen.getByTestId("first").getAttribute("data-in-group")).toBe("true");
+  });
+
+  it("provides 'end' position to last child", () => {
+    render(
+      <InputGroup>
+        <PositionProbe testId="first" />
+        <PositionProbe testId="last" />
+      </InputGroup>,
+    );
+    expect(screen.getByTestId("last").getAttribute("data-position")).toBe("end");
+  });
+
+  it("provides 'middle' position to middle children", () => {
+    render(
+      <InputGroup>
+        <PositionProbe testId="first" />
+        <PositionProbe testId="middle" />
+        <PositionProbe testId="last" />
+      </InputGroup>,
+    );
+    expect(screen.getByTestId("middle").getAttribute("data-position")).toBe("middle");
+  });
+
+  it("provides 'standalone' when there is only one child", () => {
+    render(
+      <InputGroup>
+        <PositionProbe testId="only" />
+      </InputGroup>,
+    );
+    expect(screen.getByTestId("only").getAttribute("data-position")).toBe("standalone");
   });
 
   it("applies custom className", () => {
