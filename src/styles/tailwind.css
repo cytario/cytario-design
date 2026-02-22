@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   /* Brand Colors — sourced from tokens/variables.css */
   --color-purple-50: #f5f0fa;

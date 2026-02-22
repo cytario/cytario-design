@@ -47,7 +47,7 @@ export function Switch({
           >
             <div
               className={[
-                "w-4 h-4 rounded-full bg-white transition-transform shadow-sm",
+                "w-4 h-4 rounded-full bg-[var(--color-surface-default)] transition-transform shadow-sm",
                 isSelected ? "translate-x-4" : "translate-x-0",
               ].join(" ")}
             />

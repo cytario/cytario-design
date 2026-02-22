@@ -1,5 +1,6 @@
 @import "./tailwind.css";
 @import "../tokens/variables.css";
+@import "../tokens/variables-dark.css";
 
 /*
  * Additional design-system variables not yet covered by token pipeline.
@@ -26,5 +27,12 @@
 
   h1, h2, h3, h4, h5, h6 {
     color: var(--ds-color-text-heading);
+  }
+
+  [data-theme="dark"] {
+    --ds-color-text-body: rgb(209, 213, 219);
+    --ds-color-text-heading: rgb(243, 244, 246);
+    --ds-gradient-brand: linear-gradient(135deg, #9b4fcb 0%, #7a2ea8 100%);
+    --ds-gradient-brand-reverse: linear-gradient(135deg, #7a2ea8 0%, #9b4fcb 100%);
   }
 }
