@@ -2,6 +2,10 @@
   "name": "@cytario/design",
   "version": "0.0.0-development",
   "description": "Cytario design system and brand portal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cytario/cytario-design"
+  },
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
