@@ -2,16 +2,33 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { Switch } from "../components/Switch";
 import { Input } from "../components/Input";
+import { Button } from "../components/Button";
+import { Dialog } from "../components/Dialog";
+import { EmptyState } from "../components/EmptyState";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import type { BreadcrumbItem } from "../components/Breadcrumbs";
 import {
   markers,
-  cycles,
   sampleMetadata,
   histogramData,
+  presets,
+  overlayResults,
+  mockOverlayFile,
+  mockS3Files,
 } from "./pathology-viewer-data";
-import type { MarkerChannel } from "./pathology-viewer-data";
-import { Search, ZoomIn, ZoomOut, Maximize } from "lucide-react";
+import type { MarkerChannel, ViewerPreset } from "./pathology-viewer-data";
+import {
+  Search,
+  ZoomIn,
+  ZoomOut,
+  Maximize,
+  Layers,
+  Columns2,
+  ExternalLink,
+  X,
+  ChevronDown,
+  ChevronRight,
+} from "lucide-react";
 
 /* ------------------------------------------------------------------ */
 /*  Dark theme token overrides                                         */
@@ -82,7 +99,6 @@ function HistogramChart() {
 function ScaleRuler() {
   const tickCount = 26;
   const majorEvery = 5;
-  const spacing = 240 / (tickCount - 1);
 
   return (
     <svg
@@ -127,15 +143,15 @@ function ScaleRuler() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Cycle tab button                                                   */
+/*  Preset thumbnail button                                            */
 /* ------------------------------------------------------------------ */
 
-function CycleTab({
-  cycle,
+function PresetTab({
+  preset,
   isActive,
   onClick,
 }: {
-  cycle: number;
+  preset: ViewerPreset;
   isActive: boolean;
   onClick: () => void;
 }) {
@@ -143,15 +159,30 @@ function CycleTab({
     <button
       type="button"
       onClick={onClick}
-      title={cycles[cycle - 1]?.label}
+      title={preset.label}
       className={[
-        "flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold transition-colors",
+        "relative flex flex-col justify-between overflow-hidden rounded transition-colors",
         isActive
-          ? "bg-[#35b7b8] text-black"
-          : "bg-[#374151] text-[#d1d5db] hover:bg-[#4b5563]",
+          ? "ring-2 ring-[#35b7b8] ring-offset-1 ring-offset-[#111827]"
+          : "ring-1 ring-[#374151] hover:ring-[#4b5563]",
       ].join(" ")}
+      style={{ width: 36, height: 28, backgroundColor: "#1f2937" }}
     >
-      {cycle}
+      {/* Number label */}
+      <span className="absolute top-0.5 left-1 text-[9px] font-bold text-[#9ca3af]">
+        {preset.id}
+      </span>
+
+      {/* Color bars at bottom */}
+      <div className="mt-auto flex">
+        {preset.colors.map((color, i) => (
+          <div
+            key={i}
+            className="h-1 flex-1"
+            style={{ backgroundColor: color }}
+          />
+        ))}
+      </div>
     </button>
   );
 }
@@ -211,21 +242,68 @@ function ZoomButton({
 }
 
 /* ------------------------------------------------------------------ */
+/*  S3 date formatter                                                  */
+/* ------------------------------------------------------------------ */
+
+function formatS3Date(iso: string): string {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+/* ------------------------------------------------------------------ */
 /*  Main composition                                                   */
 /* ------------------------------------------------------------------ */
 
 function PathologyViewer() {
   const [channelStates, setChannelStates] = useState<Record<string, boolean>>(
-    () =>
-      Object.fromEntries(markers.map((m) => [m.id, m.enabled])),
+    () => Object.fromEntries(markers.map((m) => [m.id, m.enabled])),
   );
-  const [activeCycle, setActiveCycle] = useState(1);
+  const [activePreset, setActivePreset] = useState(1);
   const [zoomLevel, setZoomLevel] = useState("0.5");
 
-  const activeMarkers = markers.filter((m) => m.cycle === activeCycle);
+  // Overlay state
+  const [overlayLoaded, setOverlayLoaded] = useState(false);
+  const [overlayStates, setOverlayStates] = useState<Record<string, boolean>>(
+    {},
+  );
+  const [overlaysCollapsed, setOverlaysCollapsed] = useState(false);
+  const [overlayDialogOpen, setOverlayDialogOpen] = useState(false);
+  const [selectedS3File, setSelectedS3File] = useState<string | null>(null);
 
   function toggleChannel(id: string) {
     setChannelStates((prev) => ({ ...prev, [id]: !prev[id] }));
+  }
+
+  function applyPreset(preset: ViewerPreset) {
+    setActivePreset(preset.id);
+    const enabledSet = new Set(preset.enabledChannels);
+    setChannelStates(
+      Object.fromEntries(markers.map((m) => [m.id, enabledSet.has(m.id)])),
+    );
+  }
+
+  function loadOverlay() {
+    setOverlayLoaded(true);
+    setOverlayDialogOpen(false);
+    setSelectedS3File(null);
+    setOverlayStates(
+      Object.fromEntries(overlayResults.map((r) => [r.markerId, r.enabled])),
+    );
+  }
+
+  function removeOverlay() {
+    setOverlayLoaded(false);
+    setOverlayStates({});
+  }
+
+  function toggleOverlay(markerId: string) {
+    setOverlayStates((prev) => ({ ...prev, [markerId]: !prev[markerId] }));
   }
 
   const zoomPresets = ["5x", "10x", "20x", "40x", "80x"];
@@ -239,7 +317,7 @@ function PathologyViewer() {
       }}
       className="flex flex-col overflow-hidden rounded-xl"
     >
-      {/* ── Toolbar ─────────────────────────────────────────────── */}
+      {/* -- Toolbar -------------------------------------------------- */}
       <div
         className="flex h-12 shrink-0 items-center gap-4 border-b border-[#374151] px-4"
         style={{ backgroundColor: "#1f2937" }}
@@ -296,9 +374,7 @@ function PathologyViewer() {
               key={preset}
               label={preset}
               isActive={`${zoomLevel}x` === preset}
-              onClick={() =>
-                setZoomLevel(preset.replace("x", ""))
-              }
+              onClick={() => setZoomLevel(preset.replace("x", ""))}
             />
           ))}
         </div>
@@ -307,11 +383,7 @@ function PathologyViewer() {
 
         {/* Search */}
         <div className="w-44">
-          <Input
-            placeholder="Search..."
-            size="sm"
-            aria-label="Search"
-          />
+          <Input placeholder="Search..." size="sm" aria-label="Search" />
         </div>
 
         {/* Avatar */}
@@ -320,9 +392,9 @@ function PathologyViewer() {
         </div>
       </div>
 
-      {/* ── Body: Viewport + Sidebar ────────────────────────────── */}
+      {/* -- Body: Viewport + Sidebar --------------------------------- */}
       <div className="flex flex-1 min-h-0">
-        {/* ── Viewport area ──────────────────────────────────── */}
+        {/* -- Viewport area ---------------------------------------- */}
         <div className="relative flex-1 flex flex-col min-w-0">
           {/* Horizontal ruler */}
           <div
@@ -402,24 +474,28 @@ function PathologyViewer() {
           </div>
         </div>
 
-        {/* ── Sidebar ─────────────────────────────────────────── */}
+        {/* -- Sidebar ------------------------------------------------ */}
         <div
           className="flex w-[280px] shrink-0 flex-col border-l border-[#374151]"
           style={{ backgroundColor: "#111827" }}
         >
-          {/* Cycle tabs */}
-          <div className="flex items-center gap-1 px-3 pt-4 pb-3">
-            <span className="mr-2 text-xs font-semibold text-[#9ca3af] uppercase tracking-wider">
-              Cycle
-            </span>
-            {[1, 2, 3, 4].map((c) => (
-              <CycleTab
-                key={c}
-                cycle={c}
-                isActive={activeCycle === c}
-                onClick={() => setActiveCycle(c)}
+          {/* Preset tabs */}
+          <div className="flex items-center gap-1.5 px-3 pt-4 pb-3">
+            {presets.map((p) => (
+              <PresetTab
+                key={p.id}
+                preset={p}
+                isActive={activePreset === p.id}
+                onClick={() => applyPreset(p)}
               />
             ))}
+            <button
+              type="button"
+              title="Split screen"
+              className="ml-auto flex h-7 w-7 items-center justify-center rounded border border-[#374151] bg-[#1f2937] text-[#9ca3af] transition-colors hover:bg-[#374151] hover:text-[#d1d5db]"
+            >
+              <Columns2 size={14} />
+            </button>
           </div>
 
           {/* Divider */}
@@ -452,14 +528,14 @@ function PathologyViewer() {
               Channels
             </span>
             <span className="text-xs text-[#6b7280]">
-              {activeMarkers.filter((m) => channelStates[m.id]).length}/
-              {activeMarkers.length}
+              {markers.filter((m) => channelStates[m.id]).length}/
+              {markers.length}
             </span>
           </div>
 
           {/* Channel list */}
-          <div className="flex-1 overflow-y-auto px-3 pb-3">
-            {activeMarkers.map((marker: MarkerChannel) => (
+          <div className="flex-1 overflow-y-auto px-3">
+            {markers.map((marker: MarkerChannel) => (
               <div
                 key={marker.id}
                 className="flex items-center gap-2 border-b border-[#1f2937] py-2"
@@ -486,8 +562,112 @@ function PathologyViewer() {
             ))}
           </div>
 
+          {/* Divider */}
+          <div className="mx-3 h-px bg-[#374151]" />
+
+          {/* -- Overlays section ------------------------------------ */}
+          <div className="flex flex-col">
+            {/* Overlays header */}
+            <button
+              type="button"
+              onClick={() => setOverlaysCollapsed(!overlaysCollapsed)}
+              className="flex items-center gap-2 px-3 pt-3 pb-2 text-left"
+            >
+              {overlaysCollapsed ? (
+                <ChevronRight size={14} className="text-[#9ca3af]" />
+              ) : (
+                <ChevronDown size={14} className="text-[#9ca3af]" />
+              )}
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#9ca3af]">
+                Overlays
+              </span>
+            </button>
+
+            {!overlaysCollapsed && (
+              <div className="px-3 pb-3">
+                {!overlayLoaded ? (
+                  /* State A: Empty -- no overlay loaded */
+                  <EmptyState
+                    icon={Layers}
+                    title="Add Overlay"
+                    description="Add parquet cell detection files"
+                    className="py-6"
+                    action={
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onPress={() => setOverlayDialogOpen(true)}
+                      >
+                        Add Overlay
+                      </Button>
+                    }
+                  />
+                ) : (
+                  /* State B: Overlay loaded */
+                  <div className="flex flex-col gap-2">
+                    {/* File info row */}
+                    <div className="flex items-center gap-1.5">
+                      <div className="flex-1 truncate rounded border border-[#374151] bg-[#1f2937] px-2 py-1 text-xs text-[#d1d5db]">
+                        {mockOverlayFile.filename}
+                      </div>
+                      <button
+                        type="button"
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-[#9ca3af] hover:bg-[#374151] hover:text-[#d1d5db] transition-colors"
+                        aria-label="Open file externally"
+                      >
+                        <ExternalLink size={13} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={removeOverlay}
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-[#9ca3af] hover:bg-[#374151] hover:text-[#d1d5db] transition-colors"
+                        aria-label="Remove overlay"
+                      >
+                        <X size={13} />
+                      </button>
+                    </div>
+
+                    {/* Overlay marker list */}
+                    <div className="flex flex-col">
+                      {overlayResults.map((result) => (
+                        <div
+                          key={result.markerId}
+                          className="flex items-center gap-2 border-b border-[#1f2937] py-1.5"
+                        >
+                          {/* Large colored circle */}
+                          <span
+                            className="h-4 w-4 shrink-0 rounded-full"
+                            style={{ backgroundColor: result.color }}
+                          />
+
+                          {/* Marker name */}
+                          <span className="flex-1 text-sm text-[#f3f4f6]">
+                            {result.name}
+                          </span>
+
+                          {/* Cell count */}
+                          <span className="text-xs tabular-nums text-[#9ca3af]">
+                            {result.cellCount.toLocaleString()}
+                          </span>
+
+                          {/* Switch toggle */}
+                          <Switch
+                            color={result.color}
+                            isSelected={overlayStates[result.markerId] ?? false}
+                            onChange={() => toggleOverlay(result.markerId)}
+                            aria-label={`Toggle ${result.name} overlay`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           {/* Slide info footer */}
-          <div className="border-t border-[#374151] px-3 py-2">
+          <div className="mt-auto border-t border-[#374151] px-3 py-2">
             <div className="text-xs text-[#6b7280]">
               {sampleMetadata.widthMm} x {sampleMetadata.heightMm} mm
               <span className="mx-1.5">&middot;</span>
@@ -498,6 +678,83 @@ function PathologyViewer() {
           </div>
         </div>
       </div>
+
+      {/* -- Add Overlay Dialog -------------------------------------- */}
+      <Dialog
+        isOpen={overlayDialogOpen}
+        onOpenChange={setOverlayDialogOpen}
+        title="Select Overlay File"
+        size="lg"
+      >
+        <div className="flex flex-col gap-4">
+          {/* S3 file browser table */}
+          <div className="overflow-hidden rounded-lg border border-[var(--color-border-default)]">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[var(--color-border-default)] bg-[var(--color-surface-subtle)]">
+                  <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
+                    Filename
+                  </th>
+                  <th className="px-4 py-2 text-right text-xs font-semibold text-[var(--color-text-secondary)]">
+                    Size
+                  </th>
+                  <th className="px-4 py-2 text-right text-xs font-semibold text-[var(--color-text-secondary)]">
+                    Last Modified
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {mockS3Files.map((file) => (
+                  <tr
+                    key={file.key}
+                    onClick={() => setSelectedS3File(file.key)}
+                    className={[
+                      "cursor-pointer border-b border-[var(--color-border-default)] last:border-b-0 transition-colors",
+                      selectedS3File === file.key
+                        ? "bg-[color-mix(in_srgb,var(--color-brand-accent)_15%,transparent)]"
+                        : "hover:bg-[var(--color-surface-subtle)]",
+                    ].join(" ")}
+                  >
+                    <td className="px-4 py-2.5 text-[var(--color-text-primary)]">
+                      {file.filename}
+                    </td>
+                    <td className="px-4 py-2.5 text-right text-[var(--color-text-secondary)]">
+                      {file.size}
+                    </td>
+                    <td className="px-4 py-2.5 text-right text-[var(--color-text-secondary)]">
+                      {formatS3Date(file.lastModified)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end gap-3">
+            <Button
+              variant="ghost"
+              onPress={() => {
+                setOverlayDialogOpen(false);
+                setSelectedS3File(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              isDisabled={!selectedS3File}
+              onPress={() => {
+                if (selectedS3File) {
+                  loadOverlay();
+                }
+              }}
+            >
+              Load
+            </Button>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }

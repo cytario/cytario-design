@@ -48,10 +48,10 @@ export const variantStyles: Record<ButtonVariant, string> = {
     "pressed:bg-[var(--color-slate-800)]",
   ].join(" "),
   neutral: [
-    "bg-white text-[var(--color-text-primary)]",
-    "border border-[var(--color-neutral-300)]",
-    "hover:bg-[var(--color-neutral-50)]",
-    "pressed:bg-[var(--color-neutral-100)]",
+    "bg-[var(--color-surface-default)] text-[var(--color-text-primary)]",
+    "border border-[var(--color-border-default)]",
+    "hover:bg-[var(--color-surface-subtle)]",
+    "pressed:bg-[var(--color-surface-muted)]",
   ].join(" "),
 };
 

@@ -59,7 +59,7 @@ describe("ToggleButton", () => {
     render(<ToggleButton variant="outlined">Outlined</ToggleButton>);
     const button = screen.getByRole("button");
     expect(button.className).toContain("border");
-    expect(button.className).toContain("bg-white");
+    expect(button.className).toContain("bg-[var(--color-surface-default)]");
   });
 
   it("applies square dimensions when isSquare is true", () => {

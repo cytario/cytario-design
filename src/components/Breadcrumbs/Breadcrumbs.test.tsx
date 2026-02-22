@@ -47,4 +47,18 @@ describe("Breadcrumbs", () => {
     const nav = screen.getByRole("navigation");
     expect(nav.className).toContain("mt-4");
   });
+
+  it("applies truncate class to the last breadcrumb item", () => {
+    render(<Breadcrumbs items={defaultItems} />);
+    const lastItemText = screen.getByText("Current Page");
+    expect(lastItemText.className).toContain("truncate");
+  });
+
+  it("applies whitespace-nowrap to non-last breadcrumb links", () => {
+    render(<Breadcrumbs items={defaultItems} />);
+    const links = screen.getAllByRole("link");
+    for (const link of links) {
+      expect(link.className).toContain("whitespace-nowrap");
+    }
+  });
 });

@@ -50,10 +50,10 @@ const variantStyles: Record<ToggleButtonVariant, { base: string; selected: strin
   },
   outlined: {
     base: [
-      "bg-white text-[var(--color-text-primary)]",
-      "border border-[var(--color-neutral-300)]",
-      "hover:bg-[var(--color-neutral-100)]",
-      "pressed:bg-[var(--color-neutral-200)]",
+      "bg-[var(--color-surface-default)] text-[var(--color-text-primary)]",
+      "border border-[var(--color-border-default)]",
+      "hover:bg-[var(--color-surface-subtle)]",
+      "pressed:bg-[var(--color-surface-muted)]",
     ].join(" "),
     selected: [
       "bg-[var(--color-neutral-800)] text-[var(--color-text-inverse)]",

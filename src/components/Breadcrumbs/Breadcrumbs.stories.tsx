@@ -69,6 +69,27 @@ export const SingleItem: Story = {
   },
 };
 
+export const LongFilenameTruncation: Story = {
+  name: "Long Filename (Truncated)",
+  args: {
+    items: [
+      { id: "org", label: "Cytario Research", href: "#" },
+      { id: "project", label: "LUNG-TMA-2024", href: "#" },
+      {
+        id: "file",
+        label: "LUNG_TMA_P2_S04_AF_M1_C301_very_long_filename_example.qptiff",
+      },
+    ],
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 480 }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
 export const Playground: Story = {
   args: {
     items: [

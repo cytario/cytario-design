@@ -241,3 +241,144 @@ export const histogramData: readonly number[] = [
   0.023, 0.021, 0.019, 0.017, 0.015, 0.013, 0.012, 0.011, 0.010, 0.009,
   0.008, 0.007, 0.006, 0.005, 0.004, 0.003, 0.003, 0.002, 0.001, 0.001,
 ] as const;
+
+// ---------------------------------------------------------------------------
+// Viewer presets
+// ---------------------------------------------------------------------------
+
+export interface ViewerPreset {
+  id: number;
+  label: string;
+  /** Channel IDs enabled in this preset */
+  enabledChannels: string[];
+  /** Display colors for the preset thumbnail (derived from enabled channels) */
+  colors: string[];
+}
+
+export const presets = [
+  {
+    id: 1,
+    label: "DAPI only",
+    enabledChannels: ["dapi-1"],
+    colors: ["#4287f5"],
+  },
+  {
+    id: 2,
+    label: "T-cell panel",
+    enabledChannels: ["dapi-1", "cd3", "cd4", "cd8"],
+    colors: ["#4287f5", "#42f5a1", "#42f554", "#f54242"],
+  },
+  {
+    id: 3,
+    label: "Myeloid panel",
+    enabledChannels: ["dapi-1", "cd68", "cd11b", "cd14", "cd206"],
+    colors: ["#4287f5", "#e842f5", "#f5e642", "#f5d442", "#42a5f5"],
+  },
+  {
+    id: 4,
+    label: "Tumor microenvironment",
+    enabledChannels: ["dapi-1", "ck", "pd1", "cd8"],
+    colors: ["#4287f5", "#f5f542", "#42f5e8", "#f54242"],
+  },
+] as const satisfies readonly ViewerPreset[];
+
+// ---------------------------------------------------------------------------
+// Cell segmentation overlay results
+// ---------------------------------------------------------------------------
+
+export interface OverlayResult {
+  /** Matches a MarkerChannel.id (no DAPI — structural stain, not a phenotype) */
+  markerId: string;
+  /** Display name (lowercase, as shown in overlay UI) */
+  name: string;
+  /** Overlay visualization color (large filled circle) */
+  color: string;
+  /** Total detected cell count (whole slide) */
+  cellCount: number;
+  /** Whether the overlay is visible */
+  enabled: boolean;
+}
+
+/**
+ * Realistic cell counts for an 11.2 x 8.4 mm NSCLC tissue section.
+ *
+ * Ordering: highest-count markers first (CD3, CD4, CK dominate in NSCLC).
+ * PD-1 and CD56 are sparse. Colors are bright, saturated, and all unique —
+ * spanning the red-orange-yellow-green-cyan-blue-purple-magenta spectrum.
+ */
+export const overlayResults = [
+  { markerId: "cd3",   name: "cd3",   color: "#22c55e", cellCount: 48_320, enabled: true },
+  { markerId: "cd4",   name: "cd4",   color: "#facc15", cellCount: 31_750, enabled: true },
+  { markerId: "ck",    name: "ck",    color: "#f97316", cellCount: 65_210, enabled: true },
+  { markerId: "cd8",   name: "cd8",   color: "#ef4444", cellCount: 22_480, enabled: true },
+  { markerId: "cd20",  name: "cd20",  color: "#6366f1", cellCount: 18_940, enabled: false },
+  { markerId: "cd68",  name: "cd68",  color: "#a855f7", cellCount: 14_890, enabled: false },
+  { markerId: "cd11b", name: "cd11b", color: "#06b6d4", cellCount: 11_340, enabled: false },
+  { markerId: "cd14",  name: "cd14",  color: "#14b8a6", cellCount: 8_770,  enabled: false },
+  { markerId: "cd206", name: "cd206", color: "#3b82f6", cellCount: 6_230,  enabled: false },
+  { markerId: "cd11c", name: "cd11c", color: "#ec4899", cellCount: 5_620,  enabled: false },
+  { markerId: "pd1",   name: "pd-1",  color: "#f43f5e", cellCount: 3_410,  enabled: false },
+  { markerId: "cd56",  name: "cd56",  color: "#d946ef", cellCount: 1_890,  enabled: false },
+] as const satisfies readonly OverlayResult[];
+
+// ---------------------------------------------------------------------------
+// Overlay file metadata
+// ---------------------------------------------------------------------------
+
+export interface OverlayFile {
+  filename: string;
+  path: string;
+  size: string;
+  loadedAt: string;
+}
+
+export const mockOverlayFile: OverlayFile = {
+  filename: "results_total.csv.parquet",
+  path: "s3://cytario-results/IO-Biomarker-Study-2026/segmentation/",
+  size: "24.3 MB",
+  loadedAt: "2 min ago",
+} as const satisfies OverlayFile;
+
+// ---------------------------------------------------------------------------
+// Mock S3 file browser entries
+// ---------------------------------------------------------------------------
+
+export interface S3FileEntry {
+  key: string;
+  filename: string;
+  size: string;
+  lastModified: string;
+}
+
+export const mockS3Files = [
+  {
+    key: "segmentation/results_total.csv.parquet",
+    filename: "results_total.csv.parquet",
+    size: "24.3 MB",
+    lastModified: "2026-02-22T09:14:00Z",
+  },
+  {
+    key: "segmentation/results_per_roi.csv.parquet",
+    filename: "results_per_roi.csv.parquet",
+    size: "18.7 MB",
+    lastModified: "2026-02-22T09:14:00Z",
+  },
+  {
+    key: "segmentation/cell_boundaries.geojson.parquet",
+    filename: "cell_boundaries.geojson.parquet",
+    size: "112.4 MB",
+    lastModified: "2026-02-22T08:51:00Z",
+  },
+  {
+    key: "segmentation/phenotype_assignments.csv.parquet",
+    filename: "phenotype_assignments.csv.parquet",
+    size: "9.1 MB",
+    lastModified: "2026-02-21T17:33:00Z",
+  },
+  {
+    key: "segmentation/qc_metrics.csv.parquet",
+    filename: "qc_metrics.csv.parquet",
+    size: "1.2 MB",
+    lastModified: "2026-02-21T17:33:00Z",
+  },
+] as const satisfies readonly S3FileEntry[];

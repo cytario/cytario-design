@@ -118,6 +118,6 @@ describe("Button", () => {
     render(<Button variant="neutral">Neutral</Button>);
     const button = screen.getByRole("button", { name: "Neutral" });
     expect(button).toBeDefined();
-    expect(button.className).toContain("bg-white");
+    expect(button.className).toContain("bg-[var(--color-surface-default)]");
   });
 });
