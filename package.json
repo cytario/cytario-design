@@ -16,11 +16,13 @@
       "types": "./dist/index.d.ts"
     },
     "./tokens/variables.css": "./src/tokens/variables.css",
+    "./tokens/variables-dark.css": "./src/tokens/variables-dark.css",
     "./styles/*": "./src/styles/*"
   },
   "files": [
     "dist",
     "src/tokens/variables.css",
+    "src/tokens/variables-dark.css",
     "src/styles"
   ],
   "publishConfig": {
