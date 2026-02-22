@@ -1,7 +1,7 @@
-import { createElement } from "react";
+import { createElement, useEffect } from "react";
 import type { Preview } from "storybook/react";
 import "../src/styles/global.css";
-import theme from "./theme";
+import { lightTheme } from "./theme";
 
 const preview: Preview = {
   globalTypes: {
@@ -25,6 +25,12 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const selectedTheme = context.globals.theme || "light";
+
+      // Set data-theme on the preview iframe's <html> so body bg responds
+      useEffect(() => {
+        const theme = selectedTheme === "side-by-side" ? "light" : selectedTheme;
+        document.documentElement.setAttribute("data-theme", theme);
+      }, [selectedTheme]);
 
       if (selectedTheme === "side-by-side") {
         return createElement(
@@ -96,7 +102,7 @@ const preview: Preview = {
   ],
   parameters: {
     docs: {
-      theme,
+      theme: lightTheme,
     },
     controls: {
       matchers: {
