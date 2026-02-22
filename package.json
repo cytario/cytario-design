@@ -20,7 +20,8 @@
     "src/styles"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",

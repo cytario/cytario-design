@@ -90,7 +90,7 @@ jobs:
 
     permissions:
       contents: write
-      packages: write
+      id-token: write
       issues: write
       pull-requests: write
 
@@ -109,7 +109,7 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-          registry-url: https://npm.pkg.github.com
+          registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -124,5 +124,3 @@ jobs:
         run: pnpm exec semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
