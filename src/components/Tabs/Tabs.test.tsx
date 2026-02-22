@@ -125,6 +125,71 @@ describe("Tabs", () => {
     expect(tablist.className).toContain("bg-[var(--color-surface-muted)]");
   });
 
+  it("consumer className overrides internal styles via twMerge", () => {
+    render(
+      <Tabs>
+        <TabList aria-label="Override test">
+          <Tab id="a" className="bg-red-500 text-white">
+            A
+          </Tab>
+        </TabList>
+        <TabPanel id="a">Panel A</TabPanel>
+      </Tabs>,
+    );
+    const tab = screen.getByRole("tab", { name: "A" });
+    // twMerge should let consumer's bg-red-500 win over internal bg-transparent
+    expect(tab.className).toContain("bg-red-500");
+    expect(tab.className).not.toContain("bg-transparent");
+  });
+
+  it("unstyled variant applies no visual styles to Tab", () => {
+    render(
+      <Tabs variant="unstyled">
+        <TabList aria-label="Unstyled test">
+          <Tab id="a">A</Tab>
+        </TabList>
+        <TabPanel id="a">Panel A</TabPanel>
+      </Tabs>,
+    );
+    const tab = screen.getByRole("tab", { name: "A" });
+    // Should have accessibility/interaction styles
+    expect(tab.className).toContain("cursor-pointer");
+    expect(tab.className).toContain("outline-none");
+    // Should NOT have design system visual styles
+    expect(tab.className).not.toContain("text-[var(--color-text-secondary)]");
+    expect(tab.className).not.toContain("bg-transparent");
+    expect(tab.className).not.toContain("px-4");
+  });
+
+  it("unstyled variant TabList has minimal styles", () => {
+    render(
+      <Tabs variant="unstyled">
+        <TabList aria-label="Unstyled list test">
+          <Tab id="a">A</Tab>
+        </TabList>
+        <TabPanel id="a">Panel A</TabPanel>
+      </Tabs>,
+    );
+    const tablist = screen.getByRole("tablist");
+    expect(tablist.className).toContain("flex");
+    expect(tablist.className).not.toContain("border-b");
+    expect(tablist.className).not.toContain("bg-[var(--color-surface-muted)]");
+  });
+
+  it("unstyled variant TabPanel has no margin", () => {
+    render(
+      <Tabs variant="unstyled">
+        <TabList aria-label="Unstyled panel test">
+          <Tab id="a">A</Tab>
+        </TabList>
+        <TabPanel id="a">Panel A</TabPanel>
+      </Tabs>,
+    );
+    const panel = screen.getByRole("tabpanel");
+    expect(panel.className).toContain("outline-none");
+    expect(panel.className).not.toContain("mt-4");
+  });
+
   it("disabled tab cannot be clicked", async () => {
     const onSelectionChange = vi.fn();
     render(

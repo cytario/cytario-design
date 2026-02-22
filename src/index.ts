@@ -86,6 +86,14 @@ export type { PopoverProps, PopoverTriggerProps, PopoverContentProps } from "./c
 export { Tabs, TabList, Tab, TabPanel } from "./components/Tabs";
 export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabsVariant, TabsSize } from "./components/Tabs";
 
+// Raw React Aria Components tab primitives (unstyled escape hatch)
+export {
+  Tabs as UnstyledTabs,
+  TabList as UnstyledTabList,
+  Tab as UnstyledTab,
+  TabPanel as UnstyledTabPanel,
+} from "react-aria-components";
+
 export { Tree } from "./components/Tree";
 export type { TreeProps, TreeNode, TreeApi } from "./components/Tree";
 

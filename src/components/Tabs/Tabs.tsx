@@ -1,4 +1,5 @@
 import { createContext, useContext, type ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 import {
   Tabs as AriaTabs,
   TabList as AriaTabList,
@@ -15,7 +16,7 @@ import {
 // Context
 // ---------------------------------------------------------------------------
 
-export type TabsVariant = "underline" | "pills";
+export type TabsVariant = "underline" | "pills" | "unstyled";
 export type TabsSize = "sm" | "md" | "lg";
 
 interface TabsContextValue {
@@ -68,12 +69,10 @@ export function Tabs({
       <AriaTabs
         {...props}
         orientation={orientation}
-        className={[
+        className={twMerge(
           orientation === "vertical" ? "flex" : "",
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
+        )}
       >
         {children}
       </AriaTabs>
@@ -98,27 +97,29 @@ export function TabList<T extends object>({
   const { variant } = useContext(TabsContext);
 
   const baseStyles =
-    variant === "underline"
-      ? "flex items-center border-b border-[var(--color-border-default)]"
-      : "inline-flex items-center bg-[var(--color-surface-muted)] rounded-[var(--border-radius-lg)] p-1 gap-1";
+    variant === "unstyled"
+      ? "flex items-center"
+      : variant === "underline"
+        ? "flex items-center border-b border-[var(--color-border-default)]"
+        : "inline-flex items-center bg-[var(--color-surface-muted)] rounded-[var(--border-radius-lg)] p-1 gap-1";
 
   // Vertical orientation overrides
   const verticalStyles =
-    variant === "underline"
-      ? "flex-col border-b-0 border-r border-[var(--color-border-default)]"
-      : "flex-col";
+    variant === "unstyled"
+      ? "flex-col"
+      : variant === "underline"
+        ? "flex-col border-b-0 border-r border-[var(--color-border-default)]"
+        : "flex-col";
 
   return (
     <AriaTabList
       {...props}
       className={({ orientation }) =>
-        [
+        twMerge(
           baseStyles,
           orientation === "vertical" ? verticalStyles : "",
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")
+        )
       }
     />
   );
@@ -139,8 +140,17 @@ export function Tab({ className, ...props }: TabProps) {
   return (
     <AriaTab
       {...props}
-      className={({ isSelected, isDisabled, isHovered, isPressed }) =>
-        [
+      className={({ isSelected, isDisabled, isHovered, isPressed }) => {
+        if (variant === "unstyled") {
+          return twMerge(
+            "cursor-pointer outline-none",
+            "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+            isDisabled ? "opacity-50 pointer-events-none" : "",
+            className,
+          );
+        }
+
+        return twMerge(
           // Base
           "cursor-pointer outline-none transition-colors",
           "font-[var(--font-weight-medium)]",
@@ -163,10 +173,8 @@ export function Tab({ className, ...props }: TabProps) {
           }),
 
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")
-      }
+        );
+      }}
     />
   );
 }
@@ -226,10 +234,15 @@ export interface TabPanelProps extends Omit<AriaTabPanelProps, "className"> {
 }
 
 export function TabPanel({ className, ...props }: TabPanelProps) {
+  const { variant } = useContext(TabsContext);
+
   return (
     <AriaTabPanel
       {...props}
-      className={["mt-4 outline-none", className].filter(Boolean).join(" ")}
+      className={twMerge(
+        variant === "unstyled" ? "outline-none" : "mt-4 outline-none",
+        className,
+      )}
     />
   );
 }
