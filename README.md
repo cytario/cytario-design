@@ -138,6 +138,9 @@ Both colors have a full 50--900 scale defined in `tokens/base.json` for use in h
 
 ## License
 
-Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+This project is dual-licensed:
+
+- **Open source**: [GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0-only)
+- **Commercial**: A proprietary license is available from Slash-m GmbH for use cases where the AGPL is not suitable. Contact licensing@slash-m.com for terms.
 
 "cytario" and the cytario logo are trademarks of Slash-m GmbH. See [TRADEMARK.md](TRADEMARK.md).
