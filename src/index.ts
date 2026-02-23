@@ -97,6 +97,14 @@ export {
 export { Tree } from "./components/Tree";
 export type { TreeProps, TreeNode, TreeApi } from "./components/Tree";
 
+export { SegmentedControl, SegmentedControlItem } from "./components/SegmentedControl";
+export type {
+  SegmentedControlProps,
+  SegmentedControlItemProps,
+  SegmentedControlSize,
+  SegmentedControlSelectionMode,
+} from "./components/SegmentedControl";
+
 export { StorageConnectionCard } from "./components/StorageConnectionCard";
 export type { StorageConnectionCardProps } from "./components/StorageConnectionCard";
 

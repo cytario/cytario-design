@@ -19,7 +19,11 @@ import {
   Row,
   Cell,
 } from "../components/Table";
-import { Tabs, TabList, Tab } from "../components/Tabs";
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "../components/SegmentedControl";
+import type { Key } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
 /* ------------------------------------------------------------------ */
@@ -257,24 +261,26 @@ function DataSourcesPage() {
 
       {/* View mode toolbar */}
       <div className="mb-6 flex justify-end">
-        <Tabs
-          selectedKey={viewMode}
-          onSelectionChange={(key) => setViewMode(key as ViewMode)}
-          variant="pills"
+        <SegmentedControl
+          selectedKeys={new Set([viewMode])}
+          onSelectionChange={(keys) => {
+            const key = [...keys][0];
+            if (key) setViewMode(key as ViewMode);
+          }}
+          selectionMode="single"
           size="sm"
+          aria-label="View mode"
         >
-          <TabList aria-label="View mode" className="justify-end">
-            <Tab id="grid-lg" aria-label="Large grid">
-              <LayoutGrid size={16} />
-            </Tab>
-            <Tab id="grid-sm" aria-label="Small grid">
-              <Grid3x3 size={16} />
-            </Tab>
-            <Tab id="table" aria-label="Table view">
-              <List size={16} />
-            </Tab>
-          </TabList>
-        </Tabs>
+          <SegmentedControlItem id="grid-lg" aria-label="Large grid">
+            <LayoutGrid size={16} />
+          </SegmentedControlItem>
+          <SegmentedControlItem id="grid-sm" aria-label="Small grid">
+            <Grid3x3 size={16} />
+          </SegmentedControlItem>
+          <SegmentedControlItem id="table" aria-label="Table view">
+            <List size={16} />
+          </SegmentedControlItem>
+        </SegmentedControl>
       </div>
 
       {/* Storage connections */}

@@ -4,6 +4,10 @@ import { Input } from "../Input";
 import { InputAddon } from "../InputAddon";
 import { Button } from "../Button";
 import { IconButton } from "../IconButton";
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "../SegmentedControl";
 import { Search, X } from "lucide-react";
 
 const meta: Meta<typeof InputGroup> = {
@@ -26,16 +30,17 @@ export const MagnificationButtons: Story = {
         className="w-12 text-sm text-right"
         aria-label="Current magnification"
       />
-      <InputGroup>
-        {[5, 10, 20, 40, 80].map((mag) => (
-          <Button
-            key={mag}
-            className="w-10 h-8 text-xs p-0 justify-center font-semibold"
-          >
-            {mag} x
-          </Button>
+      <SegmentedControl
+        selectionMode="none"
+        size="sm"
+        aria-label="Magnification presets"
+      >
+        {[5, 10, 20, 40].map((mag) => (
+          <SegmentedControlItem key={mag} id={`${mag}x`}>
+            {mag}x
+          </SegmentedControlItem>
         ))}
-      </InputGroup>
+      </SegmentedControl>
     </div>
   ),
 };

@@ -6,6 +6,10 @@ import { Button } from "../components/Button";
 import { Dialog } from "../components/Dialog";
 import { EmptyState } from "../components/EmptyState";
 import { Breadcrumbs } from "../components/Breadcrumbs";
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "../components/SegmentedControl";
 import type { BreadcrumbItem } from "../components/Breadcrumbs";
 import {
   markers,
@@ -188,35 +192,6 @@ function PresetTab({
 }
 
 /* ------------------------------------------------------------------ */
-/*  Zoom preset button                                                 */
-/* ------------------------------------------------------------------ */
-
-function ZoomPreset({
-  label,
-  isActive,
-  onClick,
-}: {
-  label: string;
-  isActive?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={[
-        "h-7 rounded px-2 text-xs font-medium border transition-colors",
-        isActive
-          ? "border-[#374151] bg-[#374151] text-[#f3f4f6]"
-          : "border-[#374151] bg-transparent text-[#d1d5db] hover:bg-[#1f2937]",
-      ].join(" ")}
-    >
-      {label}
-    </button>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /*  Toolbar zoom button (icon)                                         */
 /* ------------------------------------------------------------------ */
 
@@ -306,7 +281,7 @@ function PathologyViewer() {
     setOverlayStates((prev) => ({ ...prev, [markerId]: !prev[markerId] }));
   }
 
-  const zoomPresets = ["5x", "10x", "20x", "40x", "80x"];
+  const zoomPresets = ["5x", "10x", "20x", "40x"];
 
   return (
     <div
@@ -367,16 +342,22 @@ function PathologyViewer() {
             onClick={() => setZoomLevel("0.5")}
           />
 
-          <div className="ml-1 h-5 w-px bg-[#374151]" />
-
-          {zoomPresets.map((preset) => (
-            <ZoomPreset
-              key={preset}
-              label={preset}
-              isActive={`${zoomLevel}x` === preset}
-              onClick={() => setZoomLevel(preset.replace("x", ""))}
-            />
-          ))}
+          <SegmentedControl
+            selectionMode="none"
+            size="sm"
+            aria-label="Zoom presets"
+            className="ml-1"
+          >
+            {zoomPresets.map((preset) => (
+              <SegmentedControlItem
+                key={preset}
+                id={preset}
+                onPress={() => setZoomLevel(preset.replace("x", ""))}
+              >
+                {preset}
+              </SegmentedControlItem>
+            ))}
+          </SegmentedControl>
         </div>
 
         <div className="ml-1 h-5 w-px bg-[#374151]" />
