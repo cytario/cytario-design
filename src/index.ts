@@ -97,5 +97,8 @@ export {
 export { Tree } from "./components/Tree";
 export type { TreeProps, TreeNode, TreeApi } from "./components/Tree";
 
+export { StorageConnectionCard } from "./components/StorageConnectionCard";
+export type { StorageConnectionCardProps } from "./components/StorageConnectionCard";
+
 // Design tokens (TypeScript constants)
 export * from "./tokens/tokens";
