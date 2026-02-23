@@ -45,7 +45,10 @@
       "success": { "$value": "{color.green.50}" },
       "warning": { "$value": "#fffbeb" },
       "info": { "$value": "{color.slate.50}" },
-      "overlay": { "$value": "#000000cc" }
+      "overlay": { "$value": "#000000cc" },
+      "hover": { "$value": "{color.neutral.100}" },
+      "selected": { "$value": "{color.teal.50}" },
+      "selectedHover": { "$value": "{color.teal.100}" }
     },
     "border": {
       "$type": "color",

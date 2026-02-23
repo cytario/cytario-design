@@ -62,18 +62,22 @@ function NodeRenderer<T extends TreeNode>({
   checkedIds,
   onCheckToggle,
   selectionMode,
+  size,
   onHover,
   onHoverEnd,
 }: NodeRendererProps<T> & {
   checkedIds: Set<string>;
   onCheckToggle: (id: string) => void;
   selectionMode: string;
+  size: "compact" | "comfortable";
   onHover?: (node: T) => void;
   onHoverEnd?: (node: T) => void;
 }) {
   const data = node.data;
   const isCheckbox = selectionMode === "checkbox";
   const isChecked = isCheckbox && checkedIds.has(node.id);
+  const isSelected = node.isSelected && !isCheckbox;
+  const isCompact = size === "compact";
 
   const IconComponent: LucideIcon = data.icon
     ? data.icon
@@ -86,15 +90,17 @@ function NodeRenderer<T extends TreeNode>({
       ref={dragHandle}
       style={style}
       className={[
-        "flex items-center gap-1 px-2 cursor-default select-none",
+        "relative flex items-center cursor-default select-none",
+        isCompact ? "gap-0.5 px-2" : "gap-1 px-3",
         "text-[length:var(--font-size-sm)] text-[var(--color-text-primary)]",
         "outline-none",
-        "transition-colors",
-        node.isSelected && !isCheckbox
-          ? "bg-[var(--color-teal-50)]"
-          : "hover:bg-[var(--color-teal-50)]",
+        // Full-width background via pseudo-element
+        "before:absolute before:inset-y-0 before:left-[-100vw] before:right-0 before:-z-10 before:transition-colors",
+        isSelected
+          ? "before:bg-[var(--color-surface-selected)] hover:before:bg-[var(--color-surface-selected-hover)] border-l-2 border-l-[var(--color-brand-accent)]"
+          : "hover:before:bg-[var(--color-surface-hover)]",
         node.isFocused
-          ? "ring-2 ring-inset ring-[var(--color-border-focus)]"
+          ? "outline-2 outline-[var(--color-border-focus)] outline-offset-[-2px]"
           : "",
       ]
         .filter(Boolean)
@@ -102,11 +108,11 @@ function NodeRenderer<T extends TreeNode>({
       role="treeitem"
       aria-selected={isCheckbox ? isChecked : node.isSelected}
       aria-expanded={node.isInternal ? node.isOpen : undefined}
+      aria-level={node.level + 1}
       onPointerEnter={() => onHover?.(node.data)}
       onPointerLeave={() => onHoverEnd?.(node.data)}
       onClick={(e) => {
         if (isCheckbox) {
-          // In checkbox mode, clicking toggles the checkbox
           onCheckToggle(node.id);
         } else {
           node.handleClick(e);
@@ -123,10 +129,10 @@ function NodeRenderer<T extends TreeNode>({
       <button
         type="button"
         className={[
-          "flex items-center justify-center w-5 h-5 shrink-0",
+          "flex items-center justify-center w-6 h-6 shrink-0",
           "rounded-[var(--border-radius-sm)]",
           "text-[var(--color-text-secondary)]",
-          "hover:text-[var(--color-text-primary)] hover:bg-[var(--color-neutral-100)]",
+          "hover:text-[var(--color-text-primary)]",
           "transition-transform",
           node.isInternal ? "visible" : "invisible",
         ]
@@ -275,7 +281,7 @@ export function Tree<T extends TreeNode = TreeNode>({
     <div
       role="tree"
       aria-label={ariaLabel}
-      className={["outline-none", className].filter(Boolean).join(" ")}
+      className={["outline-none overflow-hidden", className].filter(Boolean).join(" ")}
     >
       <ArboristTree<T>
         ref={internalRef}
@@ -301,6 +307,7 @@ export function Tree<T extends TreeNode = TreeNode>({
             checkedIds={checkedIds}
             onCheckToggle={handleCheckToggle}
             selectionMode={selectionMode}
+            size={size}
             onHover={onHover}
             onHoverEnd={onHoverEnd}
           />

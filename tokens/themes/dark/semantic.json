@@ -45,7 +45,10 @@
       "success": { "$value": "{color.green.900}" },
       "warning": { "$value": "#78350f" },
       "info": { "$value": "{color.slate.900}" },
-      "overlay": { "$value": "rgba(255, 255, 255, 0.1)" }
+      "overlay": { "$value": "rgba(255, 255, 255, 0.1)" },
+      "hover": { "$value": "{color.neutral.800}" },
+      "selected": { "$value": "{color.teal.900}" },
+      "selectedHover": { "$value": "{color.teal.800}" }
     },
     "border": {
       "$type": "color",
