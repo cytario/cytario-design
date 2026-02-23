@@ -73,7 +73,7 @@ export const LongFilenameTruncation: Story = {
   name: "Long Filename (Truncated)",
   args: {
     items: [
-      { id: "org", label: "Cytario Research", href: "#" },
+      { id: "org", label: "cytario Research", href: "#" },
       { id: "project", label: "LUNG-TMA-2024", href: "#" },
       {
         id: "file",

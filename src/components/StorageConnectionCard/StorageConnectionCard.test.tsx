@@ -26,7 +26,7 @@ describe("StorageConnectionCard", () => {
     );
     const dot = container.querySelector("[aria-label='Status: connected']");
     expect(dot).not.toBeNull();
-    expect(dot?.className).toContain("bg-emerald-500");
+    expect(dot?.className).toContain("--color-status-success");
   });
 
   it("shows status indicator with correct class for error", () => {
@@ -39,7 +39,7 @@ describe("StorageConnectionCard", () => {
     );
     const dot = container.querySelector("[aria-label='Status: error']");
     expect(dot).not.toBeNull();
-    expect(dot?.className).toContain("bg-red-500");
+    expect(dot?.className).toContain("--color-status-danger");
   });
 
   it("shows status indicator with correct class for loading", () => {
@@ -52,7 +52,7 @@ describe("StorageConnectionCard", () => {
     );
     const dot = container.querySelector("[aria-label='Status: loading']");
     expect(dot).not.toBeNull();
-    expect(dot?.className).toContain("bg-amber-500");
+    expect(dot?.className).toContain("--color-status-warning");
   });
 
   it("renders children in preview area", () => {

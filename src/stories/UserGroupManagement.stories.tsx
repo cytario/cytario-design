@@ -30,7 +30,7 @@ import {
 const orgTree: TreeNode[] = [
   {
     id: "cytario",
-    name: "cytario GmbH",
+    name: "cytario",
     icon: Building2,
     children: [
       {

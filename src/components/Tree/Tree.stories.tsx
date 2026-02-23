@@ -38,7 +38,7 @@ const fileTree: TreeNode[] = [
     id: "data",
     name: "Data",
     children: [
-      { id: "data-patients", name: "patients.csv" },
+      { id: "data-specimens", name: "specimens.csv" },
       { id: "data-results", name: "results.json" },
     ],
   },

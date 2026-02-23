@@ -568,7 +568,7 @@ function StorageListingPage({
       {/* Row 1: Page title + action */}
       <div className="mb-2 flex items-center justify-between gap-4">
         <H1 size="xl">
-          vericura-internal
+          cytario-research-data
         </H1>
         <ButtonLink
           href="#"
@@ -579,7 +579,7 @@ function StorageListingPage({
         </ButtonLink>
       </div>
 
-      <Breadcrumbs segments={["Home", "vericura-internal", "results"]} />
+      <Breadcrumbs segments={["Home", "cytario-research-data", "results"]} />
 
       {/* Row 2: Search + View mode */}
       <div className="mb-6 flex items-center justify-between gap-3 min-h-[40px]">

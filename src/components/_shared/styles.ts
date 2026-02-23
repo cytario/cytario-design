@@ -24,8 +24,8 @@ export const variantStyles: Record<ButtonVariant, string> = {
   ].join(" "),
   ghost: [
     "bg-transparent text-[var(--color-text-primary)]",
-    "hover:bg-[var(--color-neutral-100)]",
-    "pressed:bg-[var(--color-neutral-200)]",
+    "hover:bg-[var(--color-surface-hover)]",
+    "pressed:bg-[var(--color-surface-pressed)]",
   ].join(" "),
   destructive: [
     "bg-[var(--color-action-danger)] text-[var(--color-text-inverse)]",

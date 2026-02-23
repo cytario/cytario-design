@@ -87,7 +87,7 @@ function ToastItem({
       role="status"
       aria-live="polite"
       className={[
-        "flex items-start gap-3 rounded-lg border px-4 py-3 shadow-md",
+        "flex items-start gap-[var(--spacing-3)] rounded-[var(--border-radius-lg)] border px-[var(--spacing-4)] py-[var(--spacing-3)] shadow-md",
         "min-w-[320px] max-w-[420px]",
         "transition-all duration-200",
         isExiting
@@ -97,11 +97,11 @@ function ToastItem({
       ].join(" ")}
     >
       <IconComponent size={20} className={["shrink-0 mt-0.5", config.iconClass].join(" ")} aria-hidden="true" />
-      <p className="flex-1 text-sm font-medium">{toast.message}</p>
+      <p className="flex-1 text-[length:var(--font-size-sm)] font-[number:var(--font-weight-medium)]">{toast.message}</p>
       <button
         type="button"
         onClick={dismiss}
-        className="shrink-0 rounded p-0.5 opacity-70 hover:opacity-100 transition-opacity outline-none focus-visible:ring-2 focus-visible:ring-current"
+        className="shrink-0 rounded-[var(--border-radius-sm)] p-0.5 opacity-70 hover:opacity-100 transition-opacity outline-none focus-visible:ring-2 focus-visible:ring-current"
         aria-label="Dismiss"
       >
         <X size={16} aria-hidden="true" />

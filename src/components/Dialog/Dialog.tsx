@@ -51,7 +51,7 @@ export function Dialog({
         className={[
           "w-full mx-4",
           sizeStyles[size],
-          "bg-[var(--color-surface-default)] rounded-lg shadow-xl max-h-[85vh] flex flex-col",
+          "bg-[var(--color-surface-default)] rounded-[var(--border-radius-lg)] shadow-xl max-h-[85vh] flex flex-col",
           "data-[entering]:animate-in data-[entering]:zoom-in-95 data-[entering]:fade-in",
           "data-[exiting]:animate-out data-[exiting]:zoom-out-95 data-[exiting]:fade-out",
           className,
@@ -65,7 +65,7 @@ export function Dialog({
               <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border-default)]">
                 <Heading
                   slot="title"
-                  className="text-lg font-semibold text-[var(--color-text-primary)]"
+                  className="text-[length:var(--font-size-lg)] font-[number:var(--font-weight-semibold)] text-[var(--color-text-primary)]"
                 >
                   {title}
                 </Heading>
@@ -73,7 +73,7 @@ export function Dialog({
                   type="button"
                   onClick={close}
                   className={[
-                    "inline-flex items-center justify-center rounded-md p-1",
+                    "inline-flex items-center justify-center rounded-[var(--border-radius-sm)] p-1",
                     "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]",
                     "outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
                     "transition-colors",

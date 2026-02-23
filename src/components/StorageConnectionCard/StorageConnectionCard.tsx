@@ -30,22 +30,22 @@ export interface StorageConnectionCardProps {
 }
 
 export const statusDotStyles = {
-  connected: "bg-emerald-500",
-  error: "bg-red-500",
-  loading: "bg-amber-500 animate-pulse",
+  connected: "bg-[var(--color-status-success)]",
+  error: "border-2 border-[var(--color-status-danger)] bg-transparent",
+  loading: "bg-[var(--color-status-warning)] animate-pulse",
 } as const;
 
 const providerConfig: Record<string, { label: string; color: string }> = {
-  aws: { label: "AWS", color: "bg-orange-100 text-orange-700" },
-  azure: { label: "Azure", color: "bg-blue-100 text-blue-700" },
-  gcp: { label: "GCP", color: "bg-sky-100 text-sky-700" },
-  minio: { label: "MinIO", color: "bg-red-100 text-red-700" },
+  aws: { label: "AWS", color: "bg-[var(--color-badge-purple-bg)] text-[var(--color-badge-purple-text)]" },
+  azure: { label: "Azure", color: "bg-[var(--color-badge-teal-bg)] text-[var(--color-badge-teal-text)]" },
+  gcp: { label: "GCP", color: "bg-[var(--color-badge-slate-bg)] text-[var(--color-badge-slate-text)]" },
+  minio: { label: "MinIO", color: "bg-[var(--color-badge-rose-bg)] text-[var(--color-badge-rose-text)]" },
 };
 
 export function ProviderBadge({ provider }: { provider: string }) {
   const config = providerConfig[provider.toLowerCase()];
   const label = config?.label ?? provider;
-  const colorClass = config?.color ?? "bg-neutral-100 text-neutral-700";
+  const colorClass = config?.color ?? "bg-[var(--color-badge-neutral-bg)] text-[var(--color-badge-neutral-text)]";
 
   return (
     <span
@@ -74,14 +74,14 @@ function PreviewArea({
 
   if (status === "error") {
     return (
-      <div className="flex h-full flex-col items-center justify-center gap-2 bg-red-950/20 px-4">
+      <div className="flex h-full flex-col items-center justify-center gap-2 bg-[var(--color-surface-danger)] px-4">
         <Icon
           icon={AlertCircle}
           size="lg"
-          className="text-red-400"
+          className="text-[var(--color-text-danger)]"
         />
         {errorMessage && (
-          <p className="text-center text-xs text-red-300">{errorMessage}</p>
+          <p className="text-center text-xs text-[var(--color-text-danger)]">{errorMessage}</p>
         )}
       </div>
     );
@@ -96,7 +96,7 @@ function PreviewArea({
       <Icon
         icon={Database}
         size="xl"
-        className="text-[var(--color-neutral-600)]"
+        className="text-[var(--color-text-secondary)]"
       />
     </div>
   );

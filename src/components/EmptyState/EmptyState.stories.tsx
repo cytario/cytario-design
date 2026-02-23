@@ -82,11 +82,11 @@ export const AddOverlay: Story = {
 export const Default: Story = {
   args: {
     icon: Inbox,
-    title: "No items yet",
-    description: "Get started by creating your first item.",
+    title: "No datasets available",
+    description: "Connect a storage source to begin browsing datasets.",
     action: (
       <Button variant="primary" iconLeft={Plus}>
-        Create Item
+        Add Data Source
       </Button>
     ),
   },
@@ -95,21 +95,21 @@ export const Default: Story = {
 export const NoResults: Story = {
   args: {
     icon: Search,
-    title: "No results found",
+    title: "No matching specimens",
     description:
-      "Try adjusting your search or filter to find what you are looking for.",
+      "Try adjusting your search terms or filters to locate specimens.",
   },
 };
 
 export const TitleOnly: Story = {
   args: {
-    title: "Nothing here",
+    title: "No slides loaded",
   },
 };
 
 export const WithIconOnly: Story = {
   args: {
     icon: Inbox,
-    title: "Your inbox is empty",
+    title: "No annotations in this region",
   },
 };

@@ -11,18 +11,18 @@ import { Table, TableHeader, Column, TableBody, Row, Cell } from "./Table";
 interface PathologyCase {
   id: number;
   caseId: string;
-  patient: string;
+  specimenId: string;
   status: string;
   priority: string;
 }
 
 const cases: PathologyCase[] = [
-  { id: 1, caseId: "CYT-2024-0012", patient: "M. Schmidt",  status: "In Review",  priority: "High" },
-  { id: 2, caseId: "CYT-2024-0034", patient: "A. Mueller",  status: "Completed",  priority: "Normal" },
-  { id: 3, caseId: "CYT-2024-0056", patient: "K. Fischer",  status: "Pending",    priority: "Urgent" },
-  { id: 4, caseId: "CYT-2024-0078", patient: "L. Weber",    status: "In Review",  priority: "Normal" },
-  { id: 5, caseId: "CYT-2024-0091", patient: "S. Braun",    status: "Completed",  priority: "Low" },
-  { id: 6, caseId: "CYT-2024-0103", patient: "T. Wagner",   status: "Pending",    priority: "High" },
+  { id: 1, caseId: "CYT-2024-0012", specimenId: "SP-2024-A12", status: "In Review",  priority: "High" },
+  { id: 2, caseId: "CYT-2024-0034", specimenId: "SP-2024-B07", status: "Completed",  priority: "Normal" },
+  { id: 3, caseId: "CYT-2024-0056", specimenId: "SP-2024-C33", status: "Pending",    priority: "Urgent" },
+  { id: 4, caseId: "CYT-2024-0078", specimenId: "SP-2024-D19", status: "In Review",  priority: "Normal" },
+  { id: 5, caseId: "CYT-2024-0091", specimenId: "SP-2024-E45", status: "Completed",  priority: "Low" },
+  { id: 6, caseId: "CYT-2024-0103", specimenId: "SP-2024-F02", status: "Pending",    priority: "High" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -53,7 +53,7 @@ export const Default: Story = {
     <Table aria-label="Pathology cases" size={args.size}>
       <TableHeader>
         <Column id="caseId" isRowHeader>Case ID</Column>
-        <Column id="patient">Patient</Column>
+        <Column id="specimenId">Specimen ID</Column>
         <Column id="status">Status</Column>
         <Column id="priority">Priority</Column>
       </TableHeader>
@@ -61,7 +61,7 @@ export const Default: Story = {
         {cases.map((c) => (
           <Row key={c.id}>
             <Cell>{c.caseId}</Cell>
-            <Cell>{c.patient}</Cell>
+            <Cell>{c.specimenId}</Cell>
             <Cell>{c.status}</Cell>
             <Cell>{c.priority}</Cell>
           </Row>
@@ -77,7 +77,7 @@ export const Compact: Story = {
     <Table aria-label="Pathology cases" size={args.size}>
       <TableHeader>
         <Column id="caseId" isRowHeader>Case ID</Column>
-        <Column id="patient">Patient</Column>
+        <Column id="specimenId">Specimen ID</Column>
         <Column id="status">Status</Column>
         <Column id="priority">Priority</Column>
       </TableHeader>
@@ -85,7 +85,7 @@ export const Compact: Story = {
         {cases.map((c) => (
           <Row key={c.id}>
             <Cell>{c.caseId}</Cell>
-            <Cell>{c.patient}</Cell>
+            <Cell>{c.specimenId}</Cell>
             <Cell>{c.status}</Cell>
             <Cell>{c.priority}</Cell>
           </Row>
@@ -123,7 +123,7 @@ function SortableTable({ size }: { size?: "compact" | "comfortable" }) {
     >
       <TableHeader>
         <Column id="caseId" isRowHeader allowsSorting>Case ID</Column>
-        <Column id="patient" allowsSorting>Patient</Column>
+        <Column id="specimenId" allowsSorting>Specimen ID</Column>
         <Column id="status" allowsSorting>Status</Column>
         <Column id="priority" allowsSorting>Priority</Column>
       </TableHeader>
@@ -131,7 +131,7 @@ function SortableTable({ size }: { size?: "compact" | "comfortable" }) {
         {sorted.map((c) => (
           <Row key={c.id}>
             <Cell>{c.caseId}</Cell>
-            <Cell>{c.patient}</Cell>
+            <Cell>{c.specimenId}</Cell>
             <Cell>{c.status}</Cell>
             <Cell>{c.priority}</Cell>
           </Row>
@@ -155,7 +155,7 @@ export const Empty: Story = {
     <Table aria-label="Empty table" size={args.size}>
       <TableHeader>
         <Column id="caseId" isRowHeader>Case ID</Column>
-        <Column id="patient">Patient</Column>
+        <Column id="specimenId">Specimen ID</Column>
         <Column id="status">Status</Column>
         <Column id="priority">Priority</Column>
       </TableHeader>
@@ -184,12 +184,12 @@ export const SortInteraction: Story = {
     // rows[0] is the header row, rows[1] is the first data row
     expect(rows[1]).toHaveTextContent("CYT-2024-0012");
 
-    // Click Patient column to sort by patient ascending
-    const patientHeader = canvas.getByRole("columnheader", { name: /Patient/i });
-    await userEvent.click(patientHeader);
+    // Click Specimen ID column to sort by specimen ascending
+    const specimenHeader = canvas.getByRole("columnheader", { name: /Specimen ID/i });
+    await userEvent.click(specimenHeader);
 
     const rowsAfter = canvas.getAllByRole("row");
-    // A. Mueller should be first after ascending sort on patient
-    expect(rowsAfter[1]).toHaveTextContent("A. Mueller");
+    // SP-2024-A12 should be first after ascending sort on specimen ID
+    expect(rowsAfter[1]).toHaveTextContent("SP-2024-A12");
   },
 };

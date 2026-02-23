@@ -38,7 +38,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
             ].join(" ")}
           >
             {isLast ? (
-              <span className="font-medium text-[var(--color-text-primary)] truncate">
+              <span className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)] truncate">
                 {item.label}
               </span>
             ) : (

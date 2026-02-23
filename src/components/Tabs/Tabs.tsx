@@ -201,9 +201,9 @@ function getTabVariantStyles(
             "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-0.5 after:bg-[var(--color-teal-600)]",
           ].join(" ")
         : state.isPressed
-          ? "text-[var(--color-text-primary)] bg-[var(--color-neutral-100)]"
+          ? "text-[var(--color-text-primary)] bg-[var(--color-surface-muted)]"
           : state.isHovered
-            ? "text-[var(--color-text-primary)] bg-[var(--color-neutral-50)]"
+            ? "text-[var(--color-text-primary)] bg-[var(--color-surface-subtle)]"
             : "text-[var(--color-text-secondary)] bg-transparent",
     ];
   }
@@ -217,9 +217,9 @@ function getTabVariantStyles(
     state.isSelected
       ? "text-[var(--color-text-primary)] font-[var(--font-weight-semibold)] bg-[var(--color-surface-default)] shadow-sm"
       : state.isPressed
-        ? "text-[var(--color-text-primary)] bg-[var(--color-neutral-50)] shadow-none"
+        ? "text-[var(--color-text-primary)] bg-[var(--color-surface-subtle)] shadow-none"
         : state.isHovered
-          ? "text-[var(--color-text-primary)] bg-[var(--color-neutral-200)]"
+          ? "text-[var(--color-text-primary)] bg-[var(--color-surface-pressed)]"
           : "text-[var(--color-text-secondary)] bg-transparent",
   ];
 }

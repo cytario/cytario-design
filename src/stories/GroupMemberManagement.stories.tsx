@@ -116,7 +116,7 @@ const roleItems: SelectItem[] = [
 ];
 
 const breadcrumbItems: BreadcrumbItem[] = [
-  { id: "org", label: "cytario GmbH", href: "#" },
+  { id: "org", label: "cytario", href: "#" },
   { id: "group", label: "Engineering" },
 ];
 

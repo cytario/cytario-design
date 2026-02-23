@@ -35,18 +35,18 @@ const variantStyles: Record<ToggleButtonVariant, { base: string; selected: strin
   default: {
     base: [
       "bg-transparent text-[var(--color-text-primary)]",
-      "hover:bg-[var(--color-neutral-100)]",
-      "pressed:bg-[var(--color-neutral-200)]",
+      "hover:bg-[var(--color-surface-hover)]",
+      "pressed:bg-[var(--color-surface-pressed)]",
     ].join(" "),
-    selected: "bg-[var(--color-neutral-200)] text-[var(--color-text-primary)]",
+    selected: "bg-[var(--color-surface-pressed)] text-[var(--color-text-primary)]",
   },
   primary: {
     base: [
       "bg-transparent text-[var(--color-text-primary)]",
-      "hover:bg-[var(--color-neutral-100)]",
-      "pressed:bg-[var(--color-neutral-200)]",
+      "hover:bg-[var(--color-surface-hover)]",
+      "pressed:bg-[var(--color-surface-pressed)]",
     ].join(" "),
-    selected: "bg-[var(--color-teal-500)] text-[var(--color-text-inverse)]",
+    selected: "bg-[var(--color-action-primary-active)] text-[var(--color-text-inverse)]",
   },
   outlined: {
     base: [

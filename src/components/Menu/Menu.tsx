@@ -36,7 +36,7 @@ export function Menu({ items, children, className }: MenuProps) {
       {children}
       <Popover
         className={[
-          "bg-[var(--color-surface-primary)] rounded-[var(--border-radius-md)]",
+          "bg-[var(--color-surface-default)] rounded-[var(--border-radius-md)]",
           "shadow-lg border border-[var(--color-border-default)]",
           "py-1 min-w-48",
           "entering:animate-in entering:fade-in entering:zoom-in-95",
@@ -63,8 +63,8 @@ export function Menu({ items, children, className }: MenuProps) {
               className={[
                 "flex items-center gap-2 px-3 py-2 text-sm outline-none cursor-default",
                 "transition-colors",
-                "focus:bg-[var(--color-neutral-100)]",
-                "hover:bg-[var(--color-neutral-100)]",
+                "focus:bg-[var(--color-surface-muted)]",
+                "hover:bg-[var(--color-surface-muted)]",
                 "disabled:opacity-50 disabled:pointer-events-none",
                 item.isDanger
                   ? "text-[var(--color-text-danger)]"

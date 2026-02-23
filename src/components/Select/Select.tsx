@@ -79,11 +79,11 @@ export function Select({
       isDisabled={isDisabled}
       isRequired={isRequired}
       isInvalid={hasError}
-      className={["flex flex-col gap-1", className].filter(Boolean).join(" ")}
+      className={["flex flex-col gap-[var(--spacing-1)]", className].filter(Boolean).join(" ")}
     >
       <Label
         className={[
-          "text-sm font-[var(--font-weight-medium)] text-[var(--color-text-primary)]",
+          "text-[length:var(--font-size-sm)] font-[var(--font-weight-medium)] text-[var(--color-text-primary)]",
         ].join(" ")}
       >
         {label}
@@ -118,7 +118,7 @@ export function Select({
       </Button>
 
       {hasError && (
-        <span className="text-sm text-[var(--color-text-danger)]">
+        <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-danger)]">
           {errorMessage}
         </span>
       )}

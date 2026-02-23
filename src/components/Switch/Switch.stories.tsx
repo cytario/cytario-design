@@ -22,11 +22,11 @@ type Story = StoryObj<typeof Switch>;
 
 // --- Real-world usage stories (from cytario-web) ---
 
-export const ChannelVisibilityRed: Story = {
-  name: "Channel Visibility: DAPI (Red)",
+export const ChannelVisibilityBlue: Story = {
+  name: "Channel Visibility: DAPI (Blue)",
   args: {
     "aria-label": "Toggle DAPI visibility",
-    color: "rgba(255, 0, 0, 255)",
+    color: "rgba(0, 102, 255, 255)",
     defaultSelected: true,
   },
 };
@@ -124,14 +124,14 @@ export const ChannelColors: Story = {
   name: "Microscopy Channel Colors",
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-      <Switch color="#FF0000" defaultSelected>
-        DAPI (Red)
+      <Switch color="#0066FF" defaultSelected>
+        DAPI (Blue)
       </Switch>
       <Switch color="#00FF00" defaultSelected>
         GFP (Green)
       </Switch>
-      <Switch color="#0088FF" defaultSelected>
-        Cy5 (Blue)
+      <Switch color="#FF0000" defaultSelected>
+        Cy5 (Red)
       </Switch>
       <Switch color="rgb(255, 165, 0)" defaultSelected>
         TRITC (Orange)
