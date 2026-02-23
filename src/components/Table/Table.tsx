@@ -119,6 +119,7 @@ export function Cell(props: CellProps) {
       {...props}
       className={[
         "px-3 py-[var(--table-row-py)]",
+        "text-[var(--color-text-primary)]",
         "outline-none",
         "focus-visible:outline-2 focus-visible:outline-[var(--color-border-focus)] focus-visible:outline-offset-[-2px]",
       ].join(" ")}

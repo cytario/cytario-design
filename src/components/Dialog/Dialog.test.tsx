@@ -57,4 +57,26 @@ describe("Dialog", () => {
 
     expect(screen.getByRole("dialog")).toBeDefined();
   });
+
+  it("does not dismiss on outside click when isDismissable is false", async () => {
+    const onOpenChange = vi.fn();
+    render(
+      <Dialog
+        isOpen
+        onOpenChange={onOpenChange}
+        title="Non-dismissable"
+        isDismissable={false}
+      >
+        <p>Content</p>
+      </Dialog>,
+    );
+
+    // Click outside the dialog (on the overlay backdrop)
+    // With isDismissable={false}, the dialog should not close
+    expect(screen.getByRole("dialog")).toBeDefined();
+
+    // The close button should still work
+    await userEvent.click(screen.getByRole("button", { name: "Close" }));
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
 });

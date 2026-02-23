@@ -26,6 +26,10 @@ export interface TreeProps<T extends TreeNode = TreeNode> {
   selectedIds?: Set<string>;
   onSelectionChange?: (ids: Set<string>) => void;
   onActivate?: (node: T) => void;
+  /** Called when the pointer enters a tree node row. */
+  onHover?: (node: T) => void;
+  /** Called when the pointer leaves a tree node row. */
+  onHoverEnd?: (node: T) => void;
   openByDefault?: boolean;
   searchTerm?: string;
   searchMatch?: (node: T, term: string) => boolean;
@@ -58,10 +62,14 @@ function NodeRenderer<T extends TreeNode>({
   checkedIds,
   onCheckToggle,
   selectionMode,
+  onHover,
+  onHoverEnd,
 }: NodeRendererProps<T> & {
   checkedIds: Set<string>;
   onCheckToggle: (id: string) => void;
   selectionMode: string;
+  onHover?: (node: T) => void;
+  onHoverEnd?: (node: T) => void;
 }) {
   const data = node.data;
   const isCheckbox = selectionMode === "checkbox";
@@ -94,6 +102,8 @@ function NodeRenderer<T extends TreeNode>({
       role="treeitem"
       aria-selected={isCheckbox ? isChecked : node.isSelected}
       aria-expanded={node.isInternal ? node.isOpen : undefined}
+      onPointerEnter={() => onHover?.(node.data)}
+      onPointerLeave={() => onHoverEnd?.(node.data)}
       onClick={(e) => {
         if (isCheckbox) {
           // In checkbox mode, clicking toggles the checkbox
@@ -188,6 +198,8 @@ export function Tree<T extends TreeNode = TreeNode>({
   selectedIds,
   onSelectionChange,
   onActivate,
+  onHover,
+  onHoverEnd,
   openByDefault = false,
   searchTerm,
   searchMatch,
@@ -289,6 +301,8 @@ export function Tree<T extends TreeNode = TreeNode>({
             checkedIds={checkedIds}
             onCheckToggle={handleCheckToggle}
             selectionMode={selectionMode}
+            onHover={onHover}
+            onHoverEnd={onHoverEnd}
           />
         )}
       </ArboristTree>

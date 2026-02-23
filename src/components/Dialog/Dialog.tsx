@@ -13,6 +13,8 @@ export interface DialogProps {
   onOpenChange: (isOpen: boolean) => void;
   title: string;
   size?: "sm" | "md" | "lg" | "xl";
+  /** Whether clicking outside the dialog dismisses it. Defaults to true. */
+  isDismissable?: boolean;
   children: React.ReactNode;
   className?: string;
 }
@@ -29,6 +31,7 @@ export function Dialog({
   onOpenChange,
   title,
   size = "md",
+  isDismissable = true,
   children,
   className,
 }: DialogProps) {
@@ -36,7 +39,7 @@ export function Dialog({
     <ModalOverlay
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      isDismissable
+      isDismissable={isDismissable}
       className={[
         "fixed inset-0 z-50 bg-[var(--color-overlay-backdrop)] backdrop-blur-sm",
         "flex items-center justify-center",

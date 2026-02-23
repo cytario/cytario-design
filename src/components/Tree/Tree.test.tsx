@@ -129,4 +129,51 @@ describe("Tree", () => {
     // The tree container should render
     expect(container.querySelector("[role='tree']")).toBeDefined();
   });
+
+  it("calls onHover when pointer enters a node", async () => {
+    const onHover = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <Tree
+        data={sampleData}
+        aria-label="File tree"
+        openByDefault
+        onHover={onHover}
+      />,
+    );
+
+    const readmeNode = screen.getByText("README.md");
+    await user.hover(readmeNode);
+
+    expect(onHover).toHaveBeenCalled();
+    const calls = onHover.mock.calls;
+    const readmeCall = calls.find(
+      (call: [TreeNode]) => call[0].name === "README.md",
+    );
+    expect(readmeCall).toBeDefined();
+  });
+
+  it("calls onHoverEnd when pointer leaves a node", async () => {
+    const onHoverEnd = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <Tree
+        data={sampleData}
+        aria-label="File tree"
+        openByDefault
+        onHoverEnd={onHoverEnd}
+      />,
+    );
+
+    const readmeNode = screen.getByText("README.md");
+    await user.hover(readmeNode);
+    await user.unhover(readmeNode);
+
+    expect(onHoverEnd).toHaveBeenCalled();
+    const calls = onHoverEnd.mock.calls;
+    const readmeCall = calls.find(
+      (call: [TreeNode]) => call[0].name === "README.md",
+    );
+    expect(readmeCall).toBeDefined();
+  });
 });
