@@ -5,7 +5,7 @@ export type MetricCardSize = "sm" | "md";
 
 export interface MetricCardProps {
   /** Metric label (e.g., "Total Spend") */
-  label: string;
+  label: React.ReactNode;
   /** Primary value (formatted string or component) */
   value: React.ReactNode;
   /** Secondary content rendered below the value */
