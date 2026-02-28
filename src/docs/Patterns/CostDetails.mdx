@@ -1,0 +1,78 @@
+{/* CostDetails.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Patterns/Cost Details" />
+
+# Cost Detail Screen Compositions
+
+These patterns demonstrate the detail/drill-down screens in a cost monitoring application. Each screen follows a consistent structure: back link, heading, summary MetricCards, and a data table or chart.
+
+---
+
+## Cost Center Detail
+
+Focused view of a single cost center. The workload Table is always visible (not expandable) since there is only one cost center in context.
+
+```
+BackLink + period label
+Heading (cost center name)
+MetricCardRow (3 cards: Total Spend, MoM, YoY)
+Card > Chart placeholder (cost center trend)
+Card > Table (workload breakdown, always visible)
+```
+
+## Workload Detail
+
+Drill-down into a single workload's usage types. Categorized by Compute, Storage, Other, Support using Badge variants.
+
+```
+BackLink + period label
+Heading (workload name) + subheading (cost center)
+MetricCardRow (3 cards: Current, MoM, YoY)
+Card > Table (usage type breakdown with category Badges)
+```
+
+**Badge variant mapping for categories:**
+
+| Category | Badge Variant |
+|----------|--------------|
+| Compute | `purple` |
+| Storage | `teal` |
+| Support | `slate` |
+| Other | `neutral` |
+
+## Storage Volume Detail
+
+Breakdown of storage volumes by S3 tier, with color-coded dots in the table matching the pie chart.
+
+```
+BackLink + period label
+Heading + description
+MetricCardRow (3 cards: Total Stored, Hot Tier, Cost/TB)
+Card > Pie chart placeholder
+Card > Table (tier breakdown with color dots)
+```
+
+## Storage Cost Detail
+
+Cost breakdown by storage usage type across all workloads.
+
+```
+BackLink + period label
+Heading + description
+MetricCardRow (2 cards: Total Storage Cost, MoM)
+Card > Usage type table placeholder
+```
+
+## Shared Patterns
+
+All detail screens share:
+- **PageShell**: header with product name, `max-w-5xl` content area, version footer
+- **BackLink**: returns to the main report, preserving period context
+- **MetricCards in grids**: 2-3 columns depending on the screen's data density
+- **Banner (warning)**: shown when a requested entity is not found in the selected period
+
+## See Also
+
+- [Compositions/Dapanoskop Details](?path=/story/compositions-dapanoskop-details--cost-center-detail) -- live stories
+- [Compositions/Dapanoskop Dashboard](?path=/story/compositions-dapanoskop-dashboard--default) -- dashboard story

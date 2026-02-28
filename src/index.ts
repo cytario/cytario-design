@@ -108,5 +108,23 @@ export type {
 export { StorageConnectionCard } from "./components/StorageConnectionCard";
 export type { StorageConnectionCardProps } from "./components/StorageConnectionCard";
 
+export { Badge } from "./components/Badge";
+export type { BadgeProps, BadgeVariant, BadgeSize } from "./components/Badge";
+
+export { Card } from "./components/Card";
+export type { CardProps, CardPadding } from "./components/Card";
+
+export { DeltaIndicator } from "./components/DeltaIndicator";
+export type { DeltaIndicatorProps, DeltaFormat, DeltaMode } from "./components/DeltaIndicator";
+
+export { ProgressBar } from "./components/ProgressBar";
+export type { ProgressBarProps, ProgressBarVariant, ProgressBarSize } from "./components/ProgressBar";
+
+export { Banner } from "./components/Banner";
+export type { BannerProps, BannerVariant } from "./components/Banner";
+
+export { MetricCard } from "./components/MetricCard";
+export type { MetricCardProps, MetricCardSize } from "./components/MetricCard";
+
 // Design tokens (TypeScript constants)
 export * from "./tokens/tokens";

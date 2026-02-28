@@ -1,0 +1,54 @@
+{/* CostDashboard.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Patterns/Cost Dashboard" />
+
+# Cost Dashboard Composition
+
+This pattern demonstrates how cytario-design components compose to form a cost monitoring dashboard, as used by dapanoskop.
+
+---
+
+## Layout Structure
+
+The dashboard uses a single-column layout (`max-w-5xl`) with vertical stacking (`space-y-6`). All sections are visible on one scrollable page -- no tabs or hidden content by default.
+
+```
+Page (bg surface-subtle)
+  Header (surface-default, border-bottom)
+  PeriodSelector (horizontal scrollable strip)
+  [conditional] Banner (warning, for MTD)
+  MetricCardRow (3 cards: Total Spend, MoM, YoY)
+  Card > Chart placeholder (Cost Trend)
+  MetricCardRow (3-4 cards: Storage metrics)
+  Card > ProgressBar (Tagging Coverage)
+  CostCenterCard[] (expandable, one per cost center)
+  Footer
+```
+
+## Components Used
+
+| Component | Usage |
+|-----------|-------|
+| **MetricCard** | KPI display in 3-column grids. Primary value as formatted currency; secondary slot for DeltaIndicator. Clickable (`href`) for storage metrics that link to detail pages. |
+| **DeltaIndicator** | Inline in MetricCard values and in table cells. Shows combined format (`+$800 (+5.6%)`) with directional color (red = cost increase, green = decrease). |
+| **Badge** | "MTD" label in period selector (amber variant), "Split Charge" on cost center cards (slate variant). |
+| **Banner** | Warning banner when MTD period is selected. Danger banner for error states. |
+| **Card** | Container for cost center summaries (with expand/collapse for workload table), tagging coverage section, and chart areas. |
+| **ProgressBar** | Tagging coverage visualization (brand variant). Label + description show tagged/untagged breakdown. |
+| **Table** | Workload breakdown within expanded cost center cards. Compact size. |
+
+## Key Interaction Patterns
+
+- **Period selection**: Horizontal strip of buttons. The current month gets an amber "MTD" Badge. Selecting MTD triggers a warning Banner and suppresses YoY comparisons.
+- **Cost center expand/collapse**: Chevron button toggles the workload Table within each Card. Only one level of nesting.
+- **Clickable metric cards**: Storage Cost and Total Stored cards use MetricCard's `href` prop to navigate to detail pages.
+
+## Responsive Behavior
+
+MetricCard grids collapse from 3-4 columns to single column below the `sm` breakpoint (640px). Banner, ProgressBar, and Cards are full-width at all sizes.
+
+## See Also
+
+- [Compositions/Dapanoskop Dashboard](?path=/story/compositions-dapanoskop-dashboard--default) -- live story
+- [Compositions/Dapanoskop Details](?path=/story/compositions-dapanoskop-details--cost-center-detail) -- detail screen stories
