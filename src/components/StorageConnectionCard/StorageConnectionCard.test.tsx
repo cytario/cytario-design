@@ -182,4 +182,69 @@ describe("StorageConnectionCard", () => {
     );
     expect(screen.getByText("wasabi")).toBeDefined();
   });
+
+  it("renders without provider — no badge or region shown", () => {
+    render(
+      <StorageConnectionCard
+        name="my-bucket"
+        status="connected"
+        region="eu-central-1"
+      />,
+    );
+    expect(screen.getByText("my-bucket")).toBeDefined();
+    expect(screen.queryByText("eu-central-1")).toBeNull();
+  });
+
+  it("renders without status — no status dot shown", () => {
+    const { container } = render(
+      <StorageConnectionCard
+        name="my-bucket"
+        provider="aws"
+      />,
+    );
+    expect(screen.getByText("my-bucket")).toBeDefined();
+    expect(screen.getByText("AWS")).toBeDefined();
+    const dot = container.querySelector("[aria-label^='Status:']");
+    expect(dot).toBeNull();
+  });
+
+  it("renders without provider or status — minimal card", () => {
+    const { container } = render(
+      <StorageConnectionCard name="my-bucket" />,
+    );
+    expect(screen.getByText("my-bucket")).toBeDefined();
+    const dot = container.querySelector("[aria-label^='Status:']");
+    expect(dot).toBeNull();
+  });
+
+  it("renders without status — bottom row has no left indent", () => {
+    const { container } = render(
+      <StorageConnectionCard
+        name="my-bucket"
+        provider="aws"
+      />,
+    );
+    const bottomRow = container.querySelector(".flex.items-center.gap-2");
+    expect(bottomRow).not.toBeNull();
+    expect(bottomRow?.className).not.toContain("pl-4");
+  });
+
+  it("renders without status — preview area shows connected state", () => {
+    render(
+      <StorageConnectionCard name="my-bucket">
+        <div data-testid="preview">Content</div>
+      </StorageConnectionCard>,
+    );
+    expect(screen.getByTestId("preview")).toBeDefined();
+  });
+
+  it("shows image count without status (defaults to connected behavior)", () => {
+    render(
+      <StorageConnectionCard
+        name="my-bucket"
+        imageCount={10}
+      />,
+    );
+    expect(screen.getByText("10 images")).toBeDefined();
+  });
 });

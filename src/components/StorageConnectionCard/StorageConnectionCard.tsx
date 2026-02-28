@@ -9,12 +9,12 @@ import { Spinner } from "../Spinner";
 export interface StorageConnectionCardProps {
   /** Display name for the connection */
   name: string;
-  /** Cloud provider identifier (e.g., "aws", "minio", "azure", "gcp") */
-  provider: string;
-  /** AWS region or equivalent */
+  /** Cloud provider identifier (e.g., "aws", "minio", "azure", "gcp"). When omitted, the provider badge and region are hidden. */
+  provider?: string;
+  /** AWS region or equivalent (only rendered when provider is set) */
   region?: string;
-  /** Connection health status */
-  status: "connected" | "error" | "loading";
+  /** Connection health status. When omitted, the status dot is hidden and the preview area behaves as "connected". */
+  status?: "connected" | "error" | "loading";
   /** Human-readable error message when status is "error" */
   errorMessage?: string;
   /** Number of viewable images in the bucket */
@@ -60,7 +60,7 @@ export function ProviderBadge({ provider }: { provider: string }) {
 }
 
 function PreviewArea({
-  status,
+  status = "connected",
   errorMessage,
   children,
 }: Pick<StorageConnectionCardProps, "status" | "errorMessage" | "children">) {
@@ -127,13 +127,15 @@ export function StorageConnectionCard({
       <div className="flex flex-col gap-1.5 border-t border-[var(--color-border-default)] bg-[var(--color-surface-default)] px-3 py-2.5 rounded-b-[var(--border-radius-lg)]">
         {/* Top row: status dot + name + info button */}
         <div className="flex items-start gap-2">
-          <span
-            className={twMerge(
-              "mt-1.5 h-2 w-2 shrink-0 rounded-full",
-              statusDotStyles[status],
-            )}
-            aria-label={`Status: ${status}`}
-          />
+          {status && (
+            <span
+              className={twMerge(
+                "mt-1.5 h-2 w-2 shrink-0 rounded-full",
+                statusDotStyles[status],
+              )}
+              aria-label={`Status: ${status}`}
+            />
+          )}
           <span className="min-w-0 flex-1 line-clamp-2 text-sm font-medium text-[var(--color-text-primary)]">
             {name}
           </span>
@@ -152,19 +154,21 @@ export function StorageConnectionCard({
         </div>
 
         {/* Bottom row: provider badge + region + image count */}
-        <div className="flex items-center gap-2 pl-4">
-          <ProviderBadge provider={provider} />
-          {region && (
-            <span className="shrink-0 text-xs text-[var(--color-text-secondary)]">
-              {region}
-            </span>
-          )}
-          {imageCount != null && status === "connected" && (
-            <span className="ml-auto shrink-0 text-xs tabular-nums text-[var(--color-text-tertiary)]">
-              {imageCount} {imageCount === 1 ? "image" : "images"}
-            </span>
-          )}
-        </div>
+        {(provider || (imageCount != null && (!status || status === "connected"))) && (
+          <div className={twMerge("flex items-center gap-2", status && "pl-4")}>
+            {provider && <ProviderBadge provider={provider} />}
+            {provider && region && (
+              <span className="shrink-0 text-xs text-[var(--color-text-secondary)]">
+                {region}
+              </span>
+            )}
+            {imageCount != null && (!status || status === "connected") && (
+              <span className="ml-auto shrink-0 text-xs tabular-nums text-[var(--color-text-tertiary)]">
+                {imageCount} {imageCount === 1 ? "image" : "images"}
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

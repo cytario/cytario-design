@@ -2,11 +2,7 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { fn } from "storybook/test";
 import { Database, Grid3x3, LayoutGrid, List, Plus, Info } from "lucide-react";
-import {
-  StorageConnectionCard,
-  ProviderBadge,
-  statusDotStyles,
-} from "../components/StorageConnectionCard";
+import { StorageConnectionCard } from "../components/StorageConnectionCard";
 import { Button } from "../components/Button";
 import { H1, H2 } from "../components/Heading";
 import { EmptyState } from "../components/EmptyState";
@@ -23,8 +19,6 @@ import {
   SegmentedControl,
   SegmentedControlItem,
 } from "../components/SegmentedControl";
-import type { Key } from "react-aria-components";
-import { twMerge } from "tailwind-merge";
 
 /* ------------------------------------------------------------------ */
 /*  Mock tissue preview (fluorescence-like CSS gradient)               */
@@ -60,10 +54,7 @@ function MockTissuePreview() {
 interface ConnectionData {
   id: string;
   name: string;
-  provider: string;
   region?: string;
-  status: "connected" | "error" | "loading";
-  errorMessage?: string;
   imageCount?: number;
   href?: string;
   hasPreview?: boolean;
@@ -73,35 +64,32 @@ const connections: ConnectionData[] = [
   {
     id: "1",
     name: "cytario-research-data",
-    provider: "aws",
     region: "eu-central-1",
-    status: "connected",
     imageCount: 24,
-    href: "/buckets/aws/cytario-research-data",
+    href: "/buckets/cytario-research-data",
     hasPreview: true,
   },
   {
     id: "2",
     name: "pathology-archive",
-    provider: "aws",
     region: "eu-central-1",
-    status: "connected",
     imageCount: 156,
-    href: "/buckets/aws/pathology-archive",
+    href: "/buckets/pathology-archive",
   },
   {
     id: "3",
-    name: "failing-bucket",
-    provider: "aws",
+    name: "tissue-samples-2024",
     region: "us-east-1",
-    status: "error",
-    errorMessage: "Request failed: Access Denied",
+    imageCount: 312,
+    href: "/buckets/tissue-samples-2024",
+    hasPreview: true,
   },
   {
     id: "4",
-    name: "new-connection",
-    provider: "minio",
-    status: "loading",
+    name: "spatial-biology-cohort",
+    region: "eu-west-1",
+    imageCount: 89,
+    href: "/buckets/spatial-biology-cohort",
   },
 ];
 
@@ -109,40 +97,20 @@ const recentlyViewed: ConnectionData[] = [
   {
     id: "5",
     name: "sample_001.ome.tif",
-    provider: "aws",
     region: "eu-central-1",
-    status: "connected",
-    href: "/buckets/aws/cytario-research-data/sample_001.ome.tif",
+    href: "/buckets/cytario-research-data/sample_001.ome.tif",
     hasPreview: true,
   },
   {
     id: "6",
     name: "tissue_section_42.ome.tif",
-    provider: "aws",
     region: "eu-central-1",
-    status: "connected",
-    href: "/buckets/aws/cytario-research-data/tissue_section_42.ome.tif",
+    href: "/buckets/cytario-research-data/tissue_section_42.ome.tif",
     hasPreview: true,
   },
 ];
 
 type ViewMode = "grid-lg" | "grid-sm" | "table";
-
-/* ------------------------------------------------------------------ */
-/*  Status dot (reusable in table view)                                */
-/* ------------------------------------------------------------------ */
-
-function StatusDot({ status }: { status: ConnectionData["status"] }) {
-  return (
-    <span
-      className={twMerge(
-        "inline-block h-2 w-2 rounded-full",
-        statusDotStyles[status],
-      )}
-      aria-label={`Status: ${status}`}
-    />
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /*  Grid view                                                          */
@@ -166,10 +134,6 @@ function ConnectionGrid({
         <StorageConnectionCard
           key={conn.id}
           name={conn.name}
-          provider={conn.provider}
-          region={conn.region}
-          status={conn.status}
-          errorMessage={conn.errorMessage}
           imageCount={conn.imageCount}
           href={conn.href}
           onInfo={fn()}
@@ -189,9 +153,7 @@ function ConnectionTable({ data }: { data: ConnectionData[] }) {
   return (
     <Table size="comfortable" aria-label="Data sources">
       <TableHeader>
-        <Column isRowHeader>Status</Column>
-        <Column>Name</Column>
-        <Column>Provider</Column>
+        <Column isRowHeader>Name</Column>
         <Column>Region</Column>
         <Column>Images</Column>
         <Column>Actions</Column>
@@ -200,15 +162,9 @@ function ConnectionTable({ data }: { data: ConnectionData[] }) {
         {data.map((conn) => (
           <Row key={conn.id}>
             <Cell>
-              <StatusDot status={conn.status} />
-            </Cell>
-            <Cell>
               <span className="font-medium text-[var(--color-text-primary)]">
                 {conn.name}
               </span>
-            </Cell>
-            <Cell>
-              <ProviderBadge provider={conn.provider} />
             </Cell>
             <Cell>
               <span className="text-[var(--color-text-secondary)]">
@@ -216,7 +172,7 @@ function ConnectionTable({ data }: { data: ConnectionData[] }) {
               </span>
             </Cell>
             <Cell>
-              {conn.imageCount != null && conn.status === "connected" ? (
+              {conn.imageCount != null ? (
                 <span className="tabular-nums text-[var(--color-text-tertiary)]">
                   {conn.imageCount}
                 </span>
