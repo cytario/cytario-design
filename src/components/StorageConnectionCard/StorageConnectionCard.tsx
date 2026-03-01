@@ -1,9 +1,10 @@
 import type React from "react";
-import type { LucideIcon } from "lucide-react";
 import { AlertCircle, Database, Info } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
+import type { PillColor } from "../Pill";
+import { Pill } from "../Pill";
 import { Spinner } from "../Spinner";
 
 export interface StorageConnectionCardProps {
@@ -35,27 +36,22 @@ export const statusDotStyles = {
   loading: "bg-[var(--color-status-warning)] animate-pulse",
 } as const;
 
-const providerConfig: Record<string, { label: string; color: string }> = {
-  aws: { label: "AWS", color: "bg-[var(--color-badge-purple-bg)] text-[var(--color-badge-purple-text)]" },
-  azure: { label: "Azure", color: "bg-[var(--color-badge-teal-bg)] text-[var(--color-badge-teal-text)]" },
-  gcp: { label: "GCP", color: "bg-[var(--color-badge-slate-bg)] text-[var(--color-badge-slate-text)]" },
-  minio: { label: "MinIO", color: "bg-[var(--color-badge-rose-bg)] text-[var(--color-badge-rose-text)]" },
+const providerConfig: Record<string, { label: string; color: PillColor }> = {
+  aws: { label: "AWS", color: "purple" },
+  azure: { label: "Azure", color: "teal" },
+  gcp: { label: "GCP", color: "slate" },
+  minio: { label: "MinIO", color: "rose" },
 };
 
 export function ProviderBadge({ provider }: { provider: string }) {
   const config = providerConfig[provider.toLowerCase()];
   const label = config?.label ?? provider;
-  const colorClass = config?.color ?? "bg-[var(--color-badge-neutral-bg)] text-[var(--color-badge-neutral-text)]";
+  const color: PillColor = config?.color ?? "neutral";
 
   return (
-    <span
-      className={twMerge(
-        "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
-        colorClass,
-      )}
-    >
+    <Pill color={color}>
       {label}
-    </span>
+    </Pill>
   );
 }
 
