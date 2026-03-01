@@ -12,6 +12,7 @@ import { CheckCircle, XCircle, Info, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export type ToastVariant = "success" | "error" | "info";
+export type ToastPlacement = "top-center" | "top-right" | "bottom-center" | "bottom-right";
 
 export interface ToastData {
   id: string;
@@ -57,6 +58,26 @@ const variantConfig: Record<
   },
 };
 
+// ---------------------------------------------------------------------------
+// Placement context — passed from ToastContainer to ToastItem
+// ---------------------------------------------------------------------------
+
+const PlacementContext = createContext<ToastPlacement>("bottom-right");
+
+const exitAnimationByPlacement: Record<ToastPlacement, string> = {
+  "top-center": "-translate-y-full opacity-0",
+  "top-right": "translate-x-full opacity-0",
+  "bottom-center": "translate-y-full opacity-0",
+  "bottom-right": "translate-x-full opacity-0",
+};
+
+const enterAnimationByPlacement: Record<ToastPlacement, string> = {
+  "top-center": "translate-y-0 opacity-100 animate-in slide-in-from-top",
+  "top-right": "translate-x-0 opacity-100 animate-in slide-in-from-right",
+  "bottom-center": "translate-y-0 opacity-100 animate-in slide-in-from-bottom",
+  "bottom-right": "translate-x-0 opacity-100 animate-in slide-in-from-right",
+};
+
 function ToastItem({
   toast,
   onRemove,
@@ -66,6 +87,7 @@ function ToastItem({
 }) {
   const [isExiting, setIsExiting] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const placement = useContext(PlacementContext);
   const config = variantConfig[toast.variant];
   const IconComponent = config.icon;
 
@@ -91,8 +113,8 @@ function ToastItem({
         "min-w-[320px] max-w-[420px]",
         "transition-all duration-200",
         isExiting
-          ? "translate-x-full opacity-0"
-          : "translate-x-0 opacity-100 animate-in slide-in-from-right",
+          ? exitAnimationByPlacement[placement]
+          : enterAnimationByPlacement[placement],
         config.containerClass,
       ].join(" ")}
     >
@@ -110,15 +132,32 @@ function ToastItem({
   );
 }
 
-function ToastContainer({ toasts, removeToast }: { toasts: ToastData[]; removeToast: (id: string) => void }) {
+const containerPositionStyles: Record<ToastPlacement, string> = {
+  "top-center": "fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col-reverse gap-2 items-center",
+  "top-right": "fixed top-4 right-4 z-50 flex flex-col-reverse gap-2",
+  "bottom-center": "fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 items-center",
+  "bottom-right": "fixed bottom-4 right-4 z-50 flex flex-col gap-2",
+};
+
+function ToastContainer({
+  toasts,
+  removeToast,
+  placement = "bottom-right",
+}: {
+  toasts: ToastData[];
+  removeToast: (id: string) => void;
+  placement?: ToastPlacement;
+}) {
   if (toasts.length === 0) return null;
 
   return createPortal(
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
-      {toasts.map((toast) => (
-        <ToastItem key={toast.id} toast={toast} onRemove={removeToast} />
-      ))}
-    </div>,
+    <PlacementContext.Provider value={placement}>
+      <div className={containerPositionStyles[placement]}>
+        {toasts.map((toast) => (
+          <ToastItem key={toast.id} toast={toast} onRemove={removeToast} />
+        ))}
+      </div>
+    </PlacementContext.Provider>,
     document.body,
   );
 }
@@ -153,13 +192,15 @@ export function createToastBridge(): ToastBridge {
 // ToastProvider
 // ---------------------------------------------------------------------------
 
-interface ToastProviderProps {
+export interface ToastProviderProps {
   children: ReactNode;
   /** Optional bridge for receiving toasts from outside the React tree. */
   bridge?: ToastBridge;
+  /** Where to display toasts on screen. Defaults to "bottom-right". */
+  placement?: ToastPlacement;
 }
 
-export function ToastProvider({ children, bridge }: ToastProviderProps) {
+export function ToastProvider({ children, bridge, placement = "bottom-right" }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
   const addToast = useCallback((toast: Omit<ToastData, "id">) => {
@@ -180,7 +221,7 @@ export function ToastProvider({ children, bridge }: ToastProviderProps) {
   return (
     <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
       {children}
-      <ToastContainer toasts={toasts} removeToast={removeToast} />
+      <ToastContainer toasts={toasts} removeToast={removeToast} placement={placement} />
     </ToastContext.Provider>
   );
 }

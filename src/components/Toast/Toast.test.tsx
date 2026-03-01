@@ -2,7 +2,7 @@ import { render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { ToastProvider, useToast, createToastBridge } from "./Toast";
-import type { ToastBridge } from "./Toast";
+import type { ToastBridge, ToastPlacement } from "./Toast";
 
 function TestTrigger({ variant = "success" as const, message = "Test toast" }) {
   const { toast } = useToast();
@@ -13,8 +13,8 @@ function TestTrigger({ variant = "success" as const, message = "Test toast" }) {
   );
 }
 
-function renderWithProvider(ui: React.ReactNode) {
-  return render(<ToastProvider>{ui}</ToastProvider>);
+function renderWithProvider(ui: React.ReactNode, placement?: ToastPlacement) {
+  return render(<ToastProvider placement={placement}>{ui}</ToastProvider>);
 }
 
 describe("Toast", () => {
@@ -99,6 +99,42 @@ describe("Toast", () => {
     expect(() => render(<Broken />)).toThrow(
       "useToast must be used within a ToastProvider",
     );
+  });
+
+  it("renders with top-center placement", async () => {
+    renderWithProvider(<TestTrigger />, "top-center");
+
+    await userEvent.click(screen.getByRole("button", { name: "Trigger" }));
+
+    const status = screen.getByRole("status");
+    expect(status.className).toContain("slide-in-from-top");
+  });
+
+  it("renders with top-right placement", async () => {
+    renderWithProvider(<TestTrigger />, "top-right");
+
+    await userEvent.click(screen.getByRole("button", { name: "Trigger" }));
+
+    const status = screen.getByRole("status");
+    expect(status.className).toContain("slide-in-from-right");
+  });
+
+  it("renders with bottom-center placement", async () => {
+    renderWithProvider(<TestTrigger />, "bottom-center");
+
+    await userEvent.click(screen.getByRole("button", { name: "Trigger" }));
+
+    const status = screen.getByRole("status");
+    expect(status.className).toContain("slide-in-from-bottom");
+  });
+
+  it("defaults to bottom-right placement", async () => {
+    renderWithProvider(<TestTrigger />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Trigger" }));
+
+    const status = screen.getByRole("status");
+    expect(status.className).toContain("slide-in-from-right");
   });
 });
 

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, userEvent, within } from "storybook/test";
 import { ToastProvider, useToast, createToastBridge } from "./Toast";
+import type { ToastPlacement } from "./Toast";
 import { Button } from "../Button";
 
 function ToastDemo({
@@ -103,6 +104,60 @@ export const AllVariants: Story = {
       <ToastDemo variant="error" message="Error occurred." />
       <ToastDemo variant="info" message="Info message." />
     </div>
+  ),
+};
+
+// --- Placement stories ---
+
+function PlacementDemo({ placement }: { placement: ToastPlacement }) {
+  const { toast } = useToast();
+  return (
+    <Button onPress={() => toast({ variant: "success", message: `Toast at ${placement}` })}>
+      Show toast ({placement})
+    </Button>
+  );
+}
+
+export const TopCenter: Story = {
+  name: "Placement: Top Center",
+  decorators: [
+    (Story) => (
+      <ToastProvider placement="top-center">
+        <Story />
+      </ToastProvider>
+    ),
+  ],
+  render: () => <PlacementDemo placement="top-center" />,
+};
+
+export const TopRight: Story = {
+  name: "Placement: Top Right",
+  decorators: [
+    (Story) => (
+      <ToastProvider placement="top-right">
+        <Story />
+      </ToastProvider>
+    ),
+  ],
+  render: () => <PlacementDemo placement="top-right" />,
+};
+
+export const BottomCenter: Story = {
+  name: "Placement: Bottom Center",
+  decorators: [
+    (Story) => (
+      <ToastProvider placement="bottom-center">
+        <Story />
+      </ToastProvider>
+    ),
+  ],
+  render: () => <PlacementDemo placement="bottom-center" />,
+};
+
+export const BottomRight: Story = {
+  name: "Placement: Bottom Right (Default)",
+  render: () => (
+    <ToastDemo variant="success" message="Default bottom-right placement" />
   ),
 };
 
