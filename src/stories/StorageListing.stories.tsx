@@ -2,22 +2,22 @@ import { useMemo, useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import {
   Download,
-  File,
-  FileSpreadsheet,
-  Folder,
   FolderOpen,
   FolderTree,
   Grid3x3,
   Info,
   LayoutGrid,
   List,
-  Microscope,
-  Image,
-  type LucideIcon,
 } from "lucide-react";
 
 import { ButtonLink } from "../components/ButtonLink";
 import { EmptyState } from "../components/EmptyState";
+import {
+  FileCard,
+  FileIcon,
+  getFileIcon,
+  getTypeLabel,
+} from "../components/FileCard";
 import { H1 } from "../components/Heading";
 import { IconButton } from "../components/IconButton";
 import { Input } from "../components/Input";
@@ -234,55 +234,10 @@ function MockTissuePreview({ index = 0 }: { index?: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  File type helpers                                                   */
+/*  Story-local FileCard wrapper (bridges FileNode -> FileCard props)   */
 /* ------------------------------------------------------------------ */
 
-function getFileIcon(node: FileNode): LucideIcon {
-  if (node.type === "directory") return Folder;
-  const ext = (node.extension ?? "").toLowerCase();
-  if (ext === "ome.tif" || ext === "ome.tiff") return Microscope;
-  if (/^(tiff?|png|jpe?g)$/.test(ext)) return Image;
-  if (/^(csv|parquet)$/.test(ext)) return FileSpreadsheet;
-  return File;
-}
-
-function getTypeLabel(node: FileNode): string {
-  if (node.type === "directory") return "Folder";
-  const ext = (node.extension ?? "").toLowerCase();
-  if (ext === "ome.tif" || ext === "ome.tiff") return "OME-TIFF";
-  if (/^tiff?$/.test(ext)) return "TIFF";
-  if (ext === "csv") return "CSV";
-  if (ext === "parquet") return "Parquet";
-  if (ext === "png") return "PNG";
-  if (/^jpe?g$/.test(ext)) return "JPEG";
-  return ext.toUpperCase() || "File";
-}
-
-/* ------------------------------------------------------------------ */
-/*  Shared: File type icon component                                   */
-/* ------------------------------------------------------------------ */
-
-function FileIcon({
-  node,
-  size = 16,
-}: {
-  node: FileNode;
-  size?: number;
-}) {
-  const IconComponent = getFileIcon(node);
-  return (
-    <IconComponent
-      size={size}
-      className="shrink-0 text-[var(--color-text-secondary)]"
-    />
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Grid card                                                          */
-/* ------------------------------------------------------------------ */
-
-function FileCard({
+function FileCardItem({
   node,
   compact = false,
   previewIndex,
@@ -291,101 +246,20 @@ function FileCard({
   compact?: boolean;
   previewIndex?: number;
 }) {
-  const radius = compact
-    ? "rounded-[var(--border-radius-md)]"
-    : "rounded-[var(--border-radius-lg)]";
-
-  const IconComponent = getFileIcon(node);
-  const iconSize = compact ? 24 : 32;
-  const iconColor =
-    node.type === "directory"
-      ? "text-[var(--color-neutral-500)]"
-      : "text-[var(--color-neutral-600)]";
-
-  const thumbnailClass = compact
-    ? "aspect-square rounded-t-[var(--border-radius-md)]"
-    : "aspect-[4/3] rounded-t-[var(--border-radius-lg)]";
-
   return (
-    <a
+    <FileCard
+      name={node.name}
+      type={node.type}
+      size={node.size}
+      extension={node.extension}
+      compact={compact}
       href="#"
-      onClick={(e) => e.preventDefault()}
-      aria-label={node.name}
-      className={[
-        "group flex flex-col overflow-hidden",
-        radius,
-        "border border-[var(--color-border-default)]",
-        "shadow-sm",
-        "transition-all duration-150",
-        "hover:border-[var(--color-border-focus)] hover:shadow-md",
-        "focus-visible:outline-2 focus-visible:outline-[var(--color-border-focus)] focus-visible:outline-offset-2",
-        "cursor-pointer no-underline",
-      ].join(" ")}
+      onInfo={() => {}}
     >
-      {/* Thumbnail area */}
-      <div
-        className={`shrink-0 relative overflow-hidden bg-[var(--color-neutral-900)] ${thumbnailClass}`}
-      >
-        {node.hasPreview && previewIndex != null ? (
-          <MockTissuePreview index={previewIndex} />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <IconComponent
-              size={iconSize}
-              className={iconColor}
-            />
-          </div>
-        )}
-
-        {/* Hover-reveal info button */}
-        <div
-          className={[
-            "absolute opacity-0 group-hover:opacity-100 group-focus-within:opacity-100",
-            "transition-opacity duration-150",
-            compact ? "bottom-1.5 right-1.5" : "bottom-2 right-2",
-          ].join(" ")}
-        >
-          <IconButton
-            icon={Info}
-            aria-label={`Show info for ${node.name}`}
-            variant="ghost"
-            size="sm"
-            className="bg-[var(--color-neutral-900)]/60 text-[var(--color-neutral-0)] hover:bg-[var(--color-neutral-900)]/80 rounded-[var(--border-radius-sm)]"
-          />
-        </div>
-      </div>
-
-      {/* Metadata area */}
-      <div
-        className={[
-          "flex flex-col border-t border-[var(--color-border-default)]",
-          "bg-[var(--color-surface-default)]",
-          compact
-            ? "px-2 py-1.5 rounded-b-[var(--border-radius-md)]"
-            : "gap-0.5 px-3 py-2 rounded-b-[var(--border-radius-lg)]",
-        ].join(" ")}
-      >
-        {compact ? (
-          <span className="text-[var(--font-size-xs)] font-[var(--font-weight-medium)] text-[var(--color-text-primary)] truncate">
-            {node.name}
-          </span>
-        ) : (
-          <>
-            <span className="flex items-center gap-1.5">
-              <FileIcon node={node} size={16} />
-              <span className="text-[var(--font-size-sm)] font-[var(--font-weight-medium)] text-[var(--color-text-primary)] truncate">
-                {node.name}
-              </span>
-            </span>
-            {node.size && (
-              <span className="text-[var(--font-size-xs)] text-[var(--color-text-secondary)] tabular-nums pl-[22px]">
-                {node.size}
-              </span>
-            )}
-          </>
-        )}
-      </div>
-    </a>
+      {node.hasPreview && previewIndex != null ? (
+        <MockTissuePreview index={previewIndex} />
+      ) : undefined}
+    </FileCard>
   );
 }
 
@@ -419,7 +293,7 @@ function GridView({
   return (
     <div className={gridClass}>
       {nodes.map((node) => (
-        <FileCard
+        <FileCardItem
           key={node.name}
           node={node}
           compact={compact}
@@ -460,7 +334,7 @@ function ListView({ nodes }: { nodes: FileNode[] }) {
                 onClick={(e) => e.preventDefault()}
                 className="flex items-center gap-2 font-[var(--font-weight-medium)] text-[var(--color-text-primary)] no-underline hover:underline"
               >
-                <FileIcon node={node} />
+                <FileIcon type={node.type} extension={node.extension} />
                 {node.name}
               </a>
             </Cell>
@@ -476,7 +350,7 @@ function ListView({ nodes }: { nodes: FileNode[] }) {
                   "text-[var(--color-text-secondary)]",
                 ].join(" ")}
               >
-                {getTypeLabel(node)}
+                {getTypeLabel(node.type, node.extension)}
               </span>
             </Cell>
             <Cell>
@@ -512,7 +386,7 @@ function toDesignTreeNodes(nodes: FileNode[]): DesignTreeNode[] {
   return nodes.map((node) => ({
     id: node.name,
     name: node.size ? `${node.name}  ·  ${node.size}` : node.name,
-    icon: getFileIcon(node),
+    icon: getFileIcon(node.type, node.extension),
     children: node.children ? toDesignTreeNodes(node.children) : undefined,
   }));
 }

@@ -105,6 +105,9 @@ export type {
   SegmentedControlSelectionMode,
 } from "./components/SegmentedControl";
 
+export { FileCard, FileIcon, getFileIcon, getTypeLabel } from "./components/FileCard";
+export type { FileCardProps } from "./components/FileCard";
+
 export { StorageConnectionCard } from "./components/StorageConnectionCard";
 export type { StorageConnectionCardProps } from "./components/StorageConnectionCard";
 
