@@ -2,8 +2,10 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Edit, Settings, Trash2 } from "lucide-react";
+import type { Selection } from "react-aria-components";
 import { Menu } from "./Menu";
 import { MenuItem } from "./MenuItem";
+import { MenuCheckboxItem } from "./MenuCheckboxItem";
 import { MenuSection } from "./MenuSection";
 import { MenuHeader } from "./MenuHeader";
 import { MenuSeparator } from "./MenuSeparator";
@@ -315,6 +317,103 @@ describe("Menu (composition API)", () => {
 
     await userEvent.click(screen.getByRole("button", { name: "Actions" }));
     const item = screen.getByRole("menuitem", { name: "Edit" });
+    expect(item.getAttribute("aria-disabled")).toBe("true");
+  });
+});
+
+// ─── Checkbox menu items (selectionMode="multiple") ─────────────────────────
+
+describe("Menu (checkbox items)", () => {
+  it("renders checkbox menu items with selectionMode multiple", async () => {
+    render(
+      <Menu
+        selectionMode="multiple"
+        defaultSelectedKeys={new Set(["a"])}
+        content={
+          <>
+            <MenuCheckboxItem id="a">Option A</MenuCheckboxItem>
+            <MenuCheckboxItem id="b">Option B</MenuCheckboxItem>
+          </>
+        }
+      >
+        <Button>Options</Button>
+      </Menu>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Options" }));
+    expect(screen.getByRole("menu")).toBeDefined();
+
+    const items = screen.getAllByRole("menuitemcheckbox");
+    expect(items).toHaveLength(2);
+  });
+
+  it("shows selected state for default selected keys", async () => {
+    render(
+      <Menu
+        selectionMode="multiple"
+        defaultSelectedKeys={new Set(["a"])}
+        content={
+          <>
+            <MenuCheckboxItem id="a">Option A</MenuCheckboxItem>
+            <MenuCheckboxItem id="b">Option B</MenuCheckboxItem>
+          </>
+        }
+      >
+        <Button>Options</Button>
+      </Menu>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Options" }));
+
+    expect(
+      screen.getByRole("menuitemcheckbox", { name: "Option A" }).getAttribute("aria-checked"),
+    ).toBe("true");
+    expect(
+      screen.getByRole("menuitemcheckbox", { name: "Option B" }).getAttribute("aria-checked"),
+    ).toBe("false");
+  });
+
+  it("calls onSelectionChange when checkbox item is toggled", async () => {
+    const onSelectionChange = vi.fn();
+
+    render(
+      <Menu
+        selectionMode="multiple"
+        defaultSelectedKeys={new Set(["a"])}
+        onSelectionChange={onSelectionChange}
+        content={
+          <>
+            <MenuCheckboxItem id="a">Option A</MenuCheckboxItem>
+            <MenuCheckboxItem id="b">Option B</MenuCheckboxItem>
+          </>
+        }
+      >
+        <Button>Options</Button>
+      </Menu>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Options" }));
+    await userEvent.click(screen.getByRole("menuitemcheckbox", { name: "Option B" }));
+
+    expect(onSelectionChange).toHaveBeenCalled();
+  });
+
+  it("supports disabled checkbox items", async () => {
+    render(
+      <Menu
+        selectionMode="multiple"
+        content={
+          <MenuCheckboxItem id="a" isDisabled>
+            Disabled Option
+          </MenuCheckboxItem>
+        }
+      >
+        <Button>Options</Button>
+      </Menu>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Options" }));
+    const item = screen.getByRole("menuitemcheckbox", { name: "Disabled Option" });
     expect(item.getAttribute("aria-disabled")).toBe("true");
   });
 });

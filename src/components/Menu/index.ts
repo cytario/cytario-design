@@ -4,6 +4,9 @@ export type { MenuProps, MenuItemData } from "./Menu";
 export { MenuItem } from "./MenuItem";
 export type { MenuItemProps } from "./MenuItem";
 
+export { MenuCheckboxItem } from "./MenuCheckboxItem";
+export type { MenuCheckboxItemProps } from "./MenuCheckboxItem";
+
 export { MenuSection } from "./MenuSection";
 export type { MenuSectionProps } from "./MenuSection";
 

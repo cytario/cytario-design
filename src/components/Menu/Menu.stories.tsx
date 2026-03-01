@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { fn } from "storybook/test";
+import type { Selection } from "react-aria-components";
 import {
   Copy,
   Edit,
@@ -11,9 +13,11 @@ import {
   Download,
   User,
   Shield,
+  Columns3,
 } from "lucide-react";
 import { Menu } from "./Menu";
 import { MenuItem } from "./MenuItem";
+import { MenuCheckboxItem } from "./MenuCheckboxItem";
 import { MenuSection } from "./MenuSection";
 import { MenuHeader } from "./MenuHeader";
 import { MenuSeparator } from "./MenuSeparator";
@@ -361,5 +365,90 @@ export const Playground: Story = {
       { id: "delete", label: "Delete", icon: Trash2, isDanger: true },
     ],
     children: <Button>Open Menu</Button>,
+  },
+};
+
+// --- Checkbox menu items ---
+
+export const ColumnVisibility: Story = {
+  name: "Column Visibility (Checkbox)",
+  render: function ColumnVisibilityExample() {
+    const [selectedKeys, setSelectedKeys] = useState<Selection>(
+      new Set(["name", "status", "date", "size"]),
+    );
+
+    return (
+      <Menu
+        selectionMode="multiple"
+        selectedKeys={selectedKeys}
+        onSelectionChange={setSelectedKeys}
+        content={
+          <MenuSection header="Columns">
+            <MenuCheckboxItem id="name">Name</MenuCheckboxItem>
+            <MenuCheckboxItem id="status">Status</MenuCheckboxItem>
+            <MenuCheckboxItem id="date">Date Modified</MenuCheckboxItem>
+            <MenuCheckboxItem id="size">File Size</MenuCheckboxItem>
+            <MenuCheckboxItem id="type">Type</MenuCheckboxItem>
+            <MenuCheckboxItem id="owner">Owner</MenuCheckboxItem>
+          </MenuSection>
+        }
+      >
+        <IconButton icon={Columns3} aria-label="Toggle columns" variant="ghost" />
+      </Menu>
+    );
+  },
+};
+
+export const CheckboxMenuItems: Story = {
+  name: "Checkbox Items (Uncontrolled)",
+  render: () => (
+    <Menu
+      selectionMode="multiple"
+      defaultSelectedKeys={new Set(["grid", "labels"])}
+      content={
+        <>
+          <MenuCheckboxItem id="grid">Show Grid</MenuCheckboxItem>
+          <MenuCheckboxItem id="labels">Show Labels</MenuCheckboxItem>
+          <MenuCheckboxItem id="rulers">Show Rulers</MenuCheckboxItem>
+          <MenuCheckboxItem id="guides" isDisabled>Show Guides</MenuCheckboxItem>
+        </>
+      }
+    >
+      <Button variant="secondary">View Options</Button>
+    </Menu>
+  ),
+};
+
+export const MixedCheckboxAndActions: Story = {
+  name: "Mixed: Checkbox + Action Items",
+  render: function MixedExample() {
+    const [selectedKeys, setSelectedKeys] = useState<Selection>(
+      new Set(["annotations", "heatmap"]),
+    );
+
+    return (
+      <Menu
+        selectionMode="multiple"
+        selectedKeys={selectedKeys}
+        onSelectionChange={setSelectedKeys}
+        content={
+          <>
+            <MenuSection header="Overlays">
+              <MenuCheckboxItem id="annotations">Annotations</MenuCheckboxItem>
+              <MenuCheckboxItem id="heatmap">Heatmap</MenuCheckboxItem>
+              <MenuCheckboxItem id="segmentation">Segmentation</MenuCheckboxItem>
+            </MenuSection>
+
+            <MenuSeparator />
+
+            <MenuItem id="reset-view" icon={Settings} onAction={() => setSelectedKeys(new Set())}>
+              Clear All Overlays
+            </MenuItem>
+          </>
+        }
+      >
+        <Button variant="secondary">View</Button>
+      </Menu>
+    );
   },
 };

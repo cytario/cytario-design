@@ -33,7 +33,7 @@ export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";
 
 export { ToastProvider, useToast, createToastBridge } from "./components/Toast";
-export type { ToastData, ToastVariant, ToastContextValue, ToastBridge } from "./components/Toast";
+export type { ToastData, ToastVariant, ToastPlacement, ToastContextValue, ToastBridge, ToastProviderProps } from "./components/Toast";
 
 export { EmptyState } from "./components/EmptyState";
 export type { EmptyStateProps } from "./components/EmptyState";
@@ -77,11 +77,19 @@ export type { ButtonLinkProps, IconButtonLinkProps } from "./components/ButtonLi
 export { ToggleButton } from "./components/ToggleButton";
 export type { ToggleButtonProps, ToggleButtonVariant, ToggleButtonSize } from "./components/ToggleButton";
 
-export { Menu, MenuItem, MenuSection, MenuHeader, MenuSeparator } from "./components/Menu";
+export { ToggleButtonGroup, ToggleButtonGroupItem } from "./components/ToggleButtonGroup";
+export type {
+  ToggleButtonGroupProps,
+  ToggleButtonGroupItemProps,
+  ToggleButtonGroupSize,
+} from "./components/ToggleButtonGroup";
+
+export { Menu, MenuItem, MenuCheckboxItem, MenuSection, MenuHeader, MenuSeparator } from "./components/Menu";
 export type {
   MenuProps,
   MenuItemData,
   MenuItemProps,
+  MenuCheckboxItemProps,
   MenuSectionProps,
   MenuHeaderProps,
   MenuSeparatorProps,

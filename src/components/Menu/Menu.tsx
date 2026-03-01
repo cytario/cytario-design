@@ -1,5 +1,6 @@
 import type React from "react";
 import type { LucideIcon } from "lucide-react";
+import type { Selection } from "react-aria-components";
 import {
   MenuTrigger,
   Menu as AriaMenu,
@@ -32,6 +33,14 @@ export interface MenuProps {
   children: React.ReactNode;
   /** Called when any MenuItem is activated (receives the item key) */
   onAction?: (key: string) => void;
+  /** Selection mode: "none" (default), "single", or "multiple" for checkbox-style items */
+  selectionMode?: "none" | "single" | "multiple";
+  /** Currently selected keys (controlled) */
+  selectedKeys?: Selection;
+  /** Default selected keys (uncontrolled) */
+  defaultSelectedKeys?: Selection;
+  /** Called when selection changes */
+  onSelectionChange?: (keys: Selection) => void;
   /** Additional CSS classes for the menu popover */
   className?: string;
 }
@@ -44,7 +53,21 @@ const popoverStyles = [
   "exiting:animate-out exiting:fade-out exiting:zoom-out-95",
 ].join(" ");
 
-export function Menu({ items, content, children, onAction, className }: MenuProps) {
+export function Menu({
+  items,
+  content,
+  children,
+  onAction,
+  selectionMode,
+  selectedKeys,
+  defaultSelectedKeys,
+  onSelectionChange,
+  className,
+}: MenuProps) {
+  const selectionProps = selectionMode && selectionMode !== "none"
+    ? { selectionMode, selectedKeys, defaultSelectedKeys, onSelectionChange }
+    : {};
+
   return (
     <MenuTrigger>
       {children}
@@ -59,6 +82,7 @@ export function Menu({ items, content, children, onAction, className }: MenuProp
               item?.onAction?.();
               onAction?.(key as string);
             }}
+            {...selectionProps}
             className="outline-none"
           >
             {(item) => (
@@ -93,6 +117,7 @@ export function Menu({ items, content, children, onAction, className }: MenuProp
         ) : (
           <AriaMenu
             onAction={(key) => onAction?.(key as string)}
+            {...selectionProps}
             className="outline-none"
           >
             {content}
