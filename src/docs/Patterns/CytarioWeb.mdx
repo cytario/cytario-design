@@ -1,0 +1,209 @@
+{/* CytarioWeb.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Patterns/cytario-web Screens" />
+
+# cytario-web Screen Compositions
+
+This pattern documents how cytario-design components compose to form the screens of **cytario-web**, the digital pathology data browser application. These compositions serve as the migration blueprint for moving from the current cytario-web codebase (headlessui + TanStack Table + custom components) to the design system (React Aria + design tokens).
+
+---
+
+## Screens Overview
+
+| Screen | Route | Composition Story |
+|--------|-------|-------------------|
+| **Home Dashboard** | `/` | [Home Dashboard](?path=/story/compositions-home-dashboard--default) |
+| **Storage Listing** | `/buckets` | [Data Sources](?path=/story/compositions-data-sources--default) |
+| **File Browser** | `/buckets/:provider/:bucketName/*` | [Storage Listing](?path=/story/compositions-storage-listing--default) |
+| **Connect Storage** | `/connect-bucket` (modal) | [Connect Storage Wizard](?path=/story/compositions-connect-storage-wizard--aws-provider) |
+| **Admin Users** | `/admin/users` | [Admin Users](?path=/story/compositions-admin-users--default) |
+| **Search Results** | `/search` | Tree view (see Storage Listing tree mode) |
+| **Image Viewer** | `/buckets/.../file.ome.tif` | [Pathology Viewer](?path=/story/compositions-pathology-viewer--default) |
+
+---
+
+## Home Dashboard (`/`)
+
+The home dashboard is the entry point after login. It is composed of multiple sections stacked vertically, each showing a different facet of the user's data.
+
+### Layout Structure
+
+```
+Page (bg surface-subtle)
+  AppHeader (slate-950, logo + breadcrumbs + search + user menu)
+  Section: Recently Viewed (grid-lg, max 4 items)
+  Section: Pinned (table, max 10 items)
+  Section: Recently Browsed (table, max 5 items)
+  Section: Recent Files (grid-sm, max 6 items)
+  Section: Storage Connections (grid-md, max 100 items)
+```
+
+### Components Used
+
+| Component | Usage |
+|-----------|-------|
+| **StorageConnectionCard** | Image tiles in Recently Viewed and Storage Connections grids. Each card shows a fluorescence tissue preview, bucket name, provider badge, and image count. |
+| **Table** | Pinned items and Recently Browsed directories in list format. |
+| **SectionHeader** | Section title with optional "Show all (N)" action button. |
+| **EmptyState** | First-visit state: "Start exploring your data" with Connect Storage CTA. |
+| **Badge** | Provider labels (AWS, MinIO) in table cells. |
+| **Button** | "Show all" / "View all" secondary actions, "Connect Storage" primary CTA. |
+
+### Empty State
+
+When no storage connections exist, the entire dashboard collapses to a single `EmptyState` with:
+- Icon: `FileSearch`
+- Title: "Start exploring your data"
+- Description: "Add a storage connection to view your cloud storage."
+- CTA: Primary "Connect Storage" button
+
+---
+
+## Connect Storage Wizard (`/connect-bucket`)
+
+A 3-step modal wizard for connecting S3-compatible cloud storage.
+
+### Wizard Steps
+
+| Step | Name | Fields |
+|------|------|--------|
+| 1 | Storage Provider | Visibility (Select), Provider Type (RadioButton: AWS S3 / Other), Provider Name (Input, conditional) |
+| 2 | Data Location | S3 URI (Input with "s3://" prefix via InputGroup+InputAddon), Region (Select, AWS only) |
+| 3 | Access | Role ARN (Input, AWS) or Endpoint URL (Input, Other) |
+
+### Components Used
+
+| Component | Usage |
+|-----------|-------|
+| **Dialog** | Modal container with title "Connect Storage", size lg. |
+| **FormWizardProgress** | Step indicator with numbered circles, labels, and connecting lines. |
+| **Field** | Each form field with label, description, and error message. |
+| **Fieldset** | Groups related fields within each step. |
+| **Input** | Text inputs for S3 URI, Role ARN, Endpoint, Provider Name. |
+| **InputGroup + InputAddon** | S3 URI field with "s3://" prefix. |
+| **Select** | Visibility dropdown and AWS Region dropdown. |
+| **RadioButton** | Provider type toggle (AWS S3 / Other). |
+| **Button** | Back (secondary), Next (primary), Connect Storage (primary, last step). |
+
+### Conditional Logic
+
+- **Provider Name** field only appears when "Other" provider type is selected.
+- **Region** field only appears in Step 2 when provider is AWS.
+- **Role ARN** vs **Endpoint**: Step 3 shows Role ARN for AWS, Endpoint URL for Other.
+
+---
+
+## Admin Users (`/admin/users`)
+
+User management page with filterable table, row selection, and bulk actions.
+
+### Layout Structure
+
+```
+Page
+  AppHeader
+  Section
+    SectionHeader (scope name + user count + Invite/Bulk Invite buttons)
+    Table (sortable, filterable, with row selection checkboxes)
+    [conditional] SelectionFooter (selected count + bulk action buttons)
+```
+
+### Table Columns
+
+| Column | Type | Filter | Notes |
+|--------|------|--------|-------|
+| Name | Text | Text search | Links to user edit modal |
+| ID | Monospace | Text search | Hidden by default, copyable |
+| Email | Text | Text search | Middle-ellipsis, copyable |
+| Status | Badge | Select (All/Active/Disabled) | Green "Active" or neutral "Disabled" pill |
+| Admin Groups | GroupPill[] | Select with group list | Shows colored path pills with dot indicators |
+| Groups | GroupPill[] | Select with group list | Full path pills |
+
+### Components Used
+
+| Component | Usage |
+|-----------|-------|
+| **SectionHeader** | Scope title with user count and action buttons. |
+| **Table** | Full user listing with sorting and filtering. |
+| **Checkbox** | Row selection checkboxes (header for select-all, per-row). |
+| **Badge** | Status indicators (Active/Disabled). |
+| **GroupPill** (new) | Hierarchical group path display with deterministic colors. |
+| **Button** | Invite User, Bulk Invite, Add to Group, Remove from Group. |
+| **Dialog** | Invite user modal with email and group fields. |
+| **EmptyState** | "No users yet" with Invite User CTA. |
+
+### Selection & Bulk Actions
+
+When rows are selected, a sticky footer appears at the bottom with:
+- Selected count: "3 of 8 selected"
+- Clear selection link
+- Bulk action buttons: "Add to Group", "Remove from Group"
+
+---
+
+## File Browser (`/buckets/:provider/:bucketName/*`)
+
+The main data browsing experience with multiple view modes.
+
+### View Modes
+
+| Mode | Component | Layout |
+|------|-----------|--------|
+| `list` | Table | Columns: Name, Type, Size, Modified, Actions |
+| `grid-lg` | Grid | 1-3 columns, 4:3 aspect thumbnails |
+| `grid-sm` | Grid | 2-8 columns, square compact thumbnails |
+| `tree` | Tree | Hierarchical file/folder tree with expand/collapse |
+
+### Components Used
+
+| Component | Usage |
+|-----------|-------|
+| **Table** | List view with sortable columns. |
+| **StorageConnectionCard** | Grid tiles with tissue preview or file icon placeholder. |
+| **Tree** | Hierarchical tree browser. |
+| **SegmentedControl** | View mode toggle (list, grid, compact grid, tree icons). |
+| **Input** | Filter/search bar. |
+| **Breadcrumbs** | Navigation path (Home / bucket / path / ...). |
+| **EmptyState** | "This folder is empty" when directory has no contents. |
+| **IconButton** | Info buttons on each item, download actions. |
+
+---
+
+## Migration Considerations
+
+### Component Mapping (cytario-web → cytario-design)
+
+| cytario-web | cytario-design | Notes |
+|-------------|---------------|-------|
+| `@headlessui/react` Button | `Button` (React Aria) | Theme prop → variant prop |
+| `@headlessui/react` Listbox | `Select` (React Aria) | Similar API, different internals |
+| `@headlessui/react` Checkbox | `Checkbox` (React Aria) | 1:1 mapping |
+| `@headlessui/react` Radio | `RadioGroup` + `RadioButton` | Similar pattern |
+| `@headlessui/react` Switch | `Switch` (React Aria) | 1:1 mapping |
+| `@headlessui/react` Dialog | `Dialog` (React Aria) | Modal overlay handling |
+| `@headlessui/react` Field | `Field` | Label + description + error wrapper |
+| `@tanstack/react-table` Table | `Table` (React Aria) | Significant API difference — see note below |
+| `Pill` (custom) | `Badge` + `Pill` (new) | Badge for status, Pill for hash-colored labels |
+| `GroupPill` (custom) | `GroupPill` (new) | Hierarchical path display |
+| `Placeholder` | `EmptyState` | Same pattern, renamed |
+| `Section` / `Container` | Layout wrappers | Not part of component library (app-level) |
+| `SectionHeader` | `SectionHeader` (new) | Title + action buttons |
+| `FormWizard` | `FormWizard` (new) | Step context + progress + navigation |
+| `Notification` | `Toast` + `ToastProvider` | Different API, similar UX |
+| `ViewModeToggle` | `SegmentedControl` | Design system already has this |
+
+### Table Migration Note
+
+The cytario-web Table uses `@tanstack/react-table` with features like column resizing, virtual scrolling, custom filter types, and sticky headers. The cytario-design Table uses React Aria's simpler table primitives. For the migration, complex table features (column resize, virtual scroll, advanced filtering) will need to be implemented as wrapper patterns around the React Aria primitives, or the tanstack table can be styled with design tokens while keeping its own behavior layer.
+
+---
+
+## See Also
+
+- [Compositions/Home Dashboard](?path=/story/compositions-home-dashboard--default) — live story
+- [Compositions/Connect Storage Wizard](?path=/story/compositions-connect-storage-wizard--aws-provider) — live story
+- [Compositions/Admin Users](?path=/story/compositions-admin-users--default) — live story
+- [Compositions/Data Sources](?path=/story/compositions-data-sources--default) — storage connections
+- [Compositions/Storage Listing](?path=/story/compositions-storage-listing--default) — file browser
+- [Compositions/Pathology Viewer](?path=/story/compositions-pathology-viewer--default) — image viewer
