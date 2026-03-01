@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import type { Meta, StoryObj } from "storybook/react";
+import { Badge } from "../components/Badge";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Dialog } from "../components/Dialog";
@@ -213,9 +214,7 @@ function UserGroupManagement() {
                     </span>
                   </Cell>
                   <Cell>
-                    <span className="inline-flex items-center rounded-full bg-[var(--color-surface-muted)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-text-primary)]">
-                      {membership.role}
-                    </span>
+                    <Badge variant="neutral">{membership.role}</Badge>
                   </Cell>
                   <Cell>
                     <IconButton

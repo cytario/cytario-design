@@ -4,7 +4,8 @@ import { fn } from "storybook/test";
 import { Database, Grid3x3, LayoutGrid, List, Plus, Info } from "lucide-react";
 import { StorageConnectionCard } from "../components/StorageConnectionCard";
 import { Button } from "../components/Button";
-import { H1, H2 } from "../components/Heading";
+import { H1 } from "../components/Heading";
+import { SectionHeader } from "../components/SectionHeader";
 import { EmptyState } from "../components/EmptyState";
 import { IconButton } from "../components/IconButton";
 import {
@@ -251,7 +252,7 @@ function DataSourcesPage() {
 
       {/* Recently Viewed section */}
       <div className="mt-12">
-        <H2 className="mb-6">Recently Viewed</H2>
+        <SectionHeader title="Recently Viewed" />
         {viewMode === "table" ? (
           <ConnectionTable data={recentlyViewed} />
         ) : (
