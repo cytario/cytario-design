@@ -25,6 +25,8 @@ export interface SelectProps
   placeholder?: string;
   /** Error message displayed below the trigger */
   errorMessage?: string;
+  /** When true, visually hides the label (remains accessible to screen readers). Useful when Select is used inside a Field that already renders a visible label. */
+  hideLabel?: boolean;
 }
 
 function ChevronDown() {
@@ -66,6 +68,7 @@ export function Select({
   items,
   placeholder = "Select an option",
   errorMessage,
+  hideLabel = false,
   isDisabled,
   isRequired,
   className,
@@ -84,7 +87,8 @@ export function Select({
       <Label
         className={[
           "text-[length:var(--font-size-sm)] font-[var(--font-weight-medium)] text-[var(--color-text-primary)]",
-        ].join(" ")}
+          hideLabel && "sr-only",
+        ].filter(Boolean).join(" ")}
       >
         {label}
         {isRequired && (

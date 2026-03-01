@@ -88,6 +88,13 @@ export const Required: Story = {
   },
 };
 
+export const HiddenLabel: Story = {
+  name: "Hidden Label (for use inside Field)",
+  args: {
+    hideLabel: true,
+  },
+};
+
 // --- Playground ---
 
 export const Playground: Story = {

@@ -54,4 +54,10 @@ describe("Select", () => {
 
     expect(screen.getByRole("button")).toHaveAttribute("disabled");
   });
+
+  it("visually hides label when hideLabel is true", () => {
+    render(<Select label="Staining Method" items={items} hideLabel />);
+    const label = screen.getByText("Staining Method");
+    expect(label.className).toContain("sr-only");
+  });
 });
