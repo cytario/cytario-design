@@ -1,4 +1,5 @@
 import type React from "react";
+import { useCallback } from "react";
 import { AlertCircle, Database, Info } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { Icon } from "../Icon";
@@ -24,6 +25,8 @@ export interface StorageConnectionCardProps {
   children?: React.ReactNode;
   /** Navigation target — clicking the card navigates here */
   href?: string;
+  /** Handler for click/press interaction (use instead of href for programmatic navigation) */
+  onPress?: () => void;
   /** Info button handler */
   onInfo?: () => void;
   /** Additional CSS classes */
@@ -107,9 +110,33 @@ export function StorageConnectionCard({
   imageCount,
   children,
   href,
+  onPress,
   onInfo,
   className,
 }: StorageConnectionCardProps) {
+  const isInteractive = !!href || !!onPress;
+
+  const handleInfoPress = useCallback(
+    (e: React.MouseEvent | React.KeyboardEvent) => {
+      if (isInteractive) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      onInfo?.();
+    },
+    [onInfo, isInteractive],
+  );
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (onPress && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        onPress();
+      }
+    },
+    [onPress],
+  );
+
   const cardContent = (
     <>
       {/* Preview area */}
@@ -136,16 +163,24 @@ export function StorageConnectionCard({
             {name}
           </span>
           {onInfo && (
-            <IconButton
-              icon={Info}
-              aria-label="Connection info"
-              variant="ghost"
-              size="sm"
-              className="shrink-0 -mt-1 -mr-1"
-              onPress={() => {
-                onInfo();
+            <span
+              onClick={handleInfoPress}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleInfoPress(e);
+                }
               }}
-            />
+              role="presentation"
+            >
+              <IconButton
+                icon={Info}
+                aria-label="Connection info"
+                variant="ghost"
+                size="sm"
+                className="shrink-0 -mt-1 -mr-1"
+                onPress={onInfo}
+              />
+            </span>
           )}
         </div>
 
@@ -159,7 +194,7 @@ export function StorageConnectionCard({
               </span>
             )}
             {imageCount != null && (!status || status === "connected") && (
-              <span className="ml-auto shrink-0 text-xs tabular-nums text-[var(--color-text-tertiary)]">
+              <span className="ml-auto shrink-0 text-xs tabular-nums text-[var(--color-text-secondary)]">
                 {imageCount} {imageCount === 1 ? "image" : "images"}
               </span>
             )}
@@ -173,7 +208,8 @@ export function StorageConnectionCard({
     "flex flex-col overflow-hidden rounded-[var(--border-radius-lg)]",
     "border border-[var(--color-border-default)]",
     "shadow-sm transition-all",
-    href && "hover:border-[var(--color-border-focus)] hover:shadow-md cursor-pointer",
+    isInteractive && "hover:border-[var(--color-border-focus)] hover:shadow-md cursor-pointer",
+    isInteractive && "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 outline-none",
     className,
   );
 
@@ -182,6 +218,20 @@ export function StorageConnectionCard({
       <a href={href} className={twMerge(baseStyles, "no-underline")}>
         {cardContent}
       </a>
+    );
+  }
+
+  if (onPress) {
+    return (
+      <div
+        role="button"
+        tabIndex={0}
+        className={baseStyles}
+        onClick={onPress}
+        onKeyDown={handleKeyDown}
+      >
+        {cardContent}
+      </div>
     );
   }
 

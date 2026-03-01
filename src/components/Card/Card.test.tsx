@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 import { Card } from "./Card";
 
 describe("Card", () => {
@@ -64,5 +65,43 @@ describe("Card", () => {
       <Card className="my-custom">Custom</Card>,
     );
     expect(container.firstElementChild?.className).toContain("my-custom");
+  });
+
+  it("renders as role=button when onPress is provided", () => {
+    const onPress = vi.fn();
+    render(<Card onPress={onPress}>Pressable card</Card>);
+    expect(screen.getByRole("button")).toBeDefined();
+  });
+
+  it("calls onPress on click", async () => {
+    const user = userEvent.setup();
+    const onPress = vi.fn();
+    render(<Card onPress={onPress}>Pressable card</Card>);
+    await user.click(screen.getByRole("button"));
+    expect(onPress).toHaveBeenCalledOnce();
+  });
+
+  it("calls onPress on Enter key", async () => {
+    const user = userEvent.setup();
+    const onPress = vi.fn();
+    render(<Card onPress={onPress}>Pressable card</Card>);
+    screen.getByRole("button").focus();
+    await user.keyboard("{Enter}");
+    expect(onPress).toHaveBeenCalledOnce();
+  });
+
+  it("calls onPress on Space key", async () => {
+    const user = userEvent.setup();
+    const onPress = vi.fn();
+    render(<Card onPress={onPress}>Pressable card</Card>);
+    screen.getByRole("button").focus();
+    await user.keyboard(" ");
+    expect(onPress).toHaveBeenCalledOnce();
+  });
+
+  it("has tabIndex 0 when onPress is provided", () => {
+    const onPress = vi.fn();
+    render(<Card onPress={onPress}>Pressable card</Card>);
+    expect(screen.getByRole("button").getAttribute("tabindex")).toBe("0");
   });
 });

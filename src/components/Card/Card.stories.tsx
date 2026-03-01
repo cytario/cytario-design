@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "storybook/react";
+import { fn } from "storybook/test";
 import { Card } from "./Card";
 
 const meta: Meta<typeof Card> = {
@@ -88,6 +89,14 @@ export const AsLink: Story = {
   args: {
     href: "#",
     children: "I am a clickable card link.",
+  },
+};
+
+export const WithOnPress: Story = {
+  name: "With onPress",
+  args: {
+    onPress: fn(),
+    children: "I use onPress for programmatic navigation (e.g., React Router).",
   },
 };
 

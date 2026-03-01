@@ -91,3 +91,17 @@ export const WithInfoAction: Story = {
     children: <MockTissuePreview />,
   },
 };
+
+export const WithOnPress: Story = {
+  name: "With onPress",
+  args: {
+    name: "cytario-uploads",
+    provider: "aws",
+    region: "eu-central-1",
+    status: "connected",
+    imageCount: 8,
+    onPress: fn(),
+    onInfo: fn(),
+    children: <MockTissuePreview />,
+  },
+};

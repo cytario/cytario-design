@@ -1,4 +1,5 @@
 import type React from "react";
+import { useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
 export type CardPadding = "none" | "sm" | "md" | "lg";
@@ -14,6 +15,8 @@ export interface CardProps {
   padding?: CardPadding;
   /** Makes the card a clickable link */
   href?: string;
+  /** Handler for click/press interaction (use instead of href for programmatic navigation) */
+  onPress?: () => void;
   /** Enables hover elevation even without href */
   interactive?: boolean;
   /** Merge override */
@@ -33,16 +36,27 @@ export function Card({
   footer,
   padding = "md",
   href,
+  onPress,
   interactive = false,
   className,
 }: CardProps) {
-  const isInteractive = interactive || !!href;
+  const isInteractive = interactive || !!href || !!onPress;
 
   const containerClass = twMerge(
     "bg-[var(--color-surface-default)] border border-[var(--color-border-default)] rounded-[var(--border-radius-lg)] overflow-hidden shadow-sm",
-    isInteractive && "transition-shadow hover:shadow-md hover:border-[var(--color-border-focus)] cursor-pointer",
-    href && "block focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 outline-none",
+    isInteractive && "transition-all hover:shadow-md hover:border-[var(--color-border-focus)] cursor-pointer",
+    (href || onPress) && "block focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 outline-none",
     className,
+  );
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (onPress && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        onPress();
+      }
+    },
+    [onPress],
   );
 
   const content = (
@@ -76,6 +90,20 @@ export function Card({
       <a href={href} className={containerClass}>
         {content}
       </a>
+    );
+  }
+
+  if (onPress) {
+    return (
+      <div
+        role="button"
+        tabIndex={0}
+        className={containerClass}
+        onClick={onPress}
+        onKeyDown={handleKeyDown}
+      >
+        {content}
+      </div>
     );
   }
 
