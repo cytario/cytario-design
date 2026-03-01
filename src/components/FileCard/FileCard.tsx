@@ -145,43 +145,13 @@ export function FileCard({
     <>
       {/* Thumbnail area */}
       <div
-        className={`shrink-0 relative overflow-hidden bg-[var(--color-neutral-900)] ${thumbnailClass}`}
+        className={`shrink-0 overflow-hidden bg-[var(--color-neutral-900)] ${thumbnailClass}`}
       >
         {children ? (
           <div className="h-full w-full overflow-hidden">{children}</div>
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <IconComponent size={iconSize} className={iconColor} />
-          </div>
-        )}
-
-        {/* Hover-reveal info button */}
-        {onInfo && (
-          <div
-            className={[
-              "absolute opacity-0 group-hover:opacity-100 group-focus-within:opacity-100",
-              "transition-opacity duration-150",
-              compact ? "bottom-1.5 right-1.5" : "bottom-2 right-2",
-            ].join(" ")}
-          >
-            <span
-              onClick={handleInfoClick}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleInfoClick(e);
-                }
-              }}
-              role="presentation"
-            >
-              <IconButton
-                icon={Info}
-                aria-label={`Show info for ${name}`}
-                variant="ghost"
-                size="sm"
-                className="bg-[var(--color-neutral-900)]/75 text-[var(--color-text-inverse)] hover:bg-[var(--color-neutral-900)]/90 rounded-[var(--border-radius-sm)]"
-                onPress={onInfo}
-              />
-            </span>
           </div>
         )}
       </div>
@@ -204,9 +174,29 @@ export function FileCard({
           <>
             <span className="flex items-center gap-1.5">
               <FileIcon type={type} extension={extension} size={16} />
-              <span className="text-sm font-medium text-[var(--color-text-primary)] truncate">
+              <span className="min-w-0 flex-1 text-sm font-medium text-[var(--color-text-primary)] truncate">
                 {name}
               </span>
+              {onInfo && (
+                <span
+                  onClick={handleInfoClick}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleInfoClick(e);
+                    }
+                  }}
+                  role="presentation"
+                >
+                  <IconButton
+                    icon={Info}
+                    aria-label={`Show info for ${name}`}
+                    variant="ghost"
+                    size="sm"
+                    className="shrink-0 -mt-0.5 -mr-1"
+                    onPress={onInfo}
+                  />
+                </span>
+              )}
             </span>
             {size && (
               <span className="text-xs text-[var(--color-text-secondary)] tabular-nums pl-[22px]">
