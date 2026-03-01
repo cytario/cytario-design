@@ -24,3 +24,6 @@ Thumbs.db
 
 # Test
 coverage/
+
+# Storybook debug
+debug-storybook.log
