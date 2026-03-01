@@ -77,8 +77,15 @@ export type { ButtonLinkProps, IconButtonLinkProps } from "./components/ButtonLi
 export { ToggleButton } from "./components/ToggleButton";
 export type { ToggleButtonProps, ToggleButtonVariant, ToggleButtonSize } from "./components/ToggleButton";
 
-export { Menu } from "./components/Menu";
-export type { MenuProps, MenuItemData } from "./components/Menu";
+export { Menu, MenuItem, MenuSection, MenuHeader, MenuSeparator } from "./components/Menu";
+export type {
+  MenuProps,
+  MenuItemData,
+  MenuItemProps,
+  MenuSectionProps,
+  MenuHeaderProps,
+  MenuSeparatorProps,
+} from "./components/Menu";
 
 export { Popover, PopoverTrigger, PopoverContent } from "./components/Popover";
 export type { PopoverProps, PopoverTriggerProps, PopoverContentProps } from "./components/Popover";

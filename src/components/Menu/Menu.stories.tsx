@@ -10,10 +10,17 @@ import {
   Trash2,
   Download,
   User,
+  Shield,
 } from "lucide-react";
 import { Menu } from "./Menu";
+import { MenuItem } from "./MenuItem";
+import { MenuSection } from "./MenuSection";
+import { MenuHeader } from "./MenuHeader";
+import { MenuSeparator } from "./MenuSeparator";
 import { Button } from "../Button";
 import { IconButton } from "../IconButton";
+import { Badge } from "../Badge";
+import { GroupPill } from "../Pill";
 
 const meta: Meta<typeof Menu> = {
   title: "Components/Menu",
@@ -23,10 +30,182 @@ const meta: Meta<typeof Menu> = {
 export default meta;
 type Story = StoryObj<typeof Menu>;
 
-// --- Real-world usage stories (from cytario-web) ---
+// --- Composition API stories ---
+
+export const UserProfileMenu: Story = {
+  name: "User Profile Menu",
+  render: () => (
+    <Menu
+      content={
+        <>
+          <MenuSection aria-label="User identity">
+            <MenuHeader>
+              <div className="flex items-center gap-3 px-3 py-2">
+                <div className="flex size-8 items-center justify-center rounded-full bg-[var(--color-badge-purple-bg)] text-[var(--color-badge-purple-text)]">
+                  <User className="size-4" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-[var(--color-text-primary)]">
+                    Dr. Sarah Chen
+                  </span>
+                  <span className="text-xs text-[var(--color-text-secondary)]">
+                    sarah.chen@hospital.org
+                  </span>
+                </div>
+              </div>
+            </MenuHeader>
+          </MenuSection>
+
+          <MenuSeparator />
+
+          <MenuSection header="Admin Groups">
+            <MenuItem id="group-pathology" textValue="Pathology">
+              <GroupPill path="/hospital/pathology" />
+            </MenuItem>
+            <MenuItem id="group-research" textValue="Research">
+              <GroupPill path="/hospital/research/ai-lab" />
+            </MenuItem>
+          </MenuSection>
+
+          <MenuSeparator />
+
+          <MenuSection header="Account">
+            <MenuItem id="settings" icon={Settings}>
+              Settings
+            </MenuItem>
+            <MenuItem
+              id="admin"
+              icon={Shield}
+              href="https://auth.cytario.com/admin"
+              target="_blank"
+              endContent={
+                <span className="text-xs text-[var(--color-text-tertiary)]">
+                  External
+                </span>
+              }
+            >
+              Admin Console
+            </MenuItem>
+          </MenuSection>
+
+          <MenuSeparator />
+
+          <MenuItem id="logout" icon={LogOut} isDanger onAction={fn()}>
+            Log out
+          </MenuItem>
+        </>
+      }
+    >
+      <IconButton
+        icon={User}
+        aria-label="User menu"
+        variant="ghost"
+        className="flex-shrink-0 w-8 h-8"
+      />
+    </Menu>
+  ),
+};
+
+export const WithSections: Story = {
+  name: "With Sections",
+  render: () => (
+    <Menu
+      content={
+        <>
+          <MenuSection header="Edit">
+            <MenuItem id="cut" icon={Edit}>
+              Cut
+            </MenuItem>
+            <MenuItem id="copy" icon={Copy}>
+              Copy
+            </MenuItem>
+          </MenuSection>
+
+          <MenuSeparator />
+
+          <MenuSection header="Export">
+            <MenuItem id="download" icon={Download}>
+              Download
+            </MenuItem>
+            <MenuItem
+              id="external"
+              icon={ExternalLink}
+              href="https://example.com"
+              target="_blank"
+              endContent={
+                <Badge variant="teal" size="sm">
+                  New
+                </Badge>
+              }
+            >
+              Open in Browser
+            </MenuItem>
+          </MenuSection>
+
+          <MenuSeparator />
+
+          <MenuItem id="delete" icon={Trash2} isDanger>
+            Delete
+          </MenuItem>
+        </>
+      }
+    >
+      <Button variant="secondary">Actions</Button>
+    </Menu>
+  ),
+};
+
+export const WithEndContent: Story = {
+  name: "With End Content",
+  render: () => (
+    <Menu
+      content={
+        <>
+          <MenuItem
+            id="cut"
+            icon={Edit}
+            endContent={
+              <kbd className="text-xs text-[var(--color-text-tertiary)]">
+                Cmd+X
+              </kbd>
+            }
+          >
+            Cut
+          </MenuItem>
+          <MenuItem
+            id="copy"
+            icon={Copy}
+            endContent={
+              <kbd className="text-xs text-[var(--color-text-tertiary)]">
+                Cmd+C
+              </kbd>
+            }
+          >
+            Copy
+          </MenuItem>
+          <MenuItem
+            id="download"
+            icon={Download}
+            endContent={
+              <Badge variant="purple" size="sm">
+                Pro
+              </Badge>
+            }
+          >
+            Export
+          </MenuItem>
+        </>
+      }
+    >
+      <Button variant="secondary">Edit</Button>
+    </Menu>
+  ),
+};
+
+// --- Data-driven stories (backward compatible) ---
 
 export const UserMenu: Story = {
-  name: "User Menu",
+  name: "User Menu (items prop)",
   args: {
     items: [
       {
@@ -53,8 +232,6 @@ export const UserMenu: Story = {
     ),
   },
 };
-
-// --- Generic stories ---
 
 export const Default: Story = {
   args: {
@@ -134,6 +311,45 @@ export const WithLinks: Story = {
       },
     ],
     children: <Button variant="secondary">User Menu</Button>,
+  },
+};
+
+export const ItemsWithEndContent: Story = {
+  name: "Items Prop with End Content",
+  args: {
+    items: [
+      {
+        id: "edit",
+        label: "Edit",
+        icon: Edit,
+        endContent: (
+          <kbd className="text-xs text-[var(--color-text-tertiary)]">
+            Cmd+E
+          </kbd>
+        ),
+      },
+      {
+        id: "copy",
+        label: "Copy",
+        icon: Copy,
+        endContent: (
+          <kbd className="text-xs text-[var(--color-text-tertiary)]">
+            Cmd+C
+          </kbd>
+        ),
+      },
+      {
+        id: "export",
+        label: "Export",
+        icon: Download,
+        endContent: (
+          <Badge variant="purple" size="sm">
+            Pro
+          </Badge>
+        ),
+      },
+    ],
+    children: <Button variant="secondary">Edit</Button>,
   },
 };
 
