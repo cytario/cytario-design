@@ -126,5 +126,23 @@ export type { BannerProps, BannerVariant } from "./components/Banner";
 export { MetricCard } from "./components/MetricCard";
 export type { MetricCardProps, MetricCardSize } from "./components/MetricCard";
 
+export { SectionHeader } from "./components/SectionHeader";
+export type { SectionHeaderProps } from "./components/SectionHeader";
+
+export { Pill, pillColorFromName } from "./components/Pill";
+export type { PillProps, PillColor } from "./components/Pill";
+
+export { GroupPill } from "./components/Pill";
+export type { GroupPillProps } from "./components/Pill";
+
+export { FormWizard, useFormWizard } from "./components/FormWizard";
+export type { FormWizardProps, FormWizardContextValue } from "./components/FormWizard";
+
+export { FormWizardProgress } from "./components/FormWizard";
+export type { FormWizardProgressProps } from "./components/FormWizard";
+
+export { FormWizardNav } from "./components/FormWizard";
+export type { FormWizardNavProps } from "./components/FormWizard";
+
 // Design tokens (TypeScript constants)
 export * from "./tokens/tokens";
