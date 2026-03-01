@@ -24,3 +24,6 @@ Thumbs.db
 
 # Test
 coverage/
+
+# Local issue tracking
+ISSUES.md
