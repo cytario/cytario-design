@@ -2,6 +2,23 @@
 @import "../tokens/variables.css";
 @import "../tokens/variables-dark.css";
 
+/* Montserrat variable font — self-hosted from assets/fonts */
+@font-face {
+  font-family: "Montserrat";
+  src: url("../../assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../../assets/fonts/Montserrat-Italic-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 /*
  * Additional design-system variables not yet covered by token pipeline.
  * Wrapped in the same cascade layer as the generated tokens so that
@@ -12,8 +29,6 @@
   :root {
     /* Body text */
     --ds-color-text-body: rgb(55, 65, 81);
-    /* Heading text */
-    --ds-color-text-heading: rgb(17, 24, 39);
 
     /* Gradients */
     --ds-gradient-brand: linear-gradient(135deg, #5c2483 0%, #4a1d6a 100%);
@@ -25,13 +40,8 @@
     color: var(--ds-color-text-body);
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--ds-color-text-heading);
-  }
-
   [data-theme="dark"] {
     --ds-color-text-body: rgb(209, 213, 219);
-    --ds-color-text-heading: rgb(243, 244, 246);
     --ds-gradient-brand: linear-gradient(135deg, #9b4fcb 0%, #7a2ea8 100%);
     --ds-gradient-brand-reverse: linear-gradient(135deg, #7a2ea8 0%, #9b4fcb 100%);
   }

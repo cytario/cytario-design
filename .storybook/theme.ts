@@ -4,6 +4,8 @@ const shared = {
   brandTitle: "cytario design system",
   brandUrl: "#",
   brandTarget: "_self" as const,
+  fontBase: '"Montserrat", system-ui, sans-serif',
+  fontCode: "monospace",
   appBorderRadius: 8,
   inputBorderRadius: 4,
   gridCellSize: 8,

@@ -7,9 +7,9 @@
     },
     "action": {
       "$type": "color",
-      "primary": { "$value": "{color.teal.500}" },
-      "primaryHover": { "$value": "{color.teal.600}" },
-      "primaryActive": { "$value": "{color.teal.700}" },
+      "primary": { "$value": "{color.purple.700}" },
+      "primaryHover": { "$value": "{color.purple.600}" },
+      "primaryActive": { "$value": "{color.purple.800}" },
       "secondary": { "$value": "{color.purple.700}" },
       "secondaryHover": { "$value": "{color.purple.600}" },
       "danger": { "$value": "{color.rose.600}" },
