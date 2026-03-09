@@ -30,7 +30,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
             {/* Logo */}
             <div className="flex justify-center mb-[var(--spacing-6)]">
               <img
-                src="logos/cytario-logo-reduced.svg"
+                src="logos/cytario-logo-purple.svg"
                 alt="cytario"
                 className="h-10"
               />

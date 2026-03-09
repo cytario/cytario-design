@@ -7,38 +7,13 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 The cytario logo is the most recognizable element of the brand. Use it consistently and with care.
 
----
-
-## Full logo (with brand claim)
-
-The full logo includes the brand claim and should be used whenever space permits. It is the primary representation of the cytario brand.
-
-<div style={{
-  display: "grid",
-  gridTemplateColumns: "1fr",
-  gap: 24,
-  marginTop: 24,
-}}>
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#ffffff",
-  }}>
-    <img src="logos/cytario-logo-full.svg" alt="Full logo" style={{ maxWidth: 280, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-full.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
-      Primary logo for light backgrounds. Use whenever space permits.
-    </p>
-  </div>
-</div>
+**Naming convention:** Files with the `tagline` suffix include the brand claim beneath the wordmark. Files without a suffix are the standard compact form. The `mono-` prefix indicates a single-color monochrome variant.
 
 ---
 
-## Reduced logo (without brand claim)
+## With tagline
 
-The reduced logo omits the brand claim for compact spaces, co-branding, app icons, and contexts where the claim is not needed.
+The tagline variants include the brand claim and should be used whenever space permits. They are the primary representation of the cytario brand.
 
 <div style={{
   display: "grid",
@@ -53,10 +28,65 @@ The reduced logo omits the brand claim for compact spaces, co-branding, app icon
     textAlign: "center",
     background: "#ffffff",
   }}>
-    <img src="logos/cytario-logo-reduced.svg" alt="Reduced logo" style={{ maxWidth: 200, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-reduced.svg</p>
+    <img src="logos/cytario-logo-purple-tagline.svg" alt="Purple logo with tagline" style={{ maxWidth: 280, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-purple-tagline.svg</p>
     <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
-      Default reduced logo for light backgrounds.
+      Primary logo for light backgrounds. Purple wordmark + teal icon + brand tagline. Use whenever space permits.
+    </p>
+  </div>
+
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#111827",
+  }}>
+    <img src="logos/cytario-logo-white-tagline.svg" alt="White logo with tagline" style={{ maxWidth: 280, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-white-tagline.svg</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#9ca3af" }}>
+      Primary logo for dark backgrounds. White wordmark + teal icon + brand tagline.
+    </p>
+  </div>
+</div>
+
+---
+
+## Standard
+
+The standard logo omits the brand tagline for compact spaces, co-branding, app headers, and contexts where the tagline is not needed.
+
+<div style={{
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+  gap: 24,
+  marginTop: 24,
+}}>
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#ffffff",
+  }}>
+    <img src="logos/cytario-logo-purple.svg" alt="Purple logo" style={{ maxWidth: 200, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-purple.svg</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
+      Standard logo for light backgrounds. Purple wordmark + teal icon.
+    </p>
+  </div>
+
+  <div style={{
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 32,
+    textAlign: "center",
+    background: "#111827",
+  }}>
+    <img src="logos/cytario-logo-white.svg" alt="White logo" style={{ maxWidth: 200, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-white.svg</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#9ca3af" }}>
+      Standard logo for dark backgrounds. White wordmark + teal icon.
     </p>
   </div>
 
@@ -70,10 +100,23 @@ The reduced logo omits the brand claim for compact spaces, co-branding, app icon
     <img src="logos/cytario-logo-on-purple.svg" alt="Logo on purple" style={{ maxWidth: 240, marginBottom: 16 }} />
     <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-on-purple.svg</p>
     <p style={{ margin: "4px 0 0", fontSize: 13, color: "#d4b3eb" }}>
-      Preferred placement on the brand purple background. This is the recommended way to display the logo when you control the background color.
+      Preferred placement on the brand purple background. White wordmark + teal icon on purple rectangle. This is the recommended way to display the logo when you control the background color.
     </p>
   </div>
+</div>
 
+---
+
+## Monochrome
+
+Single-color variants for contexts where the full color palette is not appropriate.
+
+<div style={{
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+  gap: 24,
+  marginTop: 24,
+}}>
   <div style={{
     border: "1px solid #e5e7eb",
     borderRadius: 12,
@@ -81,24 +124,10 @@ The reduced logo omits the brand claim for compact spaces, co-branding, app icon
     textAlign: "center",
     background: "#111827",
   }}>
-    <img src="logos/cytario-logo-reduced-inverse.svg" alt="Inverse logo" style={{ maxWidth: 200, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-reduced-inverse.svg</p>
+    <img src="logos/cytario-logo-mono-white.svg" alt="Monochrome white logo" style={{ maxWidth: 200, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-mono-white.svg</p>
     <p style={{ margin: "4px 0 0", fontSize: 13, color: "#9ca3af" }}>
-      Standard reduced logo for dark backgrounds. White wordmark with teal icon.
-    </p>
-  </div>
-
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#111827",
-  }}>
-    <img src="logos/cytario-logo-reduced-white.svg" alt="White logo" style={{ maxWidth: 200, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-reduced-white.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#9ca3af" }}>
-      All-white reduced logo. Use on dark backgrounds only when the teal accent is too prominent.
+      All-white monochrome. Use on dark backgrounds where the teal accent is too prominent.
     </p>
   </div>
 
@@ -109,10 +138,10 @@ The reduced logo omits the brand claim for compact spaces, co-branding, app icon
     textAlign: "center",
     background: "#ffffff",
   }}>
-    <img src="logos/cytario-logo-reduced-mono.svg" alt="Monochrome logo" style={{ maxWidth: 200, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-reduced-mono.svg</p>
+    <img src="logos/cytario-logo-mono-black.svg" alt="Monochrome black logo" style={{ maxWidth: 200, marginBottom: 16 }} />
+    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-mono-black.svg</p>
     <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
-      Monochrome (all black) for B&W print, fax headers, and high-contrast contexts.
+      All-black monochrome. For B&W print, fax headers, regulatory docs, and high-contrast contexts.
     </p>
   </div>
 </div>
@@ -123,12 +152,13 @@ The reduced logo omits the brand claim for compact spaces, co-branding, app icon
 
 | Context | Variant | File |
 |---------|---------|------|
-| Marketing materials, website hero | Full logo | `cytario-logo-full.svg` |
-| App header, sidebar, co-branding | Reduced (default) | `cytario-logo-reduced.svg` |
+| Marketing materials, website hero, slide decks | With tagline (light bg) | `cytario-logo-purple-tagline.svg` |
+| Marketing on dark backgrounds | With tagline (dark bg) | `cytario-logo-white-tagline.svg` |
+| App header, sidebar, co-branding | Standard (light bg) | `cytario-logo-purple.svg` |
+| Dark UI, dark backgrounds | Standard (dark bg) | `cytario-logo-white.svg` |
 | Branded backgrounds (preferred) | On purple | `cytario-logo-on-purple.svg` |
-| Dark UI, dark backgrounds | Reduced inverse | `cytario-logo-reduced-inverse.svg` |
-| Dark bg, minimal color | Reduced white | `cytario-logo-reduced-white.svg` |
-| B&W print, regulatory docs | Reduced mono | `cytario-logo-reduced-mono.svg` |
+| Dark bg, minimal color | Monochrome white | `cytario-logo-mono-white.svg` |
+| B&W print, regulatory docs | Monochrome black | `cytario-logo-mono-black.svg` |
 
 ---
 
@@ -150,7 +180,7 @@ Maintain a minimum clear space around the logo equal to the height of the "c" in
     padding: 32,
     borderRadius: 8,
   }}>
-    <img src="logos/cytario-logo-full.svg" alt="Logo with clear space" style={{ maxWidth: 200 }} />
+    <img src="logos/cytario-logo-purple-tagline.svg" alt="Logo with clear space" style={{ maxWidth: 200 }} />
   </div>
   <p style={{ marginTop: 12, fontSize: 13, color: "#6b7280" }}>
     Dashed border represents minimum clear space zone.
@@ -163,10 +193,10 @@ Maintain a minimum clear space around the logo equal to the height of the "c" in
 
 | Variant | Print minimum | Screen minimum |
 |---------|--------------|----------------|
-| Full logo | 30 mm wide | 120 px wide |
-| Reduced logo | 12 mm wide | 48 px wide |
+| With tagline | 30 mm wide | 120 px wide |
+| Standard | 12 mm wide | 48 px wide |
 
-Below these sizes, the logo becomes illegible. Use the reduced variant at small sizes.
+Below these sizes, the logo becomes illegible. Use the standard variant at small sizes.
 
 ---
 
@@ -188,7 +218,7 @@ Below these sizes, the logo becomes illegible. Use the reduced variant at small 
     <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, color: "#374151" }}>
       <li>Use provided SVG files -- never recreate the logo</li>
       <li>Place on solid, uncluttered backgrounds</li>
-      <li>Use the inverse or white variant on dark backgrounds</li>
+      <li>Use the white or mono-white variant on dark backgrounds</li>
       <li>Use the on-purple variant when placing on brand purple</li>
       <li>Maintain the correct aspect ratio at all times</li>
       <li>Respect the minimum clear space</li>
@@ -208,7 +238,7 @@ Below these sizes, the logo becomes illegible. Use the reduced variant at small 
       <li>Place on busy or low-contrast backgrounds</li>
       <li>Add drop shadows, outlines, or effects</li>
       <li>Crop or partially obscure the logo</li>
-      <li>Use the default (colored) logo on dark backgrounds</li>
+      <li>Use the purple variant on dark backgrounds</li>
     </ul>
   </div>
 </div>
@@ -223,4 +253,4 @@ The cytario mark, logo and visual identity are intellectual property of Slash-m 
 
 **Registered trademark:** The cytario name and logo carry the registered trademark symbol (&#174;). Include the &#174; mark on first prominent use in any document or material. It is already incorporated into the approved logo files.
 
-**Regulatory use:** For regulatory submissions (Technical Documentation, Instructions for Use, Declaration of Conformity), use the **monochrome** variant (`cytario-logo-reduced-mono.svg`) to ensure legibility in grayscale printing and archival formats.
+**Regulatory use:** For regulatory submissions (Technical Documentation, Instructions for Use, Declaration of Conformity), use the **monochrome black** variant (`cytario-logo-mono-black.svg`) to ensure legibility in grayscale printing and archival formats.

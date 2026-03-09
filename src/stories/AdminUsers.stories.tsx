@@ -224,7 +224,7 @@ function AdminUsersPage() {
       {/* App Header */}
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img src="logos/cytario-logo-reduced.svg" alt="cytario" className="h-6" />
+          <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
@@ -347,7 +347,7 @@ function AdminUsersEmpty() {
     <div className="min-h-screen bg-[var(--color-surface-subtle)]">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img src="logos/cytario-logo-reduced.svg" alt="cytario" className="h-6" />
+          <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
@@ -396,7 +396,7 @@ function AdminUsersWithSelection() {
     <div className="min-h-screen bg-[var(--color-surface-subtle)]">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img src="logos/cytario-logo-reduced.svg" alt="cytario" className="h-6" />
+          <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>

@@ -354,7 +354,7 @@ function HomeDashboard() {
       {/* App Header */}
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img src="logos/cytario-logo-reduced.svg" alt="cytario" className="h-6" />
+          <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
           <span className="text-sm font-medium text-slate-300">Storage Connections</span>
         </div>
         <div className="flex items-center gap-3">
@@ -388,7 +388,7 @@ function HomeDashboardEmpty() {
     <div className="min-h-screen bg-[var(--color-surface-subtle)]">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img src="logos/cytario-logo-reduced.svg" alt="cytario" className="h-6" />
+          <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
         </div>
         <div className="h-8 w-8 rounded-full bg-[var(--color-brand-primary)] flex items-center justify-center text-xs font-bold">
           ML

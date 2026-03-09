@@ -100,7 +100,7 @@ Packages consolidated into `storybook` core (do NOT install separately): `@story
 - **Tailwind**: `@tailwindcss/vite` is registered via `viteFinal` in `.storybook/main.ts` — this is required for Tailwind to work in Storybook
 - **MDX tables**: `remark-gfm` is configured in addon-docs options to enable GFM markdown table syntax in MDX files
 - **Theme**: Custom cytario theme in `.storybook/theme.ts` uses purple for sidebar/accents. Sidebar icon colors are overridden via CSS in `.storybook/manager-head.html`
-- **Static assets**: `assets/` directory is served via `staticDirs` config — reference logos as `logos/cytario-logo-reduced.svg` in MDX
+- **Static assets**: `assets/` directory is served via `staticDirs` config — reference logos as `logos/cytario-logo-purple.svg` in MDX
 
 ## Regulatory Context
 

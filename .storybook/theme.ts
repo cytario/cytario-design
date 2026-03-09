@@ -14,7 +14,7 @@ const shared = {
 export const lightTheme = create({
   ...shared,
   base: "light",
-  brandImage: "assets/logos/cytario-logo-reduced.svg",
+  brandImage: "assets/logos/cytario-logo-purple.svg",
 
   colorPrimary: "#5c2483",
   colorSecondary: "#5c2483",
@@ -44,7 +44,7 @@ export const lightTheme = create({
 export const darkTheme = create({
   ...shared,
   base: "dark",
-  brandImage: "assets/logos/cytario-logo-reduced-inverse.svg",
+  brandImage: "assets/logos/cytario-logo-white.svg",
 
   colorPrimary: "#9b4fcb",
   colorSecondary: "#9b4fcb",
