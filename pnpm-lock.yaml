@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       react:
-        specifier: '>=19.0.0'
+        specifier: '>=18.0.0'
         version: 19.2.4
       react-arborist:
         specifier: ^3.4.3
@@ -18,7 +18,7 @@ importers:
         specifier: 1.15.1
         version: 1.15.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-dom:
-        specifier: '>=19.0.0'
+        specifier: '>=18.0.0'
         version: 19.2.4(react@19.2.4)
       tailwind-merge:
         specifier: ^3.5.0
