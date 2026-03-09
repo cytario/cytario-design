@@ -11,8 +11,13 @@ permissions:
 
 jobs:
   test:
-    name: Test and Build
+    name: Test and Build (React ${{ matrix.react-version }})
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        react-version: [18, 19]
 
     steps:
       - name: Checkout repository
@@ -29,6 +34,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Downgrade to React 18
+        if: matrix.react-version == 18
+        run: pnpm add -D react@^18 react-dom@^18 @types/react@^18 @types/react-dom@^18
 
       - name: Build design tokens
         run: pnpm build:tokens

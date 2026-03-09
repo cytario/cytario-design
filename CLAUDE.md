@@ -9,7 +9,7 @@ cytario is a digital pathology / spatial biology company. The design system serv
 ## Tech Stack
 
 - **Storybook 10** (with MDX documentation pages, addon-a11y, addon-docs)
-- **React 19** + **TypeScript 5.9** (strict mode)
+- **React 18 + 19** + **TypeScript 5.9** (strict mode) — components support React 18 and 19; CI tests against both via matrix
 - **Tailwind CSS v4** (via `@tailwindcss/vite` plugin, `@theme` block in `src/styles/tailwind.css`)
 - **React Aria Components** (Adobe) — headless accessible primitives for all interactive components
 - **Style Dictionary v4** — transforms W3C DTCG token JSON into CSS custom properties and TypeScript constants
@@ -113,7 +113,7 @@ cytario operates in the medical device space (digital pathology). Key implicatio
 ## CI/CD
 
 GitHub Actions workflow at `.github/workflows/ci.yml`:
-- **test** job: runs on all pushes/PRs to main/master — installs, builds tokens, tests, builds Storybook
+- **test** job: runs on all pushes/PRs to main/master — matrix tests against React 18 and React 19 (installs, builds tokens, tests, builds Storybook)
 - **deploy** job: runs on push to main only — publishes `storybook-static/` to GitHub Pages
 
 ## Agents
