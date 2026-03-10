@@ -64,6 +64,11 @@ export function Button({
 }: ButtonProps) {
   const { inGroup, position } = useInputGroup();
 
+  const groupGhost =
+    inGroup && variant === "ghost"
+      ? "bg-[var(--color-surface-default)] text-[var(--color-text-secondary)] border border-[var(--color-border-default)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-strong)] pressed:bg-[var(--color-surface-pressed)] pressed:text-[var(--color-text-primary)]"
+      : "";
+
   const radiusClass = inGroup
     ? groupRadiusClass(position)
     : "rounded-[var(--border-radius-md)]";
@@ -90,7 +95,7 @@ export function Button({
         focusRing,
         "disabled:opacity-50 disabled:pointer-events-none",
         isLoading ? "pointer-events-none" : "",
-        variantStyles[variant],
+        groupGhost || variantStyles[variant],
         sizeStyles[size],
         marginClass,
         className as string,

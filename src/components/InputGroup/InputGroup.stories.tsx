@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { InputGroup } from "./InputGroup";
 import { Input } from "../Input";
@@ -8,7 +9,7 @@ import {
   SegmentedControl,
   SegmentedControlItem,
 } from "../SegmentedControl";
-import { Search, X } from "lucide-react";
+import { Eye, EyeOff, Search, X } from "lucide-react";
 
 const meta: Meta<typeof InputGroup> = {
   title: "Components/InputGroup",
@@ -83,7 +84,7 @@ export const WithIconButton: Story = {
       <IconButton
         icon={X}
         aria-label="Clear"
-        variant="secondary"
+        variant="ghost"
         showTooltip={false}
       />
     </InputGroup>
@@ -107,6 +108,29 @@ export const CurrencyInput: Story = {
       <Input placeholder="0.00" align="right" aria-label="Amount" />
     </InputGroup>
   ),
+};
+
+export const PasswordField: Story = {
+  name: "Password Field",
+  render: function PasswordFieldStory() {
+    const [visible, setVisible] = useState(false);
+    return (
+      <InputGroup>
+        <Input
+          type={visible ? "text" : "password"}
+          placeholder="Enter password"
+          aria-label="Password"
+        />
+        <IconButton
+          icon={visible ? EyeOff : Eye}
+          aria-label={visible ? "Hide password" : "Show password"}
+          variant="ghost"
+          onPress={() => setVisible((v) => !v)}
+          showTooltip={false}
+        />
+      </InputGroup>
+    );
+  },
 };
 
 export const AllCompositions: Story = {
@@ -153,14 +177,14 @@ export const AllCompositions: Story = {
 
       <div>
         <p className="mb-2 text-sm text-[var(--color-text-secondary)]">
-          Input + IconButton
+          Input + ghost IconButton
         </p>
         <InputGroup>
           <Input placeholder="Filter..." aria-label="Filter" />
           <IconButton
             icon={X}
             aria-label="Clear"
-            variant="secondary"
+            variant="ghost"
             showTooltip={false}
           />
         </InputGroup>

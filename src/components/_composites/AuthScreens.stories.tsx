@@ -21,10 +21,7 @@ import { Link } from "../Link";
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--color-surface-subtle)] px-[var(--spacing-4)] py-[var(--spacing-8)]">
-      <main
-        aria-label="Authentication"
-        className="w-full max-w-[420px]"
-      >
+      <main aria-label="Authentication" className="w-full max-w-[420px]">
         <div className="bg-[var(--color-surface-default)] border border-[var(--color-border-default)] rounded-[var(--border-radius-lg)] shadow-md overflow-hidden">
           <div className="px-[var(--spacing-8)] pt-10 pb-[var(--spacing-8)]">
             {/* Logo */}
@@ -75,7 +72,12 @@ function PasswordField({
       >
         {label}
         {isRequired && (
-          <span aria-hidden="true" className="ml-0.5 text-[var(--color-text-danger)]">*</span>
+          <span
+            aria-hidden="true"
+            className="ml-0.5 text-[var(--color-text-danger)]"
+          >
+            *
+          </span>
         )}
       </label>
       <InputGroup>
@@ -107,7 +109,11 @@ function PasswordField({
  */
 function AuthHeading({ children }: { children: React.ReactNode }) {
   return (
-    <Heading as="h2" size="lg" className="font-normal text-center mb-[var(--spacing-4)]">
+    <Heading
+      as="h2"
+      size="lg"
+      className="font-normal text-center mb-[var(--spacing-4)]"
+    >
       {children}
     </Heading>
   );
@@ -180,10 +186,7 @@ function SignInPage({ showError = false }: { showError?: boolean }) {
           >
             Remember me
           </Checkbox>
-          <Link
-            href="#"
-            className="text-[length:var(--font-size-sm)]"
-          >
+          <Link href="#" className="text-[length:var(--font-size-sm)]">
             Forgot password?
           </Link>
         </div>
@@ -199,8 +202,7 @@ function SignInPage({ showError = false }: { showError?: boolean }) {
       </div>
 
       <AuthFooter>
-        Don&apos;t have an account?{" "}
-        <Link href="#">Create one</Link>
+        Don&apos;t have an account? <Link href="#">Create one</Link>
       </AuthFooter>
     </AuthLayout>
   );
@@ -292,8 +294,7 @@ function RegisterPage() {
       </div>
 
       <AuthFooter>
-        Already have an account?{" "}
-        <Link href="#">Sign in</Link>
+        Already have an account? <Link href="#">Sign in</Link>
       </AuthFooter>
     </AuthLayout>
   );
@@ -323,8 +324,8 @@ function ForgotPasswordPage() {
       {isSubmitted ? (
         <div className="flex flex-col gap-[var(--spacing-4)]">
           <Banner variant="success">
-            Check your email. We sent a reset link to{" "}
-            <strong>{email}</strong>. It may take a few minutes to arrive.
+            Check your email. We sent a reset link to <strong>{email}</strong>.
+            It may take a few minutes to arrive.
           </Banner>
 
           <p className="text-center text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
@@ -337,8 +338,8 @@ function ForgotPasswordPage() {
       ) : (
         <div className="flex flex-col gap-[var(--spacing-4)]">
           <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
-            Enter the email address associated with your account and we
-            will send you a link to reset your password.
+            Enter the email address associated with your account and we will
+            send you a link to reset your password.
           </p>
 
           <Input
@@ -363,10 +364,7 @@ function ForgotPasswordPage() {
       )}
 
       <div className="mt-[var(--spacing-6)] text-center">
-        <Link
-          href="#"
-          className="text-[length:var(--font-size-sm)]"
-        >
+        <Link href="#" className="text-[length:var(--font-size-sm)]">
           Back to sign in
         </Link>
       </div>

@@ -34,6 +34,12 @@ const squareSizeStyles = {
   lg: "h-12 w-12",
 } as const;
 
+const squareWidthOnly = {
+  sm: "w-8",
+  md: "w-10",
+  lg: "w-12",
+} as const;
+
 const iconSizeMap = {
   sm: "sm",
   md: "sm",
@@ -69,6 +75,11 @@ export function IconButton({
 }: IconButtonProps) {
   const { inGroup, position } = useInputGroup();
 
+  const groupGhost =
+    inGroup && variant === "ghost"
+      ? "bg-[var(--color-surface-default)] text-[var(--color-text-secondary)] border border-[var(--color-border-default)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-strong)] pressed:bg-[var(--color-surface-pressed)] pressed:text-[var(--color-text-primary)]"
+      : "";
+
   const radiusClass = inGroup
     ? groupRadiusClass(position)
     : "rounded-[var(--border-radius-md)]";
@@ -94,8 +105,8 @@ export function IconButton({
         focusRing,
         "disabled:opacity-50 disabled:pointer-events-none",
         isLoading ? "pointer-events-none" : "",
-        variantStyles[variant],
-        squareSizeStyles[size],
+        groupGhost || variantStyles[variant],
+        inGroup ? squareWidthOnly[size] : squareSizeStyles[size],
         marginClass,
         className,
       ]
