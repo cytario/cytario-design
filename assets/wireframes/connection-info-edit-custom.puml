@@ -1,0 +1,34 @@
+@startsalt
+title Connection Info Dialog -- Edit Mode (Custom / MinIO)
+{
+  {+
+    {
+      <b>Edit Connection</b> | | | | | | | | <&x>
+    }
+    --
+    {
+      {
+        <b>Alias</b>
+        "local dev storage         "
+        .
+        <b>Provider</b>
+        ^MinIO^
+        .
+        <b>Visibility</b>
+        ^cytario-dev^
+        .
+        <b>S3 URI</b>
+        { <color:gray>s3://</color> | "dev-pathology-bucket/wsi/                " }
+        .
+        <b>Endpoint</b>
+        "https://minio.internal.cytario.io:9000     "
+        <color:gray>Required for non-AWS providers</color>
+      }
+    }
+    --
+    {
+      [  Cancel  ] | | | | | | | | [  Save Changes  ]
+    }
+  }
+}
+@endsalt

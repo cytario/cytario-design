@@ -1,0 +1,28 @@
+@startsalt
+title File Info Dialog -- Delete Confirmation
+{
+  {+
+    {
+      <b>case-2024-0193_HE.ome.tif</b> | | | | | | <&x>
+    }
+    --
+    {
+      {
+        <b>Size</b> | 2.4 GB
+        <b>Last Modified</b> | 2026-02-18 14:32 UTC
+        <b>Content Type</b> | image/tiff
+        <b>Storage Class</b> | STANDARD
+        <b>ETag</b> | <color:gray>"a3f8c91b2d..."</color>
+        <b>Version ID</b> | <color:gray>v8Kj2mNpQ3...</color>
+      }
+    }
+    --
+    {+
+      <color:red><b>Are you sure you want to delete this file?</b></color>
+      This action cannot be undone.
+      --
+      { [  Cancel  ] | | | [  Yes, Delete File  ] }
+    }
+  }
+}
+@endsalt

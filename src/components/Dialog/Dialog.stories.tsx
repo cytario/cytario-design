@@ -2,8 +2,10 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, userEvent, within } from "storybook/test";
 import { Dialog } from "./Dialog";
+import { DialogFooter } from "./DialogFooter";
 import { Button } from "../Button";
 import { ButtonLink } from "../ButtonLink";
+import { DescriptionList } from "../DescriptionList";
 
 const meta: Meta<typeof Dialog> = {
   title: "Components/Dialog",
@@ -29,18 +31,32 @@ export const NodeInfoBucket: Story = {
       <>
         <Button onPress={() => setIsOpen(true)}>Show Bucket Info</Button>
         <Dialog {...args} isOpen={isOpen} onOpenChange={setIsOpen}>
-          <div className="flex flex-row gap-4 justify-between">
+          <DescriptionList>
+            <DescriptionList.Item label="Provider">AWS</DescriptionList.Item>
+            <DescriptionList.Item label="Region">
+              eu-central-1
+            </DescriptionList.Item>
+            <DescriptionList.Item label="S3 URI">
+              <span>
+                <span className="text-[var(--color-text-secondary)]">
+                  s3://
+                </span>
+                my-pathology-data/slides/
+              </span>
+            </DescriptionList.Item>
+          </DescriptionList>
+          <DialogFooter>
             <ButtonLink
               href="/buckets/aws/my-pathology-data"
               variant="secondary"
-              size="lg"
+              size="md"
             >
               Open bucket
             </ButtonLink>
-            <Button type="submit" variant="destructive" size="lg">
+            <Button type="submit" variant="destructive" size="md">
               Remove Data Connection
             </Button>
-          </div>
+          </DialogFooter>
         </Dialog>
       </>
     );
@@ -59,18 +75,27 @@ export const NodeInfoFile: Story = {
       <>
         <Button onPress={() => setIsOpen(true)}>Show File Info</Button>
         <Dialog {...args} isOpen={isOpen} onOpenChange={setIsOpen}>
-          <div className="flex flex-row gap-4 justify-between">
+          <DescriptionList layout="horizontal">
+            <DescriptionList.Item label="Size">2.4 GB</DescriptionList.Item>
+            <DescriptionList.Item label="Last Modified">
+              2026-02-18 14:32 UTC
+            </DescriptionList.Item>
+            <DescriptionList.Item label="Content Type">
+              image/tiff
+            </DescriptionList.Item>
+          </DescriptionList>
+          <DialogFooter>
             <ButtonLink
               href="/buckets/aws/my-bucket/slide-001.ome.tif"
               variant="secondary"
-              size="lg"
+              size="md"
             >
               Open file
             </ButtonLink>
-            <Button size="lg" isDisabled>
+            <Button size="md" isDisabled>
               Download file
             </Button>
-          </div>
+          </DialogFooter>
         </Dialog>
       </>
     );
@@ -165,15 +190,15 @@ export const WithFooter: Story = {
       <>
         <Button onPress={() => setIsOpen(true)}>Open Dialog</Button>
         <Dialog {...args} isOpen={isOpen} onOpenChange={setIsOpen}>
-          <p className="mb-4">Are you sure you want to continue?</p>
-          <div className="flex justify-end gap-3 pt-4 border-t border-neutral-200">
+          <p>Are you sure you want to continue?</p>
+          <DialogFooter>
             <Button variant="secondary" onPress={() => setIsOpen(false)}>
               Cancel
             </Button>
             <Button variant="primary" onPress={() => setIsOpen(false)}>
               Confirm
             </Button>
-          </div>
+          </DialogFooter>
         </Dialog>
       </>
     );

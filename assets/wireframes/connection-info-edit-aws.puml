@@ -1,0 +1,41 @@
+@startsalt
+title Connection Info Dialog -- Edit Mode (AWS)
+{
+  {+
+    {
+      <b>Edit Connection</b> | | | | | | | | <&x>
+    }
+    --
+    {
+      {
+        <b>Alias</b>
+        "vericura internal         "
+        .
+        <b>Provider</b>
+        ^AWS^
+        .
+        <b>Visibility</b>
+        ^vericura-pathology^
+        .
+        <b>S3 URI</b>
+        { <color:gray>s3://</color> | "cytario-research-data/slides/          " }
+        .
+        <b>Region</b>
+        "eu-central-1              "
+        .
+        <b>Endpoint</b>
+        "                          "
+        <color:gray>Leave empty for default AWS endpoint</color>
+        .
+        <b>Role ARN</b>
+        "arn:aws:iam::123456789012:role/cytario-read"
+        <color:gray>Optional. IAM role for cross-account access</color>
+      }
+    }
+    --
+    {
+      [  Cancel  ] | | | | | | | | [  Save Changes  ]
+    }
+  }
+}
+@endsalt

@@ -1,0 +1,42 @@
+@startsalt
+title Connection Info Dialog -- View Mode
+{
+  {+
+    {
+      <b>vericura internal</b> | | | | | | | | <&x>
+    }
+    --
+    {
+      {
+        <b>Provider</b>
+        [  AWS  ] | " "
+        .
+        <b>Visibility</b>
+        Shared with: <b>vericura-pathology</b>
+        .
+        <b>S3 URI</b>
+        <color:gray>s3://</color>cytario-research-data/slides/
+        .
+        <b>Region</b>
+        eu-central-1
+        .
+        <b>Endpoint</b>
+        <color:gray>(default AWS endpoint)</color>
+        .
+        <b>Role ARN</b>
+        arn:aws:iam::123456789012:role/cytario-read
+        .
+        <b>Created by</b>
+        <color:gray>m.schneider@vericura.com</color>
+        .
+        <b>Connection ID</b>
+        <color:gray>conn-a8f3e21b</color>
+      }
+    }
+    --
+    {
+      [  Open Bucket  ] | [  Edit  ] | | | | [  Remove Connection  ]
+    }
+  }
+}
+@endsalt

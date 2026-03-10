@@ -1,0 +1,25 @@
+@startsalt
+title File Info Dialog -- Default View
+{
+  {+
+    {
+      <b>case-2024-0193_HE.ome.tif</b> | | | | | | <&x>
+    }
+    --
+    {
+      {
+        <b>Size</b> | 2.4 GB
+        <b>Last Modified</b> | 2026-02-18 14:32 UTC
+        <b>Content Type</b> | image/tiff
+        <b>Storage Class</b> | STANDARD
+        <b>ETag</b> | <color:gray>"a3f8c91b2d..."</color>
+        <b>Version ID</b> | <color:gray>v8Kj2mNpQ3...</color>
+      }
+    }
+    --
+    {
+      [  Open File  ] | [  Download  ] | | | | [  Delete  ]
+    }
+  }
+}
+@endsalt
