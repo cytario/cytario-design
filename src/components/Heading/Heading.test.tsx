@@ -19,7 +19,7 @@ describe("Heading", () => {
   it("applies size class based on heading level by default", () => {
     render(<Heading as="h1">Big</Heading>);
     const heading = screen.getByRole("heading", { name: "Big" });
-    expect(heading.className).toContain("--font-size-3xl");
+    expect(heading.className).toContain("text-3xl");
   });
 
   it("allows overriding size independently of heading level", () => {
@@ -29,7 +29,7 @@ describe("Heading", () => {
       </Heading>,
     );
     const heading = screen.getByRole("heading", { name: "Custom" });
-    expect(heading.className).toContain("--font-size-3xl");
+    expect(heading.className).toContain("text-3xl");
   });
 
   it("applies custom className", () => {
@@ -41,13 +41,13 @@ describe("Heading", () => {
   it("has font-weight-semibold by default", () => {
     render(<Heading>Bold</Heading>);
     const heading = screen.getByRole("heading", { name: "Bold" });
-    expect(heading.className).toContain("--font-weight-semibold");
+    expect(heading.className).toContain("font-semibold");
   });
 
   it("supports bold weight", () => {
     render(<Heading weight="bold">Heavy</Heading>);
     const heading = screen.getByRole("heading", { name: "Heavy" });
-    expect(heading.className).toContain("--font-weight-bold");
+    expect(heading.className).toContain("font-bold");
   });
 
   it("renders 3xl size as font-size-4xl", () => {
@@ -55,7 +55,7 @@ describe("Heading", () => {
       <Heading size="3xl">Extra Large</Heading>,
     );
     const heading = screen.getByRole("heading", { name: "Extra Large" });
-    expect(heading.className).toContain("--font-size-4xl");
+    expect(heading.className).toContain("text-4xl");
   });
 
   it("allows className to override internal size via twMerge", () => {
@@ -71,13 +71,13 @@ describe("Convenience components", () => {
   it("H1 renders as h1 with 2xl size", () => {
     render(<H1>Title</H1>);
     const heading = screen.getByRole("heading", { name: "Title", level: 1 });
-    expect(heading.className).toContain("--font-size-3xl");
+    expect(heading.className).toContain("text-3xl");
   });
 
   it("H1 uses font-bold by default", () => {
     render(<H1>Bold Title</H1>);
     const heading = screen.getByRole("heading", { name: "Bold Title" });
-    expect(heading.className).toContain("--font-weight-bold");
+    expect(heading.className).toContain("font-bold");
   });
 
   it("H2 renders as h2 with xl size", () => {
@@ -86,7 +86,7 @@ describe("Convenience components", () => {
       name: "Subtitle",
       level: 2,
     });
-    expect(heading.className).toContain("--font-size-2xl");
+    expect(heading.className).toContain("text-2xl");
   });
 
   it("H3 renders as h3 with lg size", () => {
@@ -95,13 +95,13 @@ describe("Convenience components", () => {
       name: "Section",
       level: 3,
     });
-    expect(heading.className).toContain("--font-size-xl");
+    expect(heading.className).toContain("text-xl");
   });
 
   it("H1 className override works with twMerge", () => {
     render(<H1 className="text-lg">Small H1</H1>);
     const heading = screen.getByRole("heading", { name: "Small H1" });
     expect(heading.className).toContain("text-lg");
-    expect(heading.className).not.toContain("--font-size-3xl");
+    expect(heading.className).not.toContain("text-3xl");
   });
 });

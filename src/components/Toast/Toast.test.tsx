@@ -54,7 +54,7 @@ describe("Toast", () => {
     await userEvent.click(screen.getByRole("button", { name: "Trigger" }));
 
     const status = screen.getByRole("status");
-    expect(status.className).toContain("var(--color-surface-success)");
+    expect(status.className).toContain("--color-surface-success");
   });
 
   it("renders error variant correctly", async () => {
@@ -63,7 +63,7 @@ describe("Toast", () => {
     await userEvent.click(screen.getByRole("button", { name: "Trigger" }));
 
     const status = screen.getByRole("status");
-    expect(status.className).toContain("var(--color-surface-danger)");
+    expect(status.className).toContain("--color-surface-danger");
   });
 
   it("renders info variant correctly", async () => {
@@ -72,7 +72,7 @@ describe("Toast", () => {
     await userEvent.click(screen.getByRole("button", { name: "Trigger" }));
 
     const status = screen.getByRole("status");
-    expect(status.className).toContain("var(--color-surface-info)");
+    expect(status.className).toContain("--color-surface-info");
   });
 
   it("shows multiple toasts", async () => {

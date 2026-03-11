@@ -80,7 +80,7 @@ After modifying tokens, run `pnpm build:tokens`. If adding a new color scale, al
 All components follow the same pattern:
 
 1. **Behavior + accessibility**: Wrap a React Aria Component (e.g., `Button`, `TextField`, `Select`, `Table`)
-2. **Styling**: Tailwind utility classes with design token CSS variables (e.g., `bg-[var(--color-action-primary)]`)
+2. **Styling**: Tailwind v4 canonical utility classes. Use standard utilities where they exist (`font-semibold`, `text-sm`, `gap-4`, `rounded-md`). Use token syntax only for custom semantic tokens (e.g., `bg-(--color-action-primary)`, `text-(--color-text-secondary)`). Never use verbose forms like `[var(--spacing-4)]` or `(number:--font-weight-semibold)`.
 3. **Stories**: CSF3 format, import from `storybook/react` and `storybook/test` (Storybook 10 paths)
 4. **Tests**: Vitest + React Testing Library. Test by user perspective (query by role/label). Do not test React Aria internals.
 
@@ -140,6 +140,10 @@ This project uses **Conventional Commits** (`type(scope): description`). Common 
 A `BREAKING CHANGE:` footer or `!` after the type triggers a major version bump.
 
 Releases are automated via **semantic-release** — version bumps, changelogs, and npm publishing to GitHub Packages are all driven by commit messages on `main`.
+
+## Pre-commit Checklist
+
+- **Always run `pnpm test -- --run` before committing** to ensure tests pass. Tests assert on class names, so any Tailwind class refactoring must update tests too.
 
 ## Common Pitfalls
 
