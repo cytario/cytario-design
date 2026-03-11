@@ -30,6 +30,7 @@ export interface TreeProps<T extends TreeNode = TreeNode> {
   onHover?: (node: T) => void;
   /** Called when the pointer leaves a tree node row. */
   onHoverEnd?: (node: T) => void;
+  onToggle?: (node: T) => void;
   openByDefault?: boolean;
   searchTerm?: string;
   searchMatch?: (node: T, term: string) => boolean;
@@ -65,6 +66,7 @@ function NodeRenderer<T extends TreeNode>({
   size,
   onHover,
   onHoverEnd,
+  onToggle,
 }: NodeRendererProps<T> & {
   checkedIds: Set<string>;
   onCheckToggle: (id: string) => void;
@@ -72,6 +74,7 @@ function NodeRenderer<T extends TreeNode>({
   size: "compact" | "comfortable";
   onHover?: (node: T) => void;
   onHoverEnd?: (node: T) => void;
+  onToggle?: (node: T) => void;
 }) {
   const data = node.data;
   const isCheckbox = selectionMode === "checkbox";
@@ -141,6 +144,7 @@ function NodeRenderer<T extends TreeNode>({
         onClick={(e) => {
           e.stopPropagation();
           node.toggle();
+          onToggle?.(node.data);
         }}
         tabIndex={-1}
         aria-label={node.isOpen ? "Collapse" : "Expand"}
@@ -204,6 +208,7 @@ export function Tree<T extends TreeNode = TreeNode>({
   selectedIds,
   onSelectionChange,
   onActivate,
+  onToggle,
   onHover,
   onHoverEnd,
   openByDefault = false,
@@ -310,6 +315,7 @@ export function Tree<T extends TreeNode = TreeNode>({
             size={size}
             onHover={onHover}
             onHoverEnd={onHoverEnd}
+            onToggle={onToggle}
           />
         )}
       </ArboristTree>
