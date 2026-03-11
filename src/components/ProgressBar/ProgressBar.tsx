@@ -27,11 +27,11 @@ export interface ProgressBarProps {
 }
 
 const fillStyles: Record<ProgressBarVariant, string> = {
-  brand: "bg-[var(--color-progress-fill)]",
-  success: "bg-[var(--color-progress-fill-success)]",
-  warning: "bg-[var(--color-progress-fill-warning)]",
-  danger: "bg-[var(--color-progress-fill-danger)]",
-  neutral: "bg-[var(--color-text-secondary)]",
+  brand: "bg-(--color-progress-fill)",
+  success: "bg-(--color-progress-fill-success)",
+  warning: "bg-(--color-progress-fill-warning)",
+  danger: "bg-(--color-progress-fill-danger)",
+  neutral: "bg-(--color-text-secondary)",
 };
 
 const sizeStyles: Record<ProgressBarSize, string> = {
@@ -55,10 +55,10 @@ export function ProgressBar({
     <div className={twMerge("w-full", className)}>
       {(label || description || showValue) && (
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[length:var(--font-size-sm)] font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+          <span className="text-sm font-medium text-(--color-text-primary)">
             {label}
           </span>
-          <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+          <span className="text-sm text-(--color-text-secondary)">
             {description ?? (showValue ? `${clampedValue}%` : null)}
           </span>
         </div>
@@ -70,13 +70,13 @@ export function ProgressBar({
         aria-valuemax={100}
         aria-label={label ?? "Progress"}
         className={twMerge(
-          "w-full rounded-[var(--border-radius-full)] bg-[var(--color-progress-track)]",
+          "w-full rounded-full bg-(--color-progress-track)",
           sizeStyles[size],
         )}
       >
         <div
           className={twMerge(
-            "h-full rounded-[var(--border-radius-full)] transition-all duration-300",
+            "h-full rounded-full transition-all duration-300",
             fillStyles[variant],
           )}
           style={{ width: `${clampedValue}%` }}

@@ -55,7 +55,7 @@ export function FileIcon({
   return (
     <IconComponent
       size={size}
-      className="shrink-0 text-[var(--color-text-secondary)]"
+      className="shrink-0 text-(--color-text-secondary)"
     />
   );
 }
@@ -106,19 +106,19 @@ export function FileCard({
   const isInteractive = !!href || !!onPress;
 
   const radius = compact
-    ? "rounded-[var(--border-radius-md)]"
-    : "rounded-[var(--border-radius-lg)]";
+    ? "rounded-md"
+    : "rounded-lg";
 
   const IconComponent = getFileIcon(type, extension);
   const iconSize = compact ? 24 : 32;
   const iconColor =
     type === "directory"
-      ? "text-[var(--color-text-tertiary)]"
-      : "text-[var(--color-text-secondary)]";
+      ? "text-(--color-text-tertiary)"
+      : "text-(--color-text-secondary)";
 
   const thumbnailClass = compact
-    ? "aspect-square rounded-t-[var(--border-radius-md)]"
-    : "aspect-[4/3] rounded-t-[var(--border-radius-lg)]";
+    ? "aspect-square rounded-t-(--border-radius-md)"
+    : "aspect-[4/3] rounded-t-(--border-radius-lg)";
 
   const handleInfoClick = useCallback(
     (e: React.MouseEvent | React.KeyboardEvent) => {
@@ -145,7 +145,7 @@ export function FileCard({
     <>
       {/* Thumbnail area */}
       <div
-        className={`shrink-0 overflow-hidden bg-[var(--color-neutral-900)] ${thumbnailClass}`}
+        className={`shrink-0 overflow-hidden bg-neutral-900 ${thumbnailClass}`}
       >
         {children ? (
           <div className="h-full w-full overflow-hidden">{children}</div>
@@ -159,22 +159,22 @@ export function FileCard({
       {/* Metadata area */}
       <div
         className={[
-          "flex flex-col border-t border-[var(--color-border-default)]",
-          "bg-[var(--color-surface-default)]",
+          "flex flex-col border-t border-(--color-border-default)",
+          "bg-(--color-surface-default)",
           compact
-            ? "px-2 py-1.5 rounded-b-[var(--border-radius-md)]"
-            : "gap-0.5 px-3 py-2 rounded-b-[var(--border-radius-lg)]",
+            ? "px-2 py-1.5 rounded-b-(--border-radius-md)"
+            : "gap-0.5 px-3 py-2 rounded-b-(--border-radius-lg)",
         ].join(" ")}
       >
         {compact ? (
-          <span className="text-xs font-medium text-[var(--color-text-primary)] truncate">
+          <span className="text-xs font-medium text-(--color-text-primary) truncate">
             {name}
           </span>
         ) : (
           <>
             <span className="flex items-center gap-1.5">
               <FileIcon type={type} extension={extension} size={16} />
-              <span className="min-w-0 flex-1 text-sm font-medium text-[var(--color-text-primary)] truncate">
+              <span className="min-w-0 flex-1 text-sm font-medium text-(--color-text-primary) truncate">
                 {name}
               </span>
               {onInfo && (
@@ -199,7 +199,7 @@ export function FileCard({
               )}
             </span>
             {size && (
-              <span className="text-xs text-[var(--color-text-secondary)] tabular-nums pl-[22px]">
+              <span className="text-xs text-(--color-text-secondary) tabular-nums pl-[22px]">
                 {size}
               </span>
             )}
@@ -212,13 +212,13 @@ export function FileCard({
   const baseStyles = [
     "group flex flex-col overflow-hidden",
     radius,
-    "border border-[var(--color-border-default)]",
+    "border border-(--color-border-default)",
     "shadow-sm",
     "transition-all",
     isInteractive &&
-      "hover:border-[var(--color-border-focus)] hover:shadow-md cursor-pointer",
+      "hover:border-(--color-border-focus) hover:shadow-md cursor-pointer",
     isInteractive &&
-      "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 outline-none",
+      "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 outline-none",
     className,
   ]
     .filter(Boolean)

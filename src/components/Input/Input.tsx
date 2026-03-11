@@ -56,13 +56,13 @@ function groupRadiusClasses(
 ): string {
   switch (position) {
     case "start":
-      return "rounded-l-[var(--border-radius-md)] rounded-r-none";
+      return "rounded-l-(--border-radius-md) rounded-r-none";
     case "middle":
       return "rounded-none";
     case "end":
-      return "rounded-r-[var(--border-radius-md)] rounded-l-none";
+      return "rounded-r-(--border-radius-md) rounded-l-none";
     default:
-      return "rounded-[var(--border-radius-md)]";
+      return "rounded-md";
   }
 }
 
@@ -84,12 +84,12 @@ export function Input({
   const { inGroup, position } = useInputGroup();
 
   const borderColor = isInvalid
-    ? "border-[var(--color-border-danger)]"
-    : "border-[var(--color-border-default)] hover:border-[var(--color-border-strong)]";
+    ? "border-(--color-border-danger)"
+    : "border-(--color-border-default) hover:border-(--color-border-strong)";
 
   const radiusClass = inGroup
     ? groupRadiusClasses(position)
-    : "rounded-[var(--border-radius-md)]";
+    : "rounded-md";
 
   /** When not first in a group, overlap left border with previous sibling */
   const marginClass = inGroup && position !== "start" && position !== "standalone" ? "-ml-px" : "";
@@ -102,7 +102,7 @@ export function Input({
       isRequired={isRequired}
       isInvalid={isInvalid}
       className={[
-        "flex flex-col gap-[var(--spacing-1)]",
+        "flex flex-col gap-1",
         inGroup ? "min-w-0 flex-1" : "",
         marginClass,
         className,
@@ -113,16 +113,16 @@ export function Input({
       {label && (
         <Label
           className={[
-            "text-[length:var(--font-size-sm)]",
-            "font-[number:var(--font-weight-medium)]",
-            "text-[var(--color-text-primary)]",
+            "text-sm",
+            "font-medium",
+            "text-(--color-text-primary)",
           ].join(" ")}
         >
           {label}
           {isRequired && (
             <span
               aria-hidden="true"
-              className="ml-0.5 text-[var(--color-text-danger)]"
+              className="ml-0.5 text-(--color-text-danger)"
             >
               *
             </span>
@@ -136,10 +136,10 @@ export function Input({
             "flex items-center overflow-hidden",
             radiusClass,
             "border",
-            "bg-[var(--color-surface-default)]",
+            "bg-(--color-surface-default)",
             "outline-none transition-colors",
             borderColor,
-            "focus-within:ring-2 focus-within:ring-[var(--color-border-focus)] focus-within:border-[var(--color-border-focus)]",
+            "focus-within:ring-2 focus-within:ring-(--color-border-focus) focus-within:border-(--color-border-focus)",
             inGroup ? "focus-within:z-10" : "",
             isDisabled ? "opacity-50 pointer-events-none" : "",
           ]
@@ -149,9 +149,9 @@ export function Input({
           <span
             className={[
               "self-stretch flex items-center shrink-0 select-none",
-              "bg-[var(--color-surface-subtle)]",
-              "border-r border-r-[var(--color-border-default)]",
-              "text-[var(--color-text-secondary)]",
+              "bg-(--color-surface-subtle)",
+              "border-r border-r-(--color-border-default)",
+              "text-(--color-text-secondary)",
               prefixSizeClasses[size],
             ].join(" ")}
           >
@@ -163,8 +163,8 @@ export function Input({
               "w-full bg-transparent",
               sizeClasses[size],
               alignClasses[align],
-              "text-[var(--color-text-primary)]",
-              "placeholder:text-[var(--color-text-tertiary)]",
+              "text-(--color-text-primary)",
+              "placeholder:text-(--color-text-tertiary)",
               "outline-none border-none",
             ].join(" ")}
           />
@@ -178,12 +178,12 @@ export function Input({
             alignClasses[align],
             radiusClass,
             "border",
-            "text-[var(--color-text-primary)]",
-            "bg-[var(--color-surface-default)]",
-            "placeholder:text-[var(--color-text-tertiary)]",
+            "text-(--color-text-primary)",
+            "bg-(--color-surface-default)",
+            "placeholder:text-(--color-text-tertiary)",
             "outline-none transition-colors",
             borderColor,
-            "focus:ring-2 focus:ring-[var(--color-border-focus)] focus:border-[var(--color-border-focus)]",
+            "focus:ring-2 focus:ring-(--color-border-focus) focus:border-(--color-border-focus)",
             inGroup ? "focus:z-10" : "",
             "disabled:opacity-50 disabled:pointer-events-none",
           ].join(" ")}
@@ -193,7 +193,7 @@ export function Input({
       {description && !isInvalid && (
         <Text
           slot="description"
-          className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]"
+          className="text-sm text-(--color-text-secondary)"
         >
           {description}
         </Text>
@@ -202,7 +202,7 @@ export function Input({
       {isInvalid && (
         <Text
           slot="errorMessage"
-          className="text-[length:var(--font-size-sm)] text-[var(--color-text-danger)]"
+          className="text-sm text-(--color-text-danger)"
         >
           {errorMessage}
         </Text>

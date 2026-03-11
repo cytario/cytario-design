@@ -151,7 +151,7 @@ function getFileIcon(type?: string): LucideIcon {
 
 function Section({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex-grow bg-[var(--color-surface-default)] px-4 sm:px-6 lg:px-8 py-4">
+    <div className="flex-grow bg-(--color-surface-default) px-4 sm:px-6 lg:px-8 py-4">
       <div className="mx-auto max-w-7xl">{children}</div>
     </div>
   );
@@ -208,14 +208,14 @@ function PinnedSection() {
                   onClick={(e) => e.preventDefault()}
                   className="flex items-center gap-2 no-underline hover:underline"
                 >
-                  <Pin size={14} className="shrink-0 text-[var(--color-text-secondary)]" />
-                  <span className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+                  <Pin size={14} className="shrink-0 text-(--color-text-secondary)" />
+                  <span className="font-medium text-(--color-text-primary)">
                     {item.name}
                   </span>
                 </a>
               </Cell>
               <Cell>
-                <span className="text-[var(--color-text-secondary)]">{item.bucketName}</span>
+                <span className="text-(--color-text-secondary)">{item.bucketName}</span>
               </Cell>
               <Cell>
                 <Badge variant="purple" size="sm">{item.provider.toUpperCase()}</Badge>
@@ -255,14 +255,14 @@ function RecentDirsSection() {
                   onClick={(e) => e.preventDefault()}
                   className="flex items-center gap-2 no-underline hover:underline"
                 >
-                  <Folder size={14} className="shrink-0 text-[var(--color-text-secondary)]" />
-                  <span className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+                  <Folder size={14} className="shrink-0 text-(--color-text-secondary)" />
+                  <span className="font-medium text-(--color-text-primary)">
                     {item.name}
                   </span>
                 </a>
               </Cell>
               <Cell>
-                <span className="text-[var(--color-text-secondary)]">{item.bucketName}</span>
+                <span className="text-(--color-text-secondary)">{item.bucketName}</span>
               </Cell>
               <Cell>
                 <Badge variant="purple" size="sm">{item.provider.toUpperCase()}</Badge>
@@ -295,13 +295,13 @@ function RecentFilesSection() {
               key={item.name}
               href={item.href}
               onClick={(e) => e.preventDefault()}
-              className="flex flex-col items-center gap-2 rounded-[var(--border-radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-default)] p-4 shadow-sm hover:border-[var(--color-border-focus)] hover:shadow-md transition-all no-underline cursor-pointer"
+              className="flex flex-col items-center gap-2 rounded-lg border border-(--color-border-default) bg-(--color-surface-default) p-4 shadow-sm hover:border-(--color-border-focus) hover:shadow-md transition-all no-underline cursor-pointer"
             >
-              <FileIcon size={24} className="text-[var(--color-text-secondary)]" />
-              <span className="text-[length:var(--font-size-xs)] font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)] truncate max-w-full">
+              <FileIcon size={24} className="text-(--color-text-secondary)" />
+              <span className="text-xs font-medium text-(--color-text-primary) truncate max-w-full">
                 {item.name}
               </span>
-              <span className="text-[length:var(--font-size-xs)] text-[var(--color-text-tertiary)]">
+              <span className="text-xs text-(--color-text-tertiary)">
                 {item.fileType}
               </span>
             </a>
@@ -350,7 +350,7 @@ function StorageConnectionsSection() {
 
 function HomeDashboard() {
   return (
-    <div className="min-h-screen bg-[var(--color-surface-subtle)]">
+    <div className="min-h-screen bg-(--color-surface-subtle)">
       {/* App Header */}
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
@@ -361,7 +361,7 @@ function HomeDashboard() {
           <div className="rounded-md bg-slate-800 px-3 py-1.5 text-sm text-slate-400 w-64">
             Search...
           </div>
-          <div className="h-8 w-8 rounded-full bg-[var(--color-brand-primary)] flex items-center justify-center text-xs font-bold">
+          <div className="h-8 w-8 rounded-full bg-(--color-brand-primary) flex items-center justify-center text-xs font-bold">
             ML
           </div>
         </div>
@@ -385,12 +385,12 @@ function HomeDashboard() {
 
 function HomeDashboardEmpty() {
   return (
-    <div className="min-h-screen bg-[var(--color-surface-subtle)]">
+    <div className="min-h-screen bg-(--color-surface-subtle)">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
           <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
         </div>
-        <div className="h-8 w-8 rounded-full bg-[var(--color-brand-primary)] flex items-center justify-center text-xs font-bold">
+        <div className="h-8 w-8 rounded-full bg-(--color-brand-primary) flex items-center justify-center text-xs font-bold">
           ML
         </div>
       </header>

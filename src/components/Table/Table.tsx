@@ -34,7 +34,7 @@ export function Table({ size = "comfortable", className, ...props }: DataTablePr
     <AriaTable
       {...props}
       className={[
-        "w-full border-collapse text-[var(--font-size-sm)] text-[var(--color-text-primary)]",
+        "w-full border-collapse text-(--font-size-sm) text-(--color-text-primary)",
         tableSizeClass[size],
         className,
       ]
@@ -61,17 +61,17 @@ export function Column(props: ColumnProps) {
     <AriaColumn
       {...props}
       className={[
-        "px-3 py-2 text-left font-[var(--font-weight-semibold)] text-[var(--color-text-secondary)]",
-        "border-b-2 border-[var(--color-border-default)]",
+        "px-3 py-2 text-left font-semibold text-(--color-text-secondary)",
+        "border-b-2 border-(--color-border-default)",
         "cursor-default select-none outline-none",
-        "focus-visible:outline-2 focus-visible:outline-[var(--color-border-focus)] focus-visible:outline-offset-[-2px]",
+        "focus-visible:outline-2 focus-visible:outline-(--color-border-focus) focus-visible:outline-offset-[-2px]",
       ].join(" ")}
     >
       {({ allowsSorting, sortDirection }) => (
         <span className="inline-flex items-center gap-1">
           {props.children as React.ReactNode}
           {allowsSorting && (
-            <span aria-hidden="true" className="text-[var(--color-text-tertiary)]">
+            <span aria-hidden="true" className="text-(--color-text-tertiary)">
               {sortDirection === "ascending" ? "\u25B2" : sortDirection === "descending" ? "\u25BC" : "\u25B4"}
             </span>
           )}
@@ -98,11 +98,11 @@ export function Row<T extends object>(props: RowProps<T>) {
     <AriaRow
       {...props}
       className={[
-        "border-b border-[var(--color-border-default)]",
-        "even:bg-[var(--color-surface-subtle)]",
-        "hover:bg-[var(--color-surface-muted)]",
+        "border-b border-(--color-border-default)",
+        "even:bg-(--color-surface-subtle)",
+        "hover:bg-(--color-surface-muted)",
         "outline-none",
-        "focus-visible:outline-2 focus-visible:outline-[var(--color-border-focus)] focus-visible:outline-offset-[-2px]",
+        "focus-visible:outline-2 focus-visible:outline-(--color-border-focus) focus-visible:outline-offset-[-2px]",
         "transition-colors",
       ].join(" ")}
     />
@@ -118,10 +118,10 @@ export function Cell(props: CellProps) {
     <AriaCell
       {...props}
       className={[
-        "px-3 py-[var(--table-row-py)]",
-        "text-[var(--color-text-primary)]",
+        "px-3 py-(--table-row-py)",
+        "text-(--color-text-primary)",
         "outline-none",
-        "focus-visible:outline-2 focus-visible:outline-[var(--color-border-focus)] focus-visible:outline-offset-[-2px]",
+        "focus-visible:outline-2 focus-visible:outline-(--color-border-focus) focus-visible:outline-offset-[-2px]",
       ].join(" ")}
     />
   );

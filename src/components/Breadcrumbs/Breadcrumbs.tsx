@@ -38,19 +38,19 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
             ].join(" ")}
           >
             {isLast ? (
-              <span className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)] truncate">
+              <span className="font-medium text-(--color-text-primary) truncate">
                 {item.label}
               </span>
             ) : (
               <>
                 <Link
                   href={item.href}
-                  className="whitespace-nowrap text-[var(--color-text-secondary)] outline-none transition-colors hover:text-[var(--color-text-primary)] focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:rounded-sm"
+                  className="whitespace-nowrap text-(--color-text-secondary) outline-none transition-colors hover:text-(--color-text-primary) focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 focus-visible:rounded-sm"
                 >
                   {item.label}
                 </Link>
                 <ChevronRight
-                  className="shrink-0 text-[var(--color-neutral-400)]"
+                  className="shrink-0 text-neutral-400"
                   size={16}
                   aria-hidden="true"
                 />

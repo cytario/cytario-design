@@ -28,17 +28,17 @@ export interface BadgeProps {
 
 const variantStyles: Record<BadgeVariant, string> = {
   neutral:
-    "bg-[var(--color-badge-neutral-bg)] text-[var(--color-badge-neutral-text)]",
+    "bg-(--color-badge-neutral-bg) text-(--color-badge-neutral-text)",
   purple:
-    "bg-[var(--color-badge-purple-bg)] text-[var(--color-badge-purple-text)]",
-  teal: "bg-[var(--color-badge-teal-bg)] text-[var(--color-badge-teal-text)]",
-  rose: "bg-[var(--color-badge-rose-bg)] text-[var(--color-badge-rose-text)]",
+    "bg-(--color-badge-purple-bg) text-(--color-badge-purple-text)",
+  teal: "bg-(--color-badge-teal-bg) text-(--color-badge-teal-text)",
+  rose: "bg-(--color-badge-rose-bg) text-(--color-badge-rose-text)",
   slate:
-    "bg-[var(--color-badge-slate-bg)] text-[var(--color-badge-slate-text)]",
+    "bg-(--color-badge-slate-bg) text-(--color-badge-slate-text)",
   green:
-    "bg-[var(--color-badge-green-bg)] text-[var(--color-badge-green-text)]",
+    "bg-(--color-badge-green-bg) text-(--color-badge-green-text)",
   amber:
-    "bg-[var(--color-badge-amber-bg)] text-[var(--color-badge-amber-text)]",
+    "bg-(--color-badge-amber-bg) text-(--color-badge-amber-text)",
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
@@ -61,8 +61,8 @@ export function Badge({
   return (
     <span
       className={twMerge(
-        "inline-flex items-center gap-1 rounded-[var(--border-radius-full)]",
-        "text-[length:var(--font-size-xs)] font-[number:var(--font-weight-medium)] leading-[var(--line-height-tight)]",
+        "inline-flex items-center gap-1 rounded-full",
+        "text-xs font-medium leading-tight",
         variantStyles[variant],
         sizeStyles[size],
         className,

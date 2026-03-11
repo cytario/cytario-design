@@ -25,7 +25,7 @@ export const Stacked: Story = {
       <DescriptionList.Item label="Region">eu-central-1</DescriptionList.Item>
       <DescriptionList.Item label="S3 URI">
         <span>
-          <span className="text-[var(--color-text-secondary)]">s3://</span>
+          <span className="text-(--color-text-secondary)">s3://</span>
           cytario-research-data/slides/
         </span>
       </DescriptionList.Item>

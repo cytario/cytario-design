@@ -57,7 +57,7 @@ export function PopoverTrigger({ children, className }: PopoverTriggerProps) {
     <AriaButton
       className={[
         "inline-flex items-center bg-transparent border-none p-0 outline-none cursor-pointer",
-        "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:rounded-[var(--border-radius-sm)]",
+        "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:rounded-sm",
         className,
       ]
         .filter(Boolean)
@@ -84,8 +84,8 @@ export function PopoverContent({
       offset={offsetPx}
       className={[
         "z-50",
-        "bg-[var(--color-surface-default)] border border-[var(--color-border-default)]",
-        "rounded-[var(--border-radius-md)] shadow-lg",
+        "bg-(--color-surface-default) border border-(--color-border-default)",
+        "rounded-md shadow-lg",
         "entering:animate-in entering:fade-in entering:duration-150",
         "exiting:animate-out exiting:fade-out exiting:duration-100",
         "entering:placement-top:slide-in-from-bottom-1",

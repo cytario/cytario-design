@@ -35,7 +35,7 @@ function BackLink({ label = "Back to Report" }: { label?: string }) {
     <a
       href="#"
       onClick={(e) => e.preventDefault()}
-      className="text-[var(--color-brand-primary)] hover:underline no-underline text-[length:var(--font-size-sm)]"
+      className="text-(--color-brand-primary) hover:underline no-underline text-sm"
     >
       &larr; {label}
     </a>
@@ -52,13 +52,13 @@ function PageShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[var(--color-surface-subtle)]">
-      <header className="bg-[var(--color-surface-default)] border-b border-[var(--color-border-default)] px-6 py-3">
+    <div className="min-h-screen bg-(--color-surface-subtle)">
+      <header className="bg-(--color-surface-default) border-b border-(--color-border-default) px-6 py-3">
         <div className="max-w-5xl mx-auto flex items-center gap-2">
-          <span className="text-[length:var(--font-size-xl)] font-[number:var(--font-weight-bold)] text-[var(--color-text-primary)]">
+          <span className="text-xl font-bold text-(--color-text-primary)">
             &#x03B4;
           </span>
-          <span className="text-[length:var(--font-size-lg)] font-[number:var(--font-weight-semibold)] text-[var(--color-text-primary)]">
+          <span className="text-lg font-semibold text-(--color-text-primary)">
             Dapanoskop
           </span>
         </div>
@@ -66,7 +66,7 @@ function PageShell({
       <main className="max-w-5xl mx-auto px-6 py-6 space-y-6">
         {children}
       </main>
-      <footer className="border-t border-[var(--color-border-default)] mt-12 py-4 text-center text-[length:var(--font-size-xs)] text-[var(--color-text-tertiary)]">
+      <footer className="border-t border-(--color-border-default) mt-12 py-4 text-center text-xs text-(--color-text-tertiary)">
         Dapanoskop v1.2.0
       </footer>
     </div>
@@ -84,7 +84,7 @@ function CostCenterDetailPage() {
     <PageShell>
       <div className="flex items-center gap-4">
         <BackLink />
-        <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+        <span className="text-sm text-(--color-text-secondary)">
           January 2026
         </span>
       </div>
@@ -120,7 +120,7 @@ function CostCenterDetailPage() {
       {/* Cost trend placeholder */}
       <Card padding="lg">
         <H3>{cc.name} Cost Trend</H3>
-        <div className="mt-4 h-48 flex items-center justify-center rounded-[var(--border-radius-md)] bg-[var(--color-surface-subtle)] text-[var(--color-text-tertiary)] text-[length:var(--font-size-sm)]">
+        <div className="mt-4 h-48 flex items-center justify-center rounded-md bg-(--color-surface-subtle) text-(--color-text-tertiary) text-sm">
           Bar chart placeholder (12-month trend for {cc.name})
         </div>
       </Card>
@@ -142,21 +142,21 @@ function CostCenterDetailPage() {
                 <Row key={wl.name}>
                   <Cell>
                     {isUntagged ? (
-                      <span className="font-[number:var(--font-weight-medium)] text-[var(--color-text-danger)]">
+                      <span className="font-medium text-(--color-text-danger)">
                         {wl.name}
                       </span>
                     ) : (
                       <a
                         href="#"
                         onClick={(e) => e.preventDefault()}
-                        className="text-[var(--color-brand-primary)] hover:underline no-underline"
+                        className="text-(--color-brand-primary) hover:underline no-underline"
                       >
                         {wl.name}
                       </a>
                     )}
                   </Cell>
                   <Cell>
-                    <span className="tabular-nums font-[number:var(--font-weight-medium)]">
+                    <span className="tabular-nums font-medium">
                       {formatUsd(wl.currentCostUsd)}
                     </span>
                   </Cell>
@@ -173,7 +173,7 @@ function CostCenterDetailPage() {
                         previous={wl.yoyCostUsd}
                       />
                     ) : (
-                      <span className="text-[var(--color-text-tertiary)]">N/A</span>
+                      <span className="text-(--color-text-tertiary)">N/A</span>
                     )}
                   </Cell>
                 </Row>
@@ -197,14 +197,14 @@ function WorkloadDetailPage() {
     <PageShell>
       <div className="flex items-center gap-4">
         <BackLink />
-        <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+        <span className="text-sm text-(--color-text-secondary)">
           January 2026
         </span>
       </div>
 
       <div>
         <H2 weight="bold">Workload: {wl.name}</H2>
-        <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)] mt-1">
+        <p className="text-sm text-(--color-text-secondary) mt-1">
           Cost Center: Engineering
         </p>
       </div>
@@ -247,7 +247,7 @@ function WorkloadDetailPage() {
             {usageTypesDataPipeline.map((row) => (
               <Row key={row.usageType}>
                 <Cell>
-                  <span className="font-[number:var(--font-weight-medium)]">
+                  <span className="font-medium">
                     {row.usageType}
                   </span>
                 </Cell>
@@ -260,7 +260,7 @@ function WorkloadDetailPage() {
                   </Badge>
                 </Cell>
                 <Cell>
-                  <span className="tabular-nums font-[number:var(--font-weight-medium)]">
+                  <span className="tabular-nums font-medium">
                     {formatUsd(row.costUsd)}
                   </span>
                 </Cell>
@@ -295,14 +295,14 @@ function StorageDetailPage() {
     <PageShell>
       <div className="flex items-center gap-4">
         <BackLink />
-        <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+        <span className="text-sm text-(--color-text-secondary)">
           January 2026
         </span>
       </div>
 
       <div>
         <H2 weight="bold">Storage Volume Breakdown</H2>
-        <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)] mt-1">
+        <p className="text-sm text-(--color-text-secondary) mt-1">
           Distribution of stored data across S3 storage tiers
         </p>
       </div>
@@ -330,7 +330,7 @@ function StorageDetailPage() {
       {/* Pie chart placeholder */}
       <Card padding="lg">
         <H3>Tier Distribution by Volume</H3>
-        <div className="mt-4 h-64 flex items-center justify-center rounded-[var(--border-radius-md)] bg-[var(--color-surface-subtle)] text-[var(--color-text-tertiary)] text-[length:var(--font-size-sm)]">
+        <div className="mt-4 h-64 flex items-center justify-center rounded-md bg-(--color-surface-subtle) text-(--color-text-tertiary) text-sm">
           Pie chart placeholder (storage tier distribution)
         </div>
       </Card>
@@ -355,7 +355,7 @@ function StorageDetailPage() {
                   <Cell>
                     <span className="flex items-center gap-2">
                       <span
-                        className="inline-block w-3 h-3 rounded-[var(--border-radius-full)]"
+                        className="inline-block w-3 h-3 rounded-full"
                         style={{
                           backgroundColor:
                             tierColors[row.tier] ?? "var(--color-text-secondary)",
@@ -372,7 +372,7 @@ function StorageDetailPage() {
                     </span>
                   </Cell>
                   <Cell>
-                    <span className="tabular-nums font-[number:var(--font-weight-medium)]">
+                    <span className="tabular-nums font-medium">
                       {formatUsd(row.costUsd)}
                     </span>
                   </Cell>
@@ -398,14 +398,14 @@ function StorageCostDetailPage() {
     <PageShell>
       <div className="flex items-center gap-4">
         <BackLink />
-        <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+        <span className="text-sm text-(--color-text-secondary)">
           January 2026
         </span>
       </div>
 
       <div>
         <H2 weight="bold">Storage Cost Breakdown</H2>
-        <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)] mt-1">
+        <p className="text-sm text-(--color-text-secondary) mt-1">
           All storage usage types across all workloads
         </p>
       </div>
@@ -429,7 +429,7 @@ function StorageCostDetailPage() {
 
       {/* Placeholder for the full usage type table */}
       <Card padding="lg">
-        <div className="h-48 flex items-center justify-center rounded-[var(--border-radius-md)] bg-[var(--color-surface-subtle)] text-[var(--color-text-tertiary)] text-[length:var(--font-size-sm)]">
+        <div className="h-48 flex items-center justify-center rounded-md bg-(--color-surface-subtle) text-(--color-text-tertiary) text-sm">
           Usage type table placeholder (all storage usage types across workloads)
         </div>
       </Card>

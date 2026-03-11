@@ -36,8 +36,8 @@ const LayoutContext = createContext<DescriptionListLayout>("stacked");
 /* ------------------------------------------------------------------ */
 
 const listGapStyles: Record<DescriptionListLayout, string> = {
-  stacked: "gap-[var(--spacing-4)]",
-  horizontal: "gap-[var(--spacing-3)]",
+  stacked: "gap-4",
+  horizontal: "gap-3",
 };
 
 export function DescriptionList({
@@ -63,13 +63,13 @@ export function DescriptionList({
 /* ------------------------------------------------------------------ */
 
 const itemLayoutStyles: Record<DescriptionListLayout, string> = {
-  stacked: "flex flex-col gap-[var(--spacing-1)]",
+  stacked: "flex flex-col gap-1",
   horizontal:
-    "grid grid-cols-[140px_1fr] gap-x-[var(--spacing-4)] items-baseline",
+    "grid grid-cols-[140px_1fr] gap-x-(--spacing-4) items-baseline",
 };
 
 const labelClasses =
-  "text-[length:var(--font-size-sm)] font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]";
+  "text-sm font-medium text-(--color-text-primary)";
 
 function DescriptionListItem({
   label,
@@ -80,10 +80,10 @@ function DescriptionListItem({
   const layout = useContext(LayoutContext);
 
   const valueClasses = [
-    "text-[length:var(--font-size-sm)] m-0",
+    "text-sm m-0",
     muted
-      ? "text-[var(--color-text-secondary)]"
-      : "text-[var(--color-text-primary)]",
+      ? "text-(--color-text-secondary)"
+      : "text-(--color-text-primary)",
   ].join(" ");
 
   const valueContent = <dd className={valueClasses}>{children}</dd>;

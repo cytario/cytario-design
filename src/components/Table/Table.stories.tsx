@@ -160,7 +160,7 @@ export const Empty: Story = {
         <Column id="priority">Priority</Column>
       </TableHeader>
       <TableBody renderEmptyState={() => (
-        <div className="px-3 py-8 text-center text-[var(--color-text-tertiary)]">
+        <div className="px-3 py-8 text-center text-(--color-text-tertiary)">
           No cases found.
         </div>
       )}>

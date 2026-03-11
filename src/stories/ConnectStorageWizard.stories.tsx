@@ -194,7 +194,7 @@ function ConnectStorageWizardPage({ initialStep = 0 }: { initialStep?: number })
         totalSteps={STEP_LABELS.length}
         onStepChange={setCurrentStep}
       >
-        <div className="flex flex-col gap-[var(--spacing-6)]">
+        <div className="flex flex-col gap-6">
           <FormWizardProgress labels={STEP_LABELS} />
 
           {currentStep === 0 && (
@@ -214,7 +214,7 @@ function ConnectStorageWizardPage({ initialStep = 0 }: { initialStep?: number })
           )}
           {currentStep === 2 && <AccessStep isAWS={isAWS} />}
 
-          <div className="border-t border-[var(--color-border-default)] pt-4">
+          <div className="border-t border-(--color-border-default) pt-4">
             <FormWizardNav
               onNext={goNext}
               submitLabel="Connect Storage"
@@ -246,7 +246,7 @@ function ConnectStorageWizardOtherProvider() {
         totalSteps={STEP_LABELS.length}
         onStepChange={setCurrentStep}
       >
-        <div className="flex flex-col gap-[var(--spacing-6)]">
+        <div className="flex flex-col gap-6">
           <FormWizardProgress labels={STEP_LABELS} />
 
           {currentStep === 0 && (
@@ -262,7 +262,7 @@ function ConnectStorageWizardOtherProvider() {
           )}
           {currentStep === 2 && <AccessStep isAWS={isAWS} />}
 
-          <div className="border-t border-[var(--color-border-default)] pt-4">
+          <div className="border-t border-(--color-border-default) pt-4">
             <FormWizardNav
               onNext={goNext}
               submitLabel="Connect Storage"

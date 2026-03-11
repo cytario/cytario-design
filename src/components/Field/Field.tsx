@@ -28,19 +28,19 @@ export function Field({
 
   return (
     <div
-      className={["flex flex-col gap-[var(--spacing-1)]", className]
+      className={["flex flex-col gap-1", className]
         .filter(Boolean)
         .join(" ")}
     >
       {label && <Label isRequired={isRequired}>{label}</Label>}
       {children}
       {description && !errorMessage && (
-        <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+        <p className="text-sm text-(--color-text-secondary)">
           {description}
         </p>
       )}
       {errorMessage && (
-        <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-danger)]">
+        <p className="text-sm text-(--color-text-danger)">
           {errorMessage}
         </p>
       )}

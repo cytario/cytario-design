@@ -125,7 +125,7 @@ const statusConfig: Record<
   { dotClass: string; label: string }
 > = {
   active: {
-    dotClass: "bg-[var(--color-teal-500)]",
+    dotClass: "bg-teal-500",
     label: "Active",
   },
   invited: {
@@ -133,7 +133,7 @@ const statusConfig: Record<
     label: "Invited",
   },
   disabled: {
-    dotClass: "bg-[var(--color-neutral-400)]",
+    dotClass: "bg-neutral-400",
     label: "Disabled",
   },
 };
@@ -246,10 +246,10 @@ function GroupMemberManagement() {
         <Breadcrumbs items={breadcrumbItems} className="mb-2" />
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-[var(--color-text-primary)]">
+            <h1 className="text-2xl font-semibold text-(--color-text-primary)">
               Engineering
             </h1>
-            <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+            <p className="mt-1 text-sm text-(--color-text-secondary)">
               <Users className="mr-1 inline h-4 w-4" />
               {members.length} member{members.length !== 1 && "s"}
             </p>
@@ -294,7 +294,7 @@ function GroupMemberManagement() {
                 </div>
               </Cell>
               <Cell>
-                <span className="text-[var(--color-text-secondary)]">
+                <span className="text-(--color-text-secondary)">
                   {member.email}
                 </span>
               </Cell>
@@ -318,7 +318,7 @@ function GroupMemberManagement() {
                 </span>
               </Cell>
               <Cell>
-                <span className="text-[var(--color-text-secondary)]">
+                <span className="text-(--color-text-secondary)">
                   {member.lastActive}
                 </span>
               </Cell>
@@ -359,7 +359,7 @@ function GroupMemberManagement() {
             selectedKey={newRole}
             onSelectionChange={(key) => setNewRole(String(key))}
           />
-          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--color-border-default)]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-(--color-border-default)">
             <Button
               variant="secondary"
               onPress={() => setAddDialogOpen(false)}
@@ -387,12 +387,12 @@ function GroupMemberManagement() {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-[var(--color-text-primary)]">
+          <p className="text-(--color-text-primary)">
             Are you sure you want to remove{" "}
             <strong>{removeTarget?.name}</strong> from this group? This
             action cannot be undone.
           </p>
-          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--color-border-default)]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-(--color-border-default)">
             <Button
               variant="secondary"
               onPress={() => setRemoveTarget(null)}

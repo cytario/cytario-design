@@ -102,7 +102,7 @@ describe("IconButton", () => {
     );
 
     const button = screen.getByRole("button");
-    expect(button.className).toContain("bg-[var(--color-action-danger)]");
+    expect(button.className).toContain("bg-(--color-action-danger)");
   });
 
   it("applies size styles", () => {

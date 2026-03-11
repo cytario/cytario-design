@@ -10,7 +10,7 @@ export function Fieldset({ legend, children, className }: FieldsetProps) {
   return (
     <fieldset
       className={[
-        "flex flex-col gap-[var(--spacing-8)]",
+        "flex flex-col gap-8",
         "border-none p-0 m-0",
         className,
       ]
@@ -20,9 +20,9 @@ export function Fieldset({ legend, children, className }: FieldsetProps) {
       {legend && (
         <legend
           className={[
-            "text-[length:var(--font-size-lg)]",
-            "font-[number:var(--font-weight-semibold)]",
-            "text-[var(--color-text-primary)]",
+            "text-lg",
+            "font-semibold",
+            "text-(--color-text-primary)",
             "p-0",
           ].join(" ")}
         >

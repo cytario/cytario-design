@@ -20,12 +20,12 @@ import { Link } from "../Link";
  */
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--color-surface-subtle)] px-[var(--spacing-4)] py-[var(--spacing-8)]">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-(--color-surface-subtle) px-4 py-8">
       <main aria-label="Authentication" className="w-full max-w-[420px]">
-        <div className="bg-[var(--color-surface-default)] border border-[var(--color-border-default)] rounded-[var(--border-radius-lg)] shadow-md overflow-hidden">
-          <div className="px-[var(--spacing-8)] pt-10 pb-[var(--spacing-8)]">
+        <div className="bg-(--color-surface-default) border border-(--color-border-default) rounded-lg shadow-md overflow-hidden">
+          <div className="px-8 pt-10 pb-8">
             {/* Logo */}
-            <div className="flex justify-center mb-[var(--spacing-6)]">
+            <div className="flex justify-center mb-6">
               <img
                 src="logos/cytario-logo-purple.svg"
                 alt="cytario"
@@ -65,16 +65,16 @@ function PasswordField({
   const [id] = useState(() => `password-field-${++passwordFieldId}`);
 
   return (
-    <div className="flex flex-col gap-[var(--spacing-1)]">
+    <div className="flex flex-col gap-1">
       <label
         htmlFor={id}
-        className="text-[length:var(--font-size-sm)] font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]"
+        className="text-sm font-medium text-(--color-text-primary)"
       >
         {label}
         {isRequired && (
           <span
             aria-hidden="true"
-            className="ml-0.5 text-[var(--color-text-danger)]"
+            className="ml-0.5 text-(--color-text-danger)"
           >
             *
           </span>
@@ -112,7 +112,7 @@ function AuthHeading({ children }: { children: React.ReactNode }) {
     <Heading
       as="h2"
       size="lg"
-      className="font-normal text-center mb-[var(--spacing-4)]"
+      className="font-normal text-center mb-4"
     >
       {children}
     </Heading>
@@ -124,8 +124,8 @@ function AuthHeading({ children }: { children: React.ReactNode }) {
  */
 function AuthFooter({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-[var(--spacing-6)] pt-[var(--spacing-6)] border-t border-[var(--color-border-default)]">
-      <p className="text-center text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+    <div className="mt-6 pt-6 border-t border-(--color-border-default)">
+      <p className="text-center text-sm text-(--color-text-secondary)">
         {children}
       </p>
     </div>
@@ -152,14 +152,14 @@ function SignInPage({ showError = false }: { showError?: boolean }) {
       <AuthHeading>Sign in</AuthHeading>
 
       {showError && (
-        <div className="mb-[var(--spacing-4)]">
+        <div className="mb-4">
           <Banner variant="danger">
             Invalid email or password. Please try again.
           </Banner>
         </div>
       )}
 
-      <div className="flex flex-col gap-[var(--spacing-4)]">
+      <div className="flex flex-col gap-4">
         <Input
           label="Email"
           type="email"
@@ -186,14 +186,14 @@ function SignInPage({ showError = false }: { showError?: boolean }) {
           >
             Remember me
           </Checkbox>
-          <Link href="#" className="text-[length:var(--font-size-sm)]">
+          <Link href="#" className="text-sm">
             Forgot password?
           </Link>
         </div>
 
         <Button
           variant="primary"
-          className="w-full mt-[var(--spacing-2)]"
+          className="w-full mt-2"
           onPress={handleSubmit}
           isLoading={isLoading}
         >
@@ -234,9 +234,9 @@ function RegisterPage() {
     <AuthLayout>
       <AuthHeading>Create account</AuthHeading>
 
-      <div className="flex flex-col gap-[var(--spacing-4)]">
+      <div className="flex flex-col gap-4">
         {/* Name fields — two columns */}
-        <div className="grid grid-cols-2 gap-[var(--spacing-4)]">
+        <div className="grid grid-cols-2 gap-4">
           <Input
             label="First name"
             placeholder="Jane"
@@ -285,7 +285,7 @@ function RegisterPage() {
 
         <Button
           variant="primary"
-          className="w-full mt-[var(--spacing-2)]"
+          className="w-full mt-2"
           onPress={handleSubmit}
           isLoading={isLoading}
         >
@@ -322,13 +322,13 @@ function ForgotPasswordPage() {
       <AuthHeading>Reset password</AuthHeading>
 
       {isSubmitted ? (
-        <div className="flex flex-col gap-[var(--spacing-4)]">
+        <div className="flex flex-col gap-4">
           <Banner variant="success">
             Check your email. We sent a reset link to <strong>{email}</strong>.
             It may take a few minutes to arrive.
           </Banner>
 
-          <p className="text-center text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+          <p className="text-center text-sm text-(--color-text-secondary)">
             Didn&apos;t receive the email?{" "}
             <Link href="#" onPress={() => setIsSubmitted(false)}>
               Send again
@@ -336,8 +336,8 @@ function ForgotPasswordPage() {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-[var(--spacing-4)]">
-          <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)]">
+        <div className="flex flex-col gap-4">
+          <p className="text-sm text-(--color-text-secondary)">
             Enter the email address associated with your account and we will
             send you a link to reset your password.
           </p>
@@ -354,7 +354,7 @@ function ForgotPasswordPage() {
 
           <Button
             variant="primary"
-            className="w-full mt-[var(--spacing-2)]"
+            className="w-full mt-2"
             onPress={handleSubmit}
             isLoading={isLoading}
           >
@@ -363,8 +363,8 @@ function ForgotPasswordPage() {
         </div>
       )}
 
-      <div className="mt-[var(--spacing-6)] text-center">
-        <Link href="#" className="text-[length:var(--font-size-sm)]">
+      <div className="mt-6 text-center">
+        <Link href="#" className="text-sm">
           Back to sign in
         </Link>
       </div>

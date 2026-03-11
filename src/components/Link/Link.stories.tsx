@@ -44,7 +44,7 @@ export const Subtle: Story = {
 
 export const InParagraph: Story = {
   render: () => (
-    <p className="text-[var(--color-text-primary)]">
+    <p className="text-(--color-text-primary)">
       This is a paragraph with a <Link href="#">default link</Link> and a{" "}
       <Link href="#" variant="subtle">
         subtle link

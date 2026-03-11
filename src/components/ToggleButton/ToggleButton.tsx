@@ -34,30 +34,30 @@ const squareSizeStyles: Record<ToggleButtonSize, string> = {
 const variantStyles: Record<ToggleButtonVariant, { base: string; selected: string }> = {
   default: {
     base: [
-      "bg-transparent text-[var(--color-text-primary)]",
-      "hover:bg-[var(--color-surface-hover)]",
-      "pressed:bg-[var(--color-surface-pressed)]",
+      "bg-transparent text-(--color-text-primary)",
+      "hover:bg-(--color-surface-hover)",
+      "pressed:bg-(--color-surface-pressed)",
     ].join(" "),
-    selected: "bg-[var(--color-surface-pressed)] text-[var(--color-text-primary)]",
+    selected: "bg-(--color-surface-pressed) text-(--color-text-primary)",
   },
   primary: {
     base: [
-      "bg-transparent text-[var(--color-text-primary)]",
-      "hover:bg-[var(--color-surface-hover)]",
-      "pressed:bg-[var(--color-surface-pressed)]",
+      "bg-transparent text-(--color-text-primary)",
+      "hover:bg-(--color-surface-hover)",
+      "pressed:bg-(--color-surface-pressed)",
     ].join(" "),
-    selected: "bg-[var(--color-action-primary-active)] text-[var(--color-text-inverse)]",
+    selected: "bg-(--color-action-primary-active) text-(--color-text-inverse)",
   },
   outlined: {
     base: [
-      "bg-[var(--color-surface-default)] text-[var(--color-text-primary)]",
-      "border border-[var(--color-border-default)]",
-      "hover:bg-[var(--color-surface-subtle)]",
-      "pressed:bg-[var(--color-surface-muted)]",
+      "bg-(--color-surface-default) text-(--color-text-primary)",
+      "border border-(--color-border-default)",
+      "hover:bg-(--color-surface-subtle)",
+      "pressed:bg-(--color-surface-muted)",
     ].join(" "),
     selected: [
-      "bg-[var(--color-neutral-800)] text-[var(--color-text-inverse)]",
-      "border border-[var(--color-neutral-800)]",
+      "bg-neutral-800 text-(--color-text-inverse)",
+      "border border-neutral-800",
     ].join(" "),
   },
 };
@@ -77,11 +77,11 @@ export function ToggleButton({
       className={({ isSelected }) =>
         twMerge(
           "inline-flex items-center justify-center gap-2",
-          isSquare ? "rounded-none" : "rounded-[var(--border-radius-md)]",
-          "font-[var(--font-weight-medium)]",
-          "leading-[var(--line-height-tight)]",
+          isSquare ? "rounded-none" : "rounded-md",
+          "font-medium",
+          "leading-tight",
           "outline-none transition-colors",
-          "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+          "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
           "disabled:opacity-50 disabled:pointer-events-none",
           isSquare ? squareSizeStyles[size] : sizeStyles[size],
           isSelected ? styles.selected : styles.base,

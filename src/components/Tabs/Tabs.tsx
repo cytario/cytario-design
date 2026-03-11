@@ -100,15 +100,15 @@ export function TabList<T extends object>({
     variant === "unstyled"
       ? "flex items-center"
       : variant === "underline"
-        ? "flex items-center border-b border-[var(--color-border-default)]"
-        : "inline-flex items-center bg-[var(--color-surface-muted)] rounded-[var(--border-radius-lg)] p-1 gap-1";
+        ? "flex items-center border-b border-(--color-border-default)"
+        : "inline-flex items-center bg-(--color-surface-muted) rounded-lg p-1 gap-1";
 
   // Vertical orientation overrides
   const verticalStyles =
     variant === "unstyled"
       ? "flex-col"
       : variant === "underline"
-        ? "flex-col border-b-0 border-r border-[var(--color-border-default)]"
+        ? "flex-col border-b-0 border-r border-(--color-border-default)"
         : "flex-col";
 
   return (
@@ -144,7 +144,7 @@ export function Tab({ className, ...props }: TabProps) {
         if (variant === "unstyled") {
           return twMerge(
             "cursor-pointer outline-none",
-            "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+            "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
             isDisabled ? "opacity-50 pointer-events-none" : "",
             className,
           );
@@ -153,10 +153,10 @@ export function Tab({ className, ...props }: TabProps) {
         return twMerge(
           // Base
           "cursor-pointer outline-none transition-colors",
-          "font-[var(--font-weight-medium)]",
+          "font-medium",
 
           // Focus ring
-          "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+          "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
 
           // Disabled
           isDisabled ? "opacity-50 pointer-events-none" : "",
@@ -191,36 +191,36 @@ function getTabVariantStyles(
   if (variant === "underline") {
     return [
       // Shape
-      "relative rounded-t-[var(--border-radius-sm)]",
+      "relative rounded-t-(--border-radius-sm)",
 
       // Color states
       state.isSelected
         ? [
-            "text-[var(--color-teal-700)] font-[var(--font-weight-semibold)]",
+            "text-teal-700 font-semibold",
             // Bottom indicator via pseudo-element
-            "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-0.5 after:bg-[var(--color-teal-600)]",
+            "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-0.5 after:bg-teal-600",
           ].join(" ")
         : state.isPressed
-          ? "text-[var(--color-text-primary)] bg-[var(--color-surface-muted)]"
+          ? "text-(--color-text-primary) bg-(--color-surface-muted)"
           : state.isHovered
-            ? "text-[var(--color-text-primary)] bg-[var(--color-surface-subtle)]"
-            : "text-[var(--color-text-secondary)] bg-transparent",
+            ? "text-(--color-text-primary) bg-(--color-surface-subtle)"
+            : "text-(--color-text-secondary) bg-transparent",
     ];
   }
 
   // Pills variant
   return [
     // Shape
-    "rounded-[var(--border-radius-md)]",
+    "rounded-md",
 
     // Color states
     state.isSelected
-      ? "text-[var(--color-text-primary)] font-[var(--font-weight-semibold)] bg-[var(--color-surface-default)] shadow-sm"
+      ? "text-(--color-text-primary) font-semibold bg-(--color-surface-default) shadow-sm"
       : state.isPressed
-        ? "text-[var(--color-text-primary)] bg-[var(--color-surface-subtle)] shadow-none"
+        ? "text-(--color-text-primary) bg-(--color-surface-subtle) shadow-none"
         : state.isHovered
-          ? "text-[var(--color-text-primary)] bg-[var(--color-surface-pressed)]"
-          : "text-[var(--color-text-secondary)] bg-transparent",
+          ? "text-(--color-text-primary) bg-(--color-surface-pressed)"
+          : "text-(--color-text-secondary) bg-transparent",
   ];
 }
 

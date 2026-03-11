@@ -26,8 +26,8 @@ export function MenuSection({
         <Header
           className={[
             "px-3 py-1.5",
-            "text-[length:var(--font-size-xs)] font-[number:var(--font-weight-semibold)]",
-            "text-[var(--color-text-secondary)]",
+            "text-xs font-semibold",
+            "text-(--color-text-secondary)",
             "uppercase tracking-wider",
             "select-none",
           ].join(" ")}

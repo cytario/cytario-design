@@ -41,7 +41,7 @@ export function Dialog({
       onOpenChange={onOpenChange}
       isDismissable={isDismissable}
       className={[
-        "fixed inset-0 z-50 bg-[var(--color-overlay-backdrop)] backdrop-blur-sm",
+        "fixed inset-0 z-50 bg-(--color-overlay-backdrop) backdrop-blur-sm",
         "flex items-center justify-center",
         "data-[entering]:animate-in data-[entering]:fade-in",
         "data-[exiting]:animate-out data-[exiting]:fade-out",
@@ -51,7 +51,7 @@ export function Dialog({
         className={[
           "w-full mx-4",
           sizeStyles[size],
-          "bg-[var(--color-surface-default)] rounded-[var(--border-radius-lg)] shadow-xl max-h-[85vh] flex flex-col",
+          "bg-(--color-surface-default) rounded-lg shadow-xl max-h-[85vh] flex flex-col",
           "data-[entering]:animate-in data-[entering]:zoom-in-95 data-[entering]:fade-in",
           "data-[exiting]:animate-out data-[exiting]:zoom-out-95 data-[exiting]:fade-out",
           className,
@@ -62,10 +62,10 @@ export function Dialog({
         <AriaDialog className="outline-none flex flex-col max-h-[85vh]">
           {({ close }) => (
             <>
-              <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border-default)]">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-(--color-border-default)">
                 <Heading
                   slot="title"
-                  className="text-[length:var(--font-size-lg)] font-[number:var(--font-weight-semibold)] text-[var(--color-text-primary)]"
+                  className="text-lg font-semibold text-(--color-text-primary)"
                 >
                   {title}
                 </Heading>
@@ -73,9 +73,9 @@ export function Dialog({
                   type="button"
                   onClick={close}
                   className={[
-                    "inline-flex items-center justify-center rounded-[var(--border-radius-sm)] p-1",
-                    "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]",
-                    "outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+                    "inline-flex items-center justify-center rounded-sm p-1",
+                    "text-(--color-text-secondary) hover:text-(--color-text-primary) hover:bg-(--color-surface-muted)",
+                    "outline-none focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
                     "transition-colors",
                   ].join(" ")}
                   aria-label="Close"

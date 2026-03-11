@@ -49,11 +49,11 @@ export function ButtonLink({
       {...props}
       className={twMerge(
         "inline-flex items-center justify-center gap-2",
-        "rounded-[var(--border-radius-md)]",
-        "font-[var(--font-weight-medium)]",
-        "leading-[var(--line-height-tight)]",
+        "rounded-md",
+        "font-medium",
+        "leading-tight",
         "outline-none transition-colors no-underline",
-        "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+        "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
         variantStyles[variant],
         sizeStyles[size],
         className,
@@ -107,9 +107,9 @@ export function IconButtonLink({
       aria-label={ariaLabel}
       className={twMerge(
         "inline-flex items-center justify-center",
-        "rounded-[var(--border-radius-md)]",
+        "rounded-md",
         "outline-none transition-colors no-underline",
-        "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+        "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
         variantStyles[variant],
         squareSizeStyles[size],
         className,

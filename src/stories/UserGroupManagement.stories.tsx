@@ -164,10 +164,10 @@ function UserGroupManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-[var(--color-text-primary)]">
+          <h1 className="text-2xl font-semibold text-(--color-text-primary)">
             Sarah Chen
           </h1>
-          <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+          <p className="mt-1 text-sm text-(--color-text-secondary)">
             s.chen@cytario.com
           </p>
         </div>
@@ -209,7 +209,7 @@ function UserGroupManagement() {
                     </span>
                   </Cell>
                   <Cell>
-                    <span className="text-[var(--color-text-secondary)] text-sm">
+                    <span className="text-(--color-text-secondary) text-sm">
                       {info?.path ?? ""}
                     </span>
                   </Cell>
@@ -246,7 +246,7 @@ function UserGroupManagement() {
             onChange={setSearchTerm}
             aria-label="Search groups"
           />
-          <div className="border border-[var(--color-border-default)] rounded-[var(--border-radius-md)] overflow-hidden">
+          <div className="border border-(--color-border-default) rounded-md overflow-hidden">
             <Tree
               data={orgTree}
               aria-label="Organization groups"
@@ -261,10 +261,10 @@ function UserGroupManagement() {
               height={360}
             />
           </div>
-          <p className="text-sm text-[var(--color-text-secondary)]">
+          <p className="text-sm text-(--color-text-secondary)">
             {pendingSelection.size} group{pendingSelection.size !== 1 && "s"} selected
           </p>
-          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--color-border-default)]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-(--color-border-default)">
             <Button variant="secondary" onPress={() => setDialogOpen(false)}>
               Cancel
             </Button>

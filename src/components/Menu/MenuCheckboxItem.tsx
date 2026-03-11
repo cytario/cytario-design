@@ -28,11 +28,11 @@ export function MenuCheckboxItem({
         [
           "flex items-center gap-2 px-3 py-2 text-sm outline-none cursor-default",
           "transition-colors",
-          "focus:bg-[var(--color-surface-muted)]",
-          "hover:bg-[var(--color-surface-muted)]",
+          "focus:bg-(--color-surface-muted)",
+          "hover:bg-(--color-surface-muted)",
           "disabled:opacity-50 disabled:pointer-events-none",
-          "text-[var(--color-text-primary)]",
-          isSelected ? "font-[number:var(--font-weight-medium)]" : "",
+          "text-(--color-text-primary)",
+          isSelected ? "font-medium" : "",
           className,
         ]
           .filter(Boolean)
@@ -43,7 +43,7 @@ export function MenuCheckboxItem({
         <>
           <span className="flex items-center justify-center w-4 h-4 shrink-0">
             {isSelected && (
-              <Check size={14} className="text-[var(--color-action-primary)]" aria-hidden="true" />
+              <Check size={14} className="text-(--color-action-primary)" aria-hidden="true" />
             )}
           </span>
           <span className="flex-1">{children}</span>

@@ -163,22 +163,22 @@ function ConnectionTable({ data }: { data: ConnectionData[] }) {
         {data.map((conn) => (
           <Row key={conn.id}>
             <Cell>
-              <span className="font-medium text-[var(--color-text-primary)]">
+              <span className="font-medium text-(--color-text-primary)">
                 {conn.name}
               </span>
             </Cell>
             <Cell>
-              <span className="text-[var(--color-text-secondary)]">
+              <span className="text-(--color-text-secondary)">
                 {conn.region ?? "\u2014"}
               </span>
             </Cell>
             <Cell>
               {conn.imageCount != null ? (
-                <span className="tabular-nums text-[var(--color-text-tertiary)]">
+                <span className="tabular-nums text-(--color-text-tertiary)">
                   {conn.imageCount}
                 </span>
               ) : (
-                <span className="text-[var(--color-text-tertiary)]">
+                <span className="text-(--color-text-tertiary)">
                   &mdash;
                 </span>
               )}

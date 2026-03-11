@@ -26,13 +26,13 @@ export function SectionHeader({
   return (
     <div
       className={twMerge(
-        "flex flex-wrap items-center gap-[var(--spacing-3)] py-[var(--spacing-4)]",
+        "flex flex-wrap items-center gap-3 py-4",
         className,
       )}
     >
       <H2>{title}</H2>
       {children && (
-        <div className="ml-auto flex flex-wrap items-center gap-[var(--spacing-2)]">
+        <div className="ml-auto flex flex-wrap items-center gap-2">
           {children}
         </div>
       )}

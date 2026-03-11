@@ -92,15 +92,15 @@ function NodeRenderer<T extends TreeNode>({
       className={[
         "relative flex items-center cursor-default select-none",
         isCompact ? "gap-0.5 px-2" : "gap-1 px-3",
-        "text-[length:var(--font-size-sm)] text-[var(--color-text-primary)]",
+        "text-sm text-(--color-text-primary)",
         "outline-none",
         // Full-width background via pseudo-element
         "before:absolute before:inset-y-0 before:left-[-100vw] before:right-0 before:-z-10 before:transition-colors",
         isSelected
-          ? "before:bg-[var(--color-surface-selected)] hover:before:bg-[var(--color-surface-selected-hover)] border-l-2 border-l-[var(--color-brand-accent)]"
-          : "hover:before:bg-[var(--color-surface-hover)]",
+          ? "before:bg-(--color-surface-selected) hover:before:bg-(--color-surface-selected-hover) border-l-2 border-l-(--color-brand-accent)"
+          : "hover:before:bg-(--color-surface-hover)",
         node.isFocused
-          ? "outline-2 outline-[var(--color-border-focus)] outline-offset-[-2px]"
+          ? "outline-2 outline-(--color-border-focus) outline-offset-[-2px]"
           : "",
       ]
         .filter(Boolean)
@@ -130,9 +130,9 @@ function NodeRenderer<T extends TreeNode>({
         type="button"
         className={[
           "flex items-center justify-center w-6 h-6 shrink-0",
-          "rounded-[var(--border-radius-sm)]",
-          "text-[var(--color-text-secondary)]",
-          "hover:text-[var(--color-text-primary)]",
+          "rounded-sm",
+          "text-(--color-text-secondary)",
+          "hover:text-(--color-text-primary)",
           "transition-transform",
           node.isInternal ? "visible" : "invisible",
         ]
@@ -161,10 +161,10 @@ function NodeRenderer<T extends TreeNode>({
         <div
           className={[
             "flex items-center justify-center w-5 h-5 shrink-0",
-            "rounded-[var(--border-radius-sm)] border transition-colors",
+            "rounded-sm border transition-colors",
             isChecked
-              ? "bg-[var(--color-action-primary)] border-[var(--color-action-primary)]"
-              : "bg-[var(--color-surface-default)] border-[var(--color-border-default)] hover:border-[var(--color-border-strong)]",
+              ? "bg-(--color-action-primary) border-(--color-action-primary)"
+              : "bg-(--color-surface-default) border-(--color-border-default) hover:border-(--color-border-strong)",
           ].join(" ")}
           role="checkbox"
           aria-checked={isChecked}
@@ -172,7 +172,7 @@ function NodeRenderer<T extends TreeNode>({
         >
           {isChecked && (
             <Check
-              className="w-3 h-3 text-[var(--color-text-inverse)]"
+              className="w-3 h-3 text-(--color-text-inverse)"
               strokeWidth={3}
             />
           )}
@@ -182,7 +182,7 @@ function NodeRenderer<T extends TreeNode>({
       {/* Icon */}
       <IconComponent
         size={16}
-        className="shrink-0 text-[var(--color-text-secondary)]"
+        className="shrink-0 text-(--color-text-secondary)"
         aria-hidden="true"
       />
 

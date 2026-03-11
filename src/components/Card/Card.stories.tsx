@@ -54,8 +54,8 @@ export const WithHeader: Story = {
   args: {
     header: (
       <div className="flex items-center justify-between">
-        <span className="font-[number:var(--font-weight-semibold)]">Card Title</span>
-        <span className="text-sm text-[var(--color-text-secondary)]">Action</span>
+        <span className="font-semibold">Card Title</span>
+        <span className="text-sm text-(--color-text-secondary)">Action</span>
       </div>
     ),
     children: "Card body content goes here.",
@@ -65,11 +65,11 @@ export const WithHeader: Story = {
 export const WithHeaderAndFooter: Story = {
   args: {
     header: (
-      <span className="font-[number:var(--font-weight-semibold)]">Card Title</span>
+      <span className="font-semibold">Card Title</span>
     ),
     children: "Card body content with both header and footer.",
     footer: (
-      <div className="flex justify-end gap-2 text-sm text-[var(--color-text-secondary)]">
+      <div className="flex justify-end gap-2 text-sm text-(--color-text-secondary)">
         Footer content
       </div>
     ),
@@ -110,12 +110,12 @@ export const CostCenterContainer: Story = {
     children: (
       <div>
         <div className="flex items-center justify-between">
-          <span className="font-[number:var(--font-weight-semibold)]">Engineering</span>
-          <span className="text-[length:var(--font-size-xl)] font-[number:var(--font-weight-semibold)]">
+          <span className="font-semibold">Engineering</span>
+          <span className="text-xl font-semibold">
             $12,450
           </span>
         </div>
-        <div className="mt-2 text-sm text-[var(--color-text-secondary)]">
+        <div className="mt-2 text-sm text-(--color-text-secondary)">
           12 workloads
         </div>
       </div>
@@ -129,12 +129,12 @@ export const TableContainer: Story = {
     padding: "none",
     header: (
       <div className="p-4">
-        <span className="font-[number:var(--font-weight-semibold)]">Workload Breakdown</span>
+        <span className="font-semibold">Workload Breakdown</span>
       </div>
     ),
     children: (
-      <div className="border-t border-[var(--color-border-default)]">
-        <div className="px-4 py-2 text-sm text-[var(--color-text-secondary)]">
+      <div className="border-t border-(--color-border-default)">
+        <div className="px-4 py-2 text-sm text-(--color-text-secondary)">
           Table content would go here
         </div>
       </div>

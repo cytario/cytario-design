@@ -23,7 +23,7 @@ describe("DeltaIndicator", () => {
       <DeltaIndicator current={1200} previous={1000} />,
     );
     expect(container.firstElementChild?.className).toContain(
-      "text-[var(--color-delta-increase-text)]",
+      "text-(--color-delta-increase-text)",
     );
   });
 
@@ -32,7 +32,7 @@ describe("DeltaIndicator", () => {
       <DeltaIndicator current={800} previous={1000} />,
     );
     expect(container.firstElementChild?.className).toContain(
-      "text-[var(--color-delta-decrease-text)]",
+      "text-(--color-delta-decrease-text)",
     );
   });
 
@@ -42,7 +42,7 @@ describe("DeltaIndicator", () => {
     );
     // Increase with reverse = green (decrease color)
     expect(container.firstElementChild?.className).toContain(
-      "text-[var(--color-delta-decrease-text)]",
+      "text-(--color-delta-decrease-text)",
     );
   });
 
@@ -117,10 +117,10 @@ describe("DeltaIndicator", () => {
       <DeltaIndicator current={1200} previous={1000} mode="pill" />,
     );
     expect(container.firstElementChild?.className).toContain(
-      "bg-[var(--color-delta-increase-bg)]",
+      "bg-(--color-delta-increase-bg)",
     );
     expect(container.firstElementChild?.className).toContain(
-      "rounded-[var(--border-radius-full)]",
+      "rounded-full",
     );
   });
 
@@ -129,7 +129,7 @@ describe("DeltaIndicator", () => {
       <DeltaIndicator current={1200} previous={1000} />,
     );
     expect(container.firstElementChild?.className).not.toContain(
-      "bg-[var(--color-delta-increase-bg)]",
+      "bg-(--color-delta-increase-bg)",
     );
   });
 

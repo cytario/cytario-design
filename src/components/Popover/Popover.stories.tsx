@@ -15,11 +15,11 @@ type Story = StoryObj<typeof Popover>;
 export const Default: Story = {
   render: () => (
     <Popover>
-      <PopoverTrigger className="text-sm font-medium text-[var(--color-text-primary)] hover:text-[var(--color-action-primary)]">
+      <PopoverTrigger className="text-sm font-medium text-(--color-text-primary) hover:text-(--color-action-primary)">
         Open Popover
       </PopoverTrigger>
       <PopoverContent placement="bottom start" className="p-4">
-        <p className="text-sm text-[var(--color-text-primary)]">
+        <p className="text-sm text-(--color-text-primary)">
           This is popover content.
         </p>
       </PopoverContent>
@@ -37,21 +37,21 @@ export const WithCloseFunction: Story = {
           <div className="flex flex-col gap-1">
             <button
               type="button"
-              className="px-3 py-1.5 text-sm rounded hover:bg-[var(--color-surface-muted)] text-left"
+              className="px-3 py-1.5 text-sm rounded hover:bg-(--color-surface-muted) text-left"
               onClick={close}
             >
               Option A
             </button>
             <button
               type="button"
-              className="px-3 py-1.5 text-sm rounded hover:bg-[var(--color-surface-muted)] text-left"
+              className="px-3 py-1.5 text-sm rounded hover:bg-(--color-surface-muted) text-left"
               onClick={close}
             >
               Option B
             </button>
             <button
               type="button"
-              className="px-3 py-1.5 text-sm rounded hover:bg-[var(--color-surface-muted)] text-left"
+              className="px-3 py-1.5 text-sm rounded hover:bg-(--color-surface-muted) text-left"
               onClick={close}
             >
               Option C
@@ -94,7 +94,7 @@ export const ColorPicker: Story = {
         <Popover>
           <PopoverTrigger>
             <span
-              className="inline-block w-6 h-6 rounded-full border-2 border-[var(--color-border-default)]"
+              className="inline-block w-6 h-6 rounded-full border-2 border-(--color-border-default)"
               style={{ backgroundColor: selected }}
               aria-label="Pick a color"
             />
@@ -110,7 +110,7 @@ export const ColorPicker: Story = {
                       setSelected(c);
                       close();
                     }}
-                    className="w-5 h-5 rounded-full border border-[var(--color-border-default)] cursor-pointer"
+                    className="w-5 h-5 rounded-full border border-(--color-border-default) cursor-pointer"
                     style={{ backgroundColor: c }}
                     aria-label={`Select color ${c}`}
                   />
@@ -119,7 +119,7 @@ export const ColorPicker: Story = {
             )}
           </PopoverContent>
         </Popover>
-        <span className="text-sm text-[var(--color-text-secondary)]">
+        <span className="text-sm text-(--color-text-secondary)">
           Selected: {selected}
         </span>
       </div>

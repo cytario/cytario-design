@@ -26,8 +26,8 @@ export const DangerDefault: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="relative bg-[var(--color-surface-default)] p-6 rounded-[var(--border-radius-lg)] max-w-lg">
-        <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-primary)] mb-0">
+      <div className="relative bg-(--color-surface-default) p-6 rounded-lg max-w-lg">
+        <p className="text-sm text-(--color-text-primary) mb-0">
           Some dialog body content above the confirmation.
         </p>
         <Story />
@@ -48,7 +48,7 @@ export const WithoutDescription: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="relative bg-[var(--color-surface-default)] p-6 rounded-[var(--border-radius-lg)] max-w-lg">
+      <div className="relative bg-(--color-surface-default) p-6 rounded-lg max-w-lg">
         <Story />
       </div>
     ),
@@ -72,7 +72,7 @@ export const InsideDialog: Story = {
           title="File Details"
           size="md"
         >
-          <p className="text-[length:var(--font-size-sm)] text-[var(--color-text-primary)]">
+          <p className="text-sm text-(--color-text-primary)">
             case-2024-0193_HE.ome.tif
           </p>
           {isConfirming ? (
@@ -87,7 +87,7 @@ export const InsideDialog: Story = {
               onCancel={() => setIsConfirming(false)}
             />
           ) : (
-            <div className="pt-4 mt-4 border-t border-[var(--color-border-default)] flex items-center justify-between gap-3">
+            <div className="pt-4 mt-4 border-t border-(--color-border-default) flex items-center justify-between gap-3">
               <Button variant="ghost" size="md">
                 Download
               </Button>

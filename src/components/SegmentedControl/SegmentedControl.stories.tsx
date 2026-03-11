@@ -93,7 +93,7 @@ export const Sizes: Story = {
     <div className="flex flex-col gap-4 items-start">
       {(["sm", "md", "lg"] as const).map((size) => (
         <div key={size} className="flex items-center gap-3">
-          <span className="w-8 text-sm text-[var(--color-text-secondary)]">
+          <span className="w-8 text-sm text-(--color-text-secondary)">
             {size}
           </span>
           <SegmentedControl
@@ -135,7 +135,7 @@ export const Controlled: Story = {
             <List size={16} />
           </SegmentedControlItem>
         </SegmentedControl>
-        <p className="text-sm text-[var(--color-text-secondary)]">
+        <p className="text-sm text-(--color-text-secondary)">
           Selected: {[...selected].join(", ") || "none"}
         </p>
       </div>

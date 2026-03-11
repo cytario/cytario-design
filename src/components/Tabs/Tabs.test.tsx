@@ -122,7 +122,7 @@ describe("Tabs", () => {
     renderTabs({ variant: "pills" });
     const tablist = screen.getByRole("tablist");
     // Pills variant tablist has the muted surface background
-    expect(tablist.className).toContain("bg-[var(--color-surface-muted)]");
+    expect(tablist.className).toContain("bg-(--color-surface-muted)");
   });
 
   it("consumer className overrides internal styles via twMerge", () => {
@@ -156,7 +156,7 @@ describe("Tabs", () => {
     expect(tab.className).toContain("cursor-pointer");
     expect(tab.className).toContain("outline-none");
     // Should NOT have design system visual styles
-    expect(tab.className).not.toContain("text-[var(--color-text-secondary)]");
+    expect(tab.className).not.toContain("text-(--color-text-secondary)");
     expect(tab.className).not.toContain("bg-transparent");
     expect(tab.className).not.toContain("px-4");
   });
@@ -173,7 +173,7 @@ describe("Tabs", () => {
     const tablist = screen.getByRole("tablist");
     expect(tablist.className).toContain("flex");
     expect(tablist.className).not.toContain("border-b");
-    expect(tablist.className).not.toContain("bg-[var(--color-surface-muted)]");
+    expect(tablist.className).not.toContain("bg-(--color-surface-muted)");
   });
 
   it("unstyled variant TabPanel has no margin", () => {
