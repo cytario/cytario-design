@@ -52,15 +52,15 @@ function formatPercentage(current: number, previous: number): string | null {
 }
 
 const directionColors: Record<Direction, string> = {
-  increase: "text-[var(--color-delta-increase-text)]",
-  decrease: "text-[var(--color-delta-decrease-text)]",
-  flat: "text-[var(--color-delta-flat-text)]",
+  increase: "text-(--color-delta-increase-text)",
+  decrease: "text-(--color-delta-decrease-text)",
+  flat: "text-(--color-delta-flat-text)",
 };
 
 const reverseDirectionColors: Record<Direction, string> = {
-  increase: "text-[var(--color-delta-decrease-text)]",
-  decrease: "text-[var(--color-delta-increase-text)]",
-  flat: "text-[var(--color-delta-flat-text)]",
+  increase: "text-(--color-delta-decrease-text)",
+  decrease: "text-(--color-delta-increase-text)",
+  flat: "text-(--color-delta-flat-text)",
 };
 
 const directionIcons: Record<Direction, React.ComponentType<{ size: number; "aria-hidden": boolean }>> = {
@@ -70,9 +70,9 @@ const directionIcons: Record<Direction, React.ComponentType<{ size: number; "ari
 };
 
 const directionBgColors: Record<Direction, string> = {
-  increase: "bg-[var(--color-delta-increase-bg)]",
-  decrease: "bg-[var(--color-delta-decrease-bg)]",
-  flat: "bg-[var(--color-delta-flat-bg)]",
+  increase: "bg-(--color-delta-increase-bg)",
+  decrease: "bg-(--color-delta-decrease-bg)",
+  flat: "bg-(--color-delta-flat-bg)",
 };
 
 export function DeltaIndicator({
@@ -90,13 +90,13 @@ export function DeltaIndicator({
     return (
       <span
         className={twMerge(
-          "inline-flex items-center gap-1 font-[number:var(--font-weight-medium)]",
-          "text-[var(--color-text-tertiary)]",
+          "inline-flex items-center gap-1 font-medium",
+          "text-(--color-text-tertiary)",
           className,
         )}
       >
         {label && (
-          <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)] mr-1">
+          <span className="text-sm text-(--color-text-secondary) mr-1">
             {label}
           </span>
         )}
@@ -139,18 +139,18 @@ export function DeltaIndicator({
   return (
     <span
       className={twMerge(
-        "inline-flex items-center gap-1 font-[number:var(--font-weight-medium)]",
+        "inline-flex items-center gap-1 font-medium",
         colorStyles,
         isPill && [
-          "rounded-[var(--border-radius-full)] px-2 py-0.5",
-          "text-[length:var(--font-size-xs)]",
+          "rounded-full px-2 py-0.5",
+          "text-xs",
           directionBgColors[direction],
         ],
         className,
       )}
     >
       {label && (
-        <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-secondary)] mr-1">
+        <span className="text-sm text-(--color-text-secondary) mr-1">
           {label}
         </span>
       )}

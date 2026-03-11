@@ -4,7 +4,7 @@ function CheckIcon() {
   return (
     <svg
       aria-hidden="true"
-      className="h-4 w-4 text-[var(--color-text-inverse)]"
+      className="h-4 w-4 text-(--color-text-inverse)"
       viewBox="0 0 16 16"
       fill="none"
       stroke="currentColor"
@@ -48,8 +48,8 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                     className={[
                       "h-0.5 flex-1",
                       index <= currentStep
-                        ? "bg-[var(--color-brand-primary)]"
-                        : "bg-[var(--color-border-default)]",
+                        ? "bg-(--color-brand-primary)"
+                        : "bg-(--color-border-default)",
                     ].join(" ")}
                   />
                 ) : (
@@ -60,16 +60,16 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                 <div
                   className={[
                     "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
-                    "text-[length:var(--font-size-sm)] font-[number:var(--font-weight-medium)]",
+                    "text-sm font-medium",
                     "transition-colors",
                     isCompleted
-                      ? "bg-[var(--color-brand-primary)] text-[var(--color-text-inverse)]"
+                      ? "bg-(--color-brand-primary) text-(--color-text-inverse)"
                       : "",
                     isCurrent
-                      ? "border-2 border-[var(--color-brand-primary)] bg-[var(--color-surface-default)] text-[var(--color-brand-primary)]"
+                      ? "border-2 border-(--color-brand-primary) bg-(--color-surface-default) text-(--color-brand-primary)"
                       : "",
                     isFuture
-                      ? "border-2 border-[var(--color-border-default)] bg-[var(--color-surface-default)] text-[var(--color-text-tertiary)]"
+                      ? "border-2 border-(--color-border-default) bg-(--color-surface-default) text-(--color-text-tertiary)"
                       : "",
                   ].join(" ")}
                   aria-hidden="true"
@@ -84,8 +84,8 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                     className={[
                       "h-0.5 flex-1",
                       index < currentStep
-                        ? "bg-[var(--color-brand-primary)]"
-                        : "bg-[var(--color-border-default)]",
+                        ? "bg-(--color-brand-primary)"
+                        : "bg-(--color-border-default)",
                     ].join(" ")}
                   />
                 ) : (
@@ -96,10 +96,10 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
               {/* Label */}
               <span
                 className={[
-                  "mt-[var(--spacing-2)] text-center text-[length:var(--font-size-sm)]",
+                  "mt-2 text-center text-sm",
                   isCurrent
-                    ? "font-[number:var(--font-weight-semibold)] text-[var(--color-text-primary)]"
-                    : "font-[number:var(--font-weight-regular)] text-[var(--color-text-secondary)]",
+                    ? "font-semibold text-(--color-text-primary)"
+                    : "font-normal text-(--color-text-secondary)",
                 ].join(" ")}
               >
                 {label}

@@ -12,7 +12,7 @@ describe("ButtonLink", () => {
   it("applies primary variant by default", () => {
     render(<ButtonLink href="#">Primary</ButtonLink>);
     const link = screen.getByRole("link");
-    expect(link.className).toContain("bg-[var(--color-action-primary)]");
+    expect(link.className).toContain("bg-(--color-action-primary)");
   });
 
   it("applies secondary variant", () => {

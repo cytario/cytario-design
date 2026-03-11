@@ -52,7 +52,7 @@ function Breadcrumbs({ segments }: { segments: string[] }) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="mb-4 text-[var(--font-size-sm)] text-[var(--color-text-secondary)]"
+      className="mb-4 text-(--font-size-sm) text-(--color-text-secondary)"
     >
       <ol className="flex flex-wrap items-center gap-1 list-none p-0 m-0">
         {segments.map((segment, i) => {
@@ -62,7 +62,7 @@ function Breadcrumbs({ segments }: { segments: string[] }) {
               {i > 0 && <span aria-hidden="true">/</span>}
               {isLast ? (
                 <span
-                  className="font-[var(--font-weight-medium)] text-[var(--color-text-primary)]"
+                  className="font-medium text-(--color-text-primary)"
                   aria-current="page"
                 >
                   {segment}
@@ -71,7 +71,7 @@ function Breadcrumbs({ segments }: { segments: string[] }) {
                 <a
                   href="#"
                   onClick={(e) => e.preventDefault()}
-                  className="hover:underline text-[var(--color-text-secondary)] no-underline"
+                  className="hover:underline text-(--color-text-secondary) no-underline"
                 >
                   {segment}
                 </a>
@@ -228,18 +228,18 @@ function ConnectionInfoDialog({
             </DescriptionList.Item>
             {connection.ownerScope && (
               <DescriptionList.Item label="Visibility">
-                <>Shared with: <span className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">{connection.ownerScope}</span></>
+                <>Shared with: <span className="font-medium text-(--color-text-primary)">{connection.ownerScope}</span></>
               </DescriptionList.Item>
             )}
             <DescriptionList.Item label="S3 URI">
-              <span><span className="text-[var(--color-text-secondary)]">s3://</span>{s3Uri}</span>
+              <span><span className="text-(--color-text-secondary)">s3://</span>{s3Uri}</span>
             </DescriptionList.Item>
             {isAws && connection.region && (
               <DescriptionList.Item label="Region">{connection.region}</DescriptionList.Item>
             )}
             <DescriptionList.Item label="Endpoint">
               {isAws && !connection.endpoint ? (
-                <span className="text-[var(--color-text-secondary)]">(default AWS endpoint)</span>
+                <span className="text-(--color-text-secondary)">(default AWS endpoint)</span>
               ) : connection.endpoint}
             </DescriptionList.Item>
             {isAws && connection.roleArn && (
@@ -291,7 +291,7 @@ function ConnectionEditMode({
 
   return (
     <>
-      <div className="flex flex-col gap-[var(--spacing-4)]">
+      <div className="flex flex-col gap-4">
         <Input label="Alias" value={alias} onChange={setAlias} />
         <Select label="Provider" items={providerOptions} selectedKey={provider} onSelectionChange={(key) => setProvider(key as ProviderType)} />
         {groups.length > 0 && <Select label="Visibility" items={groups} selectedKey={ownerScope} onSelectionChange={(key) => setOwnerScope(key as string)} />}
@@ -686,7 +686,7 @@ function ListView({
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="flex items-center gap-2 font-[var(--font-weight-medium)] text-[var(--color-text-primary)] no-underline hover:underline"
+                className="flex items-center gap-2 font-medium text-(--color-text-primary) no-underline hover:underline"
               >
                 <FileIcon type={node.type} extension={node.extension} />
                 {node.name}
@@ -696,24 +696,24 @@ function ListView({
               <span
                 className={[
                   "inline-flex items-center",
-                  "rounded-[var(--border-radius-sm)]",
+                  "rounded-sm",
                   "px-1.5 py-0.5",
-                  "text-[var(--font-size-xs)]",
-                  "font-[var(--font-weight-medium)]",
-                  "bg-[var(--color-surface-muted)]",
-                  "text-[var(--color-text-secondary)]",
+                  "text-(--font-size-xs)",
+                  "font-medium",
+                  "bg-(--color-surface-muted)",
+                  "text-(--color-text-secondary)",
                 ].join(" ")}
               >
                 {getTypeLabel(node.type, node.extension)}
               </span>
             </Cell>
             <Cell>
-              <span className="tabular-nums text-[var(--color-text-secondary)]">
+              <span className="tabular-nums text-(--color-text-secondary)">
                 {node.size ?? "\u2014"}
               </span>
             </Cell>
             <Cell>
-              <span className="text-[var(--color-text-secondary)]">
+              <span className="text-(--color-text-secondary)">
                 {node.modified ?? "\u2014"}
               </span>
             </Cell>
@@ -756,7 +756,7 @@ function TreeView({
   const treeData = useMemo(() => toDesignTreeNodes(nodes), [nodes]);
 
   return (
-    <div className="overflow-hidden rounded-[var(--border-radius-md)] border border-[var(--color-border-default)]">
+    <div className="overflow-hidden rounded-md border border-(--color-border-default)">
       <Tree
         aria-label="Directory tree"
         data={treeData}

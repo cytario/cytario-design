@@ -79,7 +79,7 @@ export function SegmentedControl({
         defaultSelectedKeys={isNoneMode ? undefined : defaultSelectedKeys}
         onSelectionChange={isNoneMode ? undefined : onSelectionChange}
         className={twMerge(
-          "inline-flex items-center rounded-[var(--border-radius-lg)] border border-[var(--color-border-default)] bg-[var(--color-surface-muted)] p-0.5 gap-0.5",
+          "inline-flex items-center rounded-lg border border-(--color-border-default) bg-(--color-surface-muted) p-0.5 gap-0.5",
           className,
         )}
       >
@@ -112,12 +112,12 @@ export function SegmentedControlItem({
         twMerge(
           // Base layout
           "inline-flex items-center justify-center",
-          "rounded-[var(--border-radius-md)]",
-          "font-[var(--font-weight-medium)]",
+          "rounded-md",
+          "font-medium",
           "outline-none transition-colors cursor-pointer",
 
           // Focus ring
-          "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-1",
+          "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-1",
 
           // Disabled
           isDisabled && "opacity-50 pointer-events-none",
@@ -127,12 +127,12 @@ export function SegmentedControlItem({
 
           // Selected state
           isSelected
-            ? "bg-[var(--color-surface-default)] text-[var(--color-text-primary)] shadow-sm font-[var(--font-weight-semibold)]"
+            ? "bg-(--color-surface-default) text-(--color-text-primary) shadow-sm font-semibold"
             : isPressed
-              ? "bg-[var(--color-surface-subtle)] text-[var(--color-text-primary)]"
+              ? "bg-(--color-surface-subtle) text-(--color-text-primary)"
               : isHovered
-                ? "bg-[var(--color-surface-subtle)] text-[var(--color-text-primary)]"
-                : "bg-transparent text-[var(--color-text-secondary)]",
+                ? "bg-(--color-surface-subtle) text-(--color-text-primary)"
+                : "bg-transparent text-(--color-text-secondary)",
 
           className,
         )

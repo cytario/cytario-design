@@ -45,14 +45,14 @@ export const UserProfileMenu: Story = {
           <MenuSection aria-label="User identity">
             <MenuHeader>
               <div className="flex items-center gap-3 px-3 py-2">
-                <div className="flex size-8 items-center justify-center rounded-full bg-[var(--color-badge-purple-bg)] text-[var(--color-badge-purple-text)]">
+                <div className="flex size-8 items-center justify-center rounded-full bg-(--color-badge-purple-bg) text-(--color-badge-purple-text)">
                   <User className="size-4" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-[var(--color-text-primary)]">
+                  <span className="text-sm font-medium text-(--color-text-primary)">
                     Dr. Sarah Chen
                   </span>
-                  <span className="text-xs text-[var(--color-text-secondary)]">
+                  <span className="text-xs text-(--color-text-secondary)">
                     sarah.chen@hospital.org
                   </span>
                 </div>
@@ -83,7 +83,7 @@ export const UserProfileMenu: Story = {
               href="https://auth.cytario.com/admin"
               target="_blank"
               endContent={
-                <span className="text-xs text-[var(--color-text-tertiary)]">
+                <span className="text-xs text-(--color-text-tertiary)">
                   External
                 </span>
               }
@@ -169,7 +169,7 @@ export const WithEndContent: Story = {
             id="cut"
             icon={Edit}
             endContent={
-              <kbd className="text-xs text-[var(--color-text-tertiary)]">
+              <kbd className="text-xs text-(--color-text-tertiary)">
                 Cmd+X
               </kbd>
             }
@@ -180,7 +180,7 @@ export const WithEndContent: Story = {
             id="copy"
             icon={Copy}
             endContent={
-              <kbd className="text-xs text-[var(--color-text-tertiary)]">
+              <kbd className="text-xs text-(--color-text-tertiary)">
                 Cmd+C
               </kbd>
             }
@@ -327,7 +327,7 @@ export const ItemsWithEndContent: Story = {
         label: "Edit",
         icon: Edit,
         endContent: (
-          <kbd className="text-xs text-[var(--color-text-tertiary)]">
+          <kbd className="text-xs text-(--color-text-tertiary)">
             Cmd+E
           </kbd>
         ),
@@ -337,7 +337,7 @@ export const ItemsWithEndContent: Story = {
         label: "Copy",
         icon: Copy,
         endContent: (
-          <kbd className="text-xs text-[var(--color-text-tertiary)]">
+          <kbd className="text-xs text-(--color-text-tertiary)">
             Cmd+C
           </kbd>
         ),

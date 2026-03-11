@@ -51,13 +51,13 @@ function groupRadiusClass(
 ): string {
   switch (position) {
     case "start":
-      return "rounded-l-[var(--border-radius-md)] rounded-r-none";
+      return "rounded-l-(--border-radius-md) rounded-r-none";
     case "middle":
       return "rounded-none";
     case "end":
-      return "rounded-r-[var(--border-radius-md)] rounded-l-none";
+      return "rounded-r-(--border-radius-md) rounded-l-none";
     default:
-      return "rounded-[var(--border-radius-md)]";
+      return "rounded-md";
   }
 }
 
@@ -77,12 +77,12 @@ export function IconButton({
 
   const groupGhost =
     inGroup && variant === "ghost"
-      ? "bg-[var(--color-surface-default)] text-[var(--color-text-secondary)] border border-[var(--color-border-default)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-strong)] pressed:bg-[var(--color-surface-pressed)] pressed:text-[var(--color-text-primary)]"
+      ? "bg-(--color-surface-default) text-(--color-text-secondary) border border-(--color-border-default) hover:bg-(--color-surface-hover) hover:text-(--color-text-primary) hover:border-(--color-border-strong) pressed:bg-(--color-surface-pressed) pressed:text-(--color-text-primary)"
       : "";
 
   const radiusClass = inGroup
     ? groupRadiusClass(position)
-    : "rounded-[var(--border-radius-md)]";
+    : "rounded-md";
 
   const marginClass =
     inGroup && position !== "start" && position !== "standalone"
@@ -90,8 +90,8 @@ export function IconButton({
       : "";
 
   const focusRing = inGroup
-    ? "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-0 focus-visible:z-10"
-    : "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2";
+    ? "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-0 focus-visible:z-10"
+    : "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2";
 
   const button = (
     <AriaButton

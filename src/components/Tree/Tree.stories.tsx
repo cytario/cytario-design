@@ -141,10 +141,10 @@ export const Search: Story = {
           onChange={(e) => setTerm(e.target.value)}
           placeholder="Search files..."
           className={[
-            "px-3 py-2 border rounded-[var(--border-radius-md)]",
-            "border-[var(--color-border-default)]",
-            "text-[length:var(--font-size-sm)]",
-            "outline-none focus:ring-2 focus:ring-[var(--color-border-focus)]",
+            "px-3 py-2 border rounded-md",
+            "border-(--color-border-default)",
+            "text-sm",
+            "outline-none focus:ring-2 focus:ring-(--color-border-focus)",
           ].join(" ")}
         />
         <Tree

@@ -46,7 +46,7 @@ export function Radio({ children, className, ...props }: RadioProps) {
     <AriaRadio
       {...props}
       className={[
-        "group flex items-center gap-2 text-[length:var(--font-size-sm)] text-[var(--color-text-primary)] cursor-pointer",
+        "group flex items-center gap-2 text-sm text-(--color-text-primary) cursor-pointer",
         "disabled:opacity-50 disabled:cursor-default",
         className,
       ]
@@ -59,14 +59,14 @@ export function Radio({ children, className, ...props }: RadioProps) {
             className={[
               "flex items-center justify-center w-5 h-5 shrink-0",
               "rounded-full border-2 transition-colors",
-              "group-focus-visible:ring-2 group-focus-visible:ring-[var(--color-border-focus)] group-focus-visible:ring-offset-2",
+              "group-focus-visible:ring-2 group-focus-visible:ring-(--color-border-focus) group-focus-visible:ring-offset-2",
               isSelected
-                ? "border-[var(--color-action-primary)]"
-                : "border-[var(--color-border-default)] group-hover:border-[var(--color-border-strong)]",
+                ? "border-(--color-action-primary)"
+                : "border-(--color-border-default) group-hover:border-(--color-border-strong)",
             ].join(" ")}
           >
             {isSelected && (
-              <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-action-primary)]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-(--color-action-primary)" />
             )}
           </div>
           {children && <span>{children}</span>}
@@ -91,12 +91,12 @@ export function RadioButton({ children, className, ...props }: RadioButtonProps)
       {({ isSelected }) => (
         <div
           className={[
-            "px-4 py-2 text-[length:var(--font-size-sm)] font-[number:var(--font-weight-medium)]",
-            "rounded-[var(--border-radius-md)] border transition-colors text-center",
-            "group-focus-visible:ring-2 group-focus-visible:ring-[var(--color-border-focus)] group-focus-visible:ring-offset-2",
+            "px-4 py-2 text-sm font-medium",
+            "rounded-md border transition-colors text-center",
+            "group-focus-visible:ring-2 group-focus-visible:ring-(--color-border-focus) group-focus-visible:ring-offset-2",
             isSelected
-              ? "bg-[var(--color-action-primary)] border-[var(--color-action-primary)] text-[var(--color-text-inverse)]"
-              : "bg-[var(--color-surface-default)] border-[var(--color-border-default)] text-[var(--color-text-primary)] hover:border-[var(--color-border-strong)]",
+              ? "bg-(--color-action-primary) border-(--color-action-primary) text-(--color-text-inverse)"
+              : "bg-(--color-surface-default) border-(--color-border-default) text-(--color-text-primary) hover:border-(--color-border-strong)",
           ].join(" ")}
         >
           {children}

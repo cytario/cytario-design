@@ -13,9 +13,9 @@ export function Label({ isRequired, children, className, ...props }: LabelProps)
     <AriaLabel
       {...props}
       className={[
-        "text-[length:var(--font-size-sm)]",
-        "font-[number:var(--font-weight-medium)]",
-        "text-[var(--color-text-primary)]",
+        "text-sm",
+        "font-medium",
+        "text-(--color-text-primary)",
         className,
       ]
         .filter(Boolean)
@@ -25,7 +25,7 @@ export function Label({ isRequired, children, className, ...props }: LabelProps)
       {isRequired && (
         <span
           aria-hidden="true"
-          className="ml-0.5 text-[var(--color-text-danger)]"
+          className="ml-0.5 text-(--color-text-danger)"
         >
           *
         </span>

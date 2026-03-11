@@ -26,18 +26,18 @@ const defaultSizeMap: Record<HeadingLevel, HeadingSize> = {
 };
 
 const sizeStyles: Record<HeadingSize, string> = {
-  xs: "text-[length:var(--font-size-sm)]",
-  sm: "text-[length:var(--font-size-base)]",
-  md: "text-[length:var(--font-size-lg)]",
-  lg: "text-[length:var(--font-size-xl)]",
-  xl: "text-[length:var(--font-size-2xl)]",
-  "2xl": "text-[length:var(--font-size-3xl)]",
-  "3xl": "text-[length:var(--font-size-4xl)]",
+  xs: "text-sm",
+  sm: "text-base",
+  md: "text-lg",
+  lg: "text-xl",
+  xl: "text-2xl",
+  "2xl": "text-3xl",
+  "3xl": "text-4xl",
 };
 
 const weightStyles: Record<HeadingWeight, string> = {
-  semibold: "font-[number:var(--font-weight-semibold)]",
-  bold: "font-[number:var(--font-weight-bold)]",
+  semibold: "font-semibold",
+  bold: "font-bold",
 };
 
 export function Heading({
@@ -53,7 +53,7 @@ export function Heading({
     <Tag
       className={twMerge(
         weightStyles[weight],
-        "text-[var(--color-text-primary)]",
+        "text-(--color-text-primary)",
         sizeStyles[resolvedSize],
         className,
       )}

@@ -38,7 +38,7 @@ export const NodeInfoBucket: Story = {
             </DescriptionList.Item>
             <DescriptionList.Item label="S3 URI">
               <span>
-                <span className="text-[var(--color-text-secondary)]">
+                <span className="text-(--color-text-secondary)">
                   s3://
                 </span>
                 my-pathology-data/slides/

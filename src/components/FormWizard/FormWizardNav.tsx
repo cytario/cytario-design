@@ -18,7 +18,7 @@ export function FormWizardNav({
   const { canGoBack, goBack, isLastStep } = useFormWizard();
 
   return (
-    <div className="flex items-center justify-end gap-[var(--spacing-3)]">
+    <div className="flex items-center justify-end gap-3">
       {canGoBack && (
         <Button
           variant="secondary"

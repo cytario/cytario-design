@@ -669,17 +669,17 @@ function PathologyViewer() {
       >
         <div className="flex flex-col gap-4">
           {/* S3 file browser table */}
-          <div className="overflow-hidden rounded-lg border border-[var(--color-border-default)]">
+          <div className="overflow-hidden rounded-lg border border-(--color-border-default)">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[var(--color-border-default)] bg-[var(--color-surface-subtle)]">
-                  <th className="px-4 py-2 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
+                <tr className="border-b border-(--color-border-default) bg-(--color-surface-subtle)">
+                  <th className="px-4 py-2 text-left text-xs font-semibold text-(--color-text-secondary)">
                     Filename
                   </th>
-                  <th className="px-4 py-2 text-right text-xs font-semibold text-[var(--color-text-secondary)]">
+                  <th className="px-4 py-2 text-right text-xs font-semibold text-(--color-text-secondary)">
                     Size
                   </th>
-                  <th className="px-4 py-2 text-right text-xs font-semibold text-[var(--color-text-secondary)]">
+                  <th className="px-4 py-2 text-right text-xs font-semibold text-(--color-text-secondary)">
                     Last Modified
                   </th>
                 </tr>
@@ -690,19 +690,19 @@ function PathologyViewer() {
                     key={file.key}
                     onClick={() => setSelectedS3File(file.key)}
                     className={[
-                      "cursor-pointer border-b border-[var(--color-border-default)] last:border-b-0 transition-colors",
+                      "cursor-pointer border-b border-(--color-border-default) last:border-b-0 transition-colors",
                       selectedS3File === file.key
                         ? "bg-[color-mix(in_srgb,var(--color-brand-accent)_15%,transparent)]"
-                        : "hover:bg-[var(--color-surface-subtle)]",
+                        : "hover:bg-(--color-surface-subtle)",
                     ].join(" ")}
                   >
-                    <td className="px-4 py-2.5 text-[var(--color-text-primary)]">
+                    <td className="px-4 py-2.5 text-(--color-text-primary)">
                       {file.filename}
                     </td>
-                    <td className="px-4 py-2.5 text-right text-[var(--color-text-secondary)]">
+                    <td className="px-4 py-2.5 text-right text-(--color-text-secondary)">
                       {file.size}
                     </td>
-                    <td className="px-4 py-2.5 text-right text-[var(--color-text-secondary)]">
+                    <td className="px-4 py-2.5 text-right text-(--color-text-secondary)">
                       {formatS3Date(file.lastModified)}
                     </td>
                   </tr>

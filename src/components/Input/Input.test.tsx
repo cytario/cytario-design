@@ -78,7 +78,7 @@ describe("Input", () => {
   it("renders prefix with subtle background and separator", () => {
     render(<Input label="Price" prefix="$" />);
     const prefixEl = screen.getByText("$");
-    expect(prefixEl.className).toContain("bg-[var(--color-surface-subtle)]");
+    expect(prefixEl.className).toContain("bg-(--color-surface-subtle)");
     expect(prefixEl.className).toContain("border-r");
   });
 

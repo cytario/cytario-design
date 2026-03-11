@@ -46,8 +46,8 @@ export interface MenuProps {
 }
 
 const popoverStyles = [
-  "bg-[var(--color-surface-default)] rounded-[var(--border-radius-md)]",
-  "shadow-lg border border-[var(--color-border-default)]",
+  "bg-(--color-surface-default) rounded-md",
+  "shadow-lg border border-(--color-border-default)",
   "py-1 min-w-48",
   "entering:animate-in entering:fade-in entering:zoom-in-95",
   "exiting:animate-out exiting:fade-out exiting:zoom-out-95",
@@ -94,12 +94,12 @@ export function Menu({
                 className={[
                   "flex items-center gap-2 px-3 py-2 text-sm outline-none cursor-default",
                   "transition-colors",
-                  "focus:bg-[var(--color-surface-muted)]",
-                  "hover:bg-[var(--color-surface-muted)]",
+                  "focus:bg-(--color-surface-muted)",
+                  "hover:bg-(--color-surface-muted)",
                   "disabled:opacity-50 disabled:pointer-events-none",
                   item.isDanger
-                    ? "text-[var(--color-text-danger)]"
-                    : "text-[var(--color-text-primary)]",
+                    ? "text-(--color-text-danger)"
+                    : "text-(--color-text-primary)",
                 ]
                   .filter(Boolean)
                   .join(" ")}

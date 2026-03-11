@@ -14,12 +14,12 @@ export interface LinkProps extends Omit<AriaLinkProps, "className"> {
 
 const variantStyles: Record<LinkVariant, string> = {
   default: [
-    "text-[var(--color-teal-700)] underline",
-    "hover:text-[var(--color-teal-800)]",
+    "text-teal-700 underline",
+    "hover:text-teal-800",
   ].join(" "),
   subtle: [
-    "text-[var(--color-text-secondary)] no-underline",
-    "hover:underline hover:text-[var(--color-text-primary)]",
+    "text-(--color-text-secondary) no-underline",
+    "hover:underline hover:text-(--color-text-primary)",
   ].join(" "),
 };
 
@@ -33,7 +33,7 @@ export function Link({
       {...props}
       className={[
         "outline-none transition-colors",
-        "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:rounded-sm",
+        "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 focus-visible:rounded-sm",
         variantStyles[variant],
         className,
       ]

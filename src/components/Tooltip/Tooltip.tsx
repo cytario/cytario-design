@@ -31,10 +31,10 @@ export function Tooltip({
       <AriaTooltip
         placement={placement}
         className={[
-          "bg-[var(--color-surface-overlay)] backdrop-blur-sm",
-          "text-[var(--color-text-inverse)] text-sm",
+          "bg-(--color-surface-overlay) backdrop-blur-sm",
+          "text-(--color-text-inverse) text-sm",
           "px-3 py-1.5",
-          "rounded-[var(--border-radius-md)]",
+          "rounded-md",
           "max-w-xs",
           "entering:animate-in entering:fade-in entering:duration-150",
           "exiting:animate-out exiting:fade-out exiting:duration-100",

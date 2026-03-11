@@ -34,9 +34,9 @@ export interface StorageConnectionCardProps {
 }
 
 export const statusDotStyles = {
-  connected: "bg-[var(--color-status-success)]",
-  error: "border-2 border-[var(--color-status-danger)] bg-transparent",
-  loading: "bg-[var(--color-status-warning)] animate-pulse",
+  connected: "bg-(--color-status-success)",
+  error: "border-2 border-(--color-status-danger) bg-transparent",
+  loading: "bg-(--color-status-warning) animate-pulse",
 } as const;
 
 const providerConfig: Record<string, { label: string; color: PillColor }> = {
@@ -73,14 +73,14 @@ function PreviewArea({
 
   if (status === "error") {
     return (
-      <div className="flex h-full flex-col items-center justify-center gap-2 bg-[var(--color-surface-danger)] px-4">
+      <div className="flex h-full flex-col items-center justify-center gap-2 bg-(--color-surface-danger) px-4">
         <Icon
           icon={AlertCircle}
           size="lg"
-          className="text-[var(--color-text-danger)]"
+          className="text-(--color-text-danger)"
         />
         {errorMessage && (
-          <p className="text-center text-xs text-[var(--color-text-danger)]">{errorMessage}</p>
+          <p className="text-center text-xs text-(--color-text-danger)">{errorMessage}</p>
         )}
       </div>
     );
@@ -95,7 +95,7 @@ function PreviewArea({
       <Icon
         icon={Database}
         size="xl"
-        className="text-[var(--color-text-secondary)]"
+        className="text-(--color-text-secondary)"
       />
     </div>
   );
@@ -140,14 +140,14 @@ export function StorageConnectionCard({
   const cardContent = (
     <>
       {/* Preview area */}
-      <div className="aspect-[4/3] bg-[var(--color-neutral-900)] overflow-hidden rounded-t-[var(--border-radius-lg)]">
+      <div className="aspect-[4/3] bg-neutral-900 overflow-hidden rounded-t-(--border-radius-lg)">
         <PreviewArea status={status} errorMessage={errorMessage}>
           {children}
         </PreviewArea>
       </div>
 
       {/* Info bar */}
-      <div className="flex flex-col gap-1.5 border-t border-[var(--color-border-default)] bg-[var(--color-surface-default)] px-3 py-2.5 rounded-b-[var(--border-radius-lg)]">
+      <div className="flex flex-col gap-1.5 border-t border-(--color-border-default) bg-(--color-surface-default) px-3 py-2.5 rounded-b-(--border-radius-lg)">
         {/* Top row: status dot + name + info button */}
         <div className="flex items-start gap-2">
           {status && (
@@ -159,7 +159,7 @@ export function StorageConnectionCard({
               aria-label={`Status: ${status}`}
             />
           )}
-          <span className="min-w-0 flex-1 line-clamp-2 text-sm font-medium text-[var(--color-text-primary)]">
+          <span className="min-w-0 flex-1 line-clamp-2 text-sm font-medium text-(--color-text-primary)">
             {name}
           </span>
           {onInfo && (
@@ -189,12 +189,12 @@ export function StorageConnectionCard({
           <div className={twMerge("flex items-center gap-2", status && "pl-4")}>
             {provider && <ProviderBadge provider={provider} />}
             {provider && region && (
-              <span className="shrink-0 text-xs text-[var(--color-text-secondary)]">
+              <span className="shrink-0 text-xs text-(--color-text-secondary)">
                 {region}
               </span>
             )}
             {imageCount != null && (!status || status === "connected") && (
-              <span className="ml-auto shrink-0 text-xs tabular-nums text-[var(--color-text-secondary)]">
+              <span className="ml-auto shrink-0 text-xs tabular-nums text-(--color-text-secondary)">
                 {imageCount} {imageCount === 1 ? "image" : "images"}
               </span>
             )}
@@ -205,11 +205,11 @@ export function StorageConnectionCard({
   );
 
   const baseStyles = twMerge(
-    "flex flex-col overflow-hidden rounded-[var(--border-radius-lg)]",
-    "border border-[var(--color-border-default)]",
+    "flex flex-col overflow-hidden rounded-lg",
+    "border border-(--color-border-default)",
     "shadow-sm transition-all",
-    isInteractive && "hover:border-[var(--color-border-focus)] hover:shadow-md cursor-pointer",
-    isInteractive && "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 outline-none",
+    isInteractive && "hover:border-(--color-border-focus) hover:shadow-md cursor-pointer",
+    isInteractive && "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 outline-none",
     className,
   );
 

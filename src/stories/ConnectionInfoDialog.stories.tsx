@@ -98,7 +98,7 @@ function ViewMode({
           <DescriptionList.Item label="Visibility">
             <>
               Shared with:{" "}
-              <span className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+              <span className="font-medium text-(--color-text-primary)">
                 {connection.ownerScope}
               </span>
             </>
@@ -107,7 +107,7 @@ function ViewMode({
 
         <DescriptionList.Item label="S3 URI">
           <span>
-            <span className="text-[var(--color-text-secondary)]">s3://</span>
+            <span className="text-(--color-text-secondary)">s3://</span>
             {s3Uri}
           </span>
         </DescriptionList.Item>
@@ -120,7 +120,7 @@ function ViewMode({
 
         <DescriptionList.Item label="Endpoint">
           {isAws && !connection.endpoint ? (
-            <span className="text-[var(--color-text-secondary)]">
+            <span className="text-(--color-text-secondary)">
               (default AWS endpoint)
             </span>
           ) : (
@@ -213,7 +213,7 @@ function EditMode({
 
   return (
     <>
-      <div className="flex flex-col gap-[var(--spacing-4)]">
+      <div className="flex flex-col gap-4">
         <Input label="Alias" value={alias} onChange={setAlias} />
 
         <Select

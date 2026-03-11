@@ -36,7 +36,7 @@ function StepContent({ step }: { step: number }) {
   switch (step) {
     case 0:
       return (
-        <div className="flex flex-col gap-[var(--spacing-4)]">
+        <div className="flex flex-col gap-4">
           <Select
             label="Storage Provider"
             items={storageItems}
@@ -53,7 +53,7 @@ function StepContent({ step }: { step: number }) {
       );
     case 1:
       return (
-        <div className="flex flex-col gap-[var(--spacing-4)]">
+        <div className="flex flex-col gap-4">
           <Input
             label="Bucket Name"
             placeholder="my-pathology-bucket"
@@ -78,38 +78,38 @@ function StepContent({ step }: { step: number }) {
       );
     case 2:
       return (
-        <div className="flex flex-col gap-[var(--spacing-4)]">
+        <div className="flex flex-col gap-4">
           <Field label="Summary">
             <div
               className={[
-                "rounded-[var(--border-radius-md)]",
-                "border border-[var(--color-border-default)]",
-                "bg-[var(--color-surface-subtle)]",
-                "p-[var(--spacing-4)]",
+                "rounded-md",
+                "border border-(--color-border-default)",
+                "bg-(--color-surface-subtle)",
+                "p-4",
               ].join(" ")}
             >
-              <dl className="flex flex-col gap-[var(--spacing-2)] text-[length:var(--font-size-sm)]">
+              <dl className="flex flex-col gap-2 text-sm">
                 <div className="flex justify-between">
-                  <dt className="text-[var(--color-text-secondary)]">Provider</dt>
-                  <dd className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+                  <dt className="text-(--color-text-secondary)">Provider</dt>
+                  <dd className="font-medium text-(--color-text-primary)">
                     Amazon S3
                   </dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-[var(--color-text-secondary)]">Name</dt>
-                  <dd className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+                  <dt className="text-(--color-text-secondary)">Name</dt>
+                  <dd className="font-medium text-(--color-text-primary)">
                     Production S3
                   </dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-[var(--color-text-secondary)]">Bucket</dt>
-                  <dd className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+                  <dt className="text-(--color-text-secondary)">Bucket</dt>
+                  <dd className="font-medium text-(--color-text-primary)">
                     my-pathology-bucket
                   </dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-[var(--color-text-secondary)]">Region</dt>
-                  <dd className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+                  <dt className="text-(--color-text-secondary)">Region</dt>
+                  <dd className="font-medium text-(--color-text-primary)">
                     eu-central-1
                   </dd>
                 </div>
@@ -161,7 +161,7 @@ function InteractiveWizard({
         totalSteps={stepLabels.length}
         onStepChange={handleStepChange}
       >
-        <div className="flex flex-col gap-[var(--spacing-6)]">
+        <div className="flex flex-col gap-6">
           <FormWizardProgress labels={stepLabels} />
           <StepContent step={step} />
           <FormWizardNav
@@ -214,7 +214,7 @@ export const Step1: Story = {
   render: () => (
     <div className="mx-auto max-w-lg">
       <FormWizard currentStep={0} totalSteps={3} onStepChange={fn()}>
-        <div className="flex flex-col gap-[var(--spacing-6)]">
+        <div className="flex flex-col gap-6">
           <FormWizardProgress labels={stepLabels} />
           <StepContent step={0} />
           <FormWizardNav onNext={fn()} />
@@ -234,7 +234,7 @@ export const Step2: Story = {
   render: () => (
     <div className="mx-auto max-w-lg">
       <FormWizard currentStep={1} totalSteps={3} onStepChange={fn()}>
-        <div className="flex flex-col gap-[var(--spacing-6)]">
+        <div className="flex flex-col gap-6">
           <FormWizardProgress labels={stepLabels} />
           <StepContent step={1} />
           <FormWizardNav onNext={fn()} />
@@ -254,7 +254,7 @@ export const Step3: Story = {
   render: () => (
     <div className="mx-auto max-w-lg">
       <FormWizard currentStep={2} totalSteps={3} onStepChange={fn()}>
-        <div className="flex flex-col gap-[var(--spacing-6)]">
+        <div className="flex flex-col gap-6">
           <FormWizardProgress labels={stepLabels} />
           <StepContent step={2} />
           <FormWizardNav onNext={fn()} submitLabel="Connect Storage" />

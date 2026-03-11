@@ -43,9 +43,9 @@ export function Card({
   const isInteractive = interactive || !!href || !!onPress;
 
   const containerClass = twMerge(
-    "bg-[var(--color-surface-default)] border border-[var(--color-border-default)] rounded-[var(--border-radius-lg)] overflow-hidden shadow-sm",
-    isInteractive && "transition-all hover:shadow-md hover:border-[var(--color-border-focus)] cursor-pointer",
-    (href || onPress) && "block focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 outline-none",
+    "bg-(--color-surface-default) border border-(--color-border-default) rounded-lg overflow-hidden shadow-sm",
+    isInteractive && "transition-all hover:shadow-md hover:border-(--color-border-focus) cursor-pointer",
+    (href || onPress) && "block focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 outline-none",
     className,
   );
 
@@ -64,7 +64,7 @@ export function Card({
       {header && (
         <div
           className={twMerge(
-            "border-b border-[var(--color-border-default)]",
+            "border-b border-(--color-border-default)",
             paddingStyles[padding],
           )}
         >
@@ -75,7 +75,7 @@ export function Card({
       {footer && (
         <div
           className={twMerge(
-            "border-t border-[var(--color-border-default)]",
+            "border-t border-(--color-border-default)",
             paddingStyles[padding],
           )}
         >

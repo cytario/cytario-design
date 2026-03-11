@@ -20,20 +20,20 @@ export function EmptyState({
   return (
     <div
       className={[
-        "flex flex-col items-center text-center py-[var(--spacing-12)] px-[var(--spacing-6)]",
+        "flex flex-col items-center text-center py-12 px-6",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
       {icon && (
-        <Icon icon={icon} size="xl" className="text-[var(--color-text-tertiary)]" />
+        <Icon icon={icon} size="xl" className="text-(--color-text-tertiary)" />
       )}
-      <h3 className="text-[length:var(--font-size-lg)] font-[number:var(--font-weight-semibold)] text-[var(--color-text-primary)] mt-4">
+      <h3 className="text-lg font-semibold text-(--color-text-primary) mt-4">
         {title}
       </h3>
       {description && (
-        <p className="text-sm text-[var(--color-text-secondary)] mt-2 max-w-sm">
+        <p className="text-sm text-(--color-text-secondary) mt-2 max-w-sm">
           {description}
         </p>
       )}

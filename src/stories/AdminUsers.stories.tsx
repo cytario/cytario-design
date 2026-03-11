@@ -140,8 +140,8 @@ function SelectionFooter({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="sticky bottom-0 flex items-center gap-4 border-t border-[var(--color-border-default)] bg-[var(--color-surface-default)] px-4 py-3 shadow-lg">
-      <span className="text-[length:var(--font-size-sm)] font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+    <div className="sticky bottom-0 flex items-center gap-4 border-t border-(--color-border-default) bg-(--color-surface-default) px-4 py-3 shadow-lg">
+      <span className="text-sm font-medium text-(--color-text-primary)">
         {selectedCount} of {totalCount} selected
       </span>
       <Button variant="ghost" size="sm" onPress={onReset}>
@@ -181,7 +181,7 @@ function InviteUserDialog({
           />
         </Field>
       </Fieldset>
-      <div className="flex justify-end gap-2 pt-4 mt-4 border-t border-[var(--color-border-default)]">
+      <div className="flex justify-end gap-2 pt-4 mt-4 border-t border-(--color-border-default)">
         <Button variant="secondary" onPress={() => onOpenChange(false)}>
           Cancel
         </Button>
@@ -220,7 +220,7 @@ function AdminUsersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-surface-subtle)]">
+    <div className="min-h-screen bg-(--color-surface-subtle)">
       {/* App Header */}
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
@@ -229,15 +229,15 @@ function AdminUsersPage() {
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
         </div>
-        <div className="h-8 w-8 rounded-full bg-[var(--color-brand-primary)] flex items-center justify-center text-xs font-bold">
+        <div className="h-8 w-8 rounded-full bg-(--color-brand-primary) flex items-center justify-center text-xs font-bold">
           ML
         </div>
       </header>
 
-      <div className="flex-grow bg-[var(--color-surface-default)] px-4 sm:px-6 lg:px-8 py-4">
+      <div className="flex-grow bg-(--color-surface-default) px-4 sm:px-6 lg:px-8 py-4">
         <div className="mx-auto max-w-7xl">
           <SectionHeader title="/cytario">
-            <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-tertiary)]">
+            <span className="text-sm text-(--color-text-tertiary)">
               {mockUsers.length} users
             </span>
             <Button variant="secondary" size="sm" iconLeft={UserPlus} onPress={() => setShowInvite(true)}>
@@ -282,13 +282,13 @@ function AdminUsersPage() {
                       <a
                         href="#"
                         onClick={(e) => e.preventDefault()}
-                        className="font-[number:var(--font-weight-medium)] text-[var(--color-teal-700)] hover:underline no-underline"
+                        className="font-medium text-teal-700 hover:underline no-underline"
                       >
                         {user.name}
                       </a>
                     </Cell>
                     <Cell>
-                      <span className="text-[var(--color-text-secondary)]">
+                      <span className="text-(--color-text-secondary)">
                         {user.email}
                       </span>
                     </Cell>
@@ -344,7 +344,7 @@ function AdminUsersPage() {
 
 function AdminUsersEmpty() {
   return (
-    <div className="min-h-screen bg-[var(--color-surface-subtle)]">
+    <div className="min-h-screen bg-(--color-surface-subtle)">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
           <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
@@ -354,7 +354,7 @@ function AdminUsersEmpty() {
         </div>
       </header>
 
-      <div className="flex-grow bg-[var(--color-surface-default)] px-4 sm:px-6 lg:px-8 py-4">
+      <div className="flex-grow bg-(--color-surface-default) px-4 sm:px-6 lg:px-8 py-4">
         <div className="mx-auto max-w-7xl">
           <SectionHeader title="/cytario" />
           <EmptyState
@@ -393,7 +393,7 @@ function AdminUsersWithSelection() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-surface-subtle)]">
+    <div className="min-h-screen bg-(--color-surface-subtle)">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
           <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
@@ -403,10 +403,10 @@ function AdminUsersWithSelection() {
         </div>
       </header>
 
-      <div className="flex-grow bg-[var(--color-surface-default)] px-4 sm:px-6 lg:px-8 py-4">
+      <div className="flex-grow bg-(--color-surface-default) px-4 sm:px-6 lg:px-8 py-4">
         <div className="mx-auto max-w-7xl">
           <SectionHeader title="/cytario">
-            <span className="text-[length:var(--font-size-sm)] text-[var(--color-text-tertiary)]">
+            <span className="text-sm text-(--color-text-tertiary)">
               {mockUsers.length} users
             </span>
           </SectionHeader>
@@ -446,12 +446,12 @@ function AdminUsersWithSelection() {
                       />
                     </Cell>
                     <Cell>
-                      <span className="font-[number:var(--font-weight-medium)] text-[var(--color-text-primary)]">
+                      <span className="font-medium text-(--color-text-primary)">
                         {user.name}
                       </span>
                     </Cell>
                     <Cell>
-                      <span className="text-[var(--color-text-secondary)]">{user.email}</span>
+                      <span className="text-(--color-text-secondary)">{user.email}</span>
                     </Cell>
                     <Cell>
                       <StatusPill enabled={user.enabled} />

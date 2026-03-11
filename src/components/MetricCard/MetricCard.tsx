@@ -24,13 +24,13 @@ const sizeConfig: Record<
 > = {
   sm: {
     padding: "p-3",
-    labelClass: "text-[length:var(--font-size-xs)]",
-    valueClass: "text-[length:var(--font-size-xl)]",
+    labelClass: "text-xs",
+    valueClass: "text-xl",
   },
   md: {
     padding: "p-4",
-    labelClass: "text-[length:var(--font-size-sm)]",
-    valueClass: "text-[length:var(--font-size-2xl)]",
+    labelClass: "text-sm",
+    valueClass: "text-2xl",
   },
 };
 
@@ -45,22 +45,22 @@ export function MetricCard({
   const config = sizeConfig[size];
 
   const containerClass = twMerge(
-    "bg-[var(--color-surface-default)] border border-[var(--color-border-default)] rounded-[var(--border-radius-lg)] shadow-sm",
+    "bg-(--color-surface-default) border border-(--color-border-default) rounded-lg shadow-sm",
     config.padding,
     href &&
-      "block transition-shadow hover:shadow-md hover:border-[var(--color-border-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 outline-none",
+      "block transition-shadow hover:shadow-md hover:border-(--color-border-focus) focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 outline-none",
     className,
   );
 
   const content = (
     <>
-      <div className={twMerge(config.labelClass, "text-[var(--color-text-secondary)]")}>
+      <div className={twMerge(config.labelClass, "text-(--color-text-secondary)")}>
         {label}
       </div>
       <div
         className={twMerge(
           config.valueClass,
-          "font-[number:var(--font-weight-semibold)] text-[var(--color-text-primary)] mt-1 tabular-nums",
+          "font-semibold text-(--color-text-primary) mt-1 tabular-nums",
         )}
       >
         {value}

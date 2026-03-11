@@ -35,29 +35,29 @@ const variantConfig: Record<
   info: {
     icon: Info,
     containerClass:
-      "bg-[var(--color-banner-info-bg)] border-[var(--color-banner-info-border)] text-[var(--color-banner-info-text)]",
-    iconClass: "text-[var(--color-banner-info-icon)]",
+      "bg-(--color-banner-info-bg) border-(--color-banner-info-border) text-(--color-banner-info-text)",
+    iconClass: "text-(--color-banner-info-icon)",
     role: "status",
   },
   warning: {
     icon: AlertTriangle,
     containerClass:
-      "bg-[var(--color-banner-warning-bg)] border-[var(--color-banner-warning-border)] text-[var(--color-banner-warning-text)]",
-    iconClass: "text-[var(--color-banner-warning-icon)]",
+      "bg-(--color-banner-warning-bg) border-(--color-banner-warning-border) text-(--color-banner-warning-text)",
+    iconClass: "text-(--color-banner-warning-icon)",
     role: "alert",
   },
   danger: {
     icon: AlertCircle,
     containerClass:
-      "bg-[var(--color-banner-danger-bg)] border-[var(--color-banner-danger-border)] text-[var(--color-banner-danger-text)]",
-    iconClass: "text-[var(--color-banner-danger-icon)]",
+      "bg-(--color-banner-danger-bg) border-(--color-banner-danger-border) text-(--color-banner-danger-text)",
+    iconClass: "text-(--color-banner-danger-icon)",
     role: "alert",
   },
   success: {
     icon: CheckCircle2,
     containerClass:
-      "bg-[var(--color-banner-success-bg)] border-[var(--color-banner-success-border)] text-[var(--color-banner-success-text)]",
-    iconClass: "text-[var(--color-banner-success-icon)]",
+      "bg-(--color-banner-success-bg) border-(--color-banner-success-border) text-(--color-banner-success-text)",
+    iconClass: "text-(--color-banner-success-icon)",
     role: "status",
   },
 };
@@ -87,8 +87,8 @@ export function Banner({
     <div
       role={config.role}
       className={twMerge(
-        "flex items-start gap-[var(--spacing-3)] rounded-[var(--border-radius-lg)] border px-[var(--spacing-4)] py-[var(--spacing-3)]",
-        "text-[length:var(--font-size-sm)]",
+        "flex items-start gap-3 rounded-lg border px-4 py-3",
+        "text-sm",
         config.containerClass,
         className,
       )}
@@ -100,7 +100,7 @@ export function Banner({
       />
       <div className="flex-1">
         {title && (
-          <span className="font-[number:var(--font-weight-medium)]">
+          <span className="font-medium">
             {title}
             {" \u2014 "}
           </span>
@@ -111,7 +111,7 @@ export function Banner({
         <button
           type="button"
           onClick={handleDismiss}
-          className="shrink-0 rounded-[var(--border-radius-sm)] p-0.5 opacity-70 hover:opacity-100 transition-opacity outline-none focus-visible:ring-2 focus-visible:ring-current"
+          className="shrink-0 rounded-sm p-0.5 opacity-70 hover:opacity-100 transition-opacity outline-none focus-visible:ring-2 focus-visible:ring-current"
           aria-label="Dismiss"
         >
           <X size={16} aria-hidden="true" />

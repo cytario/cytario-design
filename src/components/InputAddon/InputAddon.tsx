@@ -11,13 +11,13 @@ function groupRadiusClass(
 ): string {
   switch (position) {
     case "start":
-      return "rounded-l-[var(--border-radius-md)] rounded-r-none";
+      return "rounded-l-(--border-radius-md) rounded-r-none";
     case "middle":
       return "rounded-none";
     case "end":
-      return "rounded-r-[var(--border-radius-md)] rounded-l-none";
+      return "rounded-r-(--border-radius-md) rounded-l-none";
     default:
-      return "rounded-[var(--border-radius-md)]";
+      return "rounded-md";
   }
 }
 
@@ -26,7 +26,7 @@ export function InputAddon({ children, className }: InputAddonProps) {
 
   const radiusClass = inGroup
     ? groupRadiusClass(position)
-    : "rounded-[var(--border-radius-md)]";
+    : "rounded-md";
 
   const marginClass =
     inGroup && position !== "start" && position !== "standalone"
@@ -38,9 +38,9 @@ export function InputAddon({ children, className }: InputAddonProps) {
       className={[
         "flex items-center self-stretch shrink-0 select-none",
         "px-3 py-2 text-base",
-        "bg-[var(--color-surface-subtle)]",
-        "text-[var(--color-text-secondary)]",
-        "border border-[var(--color-border-default)]",
+        "bg-(--color-surface-subtle)",
+        "text-(--color-text-secondary)",
+        "border border-(--color-border-default)",
         radiusClass,
         marginClass,
         className,
