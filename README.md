@@ -18,14 +18,13 @@ Single source of truth for the cytario corporate identity -- from brand foundati
 ### Prerequisites
 
 - Node.js 22+
-- pnpm 10+ (`corepack enable` to activate the bundled version)
 
 ### Install and run
 
 ```bash
-pnpm install
-pnpm build:tokens   # generate CSS variables + TypeScript constants from token JSON
-pnpm dev             # start Storybook at http://localhost:6006
+npm install
+npm run build:tokens   # generate CSS variables + TypeScript constants from token JSON
+npm run dev            # start Storybook at http://localhost:6006
 ```
 
 ## Project structure
@@ -75,7 +74,7 @@ Semantic tokens reference base tokens using `{color.purple.700}` syntax.
 ### Adding or modifying tokens
 
 1. Edit `tokens/base.json` (primitives) or `tokens/semantic.json` (aliases).
-2. Run `pnpm build:tokens` to regenerate the output files.
+2. Run `npm run build:tokens` to regenerate the output files.
 3. If you added a new color scale, also add matching entries to `src/styles/tailwind.css` under the `@theme` block so Tailwind utility classes are available.
 
 **Do not edit `src/tokens/variables.css` or `src/tokens/tokens.ts` directly** -- they are overwritten on every build.
@@ -129,12 +128,12 @@ Both colors have a full 50--900 scale defined in `tokens/base.json` for use in h
 
 | Command | Description |
 |---|---|
-| `pnpm dev` | Start Storybook dev server on port 6006 |
-| `pnpm build` | Build static Storybook site to `storybook-static/` |
-| `pnpm build:tokens` | Generate CSS and TypeScript from token JSON |
-| `pnpm test` | Run Vitest test suite (watch mode) |
-| `pnpm test -- --run` | Run tests once (CI mode) |
-| `pnpm lint` | Lint `src/` with ESLint |
+| `npm run dev` | Start Storybook dev server on port 6006 |
+| `npm run build` | Build static Storybook site to `storybook-static/` |
+| `npm run build:tokens` | Generate CSS and TypeScript from token JSON |
+| `npm test` | Run Vitest test suite (watch mode) |
+| `npx vitest run` | Run tests once (CI mode) |
+| `npm run lint` | Lint `src/` with ESLint |
 
 ## License
 

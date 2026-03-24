@@ -23,30 +23,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: pnpm
+          cache: npm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Downgrade to React 18
         if: matrix.react-version == 18
-        run: pnpm add -D react@^18 react-dom@^18 @types/react@^18 @types/react-dom@^18
+        run: npm install --save-dev react@^18 react-dom@^18 @types/react@^18 @types/react-dom@^18
 
       - name: Build design tokens
-        run: pnpm build:tokens
+        run: npm run build:tokens
 
       - name: Run tests
-        run: pnpm test -- --run
+        run: npx vitest run
 
       - name: Build Storybook
-        run: pnpm build
+        run: npm run build
 
   deploy:
     name: Deploy to GitHub Pages
@@ -65,23 +62,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: pnpm
+          cache: npm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Build design tokens
-        run: pnpm build:tokens
+        run: npm run build:tokens
 
       - name: Build Storybook
-        run: pnpm build
+        run: npm run build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -110,25 +104,22 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: pnpm
+          cache: npm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Build design tokens
-        run: pnpm build:tokens
+        run: npm run build:tokens
 
       - name: Build library
-        run: pnpm build:lib
+        run: npm run build:lib
 
       - name: Release
-        run: pnpm exec semantic-release
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
