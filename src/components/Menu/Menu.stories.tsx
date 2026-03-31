@@ -24,7 +24,7 @@ import { MenuSeparator } from "./MenuSeparator";
 import { Button } from "../Button";
 import { IconButton } from "../IconButton";
 import { Badge } from "../Badge";
-import { GroupPill } from "../Pill";
+import { PathPill } from "../Pill";
 
 const meta: Meta<typeof Menu> = {
   title: "Components/Menu",
@@ -64,10 +64,10 @@ export const UserProfileMenu: Story = {
 
           <MenuSection header="Admin Groups">
             <MenuItem id="group-pathology" textValue="Pathology">
-              <GroupPill path="/hospital/pathology" />
+              <PathPill>/hospital/pathology</PathPill>
             </MenuItem>
             <MenuItem id="group-research" textValue="Research">
-              <GroupPill path="/hospital/research/ai-lab" />
+              <PathPill>/hospital/research/ai-lab</PathPill>
             </MenuItem>
           </MenuSection>
 

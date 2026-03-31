@@ -117,8 +117,8 @@ Page
 | ID | Monospace | Text search | Hidden by default, copyable |
 | Email | Text | Text search | Middle-ellipsis, copyable |
 | Status | Badge | Select (All/Active/Disabled) | Green "Active" or neutral "Disabled" pill |
-| Admin Groups | GroupPill[] | Select with group list | Shows colored path pills with dot indicators |
-| Groups | GroupPill[] | Select with group list | Full path pills |
+| Admin Groups | PathPill[] | Select with group list | Shows colored path pills with dot indicators |
+| Groups | PathPill[] | Select with group list | Full path pills |
 
 ### Components Used
 
@@ -128,7 +128,7 @@ Page
 | **Table** | Full user listing with sorting and filtering. |
 | **Checkbox** | Row selection checkboxes (header for select-all, per-row). |
 | **Badge** | Status indicators (Active/Disabled). |
-| **GroupPill** (new) | Hierarchical group path display with deterministic colors. |
+| **PathPill** (new) | Hierarchical group path display with deterministic colors. |
 | **Button** | Invite User, Bulk Invite, Add to Group, Remove from Group. |
 | **Dialog** | Invite user modal with email and group fields. |
 | **EmptyState** | "No users yet" with Invite User CTA. |
@@ -185,7 +185,7 @@ The main data browsing experience with multiple view modes.
 | `@headlessui/react` Field | `Field` | Label + description + error wrapper |
 | `@tanstack/react-table` Table | `Table` (React Aria) | Significant API difference — see note below |
 | `Pill` (custom) | `Badge` + `Pill` (new) | Badge for status, Pill for hash-colored labels |
-| `GroupPill` (custom) | `GroupPill` (new) | Hierarchical path display |
+| `PathPill` (custom) | `PathPill` (new) | Hierarchical path display |
 | `Placeholder` | `EmptyState` | Same pattern, renamed |
 | `Section` / `Container` | Layout wrappers | Not part of component library (app-level) |
 | `SectionHeader` | `SectionHeader` (new) | Title + action buttons |

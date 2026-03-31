@@ -42,14 +42,14 @@ export const statusDotStyles = {
 const providerConfig: Record<string, { label: string; color: PillColor }> = {
   aws: { label: "AWS", color: "purple" },
   azure: { label: "Azure", color: "teal" },
-  gcp: { label: "GCP", color: "slate" },
+  gcp: { label: "GCP", color: "green" },
   minio: { label: "MinIO", color: "rose" },
 };
 
 export function ProviderBadge({ provider }: { provider: string }) {
   const config = providerConfig[provider.toLowerCase()];
   const label = config?.label ?? provider;
-  const color: PillColor = config?.color ?? "neutral";
+  const color: PillColor | undefined = config?.color;
 
   return (
     <Pill color={color}>
