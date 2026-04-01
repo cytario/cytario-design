@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { StorageConnectionCard } from "./StorageConnectionCard";
 
 describe("StorageConnectionCard", () => {
@@ -88,17 +87,14 @@ describe("StorageConnectionCard", () => {
     expect(spinner).not.toBeNull();
   });
 
-  it("info button calls onInfo handler", async () => {
-    const user = userEvent.setup();
-    const onInfo = vi.fn();
+  it("renders actions slot", () => {
     render(
-      <StorageConnectionCard name="test" onInfo={onInfo} />,
+      <StorageConnectionCard
+        name="test"
+        actions={<button>Menu</button>}
+      />,
     );
-    const infoButton = screen.getByRole("button", {
-      name: "Connection info",
-    });
-    await user.click(infoButton);
-    expect(onInfo).toHaveBeenCalledOnce();
+    expect(screen.getByRole("button", { name: "Menu" })).toBeDefined();
   });
 
   it("renders as link when href is provided", () => {

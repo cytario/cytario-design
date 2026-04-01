@@ -1,9 +1,8 @@
 import type React from "react";
 import { useCallback } from "react";
-import { AlertCircle, Database, Info } from "lucide-react";
+import { AlertCircle, Database } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { Icon } from "../Icon";
-import { IconButton } from "../IconButton";
 import { Spinner } from "../Spinner";
 
 export interface StorageConnectionCardProps {
@@ -15,7 +14,8 @@ export interface StorageConnectionCardProps {
   children?: React.ReactNode;
   href?: string;
   onPress?: () => void;
-  onInfo?: () => void;
+  /** Slot for action controls (e.g. a dropdown menu) rendered in the card header */
+  actions?: React.ReactNode;
   className?: string;
 }
 
@@ -76,21 +76,10 @@ export function StorageConnectionCard({
   children,
   href,
   onPress,
-  onInfo,
+  actions,
   className,
 }: StorageConnectionCardProps) {
   const isInteractive = !!href || !!onPress;
-
-  const handleInfoPress = useCallback(
-    (e: React.MouseEvent | React.KeyboardEvent) => {
-      if (isInteractive) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-      onInfo?.();
-    },
-    [onInfo, isInteractive],
-  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -124,24 +113,14 @@ export function StorageConnectionCard({
           <span className="min-w-0 flex-1 line-clamp-2 text-sm font-medium text-(--color-text-primary)">
             {name}
           </span>
-          {onInfo && (
+          {actions && (
             <span
-              onClick={handleInfoPress}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleInfoPress(e);
-                }
-              }}
+              onClick={(e) => { if (isInteractive) { e.stopPropagation(); e.preventDefault(); } }}
+              onKeyDown={(e) => { if (isInteractive) { e.stopPropagation(); } }}
               role="presentation"
+              className="shrink-0 -mt-1 -mr-1"
             >
-              <IconButton
-                icon={Info}
-                aria-label="Connection info"
-                variant="ghost"
-                size="sm"
-                className="shrink-0 -mt-1 -mr-1"
-                onPress={onInfo}
-              />
+              {actions}
             </span>
           )}
         </div>

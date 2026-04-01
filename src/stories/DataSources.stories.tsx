@@ -136,7 +136,7 @@ function ConnectionGrid({
           key={conn.id}
           name={conn.name}
           href={conn.href}
-          onInfo={fn()}
+          actions={<button>⋮</button>}
         >
           {conn.hasPreview && <MockTissuePreview />}
         </StorageConnectionCard>

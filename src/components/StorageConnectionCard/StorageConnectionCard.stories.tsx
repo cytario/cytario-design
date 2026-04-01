@@ -46,7 +46,7 @@ export const Connected: Story = {
       </>
     ),
     href: "/buckets/aws/cytario-research-data",
-    onInfo: fn(),
+    actions: <button>⋮</button>,
     children: <MockTissuePreview />,
   },
 };
@@ -57,7 +57,7 @@ export const Error: Story = {
     status: "error",
     errorMessage: "Request failed: Access Denied",
     meta: <Pill color="purple">AWS</Pill>,
-    onInfo: fn(),
+    actions: <button>⋮</button>,
   },
 };
 
@@ -81,7 +81,7 @@ export const NoPreview: Story = {
       </>
     ),
     href: "/buckets/azure/archive-bucket",
-    onInfo: fn(),
+    actions: <button>⋮</button>,
   },
 };
 
@@ -97,7 +97,7 @@ export const WithOnPress: Story = {
       </>
     ),
     onPress: fn(),
-    onInfo: fn(),
+    actions: <button>⋮</button>,
     children: <MockTissuePreview />,
   },
 };

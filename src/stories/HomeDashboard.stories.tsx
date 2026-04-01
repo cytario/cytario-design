@@ -340,7 +340,7 @@ function StorageConnectionsSection() {
               </>
             }
             href={conn.href}
-            onInfo={fn()}
+            actions={<button>⋮</button>}
           >
             {conn.hasPreview && <MockTissuePreview index={i} />}
           </StorageConnectionCard>
