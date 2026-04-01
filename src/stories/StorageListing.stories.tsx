@@ -27,8 +27,8 @@ import {
 import { H1 } from "../components/Heading";
 import { IconButton } from "../components/IconButton";
 import { InlineConfirmation } from "../components/InlineConfirmation";
-import { Input } from "../components/Input";
-import { Select, type SelectItem } from "../components/Select";
+import { Input } from "../components/Form/Input";
+import { Select, type SelectItem } from "../components/Form/Select";
 import {
   SegmentedControl,
   SegmentedControlItem,

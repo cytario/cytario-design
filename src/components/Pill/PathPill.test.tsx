@@ -22,16 +22,11 @@ describe("PathPill", () => {
     expect(screen.queryByText("cytario")).toBeNull();
   });
 
-  it("shows title tooltip when segments are collapsed", () => {
+  it("marks collapsed segments as aria-hidden", () => {
     const { container } = render(<PathPill>cytario/lab/team</PathPill>);
-    const wrapper = container.firstElementChild as HTMLElement;
-    expect(wrapper).toHaveAttribute("title", "cytario / lab / team");
-  });
-
-  it("hides title when all segments visible", () => {
-    const { container } = render(<PathPill>team</PathPill>);
-    const wrapper = container.firstElementChild as HTMLElement;
-    expect(wrapper).not.toHaveAttribute("title");
+    const hidden = container.querySelectorAll("[aria-hidden='true']");
+    // "cytario" and "lab" are collapsed
+    expect(hidden).toHaveLength(2);
   });
 
   it("has aria-label with full path", () => {

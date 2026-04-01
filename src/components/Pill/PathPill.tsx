@@ -23,7 +23,6 @@ export function PathPill({
   return (
     <div
       className={twMerge("relative flex", className)}
-      title={dotCount > 0 ? fullPath : undefined}
       aria-label={`Path: ${fullPath}`}
     >
       {segments.map((segment, i) => {
@@ -32,7 +31,12 @@ export function PathPill({
         const cx = twMerge(!isLast && "pr-5 -mr-4", isCollapsed && "pr-3");
         const color = pillColorFromName(segment);
         return (
-          <Pill key={`pill-${i}-${segment}`} className={cx} color={color}>
+          <Pill
+            key={`pill-${i}-${segment}`}
+            className={cx}
+            color={color}
+            aria-hidden={isCollapsed || undefined}
+          >
             {isCollapsed ? undefined : segment}
           </Pill>
         );

@@ -11,11 +11,11 @@ import {
 
 import { Button } from "../components/Button";
 import { Dialog } from "../components/Dialog";
-import { Input } from "../components/Input";
-import { Select } from "../components/Select";
-import { Field } from "../components/Field";
-import { Fieldset } from "../components/Fieldset";
-import { Checkbox } from "../components/Checkbox";
+import { Input } from "../components/Form/Input";
+import { Select } from "../components/Form/Select";
+import { Field } from "../components/Form/Field";
+import { Fieldset } from "../components/Form/Fieldset";
+import { Checkbox } from "../components/Form/Checkbox";
 import { Badge } from "../components/Badge";
 import { EmptyState } from "../components/EmptyState";
 import { PathPill } from "../components/Pill";

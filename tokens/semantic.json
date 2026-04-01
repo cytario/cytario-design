@@ -118,7 +118,7 @@
       "purpleBg": { "$value": "{color.purple.100}" },
       "purpleText": { "$value": "{color.purple.700}" },
       "tealBg": { "$value": "{color.teal.100}" },
-      "tealText": { "$value": "{color.teal.700}" },
+      "tealText": { "$value": "{color.teal.800}" },
       "slateBg": { "$value": "{color.slate.100}" },
       "slateText": { "$value": "{color.slate.700}" },
       "roseBg": { "$value": "{color.rose.100}" },
@@ -128,7 +128,7 @@
       "greenBg": { "$value": "{color.green.100}" },
       "greenText": { "$value": "{color.green.700}" },
       "amberBg": { "$value": "{color.amber.100}" },
-      "amberText": { "$value": "{color.amber.700}" }
+      "amberText": { "$value": "{color.amber.800}" }
     }
   }
 }

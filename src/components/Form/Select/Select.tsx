@@ -23,6 +23,8 @@ export interface SelectProps
   label?: string;
   placeholder?: string;
   errorMessage?: string;
+  /** Custom visual renderer for items in the dropdown and trigger.
+   *  `item.name` remains the accessible label (used for typeahead and screen readers). */
   renderItem?: (item: SelectItem) => React.ReactNode;
 }
 

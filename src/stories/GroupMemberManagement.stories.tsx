@@ -1,9 +1,9 @@
 import { useState, useMemo } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { Button } from "../components/Button";
-import { Input } from "../components/Input";
-import { Select } from "../components/Select";
-import type { SelectItem } from "../components/Select";
+import { Input } from "../components/Form/Input";
+import { Select } from "../components/Form/Select";
+import type { SelectItem } from "../components/Form/Select";
 import { Dialog } from "../components/Dialog";
 import {
   Table,

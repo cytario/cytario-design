@@ -1,3 +1,4 @@
+import type React from "react";
 import { twMerge } from "tailwind-merge";
 
 const hashColors = {
@@ -16,10 +17,10 @@ export const colorStyles = {
 
 export type PillColor = keyof typeof colorStyles;
 
-export interface PillProps {
+export interface PillProps
+  extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children" | "color"> {
   children?: string;
   color?: PillColor;
-  className?: string;
 }
 
 const hashKeys = Object.keys(hashColors) as (keyof typeof hashColors)[];
@@ -32,11 +33,12 @@ export function pillColorFromName(name = ""): PillColor {
   return hashKeys[Math.abs(hash) % hashKeys.length];
 }
 
-/** Hash-colored label badge. Color is derived from the text unless explicitly set. */
+/** Non-interactive hash-colored label badge. Color is derived from the text unless explicitly set. */
 export function Pill({
   children,
   color = pillColorFromName(children),
   className,
+  ...rest
 }: PillProps) {
   const cx = twMerge(
     `
@@ -52,7 +54,7 @@ export function Pill({
   );
 
   return (
-    <span className={cx}>
+    <span className={cx} {...rest}>
       {children}
     </span>
   );
