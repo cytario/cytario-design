@@ -4,11 +4,11 @@ import { Eye, EyeOff } from "lucide-react";
 
 import { Banner } from "../Banner";
 import { Button } from "../Button";
-import { Checkbox } from "../Checkbox";
+import { Checkbox } from "../Form/Checkbox";
 import { Heading } from "../Heading";
 import { IconButton } from "../IconButton";
-import { Input } from "../Input";
-import { InputGroup } from "../InputGroup";
+import { Input } from "../Form/Input";
+import { InputGroup } from "../Form/InputGroup";
 import { Link } from "../Link";
 
 /* ------------------------------------------------------------------ */

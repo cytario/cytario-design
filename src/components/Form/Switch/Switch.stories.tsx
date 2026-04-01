@@ -3,7 +3,7 @@ import { expect, fn, userEvent, within } from "storybook/test";
 import { Switch } from "./Switch";
 
 const meta: Meta<typeof Switch> = {
-  title: "Components/Switch",
+  title: "Components/Form/Switch",
   component: Switch,
   argTypes: {
     color: {

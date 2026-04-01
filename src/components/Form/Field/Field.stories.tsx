@@ -5,7 +5,7 @@ import { Checkbox } from "../Checkbox";
 import { Select } from "../Select";
 
 const meta: Meta<typeof Field> = {
-  title: "Components/Field",
+  title: "Components/Form/Field",
   component: Field,
   argTypes: {
     isRequired: { control: "boolean" },

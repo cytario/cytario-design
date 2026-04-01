@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "storybook/react";
 import { InputAddon } from "./InputAddon";
 
 const meta: Meta<typeof InputAddon> = {
-  title: "Components/InputAddon",
+  title: "Components/Form/InputAddon",
   component: InputAddon,
 };
 

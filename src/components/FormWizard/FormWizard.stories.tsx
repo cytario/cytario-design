@@ -4,9 +4,9 @@ import { expect, fn, userEvent, within } from "storybook/test";
 import { FormWizard } from "./FormWizard";
 import { FormWizardProgress } from "./FormWizardProgress";
 import { FormWizardNav } from "./FormWizardNav";
-import { Field } from "../Field";
-import { Input } from "../Input";
-import { Select } from "../Select";
+import { Field } from "../Form/Field";
+import { Input } from "../Form/Input";
+import { Select } from "../Form/Select";
 
 const meta: Meta<typeof FormWizard> = {
   title: "Components/FormWizard",

@@ -24,11 +24,11 @@ export type { TooltipProps } from "./components/Tooltip";
 export { IconButton } from "./components/IconButton";
 export type { IconButtonProps } from "./components/IconButton";
 
-export { Input } from "./components/Input";
-export type { InputProps } from "./components/Input";
+export { Input } from "./components/Form/Input";
+export type { InputProps } from "./components/Form/Input";
 
-export { Select } from "./components/Select";
-export type { SelectProps, SelectItem } from "./components/Select";
+export { Select } from "./components/Form/Select";
+export type { SelectProps, SelectItem } from "./components/Form/Select";
 
 export {
   Table,
@@ -56,37 +56,37 @@ export type {
 export { EmptyState } from "./components/EmptyState";
 export type { EmptyStateProps } from "./components/EmptyState";
 
-export { Checkbox } from "./components/Checkbox";
-export type { CheckboxProps } from "./components/Checkbox";
+export { Checkbox } from "./components/Form/Checkbox";
+export type { CheckboxProps } from "./components/Form/Checkbox";
 
-export { Switch } from "./components/Switch";
-export type { SwitchProps } from "./components/Switch";
+export { Switch } from "./components/Form/Switch";
+export type { SwitchProps } from "./components/Form/Switch";
 
-export { RadioGroup, Radio, RadioButton } from "./components/Radio";
+export { RadioGroup, Radio, RadioButton } from "./components/Form/Radio";
 export type {
   RadioGroupProps,
   RadioProps,
   RadioButtonProps,
-} from "./components/Radio";
+} from "./components/Form/Radio";
 
-export { Label } from "./components/Label";
-export type { LabelProps } from "./components/Label";
+export { Label } from "./components/Form/Label";
+export type { LabelProps } from "./components/Form/Label";
 
-export { Field } from "./components/Field";
-export type { FieldProps } from "./components/Field";
+export { Field } from "./components/Form/Field";
+export type { FieldProps } from "./components/Form/Field";
 
-export { Fieldset } from "./components/Fieldset";
-export type { FieldsetProps } from "./components/Fieldset";
+export { Fieldset } from "./components/Form/Fieldset";
+export type { FieldsetProps } from "./components/Form/Fieldset";
 
 export {
   InputGroup,
   InputGroupContext,
   useInputGroup,
-} from "./components/InputGroup";
-export type { InputGroupProps, GroupPosition } from "./components/InputGroup";
+} from "./components/Form/InputGroup";
+export type { InputGroupProps, GroupPosition } from "./components/Form/InputGroup";
 
-export { InputAddon } from "./components/InputAddon";
-export type { InputAddonProps } from "./components/InputAddon";
+export { InputAddon } from "./components/Form/InputAddon";
+export type { InputAddonProps } from "./components/Form/InputAddon";
 
 export { Heading, H1, H2, H3 } from "./components/Heading";
 export type {

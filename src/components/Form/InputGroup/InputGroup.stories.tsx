@@ -3,16 +3,16 @@ import type { Meta, StoryObj } from "storybook/react";
 import { InputGroup } from "./InputGroup";
 import { Input } from "../Input";
 import { InputAddon } from "../InputAddon";
-import { Button } from "../Button";
-import { IconButton } from "../IconButton";
+import { Button } from "../../Button";
+import { IconButton } from "../../IconButton";
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from "../SegmentedControl";
+} from "../../SegmentedControl";
 import { Eye, EyeOff, Search, X } from "lucide-react";
 
 const meta: Meta<typeof InputGroup> = {
-  title: "Components/InputGroup",
+  title: "Components/Form/InputGroup",
   component: InputGroup,
 };
 

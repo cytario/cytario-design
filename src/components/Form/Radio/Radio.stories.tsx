@@ -3,7 +3,7 @@ import { expect, fn, userEvent, within } from "storybook/test";
 import { RadioGroup, Radio, RadioButton } from "./Radio";
 
 const meta: Meta<typeof RadioGroup> = {
-  title: "Components/Radio",
+  title: "Components/Form/Radio",
   component: RadioGroup,
   args: {
     onChange: fn(),

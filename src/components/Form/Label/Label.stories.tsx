@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "storybook/react";
 import { Label } from "./Label";
 
 const meta: Meta<typeof Label> = {
-  title: "Components/Label",
+  title: "Components/Form/Label",
   component: Label,
   argTypes: {
     isRequired: { control: "boolean" },
