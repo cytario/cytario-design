@@ -3,7 +3,7 @@ import { expect, userEvent, within } from "storybook/test";
 import { Input } from "./Input";
 
 const meta: Meta<typeof Input> = {
-  title: "Components/Input",
+  title: "Components/Form/Input",
   component: Input,
   argTypes: {
     type: {

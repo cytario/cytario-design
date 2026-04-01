@@ -7,7 +7,7 @@ import { type ButtonVariant, variantStyles } from "../_shared/styles";
 import { Icon } from "../Icon";
 import { Spinner } from "../Spinner";
 import { Tooltip } from "../Tooltip";
-import { useInputGroup } from "../InputGroup/InputGroupContext";
+import { useInputGroup } from "../Form/InputGroup/InputGroupContext";
 
 export interface IconButtonProps extends Omit<AriaButtonProps, "className"> {
   /** Lucide icon to render */

@@ -1,35 +1,21 @@
 import type React from "react";
 import { useCallback } from "react";
-import { AlertCircle, Database, Info } from "lucide-react";
+import { AlertCircle, Database } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { Icon } from "../Icon";
-import { IconButton } from "../IconButton";
-import type { PillColor } from "../Pill";
-import { Pill } from "../Pill";
 import { Spinner } from "../Spinner";
 
 export interface StorageConnectionCardProps {
-  /** Display name for the connection */
   name: string;
-  /** Cloud provider identifier (e.g., "aws", "minio", "azure", "gcp"). When omitted, the provider badge and region are hidden. */
-  provider?: string;
-  /** AWS region or equivalent (only rendered when provider is set) */
-  region?: string;
-  /** Connection health status. When omitted, the status dot is hidden and the preview area behaves as "connected". */
   status?: "connected" | "error" | "loading";
-  /** Human-readable error message when status is "error" */
   errorMessage?: string;
-  /** Number of viewable images in the bucket */
-  imageCount?: number;
-  /** Children rendered in the preview area (e.g., an actual tile viewer, or an img) */
+  /** Metadata row below the name (e.g. provider pill, scope pill, region text) */
+  meta?: React.ReactNode;
   children?: React.ReactNode;
-  /** Navigation target — clicking the card navigates here */
   href?: string;
-  /** Handler for click/press interaction (use instead of href for programmatic navigation) */
   onPress?: () => void;
-  /** Info button handler */
-  onInfo?: () => void;
-  /** Additional CSS classes */
+  /** Slot for action controls (e.g. a dropdown menu) rendered in the card header */
+  actions?: React.ReactNode;
   className?: string;
 }
 
@@ -38,25 +24,6 @@ export const statusDotStyles = {
   error: "border-2 border-(--color-status-danger) bg-transparent",
   loading: "bg-(--color-status-warning) animate-pulse",
 } as const;
-
-const providerConfig: Record<string, { label: string; color: PillColor }> = {
-  aws: { label: "AWS", color: "purple" },
-  azure: { label: "Azure", color: "teal" },
-  gcp: { label: "GCP", color: "slate" },
-  minio: { label: "MinIO", color: "rose" },
-};
-
-export function ProviderBadge({ provider }: { provider: string }) {
-  const config = providerConfig[provider.toLowerCase()];
-  const label = config?.label ?? provider;
-  const color: PillColor = config?.color ?? "neutral";
-
-  return (
-    <Pill color={color}>
-      {label}
-    </Pill>
-  );
-}
 
 function PreviewArea({
   status = "connected",
@@ -103,29 +70,16 @@ function PreviewArea({
 
 export function StorageConnectionCard({
   name,
-  provider,
-  region,
   status,
   errorMessage,
-  imageCount,
+  meta,
   children,
   href,
   onPress,
-  onInfo,
+  actions,
   className,
 }: StorageConnectionCardProps) {
   const isInteractive = !!href || !!onPress;
-
-  const handleInfoPress = useCallback(
-    (e: React.MouseEvent | React.KeyboardEvent) => {
-      if (isInteractive) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-      onInfo?.();
-    },
-    [onInfo, isInteractive],
-  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -139,16 +93,13 @@ export function StorageConnectionCard({
 
   const cardContent = (
     <>
-      {/* Preview area */}
       <div className="aspect-[4/3] bg-neutral-900 overflow-hidden rounded-t-(--border-radius-lg)">
         <PreviewArea status={status} errorMessage={errorMessage}>
           {children}
         </PreviewArea>
       </div>
 
-      {/* Info bar */}
       <div className="flex flex-col gap-1.5 border-t border-(--color-border-default) bg-(--color-surface-default) px-3 py-2.5 rounded-b-(--border-radius-lg)">
-        {/* Top row: status dot + name + info button */}
         <div className="flex items-start gap-2">
           {status && (
             <span
@@ -162,42 +113,21 @@ export function StorageConnectionCard({
           <span className="min-w-0 flex-1 line-clamp-2 text-sm font-medium text-(--color-text-primary)">
             {name}
           </span>
-          {onInfo && (
+          {actions && (
             <span
-              onClick={handleInfoPress}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleInfoPress(e);
-                }
-              }}
+              onClick={(e) => { if (isInteractive) { e.stopPropagation(); e.preventDefault(); } }}
+              onKeyDown={(e) => { if (isInteractive) { e.stopPropagation(); } }}
               role="presentation"
+              className="shrink-0 -mt-1 -mr-1"
             >
-              <IconButton
-                icon={Info}
-                aria-label="Connection info"
-                variant="ghost"
-                size="sm"
-                className="shrink-0 -mt-1 -mr-1"
-                onPress={onInfo}
-              />
+              {actions}
             </span>
           )}
         </div>
 
-        {/* Bottom row: provider badge + region + image count */}
-        {(provider || (imageCount != null && (!status || status === "connected"))) && (
+        {meta && (
           <div className={twMerge("flex items-center gap-2", status && "pl-4")}>
-            {provider && <ProviderBadge provider={provider} />}
-            {provider && region && (
-              <span className="shrink-0 text-xs text-(--color-text-secondary)">
-                {region}
-              </span>
-            )}
-            {imageCount != null && (!status || status === "connected") && (
-              <span className="ml-auto shrink-0 text-xs tabular-nums text-(--color-text-secondary)">
-                {imageCount} {imageCount === 1 ? "image" : "images"}
-              </span>
-            )}
+            {meta}
           </div>
         )}
       </div>

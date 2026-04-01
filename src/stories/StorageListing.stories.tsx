@@ -27,13 +27,13 @@ import {
 import { H1 } from "../components/Heading";
 import { IconButton } from "../components/IconButton";
 import { InlineConfirmation } from "../components/InlineConfirmation";
-import { Input } from "../components/Input";
-import { Select, type SelectItem } from "../components/Select";
+import { Input } from "../components/Form/Input";
+import { Select, type SelectItem } from "../components/Form/Select";
 import {
   SegmentedControl,
   SegmentedControlItem,
 } from "../components/SegmentedControl";
-import { ProviderBadge } from "../components/StorageConnectionCard";
+import { Pill } from "../components/Pill";
 import {
   Table,
   TableHeader,
@@ -224,7 +224,7 @@ function ConnectionInfoDialog({
         <>
           <DescriptionList>
             <DescriptionList.Item label="Provider">
-              <ProviderBadge provider={connection.provider} />
+              <Pill>{connection.provider}</Pill>
             </DescriptionList.Item>
             {connection.ownerScope && (
               <DescriptionList.Item label="Visibility">

@@ -6,10 +6,10 @@ import { Dialog } from "../components/Dialog";
 import { DialogFooter } from "../components/Dialog/DialogFooter";
 import { Button } from "../components/Button";
 import { ButtonLink } from "../components/ButtonLink";
-import { Input } from "../components/Input";
-import { Select, type SelectItem } from "../components/Select";
+import { Input } from "../components/Form/Input";
+import { Select, type SelectItem } from "../components/Form/Select";
 import { DescriptionList } from "../components/DescriptionList";
-import { ProviderBadge } from "../components/StorageConnectionCard";
+import { Pill } from "../components/Pill";
 
 /* ------------------------------------------------------------------ */
 /*  Domain types (app-specific, not part of the design system)         */
@@ -91,7 +91,7 @@ function ViewMode({
     <>
       <DescriptionList>
         <DescriptionList.Item label="Provider">
-          <ProviderBadge provider={connection.provider} />
+          <Pill>{connection.provider}</Pill>
         </DescriptionList.Item>
 
         {connection.ownerScope && (

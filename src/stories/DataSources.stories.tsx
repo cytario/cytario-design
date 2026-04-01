@@ -135,9 +135,8 @@ function ConnectionGrid({
         <StorageConnectionCard
           key={conn.id}
           name={conn.name}
-          imageCount={conn.imageCount}
           href={conn.href}
-          onInfo={fn()}
+          actions={<button>⋮</button>}
         >
           {conn.hasPreview && <MockTissuePreview />}
         </StorageConnectionCard>

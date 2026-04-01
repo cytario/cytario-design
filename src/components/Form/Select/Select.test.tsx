@@ -17,47 +17,45 @@ describe("Select", () => {
     expect(screen.getByRole("button")).toBeDefined();
   });
 
+  it("renders without label", () => {
+    render(<Select items={items} />);
+    expect(screen.queryByText("Staining Method")).toBeNull();
+    expect(screen.getByRole("button")).toBeDefined();
+  });
+
   it("opens popover on click", async () => {
-    render(<Select label="Staining Method" items={items} />);
-
+    render(<Select items={items} />);
     await userEvent.click(screen.getByRole("button"));
-
     expect(screen.getByRole("listbox")).toBeDefined();
     expect(screen.getByRole("option", { name: "H&E Stain" })).toBeDefined();
     expect(screen.getByRole("option", { name: "FISH" })).toBeDefined();
   });
 
   it("selects an item", async () => {
-    render(<Select label="Staining Method" items={items} />);
-
+    render(<Select items={items} />);
     await userEvent.click(screen.getByRole("button"));
     await userEvent.click(screen.getByRole("option", { name: "FISH" }));
-
     expect(screen.getByRole("button")).toHaveTextContent("FISH");
   });
 
-  it("shows error message", () => {
-    render(
-      <Select
-        label="Staining Method"
-        items={items}
-        errorMessage="Required field"
-      />,
-    );
-
-    const matches = screen.getAllByText("Required field");
-    expect(matches.length).toBeGreaterThanOrEqual(1);
-  });
-
   it("is disabled when isDisabled is true", () => {
-    render(<Select label="Staining Method" items={items} isDisabled />);
-
+    render(<Select items={items} isDisabled />);
     expect(screen.getByRole("button")).toHaveAttribute("disabled");
   });
 
-  it("visually hides label when hideLabel is true", () => {
-    render(<Select label="Staining Method" items={items} hideLabel />);
-    const label = screen.getByText("Staining Method");
-    expect(label.className).toContain("sr-only");
+  it("uses renderItem for dropdown and trigger", async () => {
+    render(
+      <Select
+        items={items}
+        renderItem={(item) => `Custom: ${item.name}`}
+      />,
+    );
+
+    await userEvent.click(screen.getByRole("button"));
+    expect(screen.getByText("Custom: H&E Stain")).toBeDefined();
+    expect(screen.getByText("Custom: FISH")).toBeDefined();
+
+    await userEvent.click(screen.getByText("Custom: FISH"));
+    expect(screen.getByRole("button")).toHaveTextContent("Custom: FISH");
   });
 });

@@ -13,7 +13,7 @@ import {
 } from "../_shared/styles";
 import { Icon } from "../Icon";
 import { Spinner } from "../Spinner";
-import { useInputGroup } from "../InputGroup/InputGroupContext";
+import { useInputGroup } from "../Form/InputGroup/InputGroupContext";
 
 export type { ButtonVariant, ButtonSize };
 

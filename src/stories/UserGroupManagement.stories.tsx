@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { Badge } from "../components/Badge";
 import { Button } from "../components/Button";
-import { Input } from "../components/Input";
+import { Input } from "../components/Form/Input";
 import { Dialog } from "../components/Dialog";
 import {
   Table,

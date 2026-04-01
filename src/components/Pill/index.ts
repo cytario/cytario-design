@@ -1,4 +1,4 @@
 export { Pill, pillColorFromName } from "./Pill";
 export type { PillProps, PillColor } from "./Pill";
-export { GroupPill } from "./GroupPill";
-export type { GroupPillProps } from "./GroupPill";
+export { PathPill } from "./PathPill";
+export type { PathPillProps } from "./PathPill";

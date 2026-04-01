@@ -6,7 +6,11 @@ export type { RouterConfig, Key } from "react-aria-components";
 
 // Components
 export { Button } from "./components/Button";
-export type { ButtonProps, ButtonVariant, ButtonSize } from "./components/Button";
+export type {
+  ButtonProps,
+  ButtonVariant,
+  ButtonSize,
+} from "./components/Button";
 
 export { Spinner } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
@@ -20,71 +24,117 @@ export type { TooltipProps } from "./components/Tooltip";
 export { IconButton } from "./components/IconButton";
 export type { IconButtonProps } from "./components/IconButton";
 
-export { Input } from "./components/Input";
-export type { InputProps } from "./components/Input";
+export { Input } from "./components/Form/Input";
+export type { InputProps } from "./components/Form/Input";
 
-export { Select } from "./components/Select";
-export type { SelectProps, SelectItem } from "./components/Select";
+export { Select } from "./components/Form/Select";
+export type { SelectProps, SelectItem } from "./components/Form/Select";
 
-export { Table, TableHeader, Column, TableBody, Row, Cell } from "./components/Table";
+export {
+  Table,
+  TableHeader,
+  Column,
+  TableBody,
+  Row,
+  Cell,
+} from "./components/Table";
 export type { DataTableProps, TableSize } from "./components/Table";
 
 export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";
 
 export { ToastProvider, useToast, createToastBridge } from "./components/Toast";
-export type { ToastData, ToastVariant, ToastPlacement, ToastContextValue, ToastBridge, ToastProviderProps } from "./components/Toast";
+export type {
+  ToastData,
+  ToastVariant,
+  ToastPlacement,
+  ToastContextValue,
+  ToastBridge,
+  ToastProviderProps,
+} from "./components/Toast";
 
 export { EmptyState } from "./components/EmptyState";
 export type { EmptyStateProps } from "./components/EmptyState";
 
-export { Checkbox } from "./components/Checkbox";
-export type { CheckboxProps } from "./components/Checkbox";
+export { Checkbox } from "./components/Form/Checkbox";
+export type { CheckboxProps } from "./components/Form/Checkbox";
 
-export { Switch } from "./components/Switch";
-export type { SwitchProps } from "./components/Switch";
+export { Switch } from "./components/Form/Switch";
+export type { SwitchProps } from "./components/Form/Switch";
 
-export { RadioGroup, Radio, RadioButton } from "./components/Radio";
-export type { RadioGroupProps, RadioProps, RadioButtonProps } from "./components/Radio";
+export { RadioGroup, Radio, RadioButton } from "./components/Form/Radio";
+export type {
+  RadioGroupProps,
+  RadioProps,
+  RadioButtonProps,
+} from "./components/Form/Radio";
 
-export { Label } from "./components/Label";
-export type { LabelProps } from "./components/Label";
+export { Label } from "./components/Form/Label";
+export type { LabelProps } from "./components/Form/Label";
 
-export { Field } from "./components/Field";
-export type { FieldProps } from "./components/Field";
+export { Field } from "./components/Form/Field";
+export type { FieldProps } from "./components/Form/Field";
 
-export { Fieldset } from "./components/Fieldset";
-export type { FieldsetProps } from "./components/Fieldset";
+export { Fieldset } from "./components/Form/Fieldset";
+export type { FieldsetProps } from "./components/Form/Fieldset";
 
-export { InputGroup, InputGroupContext, useInputGroup } from "./components/InputGroup";
-export type { InputGroupProps, GroupPosition } from "./components/InputGroup";
+export {
+  InputGroup,
+  InputGroupContext,
+  useInputGroup,
+} from "./components/Form/InputGroup";
+export type { InputGroupProps, GroupPosition } from "./components/Form/InputGroup";
 
-export { InputAddon } from "./components/InputAddon";
-export type { InputAddonProps } from "./components/InputAddon";
+export { InputAddon } from "./components/Form/InputAddon";
+export type { InputAddonProps } from "./components/Form/InputAddon";
 
 export { Heading, H1, H2, H3 } from "./components/Heading";
-export type { HeadingProps, HeadingLevel, HeadingSize } from "./components/Heading";
+export type {
+  HeadingProps,
+  HeadingLevel,
+  HeadingSize,
+} from "./components/Heading";
 
 export { Link } from "./components/Link";
 export type { LinkProps, LinkVariant } from "./components/Link";
 
 export { Breadcrumbs } from "./components/Breadcrumbs";
-export type { BreadcrumbsProps, BreadcrumbItem } from "./components/Breadcrumbs";
+export type {
+  BreadcrumbsProps,
+  BreadcrumbItem,
+} from "./components/Breadcrumbs";
 
 export { ButtonLink, IconButtonLink } from "./components/ButtonLink";
-export type { ButtonLinkProps, IconButtonLinkProps } from "./components/ButtonLink";
+export type {
+  ButtonLinkProps,
+  IconButtonLinkProps,
+} from "./components/ButtonLink";
 
 export { ToggleButton } from "./components/ToggleButton";
-export type { ToggleButtonProps, ToggleButtonVariant, ToggleButtonSize } from "./components/ToggleButton";
+export type {
+  ToggleButtonProps,
+  ToggleButtonVariant,
+  ToggleButtonSize,
+} from "./components/ToggleButton";
 
-export { ToggleButtonGroup, ToggleButtonGroupItem } from "./components/ToggleButtonGroup";
+export {
+  ToggleButtonGroup,
+  ToggleButtonGroupItem,
+} from "./components/ToggleButtonGroup";
 export type {
   ToggleButtonGroupProps,
   ToggleButtonGroupItemProps,
   ToggleButtonGroupSize,
 } from "./components/ToggleButtonGroup";
 
-export { Menu, MenuItem, MenuCheckboxItem, MenuSection, MenuHeader, MenuSeparator } from "./components/Menu";
+export {
+  Menu,
+  MenuItem,
+  MenuCheckboxItem,
+  MenuSection,
+  MenuHeader,
+  MenuSeparator,
+} from "./components/Menu";
 export type {
   MenuProps,
   MenuItemData,
@@ -96,10 +146,21 @@ export type {
 } from "./components/Menu";
 
 export { Popover, PopoverTrigger, PopoverContent } from "./components/Popover";
-export type { PopoverProps, PopoverTriggerProps, PopoverContentProps } from "./components/Popover";
+export type {
+  PopoverProps,
+  PopoverTriggerProps,
+  PopoverContentProps,
+} from "./components/Popover";
 
 export { Tabs, TabList, Tab, TabPanel } from "./components/Tabs";
-export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabsVariant, TabsSize } from "./components/Tabs";
+export type {
+  TabsProps,
+  TabListProps,
+  TabProps,
+  TabPanelProps,
+  TabsVariant,
+  TabsSize,
+} from "./components/Tabs";
 
 // Raw React Aria Components tab primitives (unstyled escape hatch)
 export {
@@ -112,7 +173,10 @@ export {
 export { Tree } from "./components/Tree";
 export type { TreeProps, TreeNode, TreeApi } from "./components/Tree";
 
-export { SegmentedControl, SegmentedControlItem } from "./components/SegmentedControl";
+export {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "./components/SegmentedControl";
 export type {
   SegmentedControlProps,
   SegmentedControlItemProps,
@@ -120,7 +184,12 @@ export type {
   SegmentedControlSelectionMode,
 } from "./components/SegmentedControl";
 
-export { FileCard, FileIcon, getFileIcon, getTypeLabel } from "./components/FileCard";
+export {
+  FileCard,
+  FileIcon,
+  getFileIcon,
+  getTypeLabel,
+} from "./components/FileCard";
 export type { FileCardProps } from "./components/FileCard";
 
 export { StorageConnectionCard } from "./components/StorageConnectionCard";
@@ -133,10 +202,18 @@ export { Card } from "./components/Card";
 export type { CardProps, CardPadding } from "./components/Card";
 
 export { DeltaIndicator } from "./components/DeltaIndicator";
-export type { DeltaIndicatorProps, DeltaFormat, DeltaMode } from "./components/DeltaIndicator";
+export type {
+  DeltaIndicatorProps,
+  DeltaFormat,
+  DeltaMode,
+} from "./components/DeltaIndicator";
 
 export { ProgressBar } from "./components/ProgressBar";
-export type { ProgressBarProps, ProgressBarVariant, ProgressBarSize } from "./components/ProgressBar";
+export type {
+  ProgressBarProps,
+  ProgressBarVariant,
+  ProgressBarSize,
+} from "./components/ProgressBar";
 
 export { Banner } from "./components/Banner";
 export type { BannerProps, BannerVariant } from "./components/Banner";
@@ -147,14 +224,14 @@ export type { MetricCardProps, MetricCardSize } from "./components/MetricCard";
 export { SectionHeader } from "./components/SectionHeader";
 export type { SectionHeaderProps } from "./components/SectionHeader";
 
-export { Pill, pillColorFromName } from "./components/Pill";
-export type { PillProps, PillColor } from "./components/Pill";
-
-export { GroupPill } from "./components/Pill";
-export type { GroupPillProps } from "./components/Pill";
+export { Pill, pillColorFromName, PathPill } from "./components/Pill";
+export type { PillProps, PillColor, PathPillProps } from "./components/Pill";
 
 export { FormWizard, useFormWizard } from "./components/FormWizard";
-export type { FormWizardProps, FormWizardContextValue } from "./components/FormWizard";
+export type {
+  FormWizardProps,
+  FormWizardContextValue,
+} from "./components/FormWizard";
 
 export { FormWizardProgress } from "./components/FormWizard";
 export type { FormWizardProgressProps } from "./components/FormWizard";

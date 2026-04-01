@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
-import { Switch } from "../components/Switch";
-import { Input } from "../components/Input";
+import { Switch } from "../components/Form/Switch";
+import { Input } from "../components/Form/Input";
 import { Button } from "../components/Button";
 import { Dialog } from "../components/Dialog";
 import { EmptyState } from "../components/EmptyState";

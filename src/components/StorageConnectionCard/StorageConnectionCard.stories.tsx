@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { fn } from "storybook/test";
+import { Pill } from "../Pill";
 import { StorageConnectionCard } from "./StorageConnectionCard";
 
 const meta: Meta<typeof StorageConnectionCard> = {
@@ -10,7 +11,6 @@ const meta: Meta<typeof StorageConnectionCard> = {
 export default meta;
 type Story = StoryObj<typeof StorageConnectionCard>;
 
-/** A fluorescence-like mock preview for stories */
 function MockTissuePreview() {
   return (
     <div
@@ -38,12 +38,15 @@ function MockTissuePreview() {
 export const Connected: Story = {
   args: {
     name: "cytario-research-data",
-    provider: "aws",
-    region: "eu-central-1",
     status: "connected",
-    imageCount: 24,
+    meta: (
+      <>
+        <Pill color="purple">AWS</Pill>
+        <span className="text-xs text-(--color-text-secondary)">eu-central-1</span>
+      </>
+    ),
     href: "/buckets/aws/cytario-research-data",
-    onInfo: fn(),
+    actions: <button>⋮</button>,
     children: <MockTissuePreview />,
   },
 };
@@ -51,19 +54,18 @@ export const Connected: Story = {
 export const Error: Story = {
   args: {
     name: "failing-bucket",
-    provider: "aws",
-    region: "us-east-1",
     status: "error",
     errorMessage: "Request failed: Access Denied",
-    onInfo: fn(),
+    meta: <Pill color="purple">AWS</Pill>,
+    actions: <button>⋮</button>,
   },
 };
 
 export const Loading: Story = {
   args: {
     name: "new-connection",
-    provider: "minio",
     status: "loading",
+    meta: <Pill color="rose">MinIO</Pill>,
   },
 };
 
@@ -71,24 +73,15 @@ export const NoPreview: Story = {
   name: "No Preview",
   args: {
     name: "archive-bucket",
-    provider: "azure",
-    region: "westeurope",
     status: "connected",
+    meta: (
+      <>
+        <Pill color="teal">Azure</Pill>
+        <span className="text-xs text-(--color-text-secondary)">westeurope</span>
+      </>
+    ),
     href: "/buckets/azure/archive-bucket",
-    onInfo: fn(),
-  },
-};
-
-export const WithInfoAction: Story = {
-  name: "With Info Action",
-  args: {
-    name: "shared-pathology-images",
-    provider: "gcp",
-    region: "europe-west1",
-    status: "connected",
-    imageCount: 156,
-    onInfo: fn(),
-    children: <MockTissuePreview />,
+    actions: <button>⋮</button>,
   },
 };
 
@@ -96,12 +89,15 @@ export const WithOnPress: Story = {
   name: "With onPress",
   args: {
     name: "cytario-uploads",
-    provider: "aws",
-    region: "eu-central-1",
     status: "connected",
-    imageCount: 8,
+    meta: (
+      <>
+        <Pill color="purple">AWS</Pill>
+        <span className="text-xs text-(--color-text-secondary)">eu-central-1</span>
+      </>
+    ),
     onPress: fn(),
-    onInfo: fn(),
+    actions: <button>⋮</button>,
     children: <MockTissuePreview />,
   },
 };

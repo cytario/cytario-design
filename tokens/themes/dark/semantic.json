@@ -84,7 +84,11 @@
       "roseBg": { "$value": "{color.rose.800}" },
       "roseText": { "$value": "{color.rose.200}" },
       "neutralBg": { "$value": "{color.neutral.700}" },
-      "neutralText": { "$value": "{color.neutral.200}" }
+      "neutralText": { "$value": "{color.neutral.200}" },
+      "greenBg": { "$value": "{color.green.800}" },
+      "greenText": { "$value": "{color.green.200}" },
+      "amberBg": { "$value": "{color.amber.800}" },
+      "amberText": { "$value": "{color.amber.200}" }
     }
   }
 }

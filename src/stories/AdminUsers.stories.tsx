@@ -11,14 +11,14 @@ import {
 
 import { Button } from "../components/Button";
 import { Dialog } from "../components/Dialog";
-import { Input } from "../components/Input";
-import { Select } from "../components/Select";
-import { Field } from "../components/Field";
-import { Fieldset } from "../components/Fieldset";
-import { Checkbox } from "../components/Checkbox";
+import { Input } from "../components/Form/Input";
+import { Select } from "../components/Form/Select";
+import { Field } from "../components/Form/Field";
+import { Fieldset } from "../components/Form/Fieldset";
+import { Checkbox } from "../components/Form/Checkbox";
 import { Badge } from "../components/Badge";
 import { EmptyState } from "../components/EmptyState";
-import { GroupPill } from "../components/Pill";
+import { PathPill } from "../components/Pill";
 import { SectionHeader } from "../components/SectionHeader";
 import {
   Table,
@@ -298,14 +298,14 @@ function AdminUsersPage() {
                     <Cell>
                       <div className="flex flex-wrap gap-1">
                         {user.adminGroups.map((path) => (
-                          <GroupPill key={path} path={path} />
+                          <PathPill key={path}>{path}</PathPill>
                         ))}
                       </div>
                     </Cell>
                     <Cell>
                       <div className="flex flex-wrap gap-1">
                         {user.groups.map((path) => (
-                          <GroupPill key={path} path={path} />
+                          <PathPill key={path}>{path}</PathPill>
                         ))}
                       </div>
                     </Cell>
@@ -459,7 +459,7 @@ function AdminUsersWithSelection() {
                     <Cell>
                       <div className="flex flex-wrap gap-1">
                         {user.groups.map((path) => (
-                          <GroupPill key={path} path={path} />
+                          <PathPill key={path}>{path}</PathPill>
                         ))}
                       </div>
                     </Cell>

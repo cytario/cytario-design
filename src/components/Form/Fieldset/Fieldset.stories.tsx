@@ -6,7 +6,7 @@ import { RadioGroup, RadioButton } from "../Radio";
 import { Select } from "../Select";
 
 const meta: Meta<typeof Fieldset> = {
-  title: "Components/Fieldset",
+  title: "Components/Form/Fieldset",
   component: Fieldset,
 };
 
