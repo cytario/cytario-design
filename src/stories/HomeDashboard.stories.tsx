@@ -17,6 +17,7 @@ import {
 import { Button } from "../components/Button";
 import { EmptyState } from "../components/EmptyState";
 import { SectionHeader } from "../components/SectionHeader";
+import { Pill } from "../components/Pill";
 import { StorageConnectionCard } from "../components/StorageConnectionCard";
 import { IconButton } from "../components/IconButton";
 import { Badge } from "../components/Badge";
@@ -329,10 +330,15 @@ function StorageConnectionsSection() {
           <StorageConnectionCard
             key={conn.name}
             name={conn.name}
-            provider={conn.provider}
-            region={conn.region}
             status="connected"
-            imageCount={conn.imageCount}
+            meta={
+              <>
+                <Pill>{conn.provider}</Pill>
+                {conn.region && (
+                  <span className="text-xs text-(--color-text-secondary)">{conn.region}</span>
+                )}
+              </>
+            }
             href={conn.href}
             onInfo={fn()}
           >

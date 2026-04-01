@@ -33,7 +33,7 @@ import {
   SegmentedControl,
   SegmentedControlItem,
 } from "../components/SegmentedControl";
-import { ProviderBadge } from "../components/StorageConnectionCard";
+import { Pill } from "../components/Pill";
 import {
   Table,
   TableHeader,
@@ -224,7 +224,7 @@ function ConnectionInfoDialog({
         <>
           <DescriptionList>
             <DescriptionList.Item label="Provider">
-              <ProviderBadge provider={connection.provider} />
+              <Pill>{connection.provider}</Pill>
             </DescriptionList.Item>
             {connection.ownerScope && (
               <DescriptionList.Item label="Visibility">
