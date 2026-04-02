@@ -19,11 +19,14 @@ import { Dialog } from "../components/Dialog";
 import { DialogFooter } from "../components/Dialog/DialogFooter";
 import { EmptyState } from "../components/EmptyState";
 import {
-  FileCard,
-  FileIcon,
-  getFileIcon,
-  getTypeLabel,
-} from "../components/FileCard";
+  File,
+  FileSpreadsheet,
+  Folder,
+  Image,
+  Microscope,
+  type LucideIcon,
+} from "lucide-react";
+import { FileCard } from "../components/FileCard";
 import { H1 } from "../components/Heading";
 import { IconButton } from "../components/IconButton";
 import { InlineConfirmation } from "../components/InlineConfirmation";
@@ -140,6 +143,30 @@ interface FileNode {
   storageClass?: string;
   etag?: string;
   versionId?: string;
+}
+
+/** Story-local icon resolver — mirrors the app's FILE_TYPE_REGISTRY for demo purposes. */
+function getNodeIcon(type: NodeType, extension?: string): LucideIcon {
+  if (type === "directory") return Folder;
+  const ext = (extension ?? "").toLowerCase();
+  if (ext === "ome.tif" || ext === "ome.tiff" || ext === "ome.zarr") return Microscope;
+  if (/^(tiff?|png|jpe?g)$/.test(ext)) return Image;
+  if (/^(csv|parquet)$/.test(ext)) return FileSpreadsheet;
+  if (ext === "ndjson" || ext === "json") return File;
+  return File;
+}
+
+function getNodeLabel(type: NodeType, extension?: string): string {
+  if (type === "directory") return "Folder";
+  const ext = (extension ?? "").toLowerCase();
+  if (ext === "ome.tif" || ext === "ome.tiff") return "OME-TIFF";
+  if (ext === "ome.zarr") return "OME-Zarr";
+  return ext.toUpperCase() || "File";
+}
+
+function NodeIcon({ type, extension }: { type: NodeType; extension?: string }) {
+  const Icon = getNodeIcon(type, extension);
+  return <Icon size={16} className="shrink-0 text-(--color-text-secondary)" />;
 }
 
 /* ------------------------------------------------------------------ */
@@ -594,11 +621,10 @@ function FileCardItem({
   return (
     <FileCard
       name={node.name}
-      type={node.type}
+      icon={getNodeIcon(node.type, node.extension)}
       size={node.size}
-      extension={node.extension}
       compact={compact}
-      href="#"
+      onPress={() => {}}
       onInfo={onInfo}
     >
       {node.hasPreview && previewIndex != null ? (
@@ -688,7 +714,7 @@ function ListView({
                 onClick={(e) => e.preventDefault()}
                 className="flex items-center gap-2 font-medium text-(--color-text-primary) no-underline hover:underline"
               >
-                <FileIcon type={node.type} extension={node.extension} />
+                <NodeIcon type={node.type} extension={node.extension} />
                 {node.name}
               </a>
             </Cell>
@@ -704,7 +730,7 @@ function ListView({
                   "text-(--color-text-secondary)",
                 ].join(" ")}
               >
-                {getTypeLabel(node.type, node.extension)}
+                {getNodeLabel(node.type, node.extension)}
               </span>
             </Cell>
             <Cell>
@@ -741,7 +767,7 @@ function toDesignTreeNodes(nodes: FileNode[]): DesignTreeNode[] {
   return nodes.map((node) => ({
     id: node.name,
     name: node.size ? `${node.name}  ·  ${node.size}` : node.name,
-    icon: getFileIcon(node.type, node.extension),
+    icon: getNodeIcon(node.type, node.extension),
     children: node.children ? toDesignTreeNodes(node.children) : undefined,
   }));
 }

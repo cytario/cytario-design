@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { fn } from "storybook/test";
+import {
+  File,
+  FileSpreadsheet,
+  Folder,
+  Microscope,
+} from "lucide-react";
 import { FileCard } from "./FileCard";
 
 const meta: Meta<typeof FileCard> = {
   title: "Components/FileCard",
   component: FileCard,
   argTypes: {
-    type: { control: "select", options: ["file", "directory"] },
     compact: { control: "boolean" },
   },
 };
@@ -43,11 +48,9 @@ export const ImageFile: Story = {
   name: "OME-TIFF with preview",
   args: {
     name: "sample_001.ome.tif",
-    type: "file",
+    icon: Microscope,
     size: "81.93 GB",
-    extension: "ome.tif",
-    hasPreview: true,
-    href: "#",
+    onPress: fn(),
     onInfo: fn(),
     children: <MockTissuePreview />,
   },
@@ -56,8 +59,8 @@ export const ImageFile: Story = {
 export const Directory: Story = {
   args: {
     name: "results",
-    type: "directory",
-    href: "#",
+    icon: Folder,
+    onPress: fn(),
   },
 };
 
@@ -65,9 +68,8 @@ export const CsvFile: Story = {
   name: "CSV file",
   args: {
     name: "analysis.csv",
-    type: "file",
+    icon: FileSpreadsheet,
     size: "1.2 MB",
-    extension: "csv",
     onInfo: fn(),
   },
 };
@@ -76,11 +78,9 @@ export const CompactMode: Story = {
   name: "Compact",
   args: {
     name: "tissue_42.ome.tif",
-    type: "file",
-    extension: "ome.tif",
+    icon: Microscope,
     compact: true,
-    hasPreview: true,
-    href: "#",
+    onPress: fn(),
     onInfo: fn(),
     children: <MockTissuePreview />,
   },
@@ -90,9 +90,8 @@ export const WithOnPress: Story = {
   name: "With onPress",
   args: {
     name: "biopsy_003.ome.tif",
-    type: "file",
+    icon: Microscope,
     size: "45.12 GB",
-    extension: "ome.tif",
     onPress: fn(),
     onInfo: fn(),
     children: <MockTissuePreview />,
@@ -103,9 +102,8 @@ export const NoPreview: Story = {
   name: "File without preview",
   args: {
     name: "annotations.parquet",
-    type: "file",
+    icon: FileSpreadsheet,
     size: "4.8 MB",
-    extension: "parquet",
     onInfo: fn(),
   },
 };
@@ -116,24 +114,22 @@ export const Grid: Story = {
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <FileCard
         name="sample_001.ome.tif"
-        type="file"
+        icon={Microscope}
         size="81.93 GB"
-        extension="ome.tif"
-        href="#"
+        onPress={() => {}}
         onInfo={() => {}}
       >
         <MockTissuePreview />
       </FileCard>
       <FileCard
         name="results"
-        type="directory"
-        href="#"
+        icon={Folder}
+        onPress={() => {}}
       />
       <FileCard
         name="analysis.csv"
-        type="file"
+        icon={File}
         size="1.2 MB"
-        extension="csv"
         onInfo={() => {}}
       />
     </div>
@@ -146,28 +142,25 @@ export const CompactGrid: Story = {
     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
       <FileCard
         name="sample_001.ome.tif"
-        type="file"
-        extension="ome.tif"
+        icon={Microscope}
         compact
-        href="#"
+        onPress={() => {}}
         onInfo={() => {}}
       >
         <MockTissuePreview />
       </FileCard>
-      <FileCard name="results" type="directory" compact href="#" />
+      <FileCard name="results" icon={Folder} compact onPress={() => {}} />
       <FileCard
         name="analysis.csv"
-        type="file"
-        extension="csv"
+        icon={FileSpreadsheet}
         compact
         onInfo={() => {}}
       />
       <FileCard
         name="tissue_42.ome.tif"
-        type="file"
-        extension="ome.tif"
+        icon={Microscope}
         compact
-        href="#"
+        onPress={() => {}}
         onInfo={() => {}}
       >
         <MockTissuePreview />

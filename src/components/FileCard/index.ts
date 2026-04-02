@@ -1,2 +1,2 @@
-export { FileCard, FileIcon, getFileIcon, getTypeLabel } from "./FileCard";
+export { FileCard } from "./FileCard";
 export type { FileCardProps } from "./FileCard";
