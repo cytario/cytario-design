@@ -1,64 +1,7 @@
 import type React from "react";
 import { useCallback } from "react";
-import {
-  File,
-  FileSpreadsheet,
-  Folder,
-  Image,
-  Info,
-  Microscope,
-  type LucideIcon,
-} from "lucide-react";
+import { File, Info, type LucideIcon } from "lucide-react";
 import { IconButton } from "../IconButton";
-
-/* ------------------------------------------------------------------ */
-/*  File type helpers                                                   */
-/* ------------------------------------------------------------------ */
-
-export function getFileIcon(
-  type: "directory" | "file",
-  extension?: string,
-): LucideIcon {
-  if (type === "directory") return Folder;
-  const ext = (extension ?? "").toLowerCase();
-  if (ext === "ome.tif" || ext === "ome.tiff") return Microscope;
-  if (/^(tiff?|png|jpe?g)$/.test(ext)) return Image;
-  if (/^(csv|parquet)$/.test(ext)) return FileSpreadsheet;
-  return File;
-}
-
-export function getTypeLabel(
-  type: "directory" | "file",
-  extension?: string,
-): string {
-  if (type === "directory") return "Folder";
-  const ext = (extension ?? "").toLowerCase();
-  if (ext === "ome.tif" || ext === "ome.tiff") return "OME-TIFF";
-  if (/^tiff?$/.test(ext)) return "TIFF";
-  if (ext === "csv") return "CSV";
-  if (ext === "parquet") return "Parquet";
-  if (ext === "png") return "PNG";
-  if (/^jpe?g$/.test(ext)) return "JPEG";
-  return ext.toUpperCase() || "File";
-}
-
-export function FileIcon({
-  type,
-  extension,
-  size = 16,
-}: {
-  type: "directory" | "file";
-  extension?: string;
-  size?: number;
-}) {
-  const IconComponent = getFileIcon(type, extension);
-  return (
-    <IconComponent
-      size={size}
-      className="shrink-0 text-(--color-text-secondary)"
-    />
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /*  FileCard                                                            */
@@ -67,25 +10,17 @@ export function FileIcon({
 export interface FileCardProps {
   /** File or folder name */
   name: string;
-  /** Whether this is a directory or file */
-  type: "directory" | "file";
+  /** Icon to display in thumbnail fallback and metadata row */
+  icon?: LucideIcon;
   /** Human-readable file size (e.g., "12.3 GB") */
   size?: string;
-  /** Last modified date/time */
-  modified?: string;
-  /** File extension (e.g., "ome.tif", "csv") */
-  extension?: string;
-  /** Whether a thumbnail preview is available */
-  hasPreview?: boolean;
   /** Compact mode (smaller card, square aspect, minimal metadata) */
   compact?: boolean;
   /** Custom thumbnail content (e.g., an image preview) */
   children?: React.ReactNode;
   /** Info button handler */
   onInfo?: () => void;
-  /** Navigation target — clicking the card navigates here */
-  href?: string;
-  /** Handler for click/press interaction (use instead of href for programmatic navigation) */
+  /** Handler for click/press interaction */
   onPress?: () => void;
   /** Additional CSS classes */
   className?: string;
@@ -93,28 +28,21 @@ export interface FileCardProps {
 
 export function FileCard({
   name,
-  type,
+  icon: IconComponent = File,
   size,
-  extension,
   compact = false,
   children,
   onInfo,
-  href,
   onPress,
   className,
 }: FileCardProps) {
-  const isInteractive = !!href || !!onPress;
+  const isInteractive = !!onPress;
 
   const radius = compact
     ? "rounded-md"
     : "rounded-lg";
 
-  const IconComponent = getFileIcon(type, extension);
   const iconSize = compact ? 24 : 32;
-  const iconColor =
-    type === "directory"
-      ? "text-(--color-text-tertiary)"
-      : "text-(--color-text-secondary)";
 
   const thumbnailClass = compact
     ? "aspect-square rounded-t-(--border-radius-md)"
@@ -151,7 +79,7 @@ export function FileCard({
           <div className="h-full w-full overflow-hidden">{children}</div>
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <IconComponent size={iconSize} className={iconColor} />
+            <IconComponent size={iconSize} className="text-(--color-text-secondary)" />
           </div>
         )}
       </div>
@@ -173,7 +101,10 @@ export function FileCard({
         ) : (
           <>
             <span className="flex items-center gap-1.5">
-              <FileIcon type={type} extension={extension} size={16} />
+              <IconComponent
+                size={16}
+                className="shrink-0 text-(--color-text-secondary)"
+              />
               <span className="min-w-0 flex-1 text-sm font-medium text-(--color-text-primary) truncate">
                 {name}
               </span>
@@ -223,18 +154,6 @@ export function FileCard({
   ]
     .filter(Boolean)
     .join(" ");
-
-  if (href) {
-    return (
-      <a
-        href={href}
-        aria-label={name}
-        className={[baseStyles, "no-underline"].join(" ")}
-      >
-        {cardContent}
-      </a>
-    );
-  }
 
   if (onPress) {
     return (
