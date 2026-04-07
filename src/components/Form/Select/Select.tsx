@@ -11,18 +11,23 @@ import {
   type SelectProps as AriaSelectProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
+import { type Size, sizeStyles } from "../../_shared/styles";
 
 export interface SelectItem {
   id: string;
   name: string;
 }
 
-export interface SelectProps
-  extends Omit<AriaSelectProps<SelectItem>, "children"> {
+export interface SelectProps extends Omit<
+  AriaSelectProps<SelectItem>,
+  "children"
+> {
   items: SelectItem[];
   label?: string;
   placeholder?: string;
   errorMessage?: string;
+  /** Controls padding and font size */
+  size?: Size;
   /** Custom visual renderer for items in the dropdown and trigger.
    *  `item.name` remains the accessible label (used for typeahead and screen readers). */
   renderItem?: (item: SelectItem) => React.ReactNode;
@@ -33,6 +38,7 @@ export function Select({
   items,
   placeholder = "Select an option",
   errorMessage,
+  size = "md",
   isDisabled,
   isRequired,
   className,
@@ -65,14 +71,19 @@ export function Select({
 
       <Button
         className={twMerge(
-          "inline-flex items-center justify-between",
-          "w-full rounded-md px-4 py-2",
-          "text-base text-left",
-          "border outline-none transition-colors",
-          hasError ? "border-(--color-border-danger)" : "border-(--color-border-default)",
-          "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
-          "cursor-pointer disabled:opacity-50 disabled:pointer-events-none",
-          "bg-(--color-surface-default)",
+          `
+            inline-flex items-center justify-between
+            w-full rounded-md
+            text-left
+            border outline-none transition-colors
+            focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2
+            cursor-pointer disabled:opacity-50 disabled:pointer-events-none
+            bg-(--color-surface-default)
+          `,
+          sizeStyles[size],
+          hasError
+            ? "border-(--color-border-danger)"
+            : "border-(--color-border-default)",
         )}
       >
         <SelectValue
@@ -84,12 +95,15 @@ export function Select({
           {({ selectedItem, isPlaceholder }) => {
             if (isPlaceholder) return placeholder;
             const item = selectedItem as SelectItem;
-            return renderItem ? renderItem(item) : item?.name ?? placeholder;
+            return renderItem ? renderItem(item) : (item?.name ?? placeholder);
           }}
         </SelectValue>
         <ChevronDown
           aria-hidden
-          className="h-4 w-4 shrink-0 text-(--color-text-secondary)"
+          className={twMerge(
+            "shrink-0 text-(--color-text-secondary)",
+            size === "sm" ? "h-3.5 w-3.5" : "h-4 w-4",
+          )}
         />
       </Button>
 
@@ -117,13 +131,16 @@ export function Select({
               id={item.id}
               textValue={item.name}
               className={twMerge(
-                "flex items-center justify-between gap-2",
-                "px-4 py-2 rounded-sm",
-                "text-base text-(--color-text-primary)",
-                "cursor-pointer outline-none",
-                "hover:bg-(--color-surface-muted)",
-                "focus-visible:bg-(--color-surface-muted)",
-                "selected:text-(--color-action-primary) selected:font-medium",
+                `
+                  flex items-center justify-between gap-2
+                  rounded-sm
+                  text-(--color-text-primary)
+                  cursor-pointer outline-none
+                  hover:bg-(--color-surface-muted)
+                  focus-visible:bg-(--color-surface-muted)
+                  selected:text-(--color-action-primary) selected:font-medium
+                `,
+                sizeStyles[size],
               )}
             >
               {({ isSelected }) => (
