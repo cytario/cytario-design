@@ -5,6 +5,7 @@ import {
   Text,
   type TextFieldProps,
 } from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 import { type Size, sizeStyles } from "../../_shared/styles";
 import { useInputGroup } from "../InputGroup/InputGroupContext";
 
@@ -93,22 +94,20 @@ export function Input({
       isDisabled={isDisabled}
       isRequired={isRequired}
       isInvalid={isInvalid}
-      className={[
+      className={twMerge(
         "flex w-full flex-col gap-1",
         inGroup ? "min-w-0 flex-1" : "",
         marginClass,
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      )}
     >
       {label && (
         <Label
-          className={[
+          className={twMerge(
             "text-sm",
             "font-medium",
             "text-(--color-text-primary)",
-          ].join(" ")}
+          )}
         >
           {label}
           {isRequired && (
@@ -124,7 +123,7 @@ export function Input({
 
       {prefix ? (
         <div
-          className={[
+          className={twMerge(
             "flex items-center overflow-hidden",
             radiusClass,
             "border",
@@ -132,39 +131,37 @@ export function Input({
             "outline-none transition-colors",
             borderColor,
             "focus-within:ring-2 focus-within:ring-(--color-border-focus) focus-within:border-(--color-border-focus)",
-            inGroup ? "focus-within:z-10" : "",
-            isDisabled ? "opacity-50 pointer-events-none" : "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
+            inGroup && "focus-within:z-10",
+            isDisabled && "opacity-50 pointer-events-none",
+          )}
         >
           <span
-            className={[
+            className={twMerge(
               "self-stretch flex items-center shrink-0 select-none",
               "bg-(--color-surface-subtle)",
               "border-r border-r-(--color-border-default)",
               "text-(--color-text-secondary)",
               sizeStyles[size],
-            ].join(" ")}
+            )}
           >
             {prefix}
           </span>
           <AriaInput
             placeholder={placeholder}
-            className={[
+            className={twMerge(
               "w-full bg-transparent",
               sizeStyles[size],
               alignClasses[align],
               "text-(--color-text-primary)",
               "placeholder:text-(--color-text-tertiary)",
               "outline-none border-none",
-            ].join(" ")}
+            )}
           />
         </div>
       ) : (
         <AriaInput
           placeholder={placeholder}
-          className={[
+          className={twMerge(
             "w-full",
             sizeStyles[size],
             alignClasses[align],
@@ -176,9 +173,9 @@ export function Input({
             "outline-none transition-colors",
             borderColor,
             "focus:ring-2 focus:ring-(--color-border-focus) focus:border-(--color-border-focus)",
-            inGroup ? "focus:z-10" : "",
+            inGroup && "focus:z-10",
             "disabled:opacity-50 disabled:pointer-events-none",
-          ].join(" ")}
+          )}
         />
       )}
 
