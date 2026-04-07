@@ -94,7 +94,7 @@ export function Input({
       isRequired={isRequired}
       isInvalid={isInvalid}
       className={[
-        "flex flex-col gap-1",
+        "flex w-full flex-col gap-1",
         inGroup ? "min-w-0 flex-1" : "",
         marginClass,
         className,
