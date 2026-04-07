@@ -1,3 +1,15 @@
+/* ── Shared sizes ── */
+
+export type Size = "sm" | "md" | "lg";
+
+export const sizeStyles: Record<Size, string> = {
+  sm: "px-3 py-1.5 text-sm",
+  md: "px-4 py-2 text-base",
+  lg: "px-6 py-3 text-lg",
+};
+
+/* ── Button ── */
+
 export type ButtonVariant =
   | "primary"
   | "secondary"
@@ -7,8 +19,6 @@ export type ButtonVariant =
   | "success"
   | "info"
   | "neutral";
-
-export type ButtonSize = "sm" | "md" | "lg";
 
 export const variantStyles: Record<ButtonVariant, string> = {
   primary: [
@@ -53,10 +63,4 @@ export const variantStyles: Record<ButtonVariant, string> = {
     "hover:bg-(--color-surface-subtle)",
     "pressed:bg-(--color-surface-muted)",
   ].join(" "),
-};
-
-export const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-2 text-base",
-  lg: "px-6 py-3 text-lg",
 };

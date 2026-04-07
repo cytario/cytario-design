@@ -6,15 +6,16 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import {
+  type Size,
   type ButtonVariant,
-  type ButtonSize,
   variantStyles,
   sizeStyles,
 } from "../_shared/styles";
 import { Icon } from "../Icon";
 import { Tooltip } from "../Tooltip";
 
-export type { ButtonVariant, ButtonSize };
+export type { ButtonVariant };
+export type ButtonSize = Size;
 
 export interface ButtonLinkProps extends Omit<AriaLinkProps, "className"> {
   /** Visual style variant */

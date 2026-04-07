@@ -6,8 +6,8 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import {
+  type Size,
   type ButtonVariant,
-  type ButtonSize,
   variantStyles,
   sizeStyles,
 } from "../_shared/styles";
@@ -15,7 +15,8 @@ import { Icon } from "../Icon";
 import { Spinner } from "../Spinner";
 import { useInputGroup } from "../Form/InputGroup/InputGroupContext";
 
-export type { ButtonVariant, ButtonSize };
+export type { ButtonVariant };
+export type ButtonSize = Size;
 
 export interface ButtonProps extends AriaButtonProps {
   /** Visual style variant */
@@ -69,9 +70,7 @@ export function Button({
       ? "bg-(--color-surface-default) text-(--color-text-secondary) border border-(--color-border-default) hover:bg-(--color-surface-hover) hover:text-(--color-text-primary) hover:border-(--color-border-strong) pressed:bg-(--color-surface-pressed) pressed:text-(--color-text-primary)"
       : "";
 
-  const radiusClass = inGroup
-    ? groupRadiusClass(position)
-    : "rounded-md";
+  const radiusClass = inGroup ? groupRadiusClass(position) : "rounded-md";
 
   const marginClass =
     inGroup && position !== "start" && position !== "standalone"

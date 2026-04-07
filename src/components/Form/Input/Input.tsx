@@ -5,19 +5,8 @@ import {
   Text,
   type TextFieldProps,
 } from "react-aria-components";
+import { type Size, sizeStyles } from "../../_shared/styles";
 import { useInputGroup } from "../InputGroup/InputGroupContext";
-
-const sizeClasses = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-2 text-base",
-  lg: "px-4 py-3 text-lg",
-} as const;
-
-const prefixSizeClasses = {
-  sm: "px-3 text-sm",
-  md: "px-3 text-base",
-  lg: "px-4 text-lg",
-} as const;
 
 const alignClasses = {
   left: "text-left",
@@ -25,8 +14,10 @@ const alignClasses = {
   right: "text-right",
 } as const;
 
-export interface InputProps
-  extends Omit<TextFieldProps, "children" | "className"> {
+export interface InputProps extends Omit<
+  TextFieldProps,
+  "children" | "className"
+> {
   /** Label text displayed above the input. Omit for raw input mode. */
   label?: string;
   /** Placeholder text shown when the input is empty */
@@ -38,7 +29,7 @@ export interface InputProps
   /** HTML input type */
   type?: "text" | "email" | "password" | "number";
   /** Controls padding and font size */
-  size?: "sm" | "md" | "lg";
+  size?: Size;
   /** Text prefix shown inside the input on the left (e.g., "$", "https://") */
   prefix?: string;
   /** Text alignment within the input */
@@ -87,12 +78,13 @@ export function Input({
     ? "border-(--color-border-danger)"
     : "border-(--color-border-default) hover:border-(--color-border-strong)";
 
-  const radiusClass = inGroup
-    ? groupRadiusClasses(position)
-    : "rounded-md";
+  const radiusClass = inGroup ? groupRadiusClasses(position) : "rounded-md";
 
   /** When not first in a group, overlap left border with previous sibling */
-  const marginClass = inGroup && position !== "start" && position !== "standalone" ? "-ml-px" : "";
+  const marginClass =
+    inGroup && position !== "start" && position !== "standalone"
+      ? "-ml-px"
+      : "";
 
   return (
     <TextField
@@ -152,7 +144,7 @@ export function Input({
               "bg-(--color-surface-subtle)",
               "border-r border-r-(--color-border-default)",
               "text-(--color-text-secondary)",
-              prefixSizeClasses[size],
+              sizeStyles[size],
             ].join(" ")}
           >
             {prefix}
@@ -161,7 +153,7 @@ export function Input({
             placeholder={placeholder}
             className={[
               "w-full bg-transparent",
-              sizeClasses[size],
+              sizeStyles[size],
               alignClasses[align],
               "text-(--color-text-primary)",
               "placeholder:text-(--color-text-tertiary)",
@@ -174,7 +166,7 @@ export function Input({
           placeholder={placeholder}
           className={[
             "w-full",
-            sizeClasses[size],
+            sizeStyles[size],
             alignClasses[align],
             radiusClass,
             "border",

@@ -6,6 +6,7 @@ const meta: Meta<typeof Select> = {
   title: "Components/Form/Select",
   component: Select,
   argTypes: {
+    size: { control: "select", options: ["sm", "md", "lg"] },
     isDisabled: { control: "boolean" },
     isRequired: { control: "boolean" },
     placeholder: { control: "text" },
@@ -52,6 +53,14 @@ export const CustomClassName: Story = {
   args: { className: "max-w-xs" },
 };
 
+export const Small: Story = {
+  args: { size: "sm", label: "Compact Select" },
+};
+
+export const Large: Story = {
+  args: { size: "lg", label: "Large Select" },
+};
+
 export const CustomRender: Story = {
   args: {
     label: "Visibility",
@@ -62,5 +71,13 @@ export const CustomRender: Story = {
       { id: "/cytario/research", name: "Research" },
     ],
     renderItem: (item: SelectItem) => <Pill>{item.name}</Pill>,
+  },
+};
+
+export const CustomRenderSmall: Story = {
+  args: {
+    ...CustomRender.args,
+    size: "sm",
+    label: "Compact with Pills",
   },
 };
