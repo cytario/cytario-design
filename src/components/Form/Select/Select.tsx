@@ -145,7 +145,7 @@ export function Select({
             >
               {({ isSelected }) => (
                 <>
-                  <span className="truncate">
+                  <span className={renderItem ? "min-w-0 flex-1" : "truncate"}>
                     {renderItem ? renderItem(item) : item.name}
                   </span>
                   {isSelected && (

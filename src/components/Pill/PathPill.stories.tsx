@@ -6,9 +6,9 @@ const meta: Meta<typeof PathPill> = {
   component: PathPill,
   argTypes: {
     children: { control: "text" },
-    visibleCount: { control: { type: "number", min: 1, max: 10 } },
+    visibleCount: { control: { type: "number", min: 0, max: 10 } },
   },
-  args: { children: "/cytario/engineering/frontend", visibleCount: 1 },
+  args: { children: "/cytario/engineering/frontend" },
 };
 
 export default meta;
