@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { ColorField } from "react-aria-components";
 import { describe, expect, it } from "vitest";
 import { Input } from "./Input";
 
@@ -92,5 +93,17 @@ describe("Input", () => {
     render(<Input label="Center" align="center" />);
     const input = screen.getByRole("textbox");
     expect(input.className).toContain("text-center");
+  });
+
+  it("renders with `as={ColorField}` and accepts hex input", async () => {
+    render(<Input as={ColorField} aria-label="Hex" defaultValue="#FF0000" />);
+    const input = screen.getByRole("textbox", { name: "Hex" });
+    expect(input).toBeDefined();
+    expect(input).toHaveValue("#FF0000");
+
+    await userEvent.clear(input);
+    await userEvent.type(input, "#00FF00");
+    await userEvent.tab();
+    expect(input).toHaveValue("#00FF00");
   });
 });

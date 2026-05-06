@@ -1,9 +1,11 @@
+import type { ElementType } from "react";
 import {
   TextField,
   Label,
   Input as AriaInput,
   Text,
   type TextFieldProps,
+  ColorField,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { type Size, sizeStyles } from "../../_shared/styles";
@@ -19,23 +21,15 @@ export interface InputProps extends Omit<
   TextFieldProps,
   "children" | "className"
 > {
-  /** Label text displayed above the input. Omit for raw input mode. */
+  as?: typeof TextField | typeof ColorField;
   label?: string;
-  /** Placeholder text shown when the input is empty */
   placeholder?: string;
-  /** Help text shown below the input */
   description?: string;
-  /** Error message shown below the input (triggers error styling) */
   errorMessage?: string;
-  /** HTML input type */
   type?: "text" | "email" | "password" | "number";
-  /** Controls padding and font size */
   size?: Size;
-  /** Text prefix shown inside the input on the left (e.g., "$", "https://") */
   prefix?: string;
-  /** Text alignment within the input */
   align?: "left" | "center" | "right";
-  /** Additional CSS class for the outer wrapper */
   className?: string;
 }
 
@@ -59,6 +53,7 @@ function groupRadiusClasses(
 }
 
 export function Input({
+  as: FieldProp = TextField,
   label,
   placeholder,
   description,
@@ -72,6 +67,8 @@ export function Input({
   className,
   ...props
 }: InputProps) {
+  const Field: ElementType = FieldProp;
+
   const isInvalid = !!errorMessage;
   const { inGroup, position } = useInputGroup();
 
@@ -88,7 +85,7 @@ export function Input({
       : "";
 
   return (
-    <TextField
+    <Field
       {...props}
       type={type}
       isDisabled={isDisabled}
@@ -196,6 +193,6 @@ export function Input({
           {errorMessage}
         </Text>
       )}
-    </TextField>
+    </Field>
   );
 }
