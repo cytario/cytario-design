@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@plugin "tailwindcss-react-aria-components";
 @source "../../src";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
