@@ -15,6 +15,7 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./styles.css": "./dist/index.css",
     "./tokens/variables.css": "./src/tokens/variables.css",
     "./tokens/variables-dark.css": "./src/tokens/variables-dark.css",
     "./styles/*": "./src/styles/*"
@@ -33,7 +34,8 @@
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
     "build:tokens": "node scripts/build-tokens.ts",
-    "build:lib": "tsup",
+    "build:css": "tailwindcss -i src/styles/tailwind.css -o dist/index.css --minify",
+    "build:lib": "tsup && npm run build:css",
     "test": "vitest",
     "lint": "eslint src/",
     "release": "semantic-release"
@@ -65,6 +67,7 @@
     "@storybook/addon-docs": "10.2.10",
     "@storybook/react": "10.2.10",
     "@storybook/react-vite": "10.2.10",
+    "@tailwindcss/cli": "^4.2.1",
     "@tailwindcss/vite": "4.2.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
