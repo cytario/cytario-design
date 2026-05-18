@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { Fieldset } from "./Fieldset";
-import { Field } from "../Field";
 import { Input } from "../Input";
 import { RadioGroup, RadioButton } from "../Radio";
 import { Select } from "../Select";
@@ -19,21 +18,14 @@ export const ConnectBucketProvider: Story = {
   name: "Connect Bucket: Provider Step",
   args: {
     children: (
-      <>
-        <Field
-          label="Provider"
-          description="Choose the type of cloud storage you want to connect. Cytario supports AWS S3 and S3-compatible object storage."
-        >
-          <RadioGroup
-            aria-label="Storage provider"
-            defaultValue="aws"
-            className="flex gap-4"
-          >
-            <RadioButton value="aws">AWS S3</RadioButton>
-            <RadioButton value="other">Other</RadioButton>
-          </RadioGroup>
-        </Field>
-      </>
+      <RadioGroup
+        aria-label="Provider"
+        defaultValue="aws"
+        className="flex gap-4"
+      >
+        <RadioButton value="aws">AWS S3</RadioButton>
+        <RadioButton value="other">Other</RadioButton>
+      </RadioGroup>
     ),
   },
 };
@@ -42,18 +34,12 @@ export const ConnectBucketAccess: Story = {
   name: "Connect Bucket: Access Step (AWS)",
   args: {
     children: (
-      <>
-        <Field
-          label="Role ARN"
-          description="The IAM role Cytario will assume to access your S3 data. The role must grant read access to the specified bucket and path."
-        >
-          <Input
-            placeholder="arn:aws:iam::123456789012:role/MyRole"
-            size="lg"
-            aria-label="Role ARN"
-          />
-        </Field>
-      </>
+      <Input
+        label="Role ARN"
+        description="The IAM role Cytario will assume to access your S3 data. The role must grant read access to the specified bucket and path."
+        placeholder="arn:aws:iam::123456789012:role/MyRole"
+        size="lg"
+      />
     ),
   },
 };
@@ -63,27 +49,22 @@ export const ConnectBucketLocation: Story = {
   args: {
     children: (
       <>
-        <Field
+        <Input
           label="S3 URI"
           description="Enter the bucket name and optional path prefix where your whole-slide images are stored."
-        >
-          <Input
-            placeholder="my-bucket/path/prefix"
-            prefix="s3://"
-            size="lg"
-            aria-label="S3 URI"
-          />
-        </Field>
-        <Field description="The AWS region where this bucket is located.">
-          <Select
-            label="Region"
-            items={[
-              { id: "us-east-1", name: "us-east-1" },
-              { id: "eu-central-1", name: "eu-central-1" },
-              { id: "eu-west-1", name: "eu-west-1" },
-            ]}
-          />
-        </Field>
+          placeholder="my-bucket/path/prefix"
+          prefix="s3://"
+          size="lg"
+        />
+        <Select
+          label="Region"
+          description="The AWS region where this bucket is located."
+          items={[
+            { id: "us-east-1", name: "us-east-1" },
+            { id: "eu-central-1", name: "eu-central-1" },
+            { id: "eu-west-1", name: "eu-west-1" },
+          ]}
+        />
       </>
     ),
   },
@@ -96,22 +77,14 @@ export const Default: Story = {
     legend: "Patient Information",
     children: (
       <>
-        <Field label="First name" isRequired>
-          <Input placeholder="John" aria-label="First name" />
-        </Field>
-        <Field label="Last name" isRequired>
-          <Input placeholder="Doe" aria-label="Last name" />
-        </Field>
-        <Field
+        <Input label="First name" placeholder="John" isRequired />
+        <Input label="Last name" placeholder="Doe" isRequired />
+        <Input
           label="Email"
           description="We will use this for communication."
-        >
-          <Input
-            placeholder="john.doe@example.com"
-            type="email"
-            aria-label="Email"
-          />
-        </Field>
+          placeholder="john.doe@example.com"
+          type="email"
+        />
       </>
     ),
   },
@@ -121,12 +94,8 @@ export const WithoutLegend: Story = {
   args: {
     children: (
       <>
-        <Field label="Field 1">
-          <Input placeholder="Value 1" aria-label="Field 1" />
-        </Field>
-        <Field label="Field 2">
-          <Input placeholder="Value 2" aria-label="Field 2" />
-        </Field>
+        <Input label="Field 1" placeholder="Value 1" />
+        <Input label="Field 2" placeholder="Value 2" />
       </>
     ),
   },

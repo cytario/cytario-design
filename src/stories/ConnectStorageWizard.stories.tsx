@@ -5,7 +5,7 @@ import { Dialog } from "../components/Dialog";
 import { Input } from "../components/Form/Input";
 import { Select } from "../components/Form/Select";
 import type { SelectItem } from "../components/Form/Select";
-import { Field } from "../components/Form/Field";
+import { Label } from "../components/Form/Label";
 import { Fieldset } from "../components/Form/Fieldset";
 import { RadioGroup, RadioButton } from "../components/Form/Radio";
 import { InputGroup } from "../components/Form/InputGroup";
@@ -54,39 +54,31 @@ function ProviderStep({
 }) {
   return (
     <Fieldset>
-      <Field
+      <Select
         label="Visibility"
         description="Choose who can access this storage connection. Personal connections are only visible to you."
-      >
-        <Select
-          label="Visibility"
-          items={visibilityOptions}
-          selectedKey={visibility}
-          onSelectionChange={(k) => onVisibilityChange(String(k))}
-        />
-      </Field>
+        items={visibilityOptions}
+        selectedKey={visibility}
+        onSelectionChange={(k) => onVisibilityChange(String(k))}
+      />
 
-      <Field
-        label="Provider"
-        description="Choose the type of cloud storage you want to connect. cytario supports AWS S3 and S3-compatible object storage."
+      <RadioGroup
+        aria-label="Provider"
+        value={providerType}
+        onChange={onProviderTypeChange}
+        orientation="horizontal"
       >
-        <RadioGroup
-          value={providerType}
-          onChange={onProviderTypeChange}
-          orientation="horizontal"
-        >
-          <RadioButton value="aws">AWS S3</RadioButton>
-          <RadioButton value="other">Other</RadioButton>
-        </RadioGroup>
-      </Field>
+        <RadioButton value="aws">AWS S3</RadioButton>
+        <RadioButton value="other">Other</RadioButton>
+      </RadioGroup>
 
       {providerType === "other" && (
-        <Field
+        <Input
           label="Provider Name"
           description="A user-friendly name to identify this storage connection."
-        >
-          <Input aria-label="Provider name" placeholder="minio" size="lg" />
-        </Field>
+          placeholder="minio"
+          size="lg"
+        />
       )}
     </Fieldset>
   );
@@ -107,10 +99,8 @@ function LocationStep({
 }) {
   return (
     <Fieldset>
-      <Field
-        label="S3 URI"
-        description="Enter the bucket name and optional path prefix where your whole-slide images are stored (e.g. my-bucket/data/images)."
-      >
+      <div className="flex flex-col gap-1">
+        <Label>S3 URI</Label>
         <InputGroup>
           <InputAddon>s3://</InputAddon>
           <Input
@@ -119,20 +109,20 @@ function LocationStep({
             size="lg"
           />
         </InputGroup>
-      </Field>
+        <p className="text-sm text-(--color-text-secondary)">
+          Enter the bucket name and optional path prefix where your whole-slide
+          images are stored (e.g. my-bucket/data/images).
+        </p>
+      </div>
 
       {isAWS && (
-        <Field
+        <Select
           label="Region"
           description="The AWS region where this bucket is located."
-        >
-          <Select
-            label="Region"
-            items={awsRegions}
-            selectedKey={region}
-            onSelectionChange={(k) => onRegionChange(String(k))}
-          />
-        </Field>
+          items={awsRegions}
+          selectedKey={region}
+          onSelectionChange={(k) => onRegionChange(String(k))}
+        />
       )}
     </Fieldset>
   );
@@ -146,27 +136,19 @@ function AccessStep({ isAWS }: { isAWS: boolean }) {
   return (
     <Fieldset>
       {isAWS ? (
-        <Field
+        <Input
           label="Role ARN"
           description="The IAM role cytario will assume to access your S3 data. The role must grant read access to the specified bucket and path."
-        >
-          <Input
-            aria-label="Role ARN"
-            placeholder="arn:aws:iam::123456789012:role/MyRole"
-            size="lg"
-          />
-        </Field>
+          placeholder="arn:aws:iam::123456789012:role/MyRole"
+          size="lg"
+        />
       ) : (
-        <Field
+        <Input
           label="Endpoint"
           description="The endpoint URL of your S3-compatible storage."
-        >
-          <Input
-            aria-label="Endpoint URL"
-            placeholder="http://localhost:9000"
-            size="lg"
-          />
-        </Field>
+          placeholder="http://localhost:9000"
+          size="lg"
+        />
       )}
     </Fieldset>
   );

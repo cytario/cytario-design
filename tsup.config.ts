@@ -10,7 +10,8 @@ export default defineConfig({
   },
   splitting: false,
   sourcemap: true,
-  clean: true,
+  // Preserve dist/index.css produced by `npm run build:css`
+  clean: ["dist/index.js", "dist/index.js.map", "dist/index.d.ts"],
   external: [
     "react",
     "react-dom",

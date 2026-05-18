@@ -1,7 +1,6 @@
 import type { ElementType } from "react";
 import {
   TextField,
-  Label,
   Input as AriaInput,
   Text,
   type TextFieldProps,
@@ -10,6 +9,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import { type Size, sizeStyles } from "../../_shared/styles";
 import { useInputGroup } from "../InputGroup/InputGroupContext";
+import { Label } from "../Label";
 
 const alignClasses = {
   left: "text-left",
@@ -98,25 +98,7 @@ export function Input({
         className,
       )}
     >
-      {label && (
-        <Label
-          className={twMerge(
-            "text-sm",
-            "font-medium",
-            "text-(--color-text-primary)",
-          )}
-        >
-          {label}
-          {isRequired && (
-            <span
-              aria-hidden="true"
-              className="ml-0.5 text-(--color-text-danger)"
-            >
-              *
-            </span>
-          )}
-        </Label>
-      )}
+      {label && <Label isRequired={isRequired}>{label}</Label>}
 
       {prefix ? (
         <div
