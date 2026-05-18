@@ -61,6 +61,7 @@ export function Select({
       {label && <Label isRequired={isRequired}>{label}</Label>}
 
       <Button
+        aria-required={isRequired || undefined}
         className={twMerge(
           `
             inline-flex items-center justify-between
@@ -98,14 +99,18 @@ export function Select({
         />
       </Button>
 
-      {description && !hasError && (
+      {description && (
         <Text slot="description" className="text-sm text-(--color-text-secondary)">
           {description}
         </Text>
       )}
 
       {hasError && (
-        <Text slot="errorMessage" className="text-sm text-(--color-text-danger)">
+        <Text
+          slot="errorMessage"
+          role="alert"
+          className="text-sm text-(--color-text-danger)"
+        >
           {errorMessage}
         </Text>
       )}

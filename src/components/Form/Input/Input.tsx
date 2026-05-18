@@ -158,7 +158,7 @@ export function Input({
         />
       )}
 
-      {description && !isInvalid && (
+      {description && (
         <Text
           slot="description"
           className="text-sm text-(--color-text-secondary)"
@@ -170,6 +170,7 @@ export function Input({
       {isInvalid && (
         <Text
           slot="errorMessage"
+          role="alert"
           className="text-sm text-(--color-text-danger)"
         >
           {errorMessage}
