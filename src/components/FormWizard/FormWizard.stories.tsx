@@ -4,8 +4,8 @@ import { expect, fn, userEvent, within } from "storybook/test";
 import { FormWizard } from "./FormWizard";
 import { FormWizardProgress } from "./FormWizardProgress";
 import { FormWizardNav } from "./FormWizardNav";
-import { Field } from "../Form/Field";
 import { Input } from "../Form/Input";
+import { Label } from "../Form/Label";
 import { Select } from "../Form/Select";
 
 const meta: Meta<typeof FormWizard> = {
@@ -79,7 +79,8 @@ function StepContent({ step }: { step: number }) {
     case 2:
       return (
         <div className="flex flex-col gap-4">
-          <Field label="Summary">
+          <div className="flex flex-col gap-1">
+            <Label>Summary</Label>
             <div
               className={[
                 "rounded-md",
@@ -115,7 +116,7 @@ function StepContent({ step }: { step: number }) {
                 </div>
               </dl>
             </div>
-          </Field>
+          </div>
         </div>
       );
     default:

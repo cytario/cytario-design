@@ -45,7 +45,7 @@ describe("Input", () => {
     expect(screen.getByText("Choose a unique name")).toBeDefined();
   });
 
-  it("hides description when error is shown", () => {
+  it("renders description and error simultaneously so context is preserved", () => {
     render(
       <Input
         label="Email"
@@ -53,8 +53,13 @@ describe("Input", () => {
         errorMessage="Invalid"
       />,
     );
-    expect(screen.queryByText("We will not share this")).toBeNull();
+    expect(screen.getByText("We will not share this")).toBeDefined();
     expect(screen.getByText("Invalid")).toBeDefined();
+  });
+
+  it("marks error message with role=alert", () => {
+    render(<Input label="Email" errorMessage="Invalid" />);
+    expect(screen.getByRole("alert")).toHaveTextContent("Invalid");
   });
 
   it("applies small size classes", () => {

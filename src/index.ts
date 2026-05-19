@@ -72,9 +72,6 @@ export type {
 export { Label } from "./components/Form/Label";
 export type { LabelProps } from "./components/Form/Label";
 
-export { Field } from "./components/Form/Field";
-export type { FieldProps } from "./components/Form/Field";
-
 export { Fieldset } from "./components/Form/Fieldset";
 export type { FieldsetProps } from "./components/Form/Fieldset";
 

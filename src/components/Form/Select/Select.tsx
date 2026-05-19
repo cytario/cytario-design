@@ -2,16 +2,17 @@ import type React from "react";
 import { Check, ChevronDown } from "lucide-react";
 import {
   Button,
-  Label,
   ListBox,
   ListBoxItem,
   Popover,
   Select as AriaSelect,
   SelectValue,
+  Text,
   type SelectProps as AriaSelectProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { type Size, sizeStyles } from "../../_shared/styles";
+import { Label } from "../Label";
 
 export interface SelectItem {
   id: string;
@@ -25,6 +26,7 @@ export interface SelectProps extends Omit<
   items: SelectItem[];
   label?: string;
   placeholder?: string;
+  description?: string;
   errorMessage?: string;
   /** Controls padding and font size */
   size?: Size;
@@ -37,6 +39,7 @@ export function Select({
   label,
   items,
   placeholder = "Select an option",
+  description,
   errorMessage,
   size = "md",
   isDisabled,
@@ -55,21 +58,10 @@ export function Select({
       isInvalid={hasError}
       className={twMerge("flex flex-col gap-1", className as string)}
     >
-      {label && (
-        <Label className="text-sm font-medium text-(--color-text-primary)">
-          {label}
-          {isRequired && (
-            <span
-              aria-hidden="true"
-              className="ml-0.5 text-(--color-text-danger)"
-            >
-              *
-            </span>
-          )}
-        </Label>
-      )}
+      {label && <Label isRequired={isRequired}>{label}</Label>}
 
       <Button
+        aria-required={isRequired || undefined}
         className={twMerge(
           `
             inline-flex items-center justify-between
@@ -107,10 +99,20 @@ export function Select({
         />
       </Button>
 
+      {description && (
+        <Text slot="description" className="text-sm text-(--color-text-secondary)">
+          {description}
+        </Text>
+      )}
+
       {hasError && (
-        <span className="text-sm text-(--color-text-danger)">
+        <Text
+          slot="errorMessage"
+          role="alert"
+          className="text-sm text-(--color-text-danger)"
+        >
           {errorMessage}
-        </span>
+        </Text>
       )}
 
       <Popover

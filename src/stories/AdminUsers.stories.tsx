@@ -13,7 +13,6 @@ import { Button } from "../components/Button";
 import { Dialog } from "../components/Dialog";
 import { Input } from "../components/Form/Input";
 import { Select } from "../components/Form/Select";
-import { Field } from "../components/Form/Field";
 import { Fieldset } from "../components/Form/Fieldset";
 import { Checkbox } from "../components/Form/Checkbox";
 import { Badge } from "../components/Badge";
@@ -166,20 +165,22 @@ function InviteUserDialog({
   return (
     <Dialog isOpen={isOpen} onOpenChange={onOpenChange} title="Invite User" size="md">
       <Fieldset>
-        <Field label="Email" description="The user will receive an invitation email.">
-          <Input aria-label="Email" placeholder="user@example.com" size="lg" />
-        </Field>
-        <Field label="Groups" description="Select which groups the user should be added to.">
-          <Select
-            label="Groups"
-            items={[
-              { id: "/cytario", name: "/cytario" },
-              { id: "/cytario/engineering", name: "/cytario/engineering" },
-              { id: "/cytario/product", name: "/cytario/product" },
-              { id: "/cytario/research", name: "/cytario/research" },
-            ]}
-          />
-        </Field>
+        <Input
+          label="Email"
+          description="The user will receive an invitation email."
+          placeholder="user@example.com"
+          size="lg"
+        />
+        <Select
+          label="Groups"
+          description="Select which groups the user should be added to."
+          items={[
+            { id: "/cytario", name: "/cytario" },
+            { id: "/cytario/engineering", name: "/cytario/engineering" },
+            { id: "/cytario/product", name: "/cytario/product" },
+            { id: "/cytario/research", name: "/cytario/research" },
+          ]}
+        />
       </Fieldset>
       <div className="flex justify-end gap-2 pt-4 mt-4 border-t border-(--color-border-default)">
         <Button variant="secondary" onPress={() => onOpenChange(false)}>
