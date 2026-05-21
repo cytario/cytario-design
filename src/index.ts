@@ -181,12 +181,6 @@ export type {
   SegmentedControlSelectionMode,
 } from "./components/SegmentedControl";
 
-export { FileCard } from "./components/FileCard";
-export type { FileCardProps } from "./components/FileCard";
-
-export { StorageConnectionCard } from "./components/StorageConnectionCard";
-export type { StorageConnectionCardProps } from "./components/StorageConnectionCard";
-
 export { Badge } from "./components/Badge";
 export type { BadgeProps, BadgeVariant, BadgeSize } from "./components/Badge";
 

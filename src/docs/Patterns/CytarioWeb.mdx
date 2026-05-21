@@ -43,7 +43,7 @@ Page (bg surface-subtle)
 
 | Component | Usage |
 |-----------|-------|
-| **StorageConnectionCard** | Image tiles in Recently Viewed and Storage Connections grids. Each card shows a fluorescence tissue preview, bucket name, provider badge, and image count. |
+| **GridItem (cytario-web)** | Image tiles in Recently Viewed and Storage Connections grids. Each card shows a fluorescence tissue preview, NodeLink row (status dot + name + context menu), and optional pills / size meta. Previously `StorageConnectionCard` here. |
 | **Table** | Pinned items and Recently Browsed directories in list format. |
 | **SectionHeader** | Section title with optional "Show all (N)" action button. |
 | **EmptyState** | First-visit state: "Start exploring your data" with Connect Storage CTA. |
@@ -160,7 +160,7 @@ The main data browsing experience with multiple view modes.
 | Component | Usage |
 |-----------|-------|
 | **Table** | List view with sortable columns. |
-| **StorageConnectionCard** | Grid tiles with tissue preview or file icon placeholder. |
+| **GridItem (cytario-web)** | Grid tiles with tissue preview or file-type icon placeholder. Previously `StorageConnectionCard`/`FileCard`. |
 | **Tree** | Hierarchical tree browser. |
 | **SegmentedControl** | View mode toggle (list, grid, compact grid, tree icons). |
 | **Input** | Filter/search bar. |
