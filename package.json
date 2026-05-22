@@ -55,7 +55,6 @@
     }
   },
   "dependencies": {
-    "react-arborist": "^3.4.3",
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {

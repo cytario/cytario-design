@@ -167,9 +167,6 @@ export {
   TabPanel as UnstyledTabPanel,
 } from "react-aria-components";
 
-export { Tree } from "./components/Tree";
-export type { TreeProps, TreeNode, TreeApi } from "./components/Tree";
-
 export {
   SegmentedControl,
   SegmentedControlItem,
