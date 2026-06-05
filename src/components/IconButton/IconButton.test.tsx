@@ -114,4 +114,14 @@ describe("IconButton", () => {
     expect(button.className).toContain("h-12");
     expect(button.className).toContain("w-12");
   });
+
+  it("applies xs size styles", () => {
+    render(
+      <IconButton icon={Settings} aria-label="Settings" size="xs" showTooltip={false} />,
+    );
+
+    const button = screen.getByRole("button");
+    expect(button.className).toContain("h-7");
+    expect(button.className).toContain("w-7");
+  });
 });

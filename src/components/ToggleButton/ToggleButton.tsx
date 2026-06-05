@@ -3,9 +3,10 @@ import {
   type ToggleButtonProps as AriaToggleButtonProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
+import { type Size, sizeStyles } from "../_shared/styles";
 
 export type ToggleButtonVariant = "default" | "primary" | "outlined";
-export type ToggleButtonSize = "sm" | "md" | "lg";
+export type ToggleButtonSize = Size;
 
 export interface ToggleButtonProps
   extends Omit<AriaToggleButtonProps, "className"> {
@@ -19,13 +20,8 @@ export interface ToggleButtonProps
   className?: string;
 }
 
-const sizeStyles: Record<ToggleButtonSize, string> = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-2 text-base",
-  lg: "px-6 py-3 text-lg",
-};
-
 const squareSizeStyles: Record<ToggleButtonSize, string> = {
+  xs: "h-6 w-6 text-xs",
   sm: "h-7 w-7 text-sm",
   md: "h-8 w-8 text-base",
   lg: "h-10 w-10 text-lg",
@@ -76,7 +72,7 @@ export function ToggleButton({
       {...props}
       className={({ isSelected }) =>
         twMerge(
-          "inline-flex items-center justify-center gap-2",
+          "inline-flex items-center justify-center gap-2 cursor-pointer",
           isSquare ? "rounded-none" : "rounded-md",
           "font-medium",
           "leading-tight",

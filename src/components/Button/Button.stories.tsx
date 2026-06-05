@@ -22,7 +22,7 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: "select",
-      options: ["sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg"],
     },
     isLoading: { control: "boolean" },
     isDisabled: { control: "boolean" },
@@ -104,6 +104,10 @@ export const DisabledDownload: Story = {
 
 // --- Size stories ---
 
+export const ExtraSmall: Story = {
+  args: { size: "xs", children: "Extra Small" },
+};
+
 export const Small: Story = {
   args: { size: "sm", children: "Small" },
 };
@@ -168,7 +172,7 @@ const variants = [
   "info",
   "neutral",
 ] as const;
-const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["xs", "sm", "md", "lg"] as const;
 
 export const AllVariants: Story = {
   render: () => (

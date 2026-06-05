@@ -62,6 +62,25 @@ describe("ToggleButton", () => {
     expect(button.className).toContain("bg-(--color-surface-default)");
   });
 
+  it("applies xs size padding and text", () => {
+    render(<ToggleButton size="xs">Tiny</ToggleButton>);
+    const button = screen.getByRole("button", { name: "Tiny" });
+    expect(button.className).toContain("px-2");
+    expect(button.className).toContain("py-1");
+    expect(button.className).toContain("text-xs");
+  });
+
+  it("applies xs square dimensions", () => {
+    render(
+      <ToggleButton isSquare size="xs">
+        X
+      </ToggleButton>,
+    );
+    const button = screen.getByRole("button");
+    expect(button.className).toContain("h-6");
+    expect(button.className).toContain("w-6");
+  });
+
   it("applies square dimensions when isSquare is true", () => {
     render(
       <ToggleButton isSquare size="md">
