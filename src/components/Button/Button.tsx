@@ -32,6 +32,7 @@ export interface ButtonProps extends AriaButtonProps {
 }
 
 const iconSizeMap = {
+  xs: "sm",
   sm: "sm",
   md: "sm",
   lg: "md",
@@ -42,11 +43,11 @@ function groupRadiusClass(
 ): string {
   switch (position) {
     case "start":
-      return "rounded-l-(--border-radius-md) rounded-r-none";
+      return "rounded-l-md rounded-r-none";
     case "middle":
       return "rounded-none";
     case "end":
-      return "rounded-r-(--border-radius-md) rounded-l-none";
+      return "rounded-r-md rounded-l-none";
     default:
       return "rounded-md";
   }
@@ -86,7 +87,7 @@ export function Button({
       {...props}
       isDisabled={isDisabled || isLoading}
       className={twMerge(
-        "inline-flex items-center justify-center gap-2 shrink-0",
+        "inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer",
         radiusClass,
         "font-medium",
         "leading-tight",

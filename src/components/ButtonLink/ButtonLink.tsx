@@ -31,6 +31,7 @@ export interface ButtonLinkProps extends Omit<AriaLinkProps, "className"> {
 }
 
 const iconSizeMap = {
+  xs: "sm",
   sm: "sm",
   md: "sm",
   lg: "md",
@@ -49,7 +50,7 @@ export function ButtonLink({
     <AriaLink
       {...props}
       className={twMerge(
-        "inline-flex items-center justify-center gap-2",
+        "inline-flex items-center justify-center gap-2 cursor-pointer",
         "rounded-md",
         "font-medium",
         "leading-tight",
@@ -107,7 +108,7 @@ export function IconButtonLink({
       {...props}
       aria-label={ariaLabel}
       className={twMerge(
-        "inline-flex items-center justify-center",
+        "inline-flex items-center justify-center cursor-pointer",
         "rounded-md",
         "outline-none transition-colors no-underline",
         "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",

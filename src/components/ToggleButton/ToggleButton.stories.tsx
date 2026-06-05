@@ -13,7 +13,7 @@ const meta: Meta<typeof ToggleButton> = {
     },
     size: {
       control: "select",
-      options: ["sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg"],
     },
     isDisabled: { control: "boolean" },
     isSquare: { control: "boolean" },
@@ -25,53 +25,6 @@ const meta: Meta<typeof ToggleButton> = {
 
 export default meta;
 type Story = StoryObj<typeof ToggleButton>;
-
-// --- Real-world usage stories (from cytario-web) ---
-
-export const ViewModeToggle: Story = {
-  name: "View Mode Toggle",
-  render: () => (
-    <div style={{ display: "flex", gap: "4px" }}>
-      <ToggleButton
-        aria-label="List View"
-        variant="outlined"
-        isSquare
-        size="sm"
-        isSelected
-        onChange={() => {}}
-      >
-        <List size={16} />
-      </ToggleButton>
-      <ToggleButton
-        aria-label="Small Grid"
-        variant="outlined"
-        isSquare
-        size="sm"
-        onChange={() => {}}
-      >
-        <Grid3x3 size={16} />
-      </ToggleButton>
-      <ToggleButton
-        aria-label="Medium Grid"
-        variant="outlined"
-        isSquare
-        size="sm"
-        onChange={() => {}}
-      >
-        <Grid2x2 size={16} />
-      </ToggleButton>
-      <ToggleButton
-        aria-label="Large Grid"
-        variant="outlined"
-        isSquare
-        size="sm"
-        onChange={() => {}}
-      >
-        <Square size={16} />
-      </ToggleButton>
-    </div>
-  ),
-};
 
 // --- Variant stories ---
 
@@ -110,6 +63,10 @@ export const Selected: Story = {
 
 export const PrimarySelected: Story = {
   args: { variant: "primary", defaultSelected: true, children: "Active" },
+};
+
+export const ExtraSmall: Story = {
+  args: { size: "xs", children: "Extra Small" },
 };
 
 export const Small: Story = {

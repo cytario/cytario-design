@@ -114,6 +114,14 @@ describe("Button", () => {
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
+  it("applies xs size padding and text", () => {
+    render(<Button size="xs">Tiny</Button>);
+    const button = screen.getByRole("button", { name: "Tiny" });
+    expect(button.className).toContain("px-2");
+    expect(button.className).toContain("py-1");
+    expect(button.className).toContain("text-xs");
+  });
+
   it("renders with neutral variant", () => {
     render(<Button variant="neutral">Neutral</Button>);
     const button = screen.getByRole("button", { name: "Neutral" });

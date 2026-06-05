@@ -39,7 +39,7 @@ const meta: Meta<typeof IconButton> = {
     },
     size: {
       control: "select",
-      options: ["sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg"],
     },
     showTooltip: { control: "boolean" },
     tooltipPlacement: {
@@ -216,6 +216,10 @@ export const Success: Story = {
 
 // --- Size stories ---
 
+export const ExtraSmall: Story = {
+  args: { size: "xs", icon: X, "aria-label": "Close" },
+};
+
 export const Small: Story = {
   args: { size: "sm", icon: X, "aria-label": "Close" },
 };
@@ -271,7 +275,7 @@ const variants = [
   "success",
   "info",
 ] as const;
-const sizes = ["sm", "md", "lg"] as const;
+const sizes = ["xs", "sm", "md", "lg"] as const;
 
 export const AllVariants: Story = {
   render: () => (

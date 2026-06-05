@@ -17,7 +17,7 @@ export interface IconButtonProps extends Omit<AriaButtonProps, "className"> {
   /** Visual style variant */
   variant?: ButtonVariant;
   /** Size preset */
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   /** Show tooltip on hover (default true) */
   showTooltip?: boolean;
   /** Tooltip placement */
@@ -29,18 +29,21 @@ export interface IconButtonProps extends Omit<AriaButtonProps, "className"> {
 }
 
 const squareSizeStyles = {
+  xs: "h-7 w-7",
   sm: "h-8 w-8",
   md: "h-10 w-10",
   lg: "h-12 w-12",
 } as const;
 
 const squareWidthOnly = {
+  xs: "w-7",
   sm: "w-8",
   md: "w-10",
   lg: "w-12",
 } as const;
 
 const iconSizeMap = {
+  xs: "sm",
   sm: "sm",
   md: "sm",
   lg: "md",
@@ -51,11 +54,11 @@ function groupRadiusClass(
 ): string {
   switch (position) {
     case "start":
-      return "rounded-l-(--border-radius-md) rounded-r-none";
+      return "rounded-l-md rounded-r-none";
     case "middle":
       return "rounded-none";
     case "end":
-      return "rounded-r-(--border-radius-md) rounded-l-none";
+      return "rounded-r-md rounded-l-none";
     default:
       return "rounded-md";
   }
@@ -99,7 +102,7 @@ export function IconButton({
       aria-label={ariaLabel}
       isDisabled={isDisabled || isLoading}
       className={[
-        "inline-flex items-center justify-center shrink-0",
+        "inline-flex items-center justify-center shrink-0 cursor-pointer",
         radiusClass,
         "outline-none transition-colors",
         focusRing,
