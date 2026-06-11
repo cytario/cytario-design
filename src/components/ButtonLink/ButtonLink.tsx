@@ -81,8 +81,6 @@ export interface IconButtonLinkProps extends Omit<AriaLinkProps, "className"> {
   size?: "sm" | "md" | "lg";
   /** Show tooltip on hover (default true) */
   showTooltip?: boolean;
-  /** Tooltip placement */
-  tooltipPlacement?: "top" | "bottom" | "left" | "right";
   /** Additional CSS classes */
   className?: string;
 }
@@ -99,7 +97,6 @@ export function IconButtonLink({
   variant = "ghost",
   size = "md",
   showTooltip = true,
-  tooltipPlacement = "top",
   className,
   ...props
 }: IconButtonLinkProps) {
@@ -123,9 +120,7 @@ export function IconButtonLink({
 
   if (showTooltip) {
     return (
-      <Tooltip content={ariaLabel} placement={tooltipPlacement}>
-        {link}
-      </Tooltip>
+      <Tooltip content={ariaLabel}>{link}</Tooltip>
     );
   }
 

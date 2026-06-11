@@ -42,10 +42,6 @@ const meta: Meta<typeof IconButton> = {
       options: ["xs", "sm", "md", "lg"],
     },
     showTooltip: { control: "boolean" },
-    tooltipPlacement: {
-      control: "select",
-      options: ["top", "bottom", "left", "right"],
-    },
     isLoading: { control: "boolean" },
     isDisabled: { control: "boolean" },
   },

@@ -20,8 +20,6 @@ export interface IconButtonProps extends Omit<AriaButtonProps, "className"> {
   size?: "xs" | "sm" | "md" | "lg";
   /** Show tooltip on hover (default true) */
   showTooltip?: boolean;
-  /** Tooltip placement */
-  tooltipPlacement?: "top" | "bottom" | "left" | "right";
   /** Shows a spinner and disables interaction */
   isLoading?: boolean;
   /** Additional CSS classes */
@@ -70,7 +68,6 @@ export function IconButton({
   variant = "ghost",
   size = "md",
   showTooltip = true,
-  tooltipPlacement = "top",
   isLoading = false,
   isDisabled,
   className,
@@ -126,9 +123,7 @@ export function IconButton({
 
   if (showTooltip) {
     return (
-      <Tooltip content={ariaLabel} placement={tooltipPlacement}>
-        {button}
-      </Tooltip>
+      <Tooltip content={ariaLabel}>{button}</Tooltip>
     );
   }
 
