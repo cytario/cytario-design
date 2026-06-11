@@ -45,7 +45,13 @@ const handleCopyKeyDown = (handleClick: () => void) => (e: KeyboardEvent) => {
 };
 
 const CopiedOverlay = () => (
-  <span className="absolute inset-0 flex items-center text-(--color-text-secondary) pointer-events-none">
+  <span
+    // Announce the successful copy to screen readers; as a live region the
+    // text is not glued onto the button's accessible name.
+    role="status"
+    aria-live="polite"
+    className="absolute inset-0 flex items-center text-(--color-text-secondary) pointer-events-none"
+  >
     Copied
   </span>
 );
@@ -128,6 +134,9 @@ const MiddleEllipsisString = ({ text, copyValue }: { text: string; copyValue?: s
       <span
         ref={ref}
         className={cx}
+        // Middle truncation replaces the DOM text, so screen readers would
+        // otherwise announce the mutilated string — expose the full value.
+        aria-label={isTruncated ? text : undefined}
         onScroll={pinScroll}
         onClick={isCopyable ? handleClick : undefined}
         onKeyDown={isCopyable ? handleCopyKeyDown(handleClick) : undefined}

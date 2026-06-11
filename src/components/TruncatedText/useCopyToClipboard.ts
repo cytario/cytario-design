@@ -17,14 +17,20 @@ export function useCopyToClipboard(copyValue: string | undefined): UseCopyToClip
     const selection = window.getSelection()?.toString();
     if (selection && selection.length > 0) return;
 
-    navigator.clipboard.writeText(copyValue).then(() => {
-      if (timerRef.current != null) clearTimeout(timerRef.current);
-      setIsCopied(true);
-      timerRef.current = window.setTimeout(() => {
-        setIsCopied(false);
-        timerRef.current = null;
-      }, FLASH_DURATION);
-    });
+    // Clipboard API is absent in insecure contexts and can reject on denied
+    // permission — fail silently rather than throw.
+    if (!navigator.clipboard) return;
+    navigator.clipboard
+      .writeText(copyValue)
+      .then(() => {
+        if (timerRef.current != null) clearTimeout(timerRef.current);
+        setIsCopied(true);
+        timerRef.current = window.setTimeout(() => {
+          setIsCopied(false);
+          timerRef.current = null;
+        }, FLASH_DURATION);
+      })
+      .catch(() => {});
   }, [copyValue]);
 
   return { handleClick, isCopied };

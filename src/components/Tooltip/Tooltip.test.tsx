@@ -93,6 +93,68 @@ describe("Tooltip", () => {
       expect(screen.getByRole("tooltip")).toHaveTextContent("Help text");
     });
 
+    it("still shows when movement stays within the 5px rest threshold", () => {
+      render(
+        <Tooltip content="Help text">
+          <Button>Trigger</Button>
+        </Tooltip>,
+      );
+      const button = screen.getByRole("button", { name: "Trigger" });
+
+      fireEvent.mouseMove(button, { clientX: 10, clientY: 10 });
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
+      // 4px diagonal jitter — within threshold, must NOT restart the dwell
+      fireEvent.mouseMove(button, { clientX: 14, clientY: 13 });
+      act(() => {
+        vi.advanceTimersByTime(200);
+      });
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Help text");
+    });
+
+    it("restarts the dwell when movement exceeds the 5px threshold", () => {
+      render(
+        <Tooltip content="Help text">
+          <Button>Trigger</Button>
+        </Tooltip>,
+      );
+      const button = screen.getByRole("button", { name: "Trigger" });
+
+      fireEvent.mouseMove(button, { clientX: 10, clientY: 10 });
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
+      // 6px move — beyond threshold, restarts the 500ms wait
+      fireEvent.mouseMove(button, { clientX: 16, clientY: 10 });
+      act(() => {
+        vi.advanceTimersByTime(400);
+      });
+      expect(screen.queryByRole("tooltip")).toBeNull();
+      act(() => {
+        vi.advanceTimersByTime(100);
+      });
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Help text");
+    });
+
+    it("hides when the cursor moves beyond the threshold after showing", () => {
+      render(
+        <Tooltip content="Help text">
+          <Button>Trigger</Button>
+        </Tooltip>,
+      );
+      const button = screen.getByRole("button", { name: "Trigger" });
+
+      fireEvent.mouseMove(button, { clientX: 10, clientY: 10 });
+      act(() => {
+        vi.advanceTimersByTime(500);
+      });
+      expect(screen.getByRole("tooltip")).toBeDefined();
+
+      fireEvent.mouseMove(button, { clientX: 60, clientY: 60 });
+      expect(screen.queryByRole("tooltip")).toBeNull();
+    });
+
     it("does not show while the cursor keeps moving", () => {
       render(
         <Tooltip content="Help text">

@@ -49,13 +49,20 @@ const tooltipCx = [
  * Keyboard: when an already-focusable child (button, switch, link) receives
  * visible focus, the tooltip shows immediately, anchored to the element's
  * center. It never makes anything focusable itself. Escape dismisses.
+ *
+ * Known limitation (WCAG 1.4.13 "hoverable"): the tooltip is
+ * pointer-events-none and follows the cursor, so it cannot itself be hovered.
+ * Keep tooltip content short — it is a glance affordance, not a reading
+ * surface; the underlying value must stay accessible on the trigger itself.
  */
 export function Tooltip({ content, children }: TooltipProps) {
   const [visible, setVisible] = useState(false);
-  const [coordsInitial, setCoordsInitial] = useState<Coords>({ x: 0, y: 0 });
   const [coords, setCoords] = useState<Coords>({ x: 0, y: 0 });
   const [adjustedCoords, setAdjustedCoords] = useState<Coords>({ x: 0, y: 0 });
   const timerRef = useRef<number | null>(null);
+  // Cursor-rest anchor. A ref, not state: the move-cancel comparison must see
+  // the value set earlier in the SAME event stream, not a previous render's.
+  const restAnchorRef = useRef<Coords | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const isVisible = visible && content != null;
@@ -105,26 +112,29 @@ export function Tooltip({ content, children }: TooltipProps) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
+    restAnchorRef.current = null;
     setVisible(false);
   };
 
+  // Cursor-rest model: any move beyond the threshold (measured against the
+  // incoming event coordinates, not stale state) hides the tooltip, re-anchors
+  // and restarts the dwell; staying within it lets the pending timer fire.
   const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
-    if (!visible) {
-      setCoordsInitial({ x: clientX, y: clientY });
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = window.setTimeout(() => {
-        setVisible(true);
-      }, tooltipDelay);
-    }
-
     setCoords({ x: clientX, y: clientY });
 
-    if (
-      Math.abs(coords.x - coordsInitial.x) > offsetThreshold ||
-      Math.abs(coords.y - coordsInitial.y) > offsetThreshold
-    ) {
-      hideTooltip();
-    }
+    const anchor = restAnchorRef.current;
+    const moved =
+      anchor == null ||
+      Math.abs(clientX - anchor.x) > offsetThreshold ||
+      Math.abs(clientY - anchor.y) > offsetThreshold;
+
+    if (!moved) return;
+
+    hideTooltip();
+    restAnchorRef.current = { x: clientX, y: clientY };
+    timerRef.current = window.setTimeout(() => {
+      setVisible(true);
+    }, tooltipDelay);
   };
 
   // Keyboard path: a focusable child received focus. Only react to visible
@@ -142,7 +152,9 @@ export function Tooltip({ content, children }: TooltipProps) {
 
     const rect = target.getBoundingClientRect();
     const center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-    setCoordsInitial(center);
+    // Anchor at the element center so incidental mouse movement over the
+    // focused trigger doesn't immediately cancel the keyboard-shown tooltip.
+    restAnchorRef.current = center;
     setCoords(center);
     setVisible(true);
   };
@@ -171,7 +183,7 @@ export function Tooltip({ content, children }: TooltipProps) {
 
   return (
     <span
-      style={{ position: "relative", display: "contents" }}
+      style={{ display: "contents" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={hideTooltip}
       onFocus={handleFocus}
