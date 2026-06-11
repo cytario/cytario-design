@@ -6,20 +6,15 @@ import { Tooltip } from "./Tooltip";
 const meta: Meta<typeof Tooltip> = {
   title: "Components/Tooltip",
   component: Tooltip,
-  argTypes: {
-    placement: {
-      control: "select",
-      options: ["top", "bottom", "left", "right"],
-    },
-    delay: { control: "number" },
-  },
   args: {
     content: "Tooltip text",
   },
-  // Center stories so tooltips have room to render in all directions
+  // Center stories so the cursor-following tooltip has room to render
   decorators: [
     (Story) => (
-      <div style={{ padding: "100px", display: "flex", justifyContent: "center" }}>
+      <div
+        style={{ padding: "100px", display: "flex", justifyContent: "center" }}
+      >
         <Story />
       </div>
     ),
@@ -29,94 +24,47 @@ const meta: Meta<typeof Tooltip> = {
 export default meta;
 type Story = StoryObj<typeof Tooltip>;
 
-// --- Placement stories ---
-
-export const Top: Story = {
+// Rest the cursor on the trigger for 500ms — the tooltip follows the cursor
+// position at a fixed offset and flips at viewport edges.
+export const CursorFollow: Story = {
   args: {
-    content: "Tooltip on top",
-    placement: "top",
+    content: "Shown after the cursor rests for 500ms",
     children: <Button>Hover me</Button>,
   },
 };
-
-export const Bottom: Story = {
-  args: {
-    content: "Tooltip on bottom",
-    placement: "bottom",
-    children: <Button>Hover me</Button>,
-  },
-};
-
-export const Left: Story = {
-  args: {
-    content: "Tooltip on left",
-    placement: "left",
-    children: <Button>Hover me</Button>,
-  },
-};
-
-export const Right: Story = {
-  args: {
-    content: "Tooltip on right",
-    placement: "right",
-    children: <Button>Hover me</Button>,
-  },
-};
-
-// --- Custom delay ---
-
-export const CustomDelay: Story = {
-  args: {
-    content: "Appears after 1 second",
-    delay: 1000,
-    children: <Button>Slow tooltip</Button>,
-  },
-};
-
-// --- Long content ---
 
 export const LongContent: Story = {
   args: {
     content:
-      "This is a longer tooltip that demonstrates how the max-width constraint keeps the tooltip readable.",
+      "This is a longer tooltip demonstrating that content wraps naturally without a placement prop — position derives from the cursor.",
     children: <Button>Long tooltip</Button>,
   },
 };
 
-// --- All placements grid ---
-
-const placements = ["top", "bottom", "left", "right"] as const;
-
-export const AllPlacements: Story = {
-  render: () => (
-    <div style={{ display: "flex", gap: "32px", alignItems: "center" }}>
-      {placements.map((placement) => (
-        <Tooltip key={placement} content={`Tooltip ${placement}`} placement={placement}>
-          <Button variant="secondary">{placement}</Button>
-        </Tooltip>
-      ))}
-    </div>
-  ),
+// `content={null}` disables the tooltip entirely — useful for conditional
+// reveals (e.g. only when text is truncated).
+export const Disabled: Story = {
+  args: {
+    content: null,
+    children: <Button>No tooltip</Button>,
+  },
 };
 
-// --- Interaction test ---
-
-export const FocusInteraction: Story = {
+// Keyboard: tabbing onto the (already focusable) trigger shows the tooltip
+// immediately, anchored to the element center. Escape dismisses it.
+export const KeyboardFocus: Story = {
   args: {
-    content: "Visible on focus",
-    delay: 0,
-    children: <Button>Focus me</Button>,
+    content: "Visible on keyboard focus",
+    children: <Button>Tab to me</Button>,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const button = canvas.getByRole("button", { name: "Focus me" });
+    const button = canvas.getByRole("button", { name: "Tab to me" });
 
-    // Focus the trigger to show tooltip
     await userEvent.tab();
     await expect(button).toHaveFocus();
 
-    // Tooltip should appear
-    const tooltip = await canvas.findByRole("tooltip");
-    await expect(tooltip).toHaveTextContent("Visible on focus");
+    const tooltip = await within(document.body).findByRole("tooltip");
+    await expect(tooltip).toHaveTextContent("Visible on keyboard focus");
   },
 };

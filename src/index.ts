@@ -21,6 +21,9 @@ export type { IconProps } from "./components/Icon";
 export { Tooltip } from "./components/Tooltip";
 export type { TooltipProps } from "./components/Tooltip";
 
+export { TruncatedText } from "./components/TruncatedText";
+export type { TruncatedTextProps } from "./components/TruncatedText";
+
 export { IconButton } from "./components/IconButton";
 export type { IconButtonProps } from "./components/IconButton";
 
