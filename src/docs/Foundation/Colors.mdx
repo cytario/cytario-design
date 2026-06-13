@@ -6,57 +6,29 @@ import { PaletteScales, SemanticTokens } from "./ColorReference";
 
 # Colors
 
-The cytario palette is built on two brand colors — purple and teal — extended into full scales with neutral grays and semantic mappings for UI states.
+The cytario color system has **two tiers**. **Semantic tokens** (`--color-surface-default`, `--color-action-primary`) express *intent* and adapt automatically across light and dark — build UI with these. **Primitives** (`--color-purple-700`, `--color-slate-100`) are the raw palette the semantic tokens are built from; treat them as reference, not values to use directly.
 
-Every swatch below is read live from the loaded token stylesheets (`src/tokens/variables.css` and `variables-dark.css`) and resolved under both themes. Nothing on this page is hardcoded, so it cannot drift from the tokens.
+Every swatch is read live from the token stylesheets and resolved under both themes, so this page can't drift from the code.
 
----
-
-## Brand colors
-
-<div style={{ display: "flex", gap: 32, marginTop: 24, marginBottom: 48, flexWrap: "wrap" }}>
-  <div style={{ textAlign: "center" }}>
-    <div style={{
-      width: 160,
-      height: 160,
-      borderRadius: 16,
-      background: "var(--color-purple-700)",
-      marginBottom: 12,
-    }} />
-    <p style={{ margin: 0, fontWeight: 700, fontSize: 16 }}>Purple</p>
-    <code style={{ fontSize: 13 }}>--color-purple-700</code>
-    <p style={{ margin: "4px 0 0", fontSize: 13, opacity: 0.6 }}>Brand primary</p>
-  </div>
-
-  <div style={{ textAlign: "center" }}>
-    <div style={{
-      width: 160,
-      height: 160,
-      borderRadius: 16,
-      background: "var(--color-teal-500)",
-      marginBottom: 12,
-    }} />
-    <p style={{ margin: 0, fontWeight: 700, fontSize: 16 }}>Teal</p>
-    <code style={{ fontSize: 13 }}>--color-teal-500</code>
-    <p style={{ margin: "4px 0 0", fontSize: 13, opacity: 0.6 }}>Brand accent</p>
-  </div>
-</div>
-
----
-
-## Palette scales
-
-Raw color primitives. These are theme-invariant — light and dark resolve to the same values — so each is shown once.
-
-<PaletteScales />
+cytario's identity is carried by purple (brand) and teal (accent) — see the **brand** group first in the semantic tokens below.
 
 ---
 
 ## Semantic tokens
 
-Semantic tokens map purpose to palette values, so UI code references intent rather than raw color. These remap per theme, shown as separate light and dark galleries.
+What you build with. Each token maps a purpose to a palette value, so code references intent rather than raw color. They remap per theme — use the **theme** toolbar (light / dark / side-by-side) to switch what's shown. Each card shows the primitive it currently resolves to (`→`).
 
 <SemanticTokens />
+
+---
+
+## Primitives (palette)
+
+The raw source palette: brand hues, the slate neutral ramp, status hues, plus base black/white and alpha scrims. These are theme-invariant — light and dark resolve identically — so each is shown once.
+
+> **Primitives are not an API.** Using a primitive directly in a component (`--color-purple-700`, a hex literal) is a bug — it can't respond to theme and bypasses the semantic layer. Reach for a semantic token above; if none fits, that's a gap to raise with the design-system team.
+
+<PaletteScales />
 
 ---
 
@@ -68,8 +40,8 @@ Semantic tokens map purpose to palette values, so UI code references intent rath
 | Teal 500 on white | 2.8:1 | Fail | Fail |
 | Teal 700 on white | 4.6:1 | Pass (large) | Pass |
 | White on purple 700 | 8.5:1 | Pass | Pass |
-| Neutral 900 on white | 17.4:1 | Pass | Pass |
-| Neutral 600 on white | 5.7:1 | Pass | Pass |
+| Slate 900 on white | 17.9:1 | Pass | Pass |
+| Slate 600 on white | 6.7:1 | Pass | Pass |
 
 **Key rule:** Teal-500 does not meet WCAG AA contrast on white backgrounds for normal text. Use **teal-700** or darker for text. Teal-500 is suitable for large text, icons, and non-text decorative elements.
 
