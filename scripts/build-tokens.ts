@@ -7,13 +7,13 @@ const CSS_BUILD_PATH = "src/tokens/";
 const modes = [
   {
     name: "light",
-    source: ["tokens/base.json", "tokens/semantic.json"],
+    source: ["tokens/primitives.json", "tokens/semantic.light.json"],
     selector: ":root",
     dest: "variables.css",
   },
   {
     name: "dark",
-    source: ["tokens/base.json", "tokens/themes/dark/semantic.json"],
+    source: ["tokens/primitives.json", "tokens/semantic.dark.json"],
     selector: '[data-theme="dark"]',
     dest: "variables-dark.css",
   },
