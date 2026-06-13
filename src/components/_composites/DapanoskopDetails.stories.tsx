@@ -35,7 +35,7 @@ function BackLink({ label = "Back to Report" }: { label?: string }) {
     <a
       href="#"
       onClick={(e) => e.preventDefault()}
-      className="text-(--color-brand-primary) hover:underline no-underline text-sm"
+      className="text-(--color-text-brand) hover:underline no-underline text-sm"
     >
       &larr; {label}
     </a>
@@ -149,7 +149,7 @@ function CostCenterDetailPage() {
                       <a
                         href="#"
                         onClick={(e) => e.preventDefault()}
-                        className="text-(--color-brand-primary) hover:underline no-underline"
+                        className="text-(--color-text-brand) hover:underline no-underline"
                       >
                         {wl.name}
                       </a>

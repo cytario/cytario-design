@@ -60,7 +60,7 @@ function PeriodStrip({
               "shrink-0 rounded-md px-3 py-1.5 text-sm transition-colors outline-none",
               "focus-visible:ring-2 focus-visible:ring-(--color-border-focus)",
               isSelected
-                ? "bg-(--color-brand-primary) text-(--color-text-inverse) font-medium"
+                ? "bg-(--color-surface-brand) text-(--color-text-inverse) font-medium"
                 : "text-(--color-text-secondary) hover:bg-(--color-surface-hover)",
             ].join(" ")}
           >
@@ -114,7 +114,7 @@ function WorkloadBreakdown({
                   <a
                     href="#"
                     onClick={(e) => e.preventDefault()}
-                    className="text-(--color-brand-primary) hover:underline no-underline"
+                    className="text-(--color-text-brand) hover:underline no-underline"
                   >
                     {wl.name}
                   </a>
@@ -191,7 +191,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
             <a
               href="#"
               onClick={(e) => e.preventDefault()}
-              className="font-semibold text-lg text-(--color-brand-primary) hover:underline no-underline"
+              className="font-semibold text-lg text-(--color-text-brand) hover:underline no-underline"
             >
               {cc.name}
             </a>

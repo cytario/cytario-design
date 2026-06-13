@@ -692,7 +692,7 @@ function PathologyViewer() {
                     className={[
                       "cursor-pointer border-b border-(--color-border-default) last:border-b-0 transition-colors",
                       selectedS3File === file.key
-                        ? "bg-[color-mix(in_srgb,var(--color-brand-accent)_15%,transparent)]"
+                        ? "bg-[color-mix(in_srgb,var(--color-surface-accent)_15%,transparent)]"
                         : "hover:bg-(--color-surface-subtle)",
                     ].join(" ")}
                   >
