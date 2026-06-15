@@ -11,12 +11,13 @@ const meta: Meta<typeof ButtonLink> = {
       options: [
         "primary",
         "secondary",
-        "ghost",
         "destructive",
-        "default",
         "success",
+        "warning",
         "info",
         "neutral",
+        "outline",
+        "ghost",
       ],
     },
     size: {
@@ -99,7 +100,7 @@ export const OpenFile: Story = {
 export const AddOverlay: Story = {
   name: "Add Overlay",
   args: {
-    variant: "default",
+    variant: "neutral",
     href: "?action=load-overlay",
     children: "Add Overlay",
   },

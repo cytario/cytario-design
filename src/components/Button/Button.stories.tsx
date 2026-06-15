@@ -12,12 +12,13 @@ const meta: Meta<typeof Button> = {
       options: [
         "primary",
         "secondary",
-        "ghost",
         "destructive",
-        "default",
         "success",
+        "warning",
         "info",
         "neutral",
+        "outline",
+        "ghost",
       ],
     },
     size: {
@@ -59,12 +60,12 @@ export const DestructiveClearStorage: Story = {
   args: { variant: "destructive", children: "Clear Local Storage" },
 };
 
-export const Default: Story = {
-  args: { variant: "default", children: "Default" },
-};
-
 export const Success: Story = {
   args: { variant: "success", children: "Success" },
+};
+
+export const Warning: Story = {
+  args: { variant: "warning", children: "Warning" },
 };
 
 export const Info: Story = {
@@ -73,6 +74,10 @@ export const Info: Story = {
 
 export const Neutral: Story = {
   args: { variant: "neutral", children: "Neutral" },
+};
+
+export const Outline: Story = {
+  args: { variant: "outline", children: "Outline" },
 };
 
 // --- Real-world patterns ---
@@ -89,12 +94,12 @@ export const FormWizardSubmit: Story = {
 
 export const GoBack: Story = {
   name: "Go Back",
-  args: { variant: "default", children: "Go Back" },
+  args: { variant: "neutral", children: "Go Back" },
 };
 
 export const ConvertToParquet: Story = {
   name: "Convert to Parquet",
-  args: { variant: "default", children: "Convert to Parquet" },
+  args: { variant: "neutral", children: "Convert to Parquet" },
 };
 
 export const DisabledDownload: Story = {
@@ -165,12 +170,13 @@ export const Playground: Story = {
 const variants = [
   "primary",
   "secondary",
-  "ghost",
   "destructive",
-  "default",
   "success",
+  "warning",
   "info",
   "neutral",
+  "outline",
+  "ghost",
 ] as const;
 const sizes = ["xs", "sm", "md", "lg"] as const;
 
