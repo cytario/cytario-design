@@ -36,8 +36,8 @@ const tooltipCx = [
   // Natural content width (capped at max-w-xs): being positioned near the
   // right viewport edge must shift the tooltip left, not squeeze its layout.
   "w-max max-w-xs",
-  "bg-(--color-surface-overlay) backdrop-blur-sm",
-  "text-(--color-text-inverse) text-sm",
+  "bg-overlay backdrop-blur-sm",
+  "text-primary-foreground text-sm",
   "pointer-events-none",
 ].join(" ");
 

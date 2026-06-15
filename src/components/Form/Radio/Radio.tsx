@@ -46,7 +46,7 @@ export function Radio({ children, className, ...props }: RadioProps) {
     <AriaRadio
       {...props}
       className={[
-        "group flex items-center gap-2 text-sm text-(--color-text-primary) cursor-pointer",
+        "group flex items-center gap-2 text-sm text-foreground cursor-pointer",
         "disabled:opacity-50 disabled:cursor-default",
         className,
       ]
@@ -59,14 +59,14 @@ export function Radio({ children, className, ...props }: RadioProps) {
             className={[
               "flex items-center justify-center w-5 h-5 shrink-0",
               "rounded-full border-2 transition-colors",
-              "group-focus-visible:ring-2 group-focus-visible:ring-(--color-border-focus) group-focus-visible:ring-offset-2",
+              "group-focus-visible:ring-2 group-focus-visible:ring-ring group-focus-visible:ring-offset-2",
               isSelected
-                ? "border-(--color-action-primary)"
-                : "border-(--color-border-default) group-hover:border-(--color-border-strong)",
+                ? "border-primary"
+                : "border-border group-hover:border-border",
             ].join(" ")}
           >
             {isSelected && (
-              <div className="w-2.5 h-2.5 rounded-full bg-(--color-action-primary)" />
+              <div className="w-2.5 h-2.5 rounded-full bg-primary" />
             )}
           </div>
           {children && <span>{children}</span>}
@@ -93,10 +93,10 @@ export function RadioButton({ children, className, ...props }: RadioButtonProps)
           className={[
             "px-4 py-2 text-sm font-medium",
             "rounded-md border transition-colors text-center",
-            "group-focus-visible:ring-2 group-focus-visible:ring-(--color-border-focus) group-focus-visible:ring-offset-2",
+            "group-focus-visible:ring-2 group-focus-visible:ring-ring group-focus-visible:ring-offset-2",
             isSelected
-              ? "bg-(--color-action-primary) border-(--color-action-primary) text-(--color-text-inverse)"
-              : "bg-(--color-surface-default) border-(--color-border-default) text-(--color-text-primary) hover:border-(--color-border-strong)",
+              ? "bg-primary border-primary text-primary-foreground"
+              : "bg-background border-border text-foreground hover:border-border",
           ].join(" ")}
         >
           {children}

@@ -22,7 +22,7 @@ export function Fieldset({ legend, children, className }: FieldsetProps) {
           className={[
             "text-lg",
             "font-semibold",
-            "text-(--color-text-primary)",
+            "text-foreground",
             "p-0",
           ].join(" ")}
         >

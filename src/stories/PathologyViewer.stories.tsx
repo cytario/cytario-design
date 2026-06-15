@@ -39,15 +39,15 @@ import {
 /* ------------------------------------------------------------------ */
 
 const viewerTokenOverrides: React.CSSProperties = {
-  "--color-surface-default": "#1f2937",
-  "--color-surface-subtle": "#374151",
-  "--color-surface-muted": "#4b5563",
-  "--color-text-primary": "#f3f4f6",
-  "--color-text-secondary": "#9ca3af",
-  "--color-text-tertiary": "#6b7280",
-  "--color-border-default": "#374151",
-  "--color-border-strong": "#4b5563",
-  "--color-border-focus": "#35b7b8",
+  "--color-background": "#1f2937",
+  "--color-card": "#374151",
+  "--color-muted": "#4b5563",
+  "--color-foreground": "#f3f4f6",
+  "--color-muted-foreground": "#9ca3af",
+  "--color-muted-foreground": "#6b7280",
+  "--color-border": "#374151",
+  "--color-border": "#4b5563",
+  "--color-ring": "#35b7b8",
 } as React.CSSProperties;
 
 /* ------------------------------------------------------------------ */
@@ -669,17 +669,17 @@ function PathologyViewer() {
       >
         <div className="flex flex-col gap-4">
           {/* S3 file browser table */}
-          <div className="overflow-hidden rounded-lg border border-(--color-border-default)">
+          <div className="overflow-hidden rounded-lg border border-border">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-(--color-border-default) bg-(--color-surface-subtle)">
-                  <th className="px-4 py-2 text-left text-xs font-semibold text-(--color-text-secondary)">
+                <tr className="border-b border-border bg-card">
+                  <th className="px-4 py-2 text-left text-xs font-semibold text-muted-foreground">
                     Filename
                   </th>
-                  <th className="px-4 py-2 text-right text-xs font-semibold text-(--color-text-secondary)">
+                  <th className="px-4 py-2 text-right text-xs font-semibold text-muted-foreground">
                     Size
                   </th>
-                  <th className="px-4 py-2 text-right text-xs font-semibold text-(--color-text-secondary)">
+                  <th className="px-4 py-2 text-right text-xs font-semibold text-muted-foreground">
                     Last Modified
                   </th>
                 </tr>
@@ -690,19 +690,19 @@ function PathologyViewer() {
                     key={file.key}
                     onClick={() => setSelectedS3File(file.key)}
                     className={[
-                      "cursor-pointer border-b border-(--color-border-default) last:border-b-0 transition-colors",
+                      "cursor-pointer border-b border-border last:border-b-0 transition-colors",
                       selectedS3File === file.key
-                        ? "bg-[color-mix(in_srgb,var(--color-surface-accent)_15%,transparent)]"
-                        : "hover:bg-(--color-surface-subtle)",
+                        ? "bg-[color-mix(in_srgb,var(--color-secondary)_15%,transparent)]"
+                        : "hover:bg-card",
                     ].join(" ")}
                   >
-                    <td className="px-4 py-2.5 text-(--color-text-primary)">
+                    <td className="px-4 py-2.5 text-foreground">
                       {file.filename}
                     </td>
-                    <td className="px-4 py-2.5 text-right text-(--color-text-secondary)">
+                    <td className="px-4 py-2.5 text-right text-muted-foreground">
                       {file.size}
                     </td>
-                    <td className="px-4 py-2.5 text-right text-(--color-text-secondary)">
+                    <td className="px-4 py-2.5 text-right text-muted-foreground">
                       {formatS3Date(file.lastModified)}
                     </td>
                   </tr>

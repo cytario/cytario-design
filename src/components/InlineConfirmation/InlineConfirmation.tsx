@@ -26,10 +26,10 @@ export interface InlineConfirmationProps {
 const variantStyles = {
   danger: {
     container:
-      "border-t border-(--color-border-danger) bg-(--color-surface-danger) -mx-6 px-6 -mb-4 pb-4 pt-4 mt-4",
+      "border-t border-destructive-border bg-destructive-surface -mx-6 px-6 -mb-4 pb-4 pt-4 mt-4",
     message:
-      "text-sm font-semibold text-(--color-text-danger)",
-    buttonDivider: "border-t border-(--color-border-danger)",
+      "text-sm font-semibold text-destructive",
+    buttonDivider: "border-t border-destructive-border",
     confirmVariant: "destructive" as const,
   },
 } as const;
@@ -55,7 +55,7 @@ export function InlineConfirmation({
         {message}
       </p>
       {description && (
-        <p className="text-sm text-(--color-text-secondary) mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           {description}
         </p>
       )}

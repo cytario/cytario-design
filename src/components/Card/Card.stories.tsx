@@ -55,7 +55,7 @@ export const WithHeader: Story = {
     header: (
       <div className="flex items-center justify-between">
         <span className="font-semibold">Card Title</span>
-        <span className="text-sm text-(--color-text-secondary)">Action</span>
+        <span className="text-sm text-muted-foreground">Action</span>
       </div>
     ),
     children: "Card body content goes here.",
@@ -69,7 +69,7 @@ export const WithHeaderAndFooter: Story = {
     ),
     children: "Card body content with both header and footer.",
     footer: (
-      <div className="flex justify-end gap-2 text-sm text-(--color-text-secondary)">
+      <div className="flex justify-end gap-2 text-sm text-muted-foreground">
         Footer content
       </div>
     ),
@@ -115,7 +115,7 @@ export const CostCenterContainer: Story = {
             $12,450
           </span>
         </div>
-        <div className="mt-2 text-sm text-(--color-text-secondary)">
+        <div className="mt-2 text-sm text-muted-foreground">
           12 workloads
         </div>
       </div>
@@ -133,8 +133,8 @@ export const TableContainer: Story = {
       </div>
     ),
     children: (
-      <div className="border-t border-(--color-border-default)">
-        <div className="px-4 py-2 text-sm text-(--color-text-secondary)">
+      <div className="border-t border-border">
+        <div className="px-4 py-2 text-sm text-muted-foreground">
           Table content would go here
         </div>
       </div>

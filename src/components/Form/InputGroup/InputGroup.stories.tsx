@@ -144,7 +144,7 @@ export const AllCompositions: Story = {
       }}
     >
       <div>
-        <p className="mb-2 text-sm text-(--color-text-secondary)">
+        <p className="mb-2 text-sm text-muted-foreground">
           Addon + Input
         </p>
         <InputGroup>
@@ -154,7 +154,7 @@ export const AllCompositions: Story = {
       </div>
 
       <div>
-        <p className="mb-2 text-sm text-(--color-text-secondary)">
+        <p className="mb-2 text-sm text-muted-foreground">
           Input + Addon
         </p>
         <InputGroup>
@@ -164,7 +164,7 @@ export const AllCompositions: Story = {
       </div>
 
       <div>
-        <p className="mb-2 text-sm text-(--color-text-secondary)">
+        <p className="mb-2 text-sm text-muted-foreground">
           Input + Button
         </p>
         <InputGroup>
@@ -176,7 +176,7 @@ export const AllCompositions: Story = {
       </div>
 
       <div>
-        <p className="mb-2 text-sm text-(--color-text-secondary)">
+        <p className="mb-2 text-sm text-muted-foreground">
           Input + ghost IconButton
         </p>
         <InputGroup>
@@ -191,7 +191,7 @@ export const AllCompositions: Story = {
       </div>
 
       <div>
-        <p className="mb-2 text-sm text-(--color-text-secondary)">
+        <p className="mb-2 text-sm text-muted-foreground">
           Addon + Input + Button
         </p>
         <InputGroup>
@@ -202,7 +202,7 @@ export const AllCompositions: Story = {
       </div>
 
       <div>
-        <p className="mb-2 text-sm text-(--color-text-secondary)">
+        <p className="mb-2 text-sm text-muted-foreground">
           Currency (addon + right-aligned input)
         </p>
         <InputGroup>

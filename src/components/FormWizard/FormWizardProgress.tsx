@@ -4,7 +4,7 @@ function CheckIcon() {
   return (
     <svg
       aria-hidden="true"
-      className="h-4 w-4 text-(--color-text-inverse)"
+      className="h-4 w-4 text-primary-foreground"
       viewBox="0 0 16 16"
       fill="none"
       stroke="currentColor"
@@ -48,8 +48,8 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                     className={[
                       "h-0.5 flex-1",
                       index <= currentStep
-                        ? "bg-(--color-surface-brand)"
-                        : "bg-(--color-border-default)",
+                        ? "bg-primary"
+                        : "bg-border",
                     ].join(" ")}
                   />
                 ) : (
@@ -63,13 +63,13 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                     "text-sm font-medium",
                     "transition-colors",
                     isCompleted
-                      ? "bg-(--color-surface-brand) text-(--color-text-inverse)"
+                      ? "bg-primary text-primary-foreground"
                       : "",
                     isCurrent
-                      ? "border-2 border-(--color-border-brand) bg-(--color-surface-default) text-(--color-text-brand)"
+                      ? "border-2 border-primary bg-background text-primary"
                       : "",
                     isFuture
-                      ? "border-2 border-(--color-border-default) bg-(--color-surface-default) text-(--color-text-tertiary)"
+                      ? "border-2 border-border bg-background text-muted-foreground"
                       : "",
                   ].join(" ")}
                   aria-hidden="true"
@@ -84,8 +84,8 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                     className={[
                       "h-0.5 flex-1",
                       index < currentStep
-                        ? "bg-(--color-surface-brand)"
-                        : "bg-(--color-border-default)",
+                        ? "bg-primary"
+                        : "bg-border",
                     ].join(" ")}
                   />
                 ) : (
@@ -98,8 +98,8 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                 className={[
                   "mt-2 text-center text-sm",
                   isCurrent
-                    ? "font-semibold text-(--color-text-primary)"
-                    : "font-normal text-(--color-text-secondary)",
+                    ? "font-semibold text-foreground"
+                    : "font-normal text-muted-foreground",
                 ].join(" ")}
               >
                 {label}

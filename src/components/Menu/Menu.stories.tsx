@@ -49,10 +49,10 @@ export const UserProfileMenu: Story = {
                   <User className="size-4" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-(--color-text-primary)">
+                  <span className="text-sm font-medium text-foreground">
                     Dr. Sarah Chen
                   </span>
-                  <span className="text-xs text-(--color-text-secondary)">
+                  <span className="text-xs text-muted-foreground">
                     sarah.chen@hospital.org
                   </span>
                 </div>
@@ -83,7 +83,7 @@ export const UserProfileMenu: Story = {
               href="https://auth.cytario.com/admin"
               target="_blank"
               endContent={
-                <span className="text-xs text-(--color-text-tertiary)">
+                <span className="text-xs text-muted-foreground">
                   External
                 </span>
               }
@@ -169,7 +169,7 @@ export const WithEndContent: Story = {
             id="cut"
             icon={Edit}
             endContent={
-              <kbd className="text-xs text-(--color-text-tertiary)">
+              <kbd className="text-xs text-muted-foreground">
                 Cmd+X
               </kbd>
             }
@@ -180,7 +180,7 @@ export const WithEndContent: Story = {
             id="copy"
             icon={Copy}
             endContent={
-              <kbd className="text-xs text-(--color-text-tertiary)">
+              <kbd className="text-xs text-muted-foreground">
                 Cmd+C
               </kbd>
             }
@@ -327,7 +327,7 @@ export const ItemsWithEndContent: Story = {
         label: "Edit",
         icon: Edit,
         endContent: (
-          <kbd className="text-xs text-(--color-text-tertiary)">
+          <kbd className="text-xs text-muted-foreground">
             Cmd+E
           </kbd>
         ),
@@ -337,7 +337,7 @@ export const ItemsWithEndContent: Story = {
         label: "Copy",
         icon: Copy,
         endContent: (
-          <kbd className="text-xs text-(--color-text-tertiary)">
+          <kbd className="text-xs text-muted-foreground">
             Cmd+C
           </kbd>
         ),

@@ -20,9 +20,9 @@ import { Link } from "../Link";
  */
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-(--color-surface-subtle) px-4 py-8">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-card px-4 py-8">
       <main aria-label="Authentication" className="w-full max-w-[420px]">
-        <div className="bg-(--color-surface-default) border border-(--color-border-default) rounded-lg shadow-md overflow-hidden">
+        <div className="bg-background border border-border rounded-lg shadow-md overflow-hidden">
           <div className="px-8 pt-10 pb-8">
             {/* Logo */}
             <div className="flex justify-center mb-6">
@@ -68,13 +68,13 @@ function PasswordField({
     <div className="flex flex-col gap-1">
       <label
         htmlFor={id}
-        className="text-sm font-medium text-(--color-text-primary)"
+        className="text-sm font-medium text-foreground"
       >
         {label}
         {isRequired && (
           <span
             aria-hidden="true"
-            className="ml-0.5 text-(--color-text-danger)"
+            className="ml-0.5 text-destructive"
           >
             *
           </span>
@@ -124,8 +124,8 @@ function AuthHeading({ children }: { children: React.ReactNode }) {
  */
 function AuthFooter({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-6 pt-6 border-t border-(--color-border-default)">
-      <p className="text-center text-sm text-(--color-text-secondary)">
+    <div className="mt-6 pt-6 border-t border-border">
+      <p className="text-center text-sm text-muted-foreground">
         {children}
       </p>
     </div>
@@ -328,7 +328,7 @@ function ForgotPasswordPage() {
             It may take a few minutes to arrive.
           </Banner>
 
-          <p className="text-center text-sm text-(--color-text-secondary)">
+          <p className="text-center text-sm text-muted-foreground">
             Didn&apos;t receive the email?{" "}
             <Link href="#" onPress={() => setIsSubmitted(false)}>
               Send again
@@ -337,7 +337,7 @@ function ForgotPasswordPage() {
         </div>
       ) : (
         <div className="flex flex-col gap-4">
-          <p className="text-sm text-(--color-text-secondary)">
+          <p className="text-sm text-muted-foreground">
             Enter the email address associated with your account and we will
             send you a link to reset your password.
           </p>

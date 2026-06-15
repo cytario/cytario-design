@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../tokens/utilities.css";
 @plugin "tailwindcss-react-aria-components";
 @source "../../src";
 

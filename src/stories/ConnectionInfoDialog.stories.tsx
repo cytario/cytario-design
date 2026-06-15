@@ -98,7 +98,7 @@ function ViewMode({
           <DescriptionList.Item label="Visibility">
             <>
               Shared with:{" "}
-              <span className="font-medium text-(--color-text-primary)">
+              <span className="font-medium text-foreground">
                 {connection.ownerScope}
               </span>
             </>
@@ -107,7 +107,7 @@ function ViewMode({
 
         <DescriptionList.Item label="S3 URI">
           <span>
-            <span className="text-(--color-text-secondary)">s3://</span>
+            <span className="text-muted-foreground">s3://</span>
             {s3Uri}
           </span>
         </DescriptionList.Item>
@@ -120,7 +120,7 @@ function ViewMode({
 
         <DescriptionList.Item label="Endpoint">
           {isAws && !connection.endpoint ? (
-            <span className="text-(--color-text-secondary)">
+            <span className="text-muted-foreground">
               (default AWS endpoint)
             </span>
           ) : (

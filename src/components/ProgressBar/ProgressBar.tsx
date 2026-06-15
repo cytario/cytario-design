@@ -31,7 +31,7 @@ const fillStyles: Record<ProgressBarVariant, string> = {
   success: "bg-(--color-progress-fill-success)",
   warning: "bg-(--color-progress-fill-warning)",
   danger: "bg-(--color-progress-fill-danger)",
-  neutral: "bg-(--color-text-secondary)",
+  neutral: "bg-muted-foreground",
 };
 
 const sizeStyles: Record<ProgressBarSize, string> = {
@@ -55,10 +55,10 @@ export function ProgressBar({
     <div className={twMerge("w-full", className)}>
       {(label || description || showValue) && (
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-(--color-text-primary)">
+          <span className="text-sm font-medium text-foreground">
             {label}
           </span>
-          <span className="text-sm text-(--color-text-secondary)">
+          <span className="text-sm text-muted-foreground">
             {description ?? (showValue ? `${clampedValue}%` : null)}
           </span>
         </div>

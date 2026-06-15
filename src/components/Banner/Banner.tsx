@@ -35,29 +35,29 @@ const variantConfig: Record<
   info: {
     icon: Info,
     containerClass:
-      "bg-(--color-banner-info-bg) border-(--color-banner-info-border) text-(--color-banner-info-text)",
-    iconClass: "text-(--color-banner-info-icon)",
+      "bg-info-surface border-info-border text-info-surface-foreground",
+    iconClass: "text-info",
     role: "status",
   },
   warning: {
     icon: AlertTriangle,
     containerClass:
-      "bg-(--color-banner-warning-bg) border-(--color-banner-warning-border) text-(--color-banner-warning-text)",
-    iconClass: "text-(--color-banner-warning-icon)",
+      "bg-warning-surface border-warning-border text-warning-surface-foreground",
+    iconClass: "text-warning",
     role: "alert",
   },
   danger: {
     icon: AlertCircle,
     containerClass:
-      "bg-(--color-banner-danger-bg) border-(--color-banner-danger-border) text-(--color-banner-danger-text)",
-    iconClass: "text-(--color-banner-danger-icon)",
+      "bg-destructive-surface border-destructive-border text-destructive-surface-foreground",
+    iconClass: "text-destructive",
     role: "alert",
   },
   success: {
     icon: CheckCircle2,
     containerClass:
-      "bg-(--color-banner-success-bg) border-(--color-banner-success-border) text-(--color-banner-success-text)",
-    iconClass: "text-(--color-banner-success-icon)",
+      "bg-success-surface border-success-border text-success-surface-foreground",
+    iconClass: "text-success",
     role: "status",
   },
 };

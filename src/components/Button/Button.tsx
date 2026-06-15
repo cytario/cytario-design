@@ -68,7 +68,7 @@ export function Button({
 
   const groupGhost =
     inGroup && variant === "ghost"
-      ? "bg-(--color-surface-default) text-(--color-text-secondary) border border-(--color-border-default) hover:bg-(--color-surface-hover) hover:text-(--color-text-primary) hover:border-(--color-border-strong) pressed:bg-(--color-surface-pressed) pressed:text-(--color-text-primary)"
+      ? "bg-background text-muted-foreground border border-border hover:bg-accent hover:text-foreground hover:border-border pressed:bg-accent pressed:text-foreground"
       : "";
 
   const radiusClass = inGroup ? groupRadiusClass(position) : "rounded-md";
@@ -79,8 +79,8 @@ export function Button({
       : "";
 
   const focusRing = inGroup
-    ? "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-0 focus-visible:z-10"
-    : "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2";
+    ? "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 focus-visible:z-10"
+    : "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
   return (
     <AriaButton

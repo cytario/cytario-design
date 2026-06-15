@@ -27,13 +27,13 @@ export function EmptyState({
         .join(" ")}
     >
       {icon && (
-        <Icon icon={icon} size="xl" className="text-(--color-text-tertiary)" />
+        <Icon icon={icon} size="xl" className="text-muted-foreground" />
       )}
-      <h3 className="text-lg font-semibold text-(--color-text-primary) mt-4">
+      <h3 className="text-lg font-semibold text-foreground mt-4">
         {title}
       </h3>
       {description && (
-        <p className="text-sm text-(--color-text-secondary) mt-2 max-w-sm">
+        <p className="text-sm text-muted-foreground mt-2 max-w-sm">
           {description}
         </p>
       )}

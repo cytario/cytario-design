@@ -84,33 +84,33 @@ function StepContent({ step }: { step: number }) {
             <div
               className={[
                 "rounded-md",
-                "border border-(--color-border-default)",
-                "bg-(--color-surface-subtle)",
+                "border border-border",
+                "bg-card",
                 "p-4",
               ].join(" ")}
             >
               <dl className="flex flex-col gap-2 text-sm">
                 <div className="flex justify-between">
-                  <dt className="text-(--color-text-secondary)">Provider</dt>
-                  <dd className="font-medium text-(--color-text-primary)">
+                  <dt className="text-muted-foreground">Provider</dt>
+                  <dd className="font-medium text-foreground">
                     Amazon S3
                   </dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-(--color-text-secondary)">Name</dt>
-                  <dd className="font-medium text-(--color-text-primary)">
+                  <dt className="text-muted-foreground">Name</dt>
+                  <dd className="font-medium text-foreground">
                     Production S3
                   </dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-(--color-text-secondary)">Bucket</dt>
-                  <dd className="font-medium text-(--color-text-primary)">
+                  <dt className="text-muted-foreground">Bucket</dt>
+                  <dd className="font-medium text-foreground">
                     my-pathology-bucket
                   </dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-(--color-text-secondary)">Region</dt>
-                  <dd className="font-medium text-(--color-text-primary)">
+                  <dt className="text-muted-foreground">Region</dt>
+                  <dd className="font-medium text-foreground">
                     eu-central-1
                   </dd>
                 </div>

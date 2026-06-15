@@ -73,8 +73,8 @@ export function Input({
   const { inGroup, position } = useInputGroup();
 
   const borderColor = isInvalid
-    ? "border-(--color-border-danger)"
-    : "border-(--color-border-default) hover:border-(--color-border-strong)";
+    ? "border-destructive-border"
+    : "border-border hover:border-border";
 
   const radiusClass = inGroup ? groupRadiusClasses(position) : "rounded-md";
 
@@ -106,10 +106,10 @@ export function Input({
             "flex items-center overflow-hidden",
             radiusClass,
             "border",
-            "bg-(--color-surface-default)",
+            "bg-background",
             "outline-none transition-colors",
             borderColor,
-            "focus-within:ring-2 focus-within:ring-(--color-border-focus) focus-within:border-(--color-border-focus)",
+            "focus-within:ring-2 focus-within:ring-ring focus-within:border-ring",
             inGroup && "focus-within:z-10",
             isDisabled && "opacity-50 pointer-events-none",
           )}
@@ -117,9 +117,9 @@ export function Input({
           <span
             className={twMerge(
               "self-stretch flex items-center shrink-0 select-none",
-              "bg-(--color-surface-subtle)",
-              "border-r border-r-(--color-border-default)",
-              "text-(--color-text-secondary)",
+              "bg-card",
+              "border-r border-r-border",
+              "text-muted-foreground",
               sizeStyles[size],
             )}
           >
@@ -131,8 +131,8 @@ export function Input({
               "w-full bg-transparent",
               sizeStyles[size],
               alignClasses[align],
-              "text-(--color-text-primary)",
-              "placeholder:text-(--color-text-tertiary)",
+              "text-foreground",
+              "placeholder:text-muted-foreground",
               "outline-none border-none",
             )}
           />
@@ -146,12 +146,12 @@ export function Input({
             alignClasses[align],
             radiusClass,
             "border",
-            "text-(--color-text-primary)",
-            "bg-(--color-surface-default)",
-            "placeholder:text-(--color-text-tertiary)",
+            "text-foreground",
+            "bg-background",
+            "placeholder:text-muted-foreground",
             "outline-none transition-colors",
             borderColor,
-            "focus:ring-2 focus:ring-(--color-border-focus) focus:border-(--color-border-focus)",
+            "focus:ring-2 focus:ring-ring focus:border-ring",
             inGroup && "focus:z-10",
             "disabled:opacity-50 disabled:pointer-events-none",
           )}
@@ -161,7 +161,7 @@ export function Input({
       {description && (
         <Text
           slot="description"
-          className="text-sm text-(--color-text-secondary)"
+          className="text-sm text-muted-foreground"
         >
           {description}
         </Text>
@@ -171,7 +171,7 @@ export function Input({
         <Text
           slot="errorMessage"
           role="alert"
-          className="text-sm text-(--color-text-danger)"
+          className="text-sm text-destructive"
         >
           {errorMessage}
         </Text>

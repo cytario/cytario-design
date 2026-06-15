@@ -68,20 +68,20 @@ export function Select({
             w-full rounded-md
             text-left
             border outline-none transition-colors
-            focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2
+            focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
             cursor-pointer disabled:opacity-50 disabled:pointer-events-none
-            bg-(--color-surface-default)
+            bg-background
           `,
           sizeStyles[size],
           hasError
-            ? "border-(--color-border-danger)"
-            : "border-(--color-border-default)",
+            ? "border-destructive-border"
+            : "border-border",
         )}
       >
         <SelectValue
           className={twMerge(
             renderItem ? "min-w-0" : "truncate",
-            "data-placeholder:text-(--color-text-tertiary)",
+            "data-placeholder:text-muted-foreground",
           )}
         >
           {({ selectedItem, isPlaceholder }) => {
@@ -93,14 +93,14 @@ export function Select({
         <ChevronDown
           aria-hidden
           className={twMerge(
-            "shrink-0 text-(--color-text-secondary)",
+            "shrink-0 text-muted-foreground",
             size === "sm" ? "h-3.5 w-3.5" : "h-4 w-4",
           )}
         />
       </Button>
 
       {description && (
-        <Text slot="description" className="text-sm text-(--color-text-secondary)">
+        <Text slot="description" className="text-sm text-muted-foreground">
           {description}
         </Text>
       )}
@@ -109,7 +109,7 @@ export function Select({
         <Text
           slot="errorMessage"
           role="alert"
-          className="text-sm text-(--color-text-danger)"
+          className="text-sm text-destructive"
         >
           {errorMessage}
         </Text>
@@ -119,8 +119,8 @@ export function Select({
         className={twMerge(
           "w-(--trigger-width)",
           "rounded-md",
-          "border border-(--color-border-default)",
-          "bg-(--color-surface-default)",
+          "border border-border",
+          "bg-background",
           "shadow-lg",
           "overflow-auto",
           "entering:animate-in entering:fade-in",
@@ -136,11 +136,11 @@ export function Select({
                 `
                   flex items-center justify-between gap-2
                   rounded-sm
-                  text-(--color-text-primary)
+                  text-foreground
                   cursor-pointer outline-none
-                  hover:bg-(--color-surface-muted)
-                  focus-visible:bg-(--color-surface-muted)
-                  selected:text-(--color-action-primary) selected:font-medium
+                  hover:bg-muted
+                  focus-visible:bg-muted
+                  selected:text-primary selected:font-medium
                 `,
                 sizeStyles[size],
               )}
@@ -151,7 +151,7 @@ export function Select({
                     {renderItem ? renderItem(item) : item.name}
                   </span>
                   {isSelected && (
-                    <Check className="h-4 w-4 shrink-0 text-(--color-action-primary)" />
+                    <Check className="h-4 w-4 shrink-0 text-primary" />
                   )}
                 </>
               )}

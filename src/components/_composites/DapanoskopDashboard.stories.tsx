@@ -58,10 +58,10 @@ function PeriodStrip({
             onClick={() => onSelect(p)}
             className={[
               "shrink-0 rounded-md px-3 py-1.5 text-sm transition-colors outline-none",
-              "focus-visible:ring-2 focus-visible:ring-(--color-border-focus)",
+              "focus-visible:ring-2 focus-visible:ring-ring",
               isSelected
-                ? "bg-(--color-surface-brand) text-(--color-text-inverse) font-medium"
-                : "text-(--color-text-secondary) hover:bg-(--color-surface-hover)",
+                ? "bg-primary text-primary-foreground font-medium"
+                : "text-muted-foreground hover:bg-accent",
             ].join(" ")}
           >
             {label}
@@ -107,14 +107,14 @@ function WorkloadBreakdown({
             <Row key={wl.name}>
               <Cell>
                 {isUntagged ? (
-                  <span className="font-medium text-(--color-text-danger)">
+                  <span className="font-medium text-destructive">
                     {wl.name}
                   </span>
                 ) : (
                   <a
                     href="#"
                     onClick={(e) => e.preventDefault()}
-                    className="text-(--color-text-brand) hover:underline no-underline"
+                    className="text-primary hover:underline no-underline"
                   >
                     {wl.name}
                   </a>
@@ -138,7 +138,7 @@ function WorkloadBreakdown({
                     previous={wl.yoyCostUsd}
                   />
                 ) : (
-                  <span className="text-(--color-text-tertiary)">N/A</span>
+                  <span className="text-muted-foreground">N/A</span>
                 )}
               </Cell>
             </Row>
@@ -177,12 +177,12 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
             {cc.workloads.length > 0 && (
               <button
                 onClick={() => setExpanded(!expanded)}
-                className="rounded-sm p-0.5 hover:bg-(--color-surface-hover) transition-colors outline-none focus-visible:ring-2 focus-visible:ring-(--color-border-focus)"
+                className="rounded-sm p-0.5 hover:bg-accent transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-label={expanded ? "Collapse" : "Expand"}
                 aria-expanded={expanded}
               >
                 <span
-                  className={`inline-block transition-transform text-(--color-text-secondary) ${expanded ? "rotate-90" : ""}`}
+                  className={`inline-block transition-transform text-muted-foreground ${expanded ? "rotate-90" : ""}`}
                 >
                   &#9654;
                 </span>
@@ -191,7 +191,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
             <a
               href="#"
               onClick={(e) => e.preventDefault()}
-              className="font-semibold text-lg text-(--color-text-brand) hover:underline no-underline"
+              className="font-semibold text-lg text-primary hover:underline no-underline"
             >
               {cc.name}
             </a>
@@ -201,7 +201,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
           </div>
           <span className="text-xl font-semibold tabular-nums">
             {cc.isSplitCharge ? (
-              <span className="text-sm font-normal text-(--color-text-tertiary)">
+              <span className="text-sm font-normal text-muted-foreground">
                 Allocated
               </span>
             ) : (
@@ -237,7 +237,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
 
         {/* Meta row */}
         {!cc.isSplitCharge && (
-          <div className="flex items-center gap-3 mt-1 ml-7 text-xs text-(--color-text-secondary)">
+          <div className="flex items-center gap-3 mt-1 ml-7 text-xs text-muted-foreground">
             <span>{cc.workloads.length} workloads</span>
             {topMover && topMover.name && (
               <span>
@@ -254,7 +254,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
         )}
 
         {cc.isSplitCharge && (
-          <div className="mt-2 ml-7 text-sm text-(--color-text-tertiary)">
+          <div className="mt-2 ml-7 text-sm text-muted-foreground">
             Costs allocated to other cost centers
           </div>
         )}
@@ -262,7 +262,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
 
       {/* Expanded workload table */}
       {expanded && cc.workloads.length > 0 && (
-        <div className="px-4 pb-4 border-t border-(--color-border-default)">
+        <div className="px-4 pb-4 border-t border-border">
           <div className="pt-3">
             <WorkloadBreakdown workloads={cc.workloads} />
           </div>
@@ -288,19 +288,19 @@ function DashboardPage({ showMtdBanner = false }: { showMtdBanner?: boolean }) {
   const isMtd = period === "2026-02";
 
   return (
-    <div className="min-h-screen bg-(--color-surface-subtle)">
+    <div className="min-h-screen bg-card">
       {/* Header */}
-      <header className="bg-(--color-surface-default) border-b border-(--color-border-default) px-6 py-3">
+      <header className="bg-background border-b border-border px-6 py-3">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold text-(--color-text-primary)">
+            <span className="text-xl font-bold text-foreground">
               &#x03B4;
             </span>
-            <span className="text-lg font-semibold text-(--color-text-primary)">
+            <span className="text-lg font-semibold text-foreground">
               Dapanoskop
             </span>
           </div>
-          <span className="text-sm text-(--color-text-secondary)">
+          <span className="text-sm text-muted-foreground">
             Cost Report
           </span>
         </div>
@@ -361,7 +361,7 @@ function DashboardPage({ showMtdBanner = false }: { showMtdBanner?: boolean }) {
         {/* Cost Trend placeholder */}
         <Card padding="lg">
           <H3>Cost Trend</H3>
-          <div className="mt-4 h-48 flex items-center justify-center rounded-md bg-(--color-surface-subtle) text-(--color-text-tertiary) text-sm">
+          <div className="mt-4 h-48 flex items-center justify-center rounded-md bg-card text-muted-foreground text-sm">
             Stacked bar chart placeholder (12-month trend by cost center)
           </div>
         </Card>
@@ -415,7 +415,7 @@ function DashboardPage({ showMtdBanner = false }: { showMtdBanner?: boolean }) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-(--color-border-default) mt-12 py-4 text-center text-xs text-(--color-text-tertiary)">
+      <footer className="border-t border-border mt-12 py-4 text-center text-xs text-muted-foreground">
         Dapanoskop v1.2.0
       </footer>
     </div>
@@ -428,13 +428,13 @@ function DashboardPage({ showMtdBanner = false }: { showMtdBanner?: boolean }) {
 
 function DashboardError() {
   return (
-    <div className="min-h-screen bg-(--color-surface-subtle)">
-      <header className="bg-(--color-surface-default) border-b border-(--color-border-default) px-6 py-3">
+    <div className="min-h-screen bg-card">
+      <header className="bg-background border-b border-border px-6 py-3">
         <div className="max-w-5xl mx-auto flex items-center gap-2">
-          <span className="text-xl font-bold text-(--color-text-primary)">
+          <span className="text-xl font-bold text-foreground">
             &#x03B4;
           </span>
-          <span className="text-lg font-semibold text-(--color-text-primary)">
+          <span className="text-lg font-semibold text-foreground">
             Dapanoskop
           </span>
         </div>
