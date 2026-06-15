@@ -4,16 +4,49 @@ import StyleDictionary from "style-dictionary";
 
 const CSS_BUILD_PATH = "src/tokens/";
 
+// --- Dark-theme coverage assertion ---------------------------------------
+// Every semantic token defined for light must have an explicit dark value;
+// otherwise it silently falls through the CSS cascade to the light value
+// (this is what left banner/delta/progress rendering light colors in dark).
+const THEME_INVARIANT = new Set<string>([]); // intentionally identical across themes
+
+type TokenNode = { $value?: unknown; [k: string]: unknown };
+function flattenKeys(obj: Record<string, TokenNode>, prefix = ""): string[] {
+  const out: string[] = [];
+  for (const [k, v] of Object.entries(obj)) {
+    if (k.startsWith("$") || v == null || typeof v !== "object") continue;
+    const path = prefix ? `${prefix}.${k}` : k;
+    if ("$value" in v) out.push(path);
+    else out.push(...flattenKeys(v as Record<string, TokenNode>, path));
+  }
+  return out;
+}
+
+const lightJson = JSON.parse(await readFile("tokens/semantic.light.json", "utf-8"));
+const darkJson = JSON.parse(await readFile("tokens/semantic.dark.json", "utf-8"));
+const darkKeys = new Set(flattenKeys(darkJson.color, "color"));
+const missingInDark = flattenKeys(lightJson.color, "color").filter(
+  (k) => !darkKeys.has(k) && !THEME_INVARIANT.has(k),
+);
+if (missingInDark.length) {
+  throw new Error(
+    `Dark theme is missing ${missingInDark.length} semantic token(s) present in light:\n  ` +
+      missingInDark.join("\n  ") +
+      `\nAdd them to tokens/semantic.dark.json (or to THEME_INVARIANT in build-tokens.ts ` +
+      `if a token is intentionally identical across themes).`,
+  );
+}
+
 const modes = [
   {
     name: "light",
-    source: ["tokens/base.json", "tokens/semantic.json"],
+    source: ["tokens/primitives.json", "tokens/semantic.light.json"],
     selector: ":root",
     dest: "variables.css",
   },
   {
     name: "dark",
-    source: ["tokens/base.json", "tokens/themes/dark/semantic.json"],
+    source: ["tokens/primitives.json", "tokens/semantic.dark.json"],
     selector: '[data-theme="dark"]',
     dest: "variables-dark.css",
   },

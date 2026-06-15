@@ -230,7 +230,7 @@ function AdminUsersPage() {
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
         </div>
-        <div className="h-8 w-8 rounded-full bg-(--color-brand-primary) flex items-center justify-center text-xs font-bold">
+        <div className="h-8 w-8 rounded-full bg-(--color-surface-brand) flex items-center justify-center text-xs font-bold">
           ML
         </div>
       </header>

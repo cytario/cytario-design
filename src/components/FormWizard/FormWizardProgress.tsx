@@ -48,7 +48,7 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                     className={[
                       "h-0.5 flex-1",
                       index <= currentStep
-                        ? "bg-(--color-brand-primary)"
+                        ? "bg-(--color-surface-brand)"
                         : "bg-(--color-border-default)",
                     ].join(" ")}
                   />
@@ -63,10 +63,10 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                     "text-sm font-medium",
                     "transition-colors",
                     isCompleted
-                      ? "bg-(--color-brand-primary) text-(--color-text-inverse)"
+                      ? "bg-(--color-surface-brand) text-(--color-text-inverse)"
                       : "",
                     isCurrent
-                      ? "border-2 border-(--color-brand-primary) bg-(--color-surface-default) text-(--color-brand-primary)"
+                      ? "border-2 border-(--color-border-brand) bg-(--color-surface-default) text-(--color-text-brand)"
                       : "",
                     isFuture
                       ? "border-2 border-(--color-border-default) bg-(--color-surface-default) text-(--color-text-tertiary)"
@@ -84,7 +84,7 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                     className={[
                       "h-0.5 flex-1",
                       index < currentStep
-                        ? "bg-(--color-brand-primary)"
+                        ? "bg-(--color-surface-brand)"
                         : "bg-(--color-border-default)",
                     ].join(" ")}
                   />
