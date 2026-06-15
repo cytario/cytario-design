@@ -121,10 +121,10 @@ cytario uses **Montserrat** as its primary typeface. It is a geometric sans-seri
 
 ## Usage guidelines
 
-**Headings** use semibold or bold weight with tight line height. Color: `--color-text-primary` (neutral-900).
+**Headings** use semibold or bold weight with tight line height. Color: `--color-foreground` (slate-900).
 
-**Body text** uses regular weight at base size (16px) with normal line height. Color: `--color-text-secondary` (neutral-600) for supporting content, `--color-text-primary` for main content.
+**Body text** uses regular weight at base size (16px) with normal line height. Color: `--color-muted-foreground` (slate-600) for supporting content, `--color-foreground` for main content.
 
-**Captions and labels** use sm (14px) or xs (12px) at medium weight. Color: `--color-text-tertiary` (neutral-400) for least-prominent text.
+**Captions and labels** use sm (14px) or xs (12px) at medium weight. Color: `--color-muted-foreground` for least-prominent text — the type hierarchy is two levels (foreground / muted-foreground); the old third tier was dropped because slate-400 fails WCAG AA on white.
 
 **Never** use light (300) weight below 18px -- it becomes hard to read on lower-resolution screens.
