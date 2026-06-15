@@ -11,7 +11,7 @@ describe("InputAddon", () => {
   it("applies muted background class", () => {
     const { container } = render(<InputAddon>$</InputAddon>);
     const el = container.firstElementChild as HTMLElement;
-    expect(el.className).toContain("bg-(--color-surface-subtle)");
+    expect(el.className).toContain("bg-card");
   });
 
   it("is not focusable or interactive", () => {

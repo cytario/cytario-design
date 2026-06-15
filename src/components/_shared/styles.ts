@@ -14,54 +14,59 @@ export const sizeStyles: Record<Size, string> = {
 export type ButtonVariant =
   | "primary"
   | "secondary"
-  | "ghost"
   | "destructive"
-  | "default"
   | "success"
+  | "warning"
   | "info"
-  | "neutral";
+  | "neutral"
+  | "outline"
+  | "ghost";
 
 export const variantStyles: Record<ButtonVariant, string> = {
   primary: [
-    "bg-(--color-action-primary) text-(--color-text-inverse)",
-    "hover:bg-(--color-action-primary-hover)",
-    "pressed:bg-(--color-action-primary-active)",
+    "bg-primary text-primary-foreground",
+    "hover:bg-primary-hover",
+    "pressed:bg-primary-pressed",
   ].join(" "),
   secondary: [
-    "bg-transparent text-(--color-action-secondary)",
-    "border border-(--color-border-brand)",
-    "hover:bg-purple-50",
-    "pressed:bg-purple-100",
-  ].join(" "),
-  ghost: [
-    "bg-transparent text-(--color-text-primary)",
-    "hover:bg-(--color-surface-hover)",
-    "pressed:bg-(--color-surface-pressed)",
+    "bg-secondary text-secondary-foreground",
+    "hover:bg-secondary-hover",
+    "pressed:bg-secondary-pressed",
   ].join(" "),
   destructive: [
-    "bg-(--color-action-danger) text-(--color-text-inverse)",
-    "hover:bg-(--color-action-danger-hover)",
-    "pressed:bg-(--color-action-danger-hover)",
-  ].join(" "),
-  default: [
-    "bg-(--color-action-default) text-(--color-text-inverse)",
-    "hover:bg-(--color-action-default-hover)",
-    "pressed:bg-slate-600",
+    "bg-destructive text-destructive-foreground",
+    "hover:bg-destructive-hover",
+    "pressed:bg-destructive-pressed",
   ].join(" "),
   success: [
-    "bg-(--color-action-success) text-(--color-text-inverse)",
-    "hover:bg-(--color-action-success-hover)",
-    "pressed:bg-green-800",
+    "bg-success text-success-foreground",
+    "hover:bg-success-hover",
+    "pressed:bg-success-pressed",
+  ].join(" "),
+  warning: [
+    "bg-warning text-warning-foreground",
+    "hover:bg-warning-hover",
+    "pressed:bg-warning-pressed",
   ].join(" "),
   info: [
-    "bg-(--color-action-info) text-(--color-text-inverse)",
-    "hover:bg-(--color-action-info-hover)",
-    "pressed:bg-slate-800",
+    "bg-info text-info-foreground",
+    "hover:bg-info-hover",
+    "pressed:bg-info-pressed",
   ].join(" "),
   neutral: [
-    "bg-(--color-surface-default) text-(--color-text-primary)",
-    "border border-(--color-border-default)",
-    "hover:bg-(--color-surface-subtle)",
-    "pressed:bg-(--color-surface-muted)",
+    "bg-muted text-foreground",
+    "hover:bg-accent",
+    "pressed:bg-accent-pressed",
+  ].join(" "),
+  outline: [
+    "bg-transparent text-foreground",
+    "border border-border",
+    "hover:bg-muted",
+    "pressed:bg-accent-pressed",
+  ].join(" "),
+  ghost: [
+    "bg-transparent text-foreground",
+    "hover:bg-muted",
+    "pressed:bg-accent-pressed",
   ].join(" "),
 };

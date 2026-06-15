@@ -35,7 +35,7 @@ function BackLink({ label = "Back to Report" }: { label?: string }) {
     <a
       href="#"
       onClick={(e) => e.preventDefault()}
-      className="text-(--color-text-brand) hover:underline no-underline text-sm"
+      className="text-primary hover:underline no-underline text-sm"
     >
       &larr; {label}
     </a>
@@ -52,13 +52,13 @@ function PageShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-(--color-surface-subtle)">
-      <header className="bg-(--color-surface-default) border-b border-(--color-border-default) px-6 py-3">
+    <div className="min-h-screen bg-card">
+      <header className="bg-background border-b border-border px-6 py-3">
         <div className="max-w-5xl mx-auto flex items-center gap-2">
-          <span className="text-xl font-bold text-(--color-text-primary)">
+          <span className="text-xl font-bold text-foreground">
             &#x03B4;
           </span>
-          <span className="text-lg font-semibold text-(--color-text-primary)">
+          <span className="text-lg font-semibold text-foreground">
             Dapanoskop
           </span>
         </div>
@@ -66,7 +66,7 @@ function PageShell({
       <main className="max-w-5xl mx-auto px-6 py-6 space-y-6">
         {children}
       </main>
-      <footer className="border-t border-(--color-border-default) mt-12 py-4 text-center text-xs text-(--color-text-tertiary)">
+      <footer className="border-t border-border mt-12 py-4 text-center text-xs text-muted-foreground">
         Dapanoskop v1.2.0
       </footer>
     </div>
@@ -84,7 +84,7 @@ function CostCenterDetailPage() {
     <PageShell>
       <div className="flex items-center gap-4">
         <BackLink />
-        <span className="text-sm text-(--color-text-secondary)">
+        <span className="text-sm text-muted-foreground">
           January 2026
         </span>
       </div>
@@ -120,7 +120,7 @@ function CostCenterDetailPage() {
       {/* Cost trend placeholder */}
       <Card padding="lg">
         <H3>{cc.name} Cost Trend</H3>
-        <div className="mt-4 h-48 flex items-center justify-center rounded-md bg-(--color-surface-subtle) text-(--color-text-tertiary) text-sm">
+        <div className="mt-4 h-48 flex items-center justify-center rounded-md bg-card text-muted-foreground text-sm">
           Bar chart placeholder (12-month trend for {cc.name})
         </div>
       </Card>
@@ -142,14 +142,14 @@ function CostCenterDetailPage() {
                 <Row key={wl.name}>
                   <Cell>
                     {isUntagged ? (
-                      <span className="font-medium text-(--color-text-danger)">
+                      <span className="font-medium text-destructive">
                         {wl.name}
                       </span>
                     ) : (
                       <a
                         href="#"
                         onClick={(e) => e.preventDefault()}
-                        className="text-(--color-text-brand) hover:underline no-underline"
+                        className="text-primary hover:underline no-underline"
                       >
                         {wl.name}
                       </a>
@@ -173,7 +173,7 @@ function CostCenterDetailPage() {
                         previous={wl.yoyCostUsd}
                       />
                     ) : (
-                      <span className="text-(--color-text-tertiary)">N/A</span>
+                      <span className="text-muted-foreground">N/A</span>
                     )}
                   </Cell>
                 </Row>
@@ -197,14 +197,14 @@ function WorkloadDetailPage() {
     <PageShell>
       <div className="flex items-center gap-4">
         <BackLink />
-        <span className="text-sm text-(--color-text-secondary)">
+        <span className="text-sm text-muted-foreground">
           January 2026
         </span>
       </div>
 
       <div>
         <H2 weight="bold">Workload: {wl.name}</H2>
-        <p className="text-sm text-(--color-text-secondary) mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Cost Center: Engineering
         </p>
       </div>
@@ -295,14 +295,14 @@ function StorageDetailPage() {
     <PageShell>
       <div className="flex items-center gap-4">
         <BackLink />
-        <span className="text-sm text-(--color-text-secondary)">
+        <span className="text-sm text-muted-foreground">
           January 2026
         </span>
       </div>
 
       <div>
         <H2 weight="bold">Storage Volume Breakdown</H2>
-        <p className="text-sm text-(--color-text-secondary) mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Distribution of stored data across S3 storage tiers
         </p>
       </div>
@@ -330,7 +330,7 @@ function StorageDetailPage() {
       {/* Pie chart placeholder */}
       <Card padding="lg">
         <H3>Tier Distribution by Volume</H3>
-        <div className="mt-4 h-64 flex items-center justify-center rounded-md bg-(--color-surface-subtle) text-(--color-text-tertiary) text-sm">
+        <div className="mt-4 h-64 flex items-center justify-center rounded-md bg-card text-muted-foreground text-sm">
           Pie chart placeholder (storage tier distribution)
         </div>
       </Card>
@@ -358,7 +358,7 @@ function StorageDetailPage() {
                         className="inline-block w-3 h-3 rounded-full"
                         style={{
                           backgroundColor:
-                            tierColors[row.tier] ?? "var(--color-text-secondary)",
+                            tierColors[row.tier] ?? "var(--color-muted-foreground)",
                         }}
                       />
                       {row.tier}
@@ -398,14 +398,14 @@ function StorageCostDetailPage() {
     <PageShell>
       <div className="flex items-center gap-4">
         <BackLink />
-        <span className="text-sm text-(--color-text-secondary)">
+        <span className="text-sm text-muted-foreground">
           January 2026
         </span>
       </div>
 
       <div>
         <H2 weight="bold">Storage Cost Breakdown</H2>
-        <p className="text-sm text-(--color-text-secondary) mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           All storage usage types across all workloads
         </p>
       </div>
@@ -429,7 +429,7 @@ function StorageCostDetailPage() {
 
       {/* Placeholder for the full usage type table */}
       <Card padding="lg">
-        <div className="h-48 flex items-center justify-center rounded-md bg-(--color-surface-subtle) text-(--color-text-tertiary) text-sm">
+        <div className="h-48 flex items-center justify-center rounded-md bg-card text-muted-foreground text-sm">
           Usage type table placeholder (all storage usage types across workloads)
         </div>
       </Card>

@@ -91,12 +91,12 @@ export function DeltaIndicator({
       <span
         className={twMerge(
           "inline-flex items-center gap-1 font-medium",
-          "text-(--color-text-tertiary)",
+          "text-muted-foreground",
           className,
         )}
       >
         {label && (
-          <span className="text-sm text-(--color-text-secondary) mr-1">
+          <span className="text-sm text-muted-foreground mr-1">
             {label}
           </span>
         )}
@@ -150,7 +150,7 @@ export function DeltaIndicator({
       )}
     >
       {label && (
-        <span className="text-sm text-(--color-text-secondary) mr-1">
+        <span className="text-sm text-muted-foreground mr-1">
           {label}
         </span>
       )}

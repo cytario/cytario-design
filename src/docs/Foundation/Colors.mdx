@@ -6,11 +6,11 @@ import { PaletteScales, SemanticTokens } from "./ColorReference";
 
 # Colors
 
-The cytario color system has **two tiers**. **Semantic tokens** (`--color-surface-default`, `--color-action-primary`) express *intent* and adapt automatically across light and dark — build UI with these. **Primitives** (`--color-purple-700`, `--color-slate-100`) are the raw palette the semantic tokens are built from; treat them as reference, not values to use directly.
+The cytario color system has **two tiers**. **Semantic tokens** (`--color-background`, `--color-primary`) express *intent* and adapt automatically across light and dark — build UI with these. **Primitives** (`--color-purple-700`, `--color-slate-100`) are the raw palette the semantic tokens are built from; treat them as reference, not values to use directly.
 
 Every swatch is read live from the token stylesheets and resolved under both themes, so this page can't drift from the code.
 
-cytario's identity is carried by purple (brand) and teal (accent) — see the **brand** group first in the semantic tokens below.
+cytario's identity is carried by purple and teal — the **Primary** (purple) and **Secondary** (teal) sections in the semantic tokens below. Token names follow the shadcn/ui convention (`background`/`foreground`, `primary`, `destructive`, …) so they map to clean, property-agnostic Tailwind utilities (`bg-background`, `text-destructive`).
 
 ---
 

@@ -41,9 +41,7 @@ export const SearchResults: Story = {
 export const DirectoryTitle: Story = {
   name: "Directory View Title",
   render: () => (
-    <H1 className="flex-grow text-2xl sm:text-3xl md:text-4xl">
-      my-bucket
-    </H1>
+    <H1 className="grow text-2xl sm:text-3xl md:text-4xl">my-bucket</H1>
   ),
 };
 

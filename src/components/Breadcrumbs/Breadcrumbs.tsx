@@ -38,14 +38,14 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
             ].join(" ")}
           >
             {isLast ? (
-              <span className="font-medium text-(--color-text-primary) truncate">
+              <span className="font-medium text-foreground truncate">
                 {item.label}
               </span>
             ) : (
               <>
                 <Link
                   href={item.href}
-                  className="whitespace-nowrap text-(--color-text-secondary) outline-none transition-colors hover:text-(--color-text-primary) focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 focus-visible:rounded-sm"
+                  className="whitespace-nowrap text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:rounded-sm"
                 >
                   {item.label}
                 </Link>

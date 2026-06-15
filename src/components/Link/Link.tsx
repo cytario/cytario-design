@@ -18,8 +18,8 @@ const variantStyles: Record<LinkVariant, string> = {
     "hover:text-teal-800",
   ].join(" "),
   subtle: [
-    "text-(--color-text-secondary) no-underline",
-    "hover:underline hover:text-(--color-text-primary)",
+    "text-muted-foreground no-underline",
+    "hover:underline hover:text-foreground",
   ].join(" "),
 };
 
@@ -33,7 +33,7 @@ export function Link({
       {...props}
       className={[
         "outline-none transition-colors",
-        "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 focus-visible:rounded-sm",
+        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:rounded-sm",
         variantStyles[variant],
         className,
       ]

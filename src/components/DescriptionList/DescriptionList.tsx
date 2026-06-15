@@ -69,7 +69,7 @@ const itemLayoutStyles: Record<DescriptionListLayout, string> = {
 };
 
 const labelClasses =
-  "text-sm font-medium text-(--color-text-primary)";
+  "text-sm font-medium text-foreground";
 
 function DescriptionListItem({
   label,
@@ -82,8 +82,8 @@ function DescriptionListItem({
   const valueClasses = [
     "text-sm m-0",
     muted
-      ? "text-(--color-text-secondary)"
-      : "text-(--color-text-primary)",
+      ? "text-muted-foreground"
+      : "text-foreground",
   ].join(" ");
 
   const valueContent = <dd className={valueClasses}>{children}</dd>;

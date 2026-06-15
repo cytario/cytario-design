@@ -20,7 +20,15 @@ interface TokenRow {
 
 // Stepped hue scales, each its own gallery.
 // slate (neutral) first, then hue scales by wavelength: red → violet.
-const SCALE_GROUPS = ["slate", "rose", "amber", "green", "teal", "blue", "purple"];
+const SCALE_GROUPS = [
+  "slate",
+  "rose",
+  "amber",
+  "green",
+  "teal",
+  "blue",
+  "purple",
+];
 // Base primitives (black + white), shown atop the scales.
 const BASE_GROUPS = ["black", "white"];
 // Alpha scrims/overlays — their own gallery (rendered over a checkerboard).
@@ -39,7 +47,10 @@ function rgbToHex(rgb: string): string {
 }
 
 /** Raw declared values per theme (e.g. "var(--color-white)" or "#f8fafc"). */
-function collectDeclaredTokens(): { light: Map<string, string>; dark: Map<string, string> } {
+function collectDeclaredTokens(): {
+  light: Map<string, string>;
+  dark: Map<string, string>;
+} {
   const light = new Map<string, string>();
   const dark = new Map<string, string>();
 
@@ -134,8 +145,12 @@ function useTokens(): TokenRow[] | null {
 function useThemeGlobal(): string {
   const [theme, setTheme] = useState(() => {
     try {
-      const g = new URLSearchParams(window.location.search).get("globals") ?? "";
-      const entry = g.split(";").map((s) => s.split(":")).find(([k]) => k === "theme");
+      const g =
+        new URLSearchParams(window.location.search).get("globals") ?? "";
+      const entry = g
+        .split(";")
+        .map((s) => s.split(":"))
+        .find(([k]) => k === "theme");
       return entry?.[1] || "light";
     } catch {
       return "light";
@@ -165,94 +180,127 @@ function stepOf(name: string): number {
   return /^\d+$/.test(last) ? Number(last) : Number.POSITIVE_INFINITY;
 }
 
-// Semantic family order: neutral chrome → identity/interaction → feedback → plumbing.
-const FAMILY_ORDER = [
-  "brand",
-  "surface",
-  "text",
-  "border",
-  "action",
-  "status",
-  "banner",
-  "badge",
-  "delta",
-  "progress",
-  "overlay",
-];
-const rankIn = (order: string[], value: string) => {
-  const i = order.findIndex((p) => value.startsWith(p));
-  return i < 0 ? order.length : i;
-};
+/** Bare token name without the `--color-` prefix, e.g. "muted-foreground". */
+const bareName = (name: string) => name.replace("--color-", "");
 
-// Within a family: neutral ramp → interaction states → semantic hues.
-const VARIANT_ORDER = [
-  "default",
-  "subtle",
+// Semantic tokens use shadcn-aligned, property-agnostic names (background,
+// foreground, primary, destructive…). They no longer share a family prefix, so
+// they're grouped by an explicit section classifier instead of by first segment.
+const NEUTRAL = new Set([
+  "background",
+  "foreground",
+  "card",
   "muted",
-  "strong",
-  "primary",
-  "secondary",
-  "tertiary",
-  "inverse",
-  "brand",
+  "muted-foreground",
   "accent",
-  "focus",
+  "accent-foreground",
+  "accent-pressed",
+  "border",
   "ring",
-  "hover",
-  "pressed",
-  "active",
-  "selected",
-  "danger",
-  "success",
-  "warning",
-  "info",
-  "overlay",
-  "backdrop",
-  "track",
-  "fill",
-];
-/** One-line purpose per semantic family, shown under its heading. */
-const FAMILY_DESC: Record<string, string> = {
-  surface:
-    "Background fills. default / subtle / muted are the neutral elevation ramp; hover / pressed / selected are interaction states; hue variants tint backgrounds for inline messaging.",
-  text: "Foreground / type color. primary / secondary / tertiary is the neutral hierarchy; inverse is for text on dark or colored fills; hue variants carry meaning.",
-  border:
-    "Dividers, outlines, and the focus ring. Mirrors the surface/text roles so a field can pair border + surface + text of the same hue.",
-  brand: "cytario identity — purple primary, teal accent. Use sparingly so emphasis stays meaningful.",
-  action:
-    "Interactive element fills (buttons, controls). Variants encode role (primary / secondary / danger…) and state (hover / active). For things the user clicks — not status display.",
-  status: "State indicators for dots, chips, and icons, where the color itself is the message.",
-  banner: "Pre-composed background + text + border + icon sets for full-width alerts. Use a matched set together.",
-  badge: "Compact label colors keyed by palette hue (decorative), as background + text pairs.",
-  delta: "Trend display (up / down / flat). Convention: increase = rose, decrease = green.",
-  progress: "Progress-bar track and fill, plus per-status fills.",
-  overlay: "Scrims — the modal/dropdown overlay and the backdrop behind dialogs.",
-};
+]);
 
-/** Variant part after the family, e.g. "action-primary-hover" → "primary-hover". */
-const variantOf = (name: string) => name.replace("--color-", "").split("-").slice(1).join("-");
-function semanticSort(a: TokenRow, b: TokenRow): number {
-  const fa = FAMILY_ORDER.indexOf(groupOf(a.name));
-  const fb = FAMILY_ORDER.indexOf(groupOf(b.name));
-  if (fa !== fb) return (fa < 0 ? 999 : fa) - (fb < 0 ? 999 : fb);
-  const va = variantOf(a.name);
-  const vb = variantOf(b.name);
-  const ra = rankIn(VARIANT_ORDER, va);
-  const rb = rankIn(VARIANT_ORDER, vb);
-  if (ra !== rb) return ra - rb;
-  return va.localeCompare(vb); // base before its hover/active variants
+interface Section {
+  key: string;
+  label: string;
+  desc: string;
+  test: (n: string) => boolean;
 }
 
-// Sub-clusters inside a family, separated visually. Order matters.
-const SUBGROUP_ORDER = ["base", "selection", "brand", "status", "overlay"] as const;
-function subgroupOf(variant: string): (typeof SUBGROUP_ORDER)[number] {
-  const v = variant.toLowerCase();
-  if (/^(danger|success|warning|info)/.test(v)) return "status";
-  if (v.startsWith("selected")) return "selection";
-  if (v === "brand" || v === "accent" || v.startsWith("brand") || v.startsWith("accent"))
-    return "brand";
-  if (v.startsWith("overlay") || v.startsWith("backdrop")) return "overlay";
-  return "base"; // neutral ramp + interaction states
+const SECTIONS: Section[] = [
+  {
+    key: "neutral",
+    label: "Neutral & chrome",
+    desc: "The page base and structural neutrals. background / foreground are the canvas and its text; card is a raised surface, muted a recessed panel; accent is the neutral hover / selected highlight (with accent-foreground); muted-foreground is secondary text; border draws dividers and ring is the focus outline. These flip between light and dark.",
+    test: (n) => NEUTRAL.has(n),
+  },
+  {
+    key: "primary",
+    label: "Primary — brand purple",
+    desc: "The main call-to-action. primary fill + primary-foreground text, plus hover / pressed states. Colored solids stay constant across themes.",
+    test: (n) => n === "primary" || n.startsWith("primary-"),
+  },
+  {
+    key: "secondary",
+    label: "Secondary — brand teal",
+    desc: "Secondary action in cytario teal. Solid + foreground + hover. Constant across themes.",
+    test: (n) => n === "secondary" || n.startsWith("secondary-"),
+  },
+  {
+    key: "destructive",
+    label: "Destructive — rose",
+    desc: "Dangerous / irreversible actions and error messaging. The solid (+ foreground, hover) drives buttons; -surface / -surface-foreground / -border form inline alerts. Solid is constant; the surface/border pair flips per theme.",
+    test: (n) => n === "destructive" || n.startsWith("destructive-"),
+  },
+  {
+    key: "success",
+    label: "Success — green",
+    desc: "Positive confirmation. Solid (+ foreground, hover) for buttons; -surface / -surface-foreground / -border for inline success states.",
+    test: (n) => n === "success" || n.startsWith("success-"),
+  },
+  {
+    key: "warning",
+    label: "Warning — amber",
+    desc: "Cautions. Solid uses dark foreground for contrast on amber; -surface / -surface-foreground / -border for inline warnings.",
+    test: (n) => n === "warning" || n.startsWith("warning-"),
+  },
+  {
+    key: "info",
+    label: "Info — blue",
+    desc: "Neutral informational messaging. Solid (+ foreground, hover); -surface / -surface-foreground / -border for inline notices.",
+    test: (n) => n === "info" || n.startsWith("info-"),
+  },
+  {
+    key: "plumbing",
+    label: "Overlay & backdrop",
+    desc: "Scrims — overlay sits on dropdowns/tooltips, backdrop dims behind modal dialogs.",
+    test: (n) => n === "overlay" || n === "backdrop",
+  },
+  {
+    key: "badge",
+    label: "Badge",
+    desc: "Compact label colors keyed by palette hue (decorative), as background + text pairs.",
+    test: (n) => n.startsWith("badge-"),
+  },
+  {
+    key: "delta",
+    label: "Delta",
+    desc: "Trend display (up / down / flat). Convention: increase = rose, decrease = green.",
+    test: (n) => n.startsWith("delta-"),
+  },
+  {
+    key: "progress",
+    label: "Progress",
+    desc: "Progress-bar track and fill, plus per-status fills.",
+    test: (n) => n.startsWith("progress-"),
+  },
+];
+
+const sectionOf = (name: string): Section | undefined =>
+  SECTIONS.find((s) => s.test(bareName(name)));
+
+// Within a section: solid base → foreground → interaction states → surface set.
+const SUFFIX_RANK = [
+  "",
+  "foreground",
+  "hover",
+  "pressed",
+  "surface",
+  "surface-foreground",
+  "border",
+];
+function withinSection(a: TokenRow, b: TokenRow): number {
+  const an = bareName(a.name);
+  const bn = bareName(b.name);
+  const suffix = (n: string) => {
+    const hit = SUFFIX_RANK.filter((s) => s && n.endsWith(s)).sort(
+      (x, y) => y.length - x.length,
+    )[0];
+    return SUFFIX_RANK.indexOf(hit ?? "");
+  };
+  const ra = suffix(an);
+  const rb = suffix(bn);
+  if (ra !== rb) return ra - rb;
+  return an.localeCompare(bn);
 }
 
 function Swatch({
@@ -329,41 +377,27 @@ function Gallery({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** A family's swatches, split into sub-clusters separated by a full-width rule. */
-function FamilyGallery({ tokens, theme }: { tokens: TokenRow[]; theme: "light" | "dark" }) {
-  const buckets = SUBGROUP_ORDER.map((cat) => ({
-    cat,
-    items: tokens.filter((t) => subgroupOf(variantOf(t.name)) === cat),
-  })).filter((b) => b.items.length > 0);
-
-  const children: React.ReactNode[] = [];
-  buckets.forEach((b, i) => {
-    if (i > 0) {
-      children.push(
-        <div
-          key={`sep-${b.cat}`}
-          style={{
-            flexBasis: "100%",
-            height: 0,
-            borderTop: "1px dashed rgba(128,128,128,0.3)",
-            margin: "4px 0",
-          }}
-        />,
-      );
-    }
-    for (const r of b.items) {
-      children.push(
+/** A section's swatches in a single gallery, ordered solid → foreground → states → surface set. */
+function SectionGallery({
+  tokens,
+  theme,
+}: {
+  tokens: TokenRow[];
+  theme: "light" | "dark";
+}) {
+  return (
+    <Gallery>
+      {[...tokens].sort(withinSection).map((r) => (
         <Swatch
           key={r.name}
           name={r.name}
           color={theme === "dark" ? r.dark : r.light}
           onDark={theme === "dark"}
           mapsTo={theme === "dark" ? r.mapsToDark : r.mapsToLight}
-        />,
-      );
-    }
-  });
-  return <Gallery>{children}</Gallery>;
+        />
+      ))}
+    </Gallery>
+  );
 }
 
 /** Palette scales — primitives, identical across themes, so a single gallery. */
@@ -372,7 +406,9 @@ export function PaletteScales() {
   if (!rows) return <p>Reading tokens…</p>;
   // Base primitives (black, white) in one gallery.
   const baseRows = BASE_GROUPS.flatMap((group) =>
-    rows.filter((r) => groupOf(r.name) === group).sort((a, b) => a.name.localeCompare(b.name)),
+    rows
+      .filter((r) => groupOf(r.name) === group)
+      .sort((a, b) => a.name.localeCompare(b.name)),
   );
   // Alpha scrims/overlays, shown over a checkerboard so transparency reads.
   const alphaRows = rows
@@ -429,67 +465,79 @@ export function SemanticTokens() {
   const selected = useThemeGlobal();
   const rows = useTokens();
   if (!rows) return <p>Reading tokens…</p>;
-  // Sorted by family (chrome → interaction → feedback → plumbing) then by
-  // variant (neutral ramp → states → hues); groups inherit that order.
-  const semantic = rows
-    .filter((r) => !PALETTE_GROUPS.includes(groupOf(r.name)))
-    .sort(semanticSort);
-  const groups = Array.from(new Set(semantic.map((r) => groupOf(r.name))));
+  // Grouped into explicit sections (neutral chrome → brand roles → status hues →
+  // plumbing → decorative). Tokens not matching any section are dropped from the
+  // semantic view (primitives are already excluded by PALETTE_GROUPS).
+  const semantic = rows.filter(
+    (r) => !PALETTE_GROUPS.includes(groupOf(r.name)),
+  );
+  const sections = SECTIONS.map((s) => ({
+    section: s,
+    tokens: semantic.filter((r) => sectionOf(r.name)?.key === s.key),
+  })).filter((g) => g.tokens.length > 0);
 
   const themeView = (theme: "light" | "dark") => {
     // Explicit fg — the docs theme styles headings/paragraphs with a fixed dark
     // color that would otherwise override the dark panel's inherited light text.
     const fg = theme === "dark" ? "#e5e7eb" : "inherit";
     return (
-    <div
-      data-theme={theme}
-      style={{
-        flex: 1,
-        minWidth: 0,
-        // Match vertical padding so columns align at the top in side-by-side;
-        // only the tinted dark panel gets horizontal inset (light stays flush-left).
-        padding: theme === "dark" ? "12px 16px" : "12px 0",
-        borderRadius: 8,
-        background: theme === "dark" ? "#0f172a" : "transparent",
-        color: fg,
-      }}
-    >
-      {selected === "side-by-side" && (
-        <p
-          style={{
-            fontSize: 12,
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-            color: fg,
-          }}
-        >
-          {theme}
-        </p>
-      )}
-      {groups.map((group) => (
-        <section key={group} style={{ marginBottom: 8 }}>
-          <h4 style={{ textTransform: "capitalize", margin: "12px 0 0", color: fg }}>
-            {group}
-          </h4>
-          {FAMILY_DESC[group] && (
-            <p style={{ fontSize: 12, opacity: 0.7, margin: "2px 0 0", maxWidth: 560, color: fg }}>
-              {FAMILY_DESC[group]}
+      <div
+        data-theme={theme}
+        style={{
+          flex: 1,
+          minWidth: 0,
+          // Match vertical padding so columns align at the top in side-by-side;
+          // only the tinted dark panel gets horizontal inset (light stays flush-left).
+          padding: theme === "dark" ? "12px 16px" : "12px 0",
+          borderRadius: 8,
+          background: theme === "dark" ? "#0f172a" : "transparent",
+          color: fg,
+        }}
+      >
+        {selected === "side-by-side" && (
+          <p
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+              color: fg,
+            }}
+          >
+            {theme}
+          </p>
+        )}
+        {sections.map(({ section, tokens }) => (
+          <section key={section.key} style={{ marginBottom: 8 }}>
+            <h4 style={{ margin: "12px 0 0", color: fg }}>{section.label}</h4>
+            <p
+              style={{
+                fontSize: 12,
+                opacity: 0.7,
+                margin: "2px 0 0",
+                maxWidth: 560,
+                color: fg,
+              }}
+            >
+              {section.desc}
             </p>
-          )}
-          <FamilyGallery
-            tokens={semantic.filter((r) => groupOf(r.name) === group)}
-            theme={theme}
-          />
-        </section>
-      ))}
-    </div>
+            <SectionGallery tokens={tokens} theme={theme} />
+          </section>
+        ))}
+      </div>
     );
   };
 
   if (selected === "side-by-side") {
     return (
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 16 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "flex-start",
+          gap: 16,
+        }}
+      >
         {themeView("light")}
         {themeView("dark")}
       </div>

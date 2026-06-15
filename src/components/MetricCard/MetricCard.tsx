@@ -45,22 +45,22 @@ export function MetricCard({
   const config = sizeConfig[size];
 
   const containerClass = twMerge(
-    "bg-(--color-surface-default) border border-(--color-border-default) rounded-lg shadow-sm",
+    "bg-background border border-border rounded-lg shadow-sm",
     config.padding,
     href &&
-      "block transition-shadow hover:shadow-md hover:border-(--color-border-focus) focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2 outline-none",
+      "block transition-shadow hover:shadow-md hover:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 outline-none",
     className,
   );
 
   const content = (
     <>
-      <div className={twMerge(config.labelClass, "text-(--color-text-secondary)")}>
+      <div className={twMerge(config.labelClass, "text-muted-foreground")}>
         {label}
       </div>
       <div
         className={twMerge(
           config.valueClass,
-          "font-semibold text-(--color-text-primary) mt-1 tabular-nums",
+          "font-semibold text-foreground mt-1 tabular-nums",
         )}
       >
         {value}

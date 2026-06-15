@@ -38,9 +38,9 @@ export function InputAddon({ children, className }: InputAddonProps) {
       className={[
         "flex items-center self-stretch shrink-0 select-none",
         "px-3 py-2 text-base",
-        "bg-(--color-surface-subtle)",
-        "text-(--color-text-secondary)",
-        "border border-(--color-border-default)",
+        "bg-card",
+        "text-muted-foreground",
+        "border border-border",
         radiusClass,
         marginClass,
         className,

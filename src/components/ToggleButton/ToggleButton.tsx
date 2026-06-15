@@ -8,8 +8,10 @@ import { type Size, sizeStyles } from "../_shared/styles";
 export type ToggleButtonVariant = "default" | "primary" | "outlined";
 export type ToggleButtonSize = Size;
 
-export interface ToggleButtonProps
-  extends Omit<AriaToggleButtonProps, "className"> {
+export interface ToggleButtonProps extends Omit<
+  AriaToggleButtonProps,
+  "className"
+> {
   /** Visual style variant */
   variant?: ToggleButtonVariant;
   /** Size preset */
@@ -27,32 +29,35 @@ const squareSizeStyles: Record<ToggleButtonSize, string> = {
   lg: "h-10 w-10 text-lg",
 };
 
-const variantStyles: Record<ToggleButtonVariant, { base: string; selected: string }> = {
+const variantStyles: Record<
+  ToggleButtonVariant,
+  { base: string; selected: string }
+> = {
   default: {
     base: [
-      "bg-transparent text-(--color-text-primary)",
-      "hover:bg-(--color-surface-hover)",
-      "pressed:bg-(--color-surface-pressed)",
+      "bg-transparent text-foreground",
+      "hover:bg-accent",
+      "pressed:bg-accent",
     ].join(" "),
-    selected: "bg-(--color-surface-pressed) text-(--color-text-primary)",
+    selected: "bg-accent text-foreground",
   },
   primary: {
     base: [
-      "bg-transparent text-(--color-text-primary)",
-      "hover:bg-(--color-surface-hover)",
-      "pressed:bg-(--color-surface-pressed)",
+      "bg-transparent text-foreground",
+      "hover:bg-accent",
+      "pressed:bg-accent",
     ].join(" "),
-    selected: "bg-(--color-action-primary-active) text-(--color-text-inverse)",
+    selected: "bg-primary-pressed text-primary-foreground",
   },
   outlined: {
     base: [
-      "bg-(--color-surface-default) text-(--color-text-primary)",
-      "border border-(--color-border-default)",
-      "hover:bg-(--color-surface-subtle)",
-      "pressed:bg-(--color-surface-muted)",
+      "bg-background text-foreground",
+      "border border-border",
+      "hover:bg-card",
+      "pressed:bg-muted",
     ].join(" "),
     selected: [
-      "bg-neutral-800 text-(--color-text-inverse)",
+      "bg-neutral-800 text-primary-foreground",
       "border border-neutral-800",
     ].join(" "),
   },
@@ -77,7 +82,7 @@ export function ToggleButton({
           "font-medium",
           "leading-tight",
           "outline-none transition-colors",
-          "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
+          "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           "disabled:opacity-50 disabled:pointer-events-none",
           isSquare ? squareSizeStyles[size] : sizeStyles[size],
           isSelected ? styles.selected : styles.base,

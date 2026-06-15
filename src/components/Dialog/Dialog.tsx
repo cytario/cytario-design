@@ -41,19 +41,19 @@ export function Dialog({
       onOpenChange={onOpenChange}
       isDismissable={isDismissable}
       className={[
-        "fixed inset-0 z-50 bg-(--color-overlay-backdrop) backdrop-blur-sm",
+        "fixed inset-0 z-50 bg-backdrop backdrop-blur-sm",
         "flex items-center justify-center",
-        "data-[entering]:animate-in data-[entering]:fade-in",
-        "data-[exiting]:animate-out data-[exiting]:fade-out",
+        "entering:animate-in entering:fade-in",
+        "exiting:animate-out exiting:fade-out",
       ].join(" ")}
     >
       <Modal
         className={[
           "w-full mx-4",
           sizeStyles[size],
-          "bg-(--color-surface-default) rounded-lg shadow-xl max-h-[85vh] flex flex-col",
-          "data-[entering]:animate-in data-[entering]:zoom-in-95 data-[entering]:fade-in",
-          "data-[exiting]:animate-out data-[exiting]:zoom-out-95 data-[exiting]:fade-out",
+          "bg-background rounded-lg shadow-xl max-h-[85vh] flex flex-col",
+          "entering:animate-in entering:zoom-in-95 entering:fade-in",
+          "exiting:animate-out exiting:zoom-out-95 exiting:fade-out",
           className,
         ]
           .filter(Boolean)
@@ -62,10 +62,10 @@ export function Dialog({
         <AriaDialog className="outline-none flex flex-col max-h-[85vh]">
           {({ close }) => (
             <>
-              <div className="flex items-center justify-between px-6 py-4 border-b border-(--color-border-default)">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-border">
                 <Heading
                   slot="title"
-                  className="text-lg font-semibold text-(--color-text-primary)"
+                  className="text-lg font-semibold text-foreground"
                 >
                   {title}
                 </Heading>
@@ -74,8 +74,8 @@ export function Dialog({
                   onClick={close}
                   className={[
                     "inline-flex items-center justify-center rounded-sm p-1",
-                    "text-(--color-text-secondary) hover:text-(--color-text-primary) hover:bg-(--color-surface-muted)",
-                    "outline-none focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
+                    "text-muted-foreground hover:text-foreground hover:bg-muted",
+                    "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                     "transition-colors",
                   ].join(" ")}
                   aria-label="Close"

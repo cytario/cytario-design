@@ -34,7 +34,7 @@ export interface PopoverTriggerProps {
 export function PopoverTrigger({ children, className }: PopoverTriggerProps) {
   const cx = `
     inline-flex items-center bg-transparent border-none p-0 outline-none cursor-pointer
-    focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:rounded-sm
+    focus-visible:ring-2 focus-visible:ring-ring focus-visible:rounded-sm
   `;
 
   return <AriaButton className={twMerge(cx, className)}>{children}</AriaButton>;
@@ -61,8 +61,8 @@ export function PopoverContent({
 }: PopoverContentProps) {
   const cx = `
     z-50
-    bg-(--color-surface-default)
-    border border-(--color-border-default)
+    bg-background
+    border border-border
     rounded-md shadow-lg
     entering:animate-in entering:fade-in entering:duration-300
     exiting:animate-out exiting:fade-out exiting:duration-300

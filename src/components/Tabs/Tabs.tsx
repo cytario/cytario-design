@@ -100,15 +100,15 @@ export function TabList<T extends object>({
     variant === "unstyled"
       ? "flex items-center"
       : variant === "underline"
-        ? "flex items-center border-b border-(--color-border-default)"
-        : "inline-flex items-center bg-(--color-surface-muted) rounded-lg p-1 gap-1";
+        ? "flex items-center border-b border-border"
+        : "inline-flex items-center bg-muted rounded-lg p-1 gap-1";
 
   // Vertical orientation overrides
   const verticalStyles =
     variant === "unstyled"
       ? "flex-col"
       : variant === "underline"
-        ? "flex-col border-b-0 border-r border-(--color-border-default)"
+        ? "flex-col border-b-0 border-r border-border"
         : "flex-col";
 
   return (
@@ -144,7 +144,7 @@ export function Tab({ className, ...props }: TabProps) {
         if (variant === "unstyled") {
           return twMerge(
             "cursor-pointer outline-none",
-            "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
+            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
             isDisabled ? "opacity-50 pointer-events-none" : "",
             className,
           );
@@ -156,7 +156,7 @@ export function Tab({ className, ...props }: TabProps) {
           "font-medium",
 
           // Focus ring
-          "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-2",
+          "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
 
           // Disabled
           isDisabled ? "opacity-50 pointer-events-none" : "",
@@ -201,10 +201,10 @@ function getTabVariantStyles(
             "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-0.5 after:bg-teal-600",
           ].join(" ")
         : state.isPressed
-          ? "text-(--color-text-primary) bg-(--color-surface-muted)"
+          ? "text-foreground bg-muted"
           : state.isHovered
-            ? "text-(--color-text-primary) bg-(--color-surface-subtle)"
-            : "text-(--color-text-secondary) bg-transparent",
+            ? "text-foreground bg-card"
+            : "text-muted-foreground bg-transparent",
     ];
   }
 
@@ -215,12 +215,12 @@ function getTabVariantStyles(
 
     // Color states
     state.isSelected
-      ? "text-(--color-text-primary) font-semibold bg-(--color-surface-default) shadow-sm"
+      ? "text-foreground font-semibold bg-background shadow-sm"
       : state.isPressed
-        ? "text-(--color-text-primary) bg-(--color-surface-subtle) shadow-none"
+        ? "text-foreground bg-card shadow-none"
         : state.isHovered
-          ? "text-(--color-text-primary) bg-(--color-surface-pressed)"
-          : "text-(--color-text-secondary) bg-transparent",
+          ? "text-foreground bg-accent"
+          : "text-muted-foreground bg-transparent",
   ];
 }
 

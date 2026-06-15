@@ -53,7 +53,7 @@ export function Heading({
     <Tag
       className={twMerge(
         weightStyles[weight],
-        "text-(--color-text-primary)",
+        "text-foreground",
         sizeStyles[resolvedSize],
         className,
       )}

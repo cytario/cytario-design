@@ -148,7 +148,7 @@ export const Controlled: Story = {
     const [selectedKey, setSelectedKey] = useState<string | number>("second");
     return (
       <div>
-        <p className="mb-4 text-sm text-(--color-text-secondary)">
+        <p className="mb-4 text-sm text-muted-foreground">
           Selected: <strong>{String(selectedKey)}</strong>
         </p>
         <Tabs
@@ -181,7 +181,7 @@ export const AllVariants: Story = {
       {variants.map((variant) =>
         sizes.map((size) => (
           <div key={`${variant}-${size}`}>
-            <p className="mb-2 text-sm font-semibold text-(--color-text-secondary)">
+            <p className="mb-2 text-sm font-semibold text-muted-foreground">
               {variant} / {size}
             </p>
             <Tabs variant={variant} size={size}>

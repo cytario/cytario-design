@@ -26,7 +26,7 @@ const spanCx = "truncate overflow-hidden whitespace-nowrap block min-w-0 w-full"
 // text; on a w-full element the negative margin overflows the container and
 // clips on the right — keep the highlight within the text box instead.
 const copyCx =
-  "hover:bg-(--color-surface-hover) transition-colors rounded cursor-pointer";
+  "hover:bg-accent transition-colors rounded cursor-pointer";
 
 const leftStyle: CSSProperties = { direction: "rtl", textAlign: "left" };
 
@@ -50,7 +50,7 @@ const CopiedOverlay = () => (
     // text is not glued onto the button's accessible name.
     role="status"
     aria-live="polite"
-    className="absolute inset-0 flex items-center text-(--color-text-secondary) pointer-events-none"
+    className="absolute inset-0 flex items-center text-muted-foreground pointer-events-none"
   >
     Copied
   </span>

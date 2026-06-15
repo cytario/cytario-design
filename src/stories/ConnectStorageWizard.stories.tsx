@@ -109,7 +109,7 @@ function LocationStep({
             size="lg"
           />
         </InputGroup>
-        <p className="text-sm text-(--color-text-secondary)">
+        <p className="text-sm text-muted-foreground">
           Enter the bucket name and optional path prefix where your whole-slide
           images are stored (e.g. my-bucket/data/images).
         </p>
@@ -196,7 +196,7 @@ function ConnectStorageWizardPage({ initialStep = 0 }: { initialStep?: number })
           )}
           {currentStep === 2 && <AccessStep isAWS={isAWS} />}
 
-          <div className="border-t border-(--color-border-default) pt-4">
+          <div className="border-t border-border pt-4">
             <FormWizardNav
               onNext={goNext}
               submitLabel="Connect Storage"
@@ -244,7 +244,7 @@ function ConnectStorageWizardOtherProvider() {
           )}
           {currentStep === 2 && <AccessStep isAWS={isAWS} />}
 
-          <div className="border-t border-(--color-border-default) pt-4">
+          <div className="border-t border-border pt-4">
             <FormWizardNav
               onNext={goNext}
               submitLabel="Connect Storage"

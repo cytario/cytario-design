@@ -79,7 +79,7 @@ export function SegmentedControl({
         defaultSelectedKeys={isNoneMode ? undefined : defaultSelectedKeys}
         onSelectionChange={isNoneMode ? undefined : onSelectionChange}
         className={twMerge(
-          "inline-flex items-center rounded-lg border border-(--color-border-default) bg-(--color-surface-muted) p-0.5 gap-0.5",
+          "inline-flex items-center rounded-lg border border-border bg-muted p-0.5 gap-0.5",
           className,
         )}
       >
@@ -117,7 +117,7 @@ export function SegmentedControlItem({
           "outline-none transition-colors cursor-pointer",
 
           // Focus ring
-          "focus-visible:ring-2 focus-visible:ring-(--color-border-focus) focus-visible:ring-offset-1",
+          "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
 
           // Disabled
           isDisabled && "opacity-50 pointer-events-none",
@@ -127,12 +127,12 @@ export function SegmentedControlItem({
 
           // Selected state
           isSelected
-            ? "bg-(--color-surface-default) text-(--color-text-primary) shadow-sm font-semibold"
+            ? "bg-background text-foreground shadow-sm font-semibold"
             : isPressed
-              ? "bg-(--color-surface-subtle) text-(--color-text-primary)"
+              ? "bg-card text-foreground"
               : isHovered
-                ? "bg-(--color-surface-subtle) text-(--color-text-primary)"
-                : "bg-transparent text-(--color-text-secondary)",
+                ? "bg-card text-foreground"
+                : "bg-transparent text-muted-foreground",
 
           className,
         )

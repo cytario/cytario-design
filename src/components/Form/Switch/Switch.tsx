@@ -15,9 +15,9 @@ export interface SwitchProps
 }
 
 const trackColorMap: Record<PresetColor, string> = {
-  primary: "bg-(--color-action-primary)",
-  success: "bg-(--color-action-success)",
-  destructive: "bg-(--color-action-danger)",
+  primary: "bg-primary",
+  success: "bg-success",
+  destructive: "bg-destructive",
 };
 
 const presetColors = new Set<string>(Object.keys(trackColorMap));
@@ -38,7 +38,7 @@ export function Switch({
     <AriaSwitch
       {...props}
       className={[
-        "group flex items-center gap-2 text-sm text-(--color-text-primary) cursor-pointer",
+        "group flex items-center gap-2 text-sm text-foreground cursor-pointer",
         "disabled:opacity-50 disabled:cursor-default",
         className,
       ]
@@ -50,11 +50,11 @@ export function Switch({
           <div
             className={[
               "w-9 h-5 rounded-full transition-colors shrink-0 p-0.5",
-              "group-focus-visible:ring-2 group-focus-visible:ring-(--color-border-focus) group-focus-visible:ring-offset-2",
+              "group-focus-visible:ring-2 group-focus-visible:ring-ring group-focus-visible:ring-offset-2",
               isSelected && isPreset
                 ? trackColorMap[color]
                 : !isSelected
-                  ? "bg-(--color-border-strong)"
+                  ? "bg-border"
                   : "",
             ].join(" ")}
             style={
@@ -65,7 +65,7 @@ export function Switch({
           >
             <div
               className={[
-                "w-4 h-4 rounded-full bg-(--color-surface-default) transition-transform shadow-sm",
+                "w-4 h-4 rounded-full bg-background transition-transform shadow-sm",
                 isSelected ? "translate-x-4" : "translate-x-0",
               ].join(" ")}
             />

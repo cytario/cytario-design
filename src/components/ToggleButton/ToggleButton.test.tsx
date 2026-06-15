@@ -59,7 +59,7 @@ describe("ToggleButton", () => {
     render(<ToggleButton variant="outlined">Outlined</ToggleButton>);
     const button = screen.getByRole("button");
     expect(button.className).toContain("border");
-    expect(button.className).toContain("bg-(--color-surface-default)");
+    expect(button.className).toContain("bg-background");
   });
 
   it("applies xs size padding and text", () => {

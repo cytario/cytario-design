@@ -44,12 +44,12 @@ export function MenuItem({
       className={[
         "flex items-center gap-2 px-3 py-2 text-sm outline-none cursor-default",
         "transition-colors",
-        "focus:bg-(--color-surface-muted)",
-        "hover:bg-(--color-surface-muted)",
+        "focus:bg-muted",
+        "hover:bg-muted",
         "disabled:opacity-50 disabled:pointer-events-none",
         isDanger
-          ? "text-(--color-text-danger)"
-          : "text-(--color-text-primary)",
+          ? "text-destructive"
+          : "text-foreground",
         className,
       ]
         .filter(Boolean)
