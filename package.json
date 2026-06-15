@@ -18,12 +18,14 @@
     "./styles.css": "./dist/index.css",
     "./tokens/variables.css": "./src/tokens/variables.css",
     "./tokens/variables-dark.css": "./src/tokens/variables-dark.css",
+    "./tokens/utilities.css": "./src/tokens/utilities.css",
     "./styles/*": "./src/styles/*"
   },
   "files": [
     "dist",
     "src/tokens/variables.css",
     "src/tokens/variables-dark.css",
+    "src/tokens/utilities.css",
     "src/styles"
   ],
   "publishConfig": {
