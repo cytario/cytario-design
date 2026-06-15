@@ -20,7 +20,15 @@ interface TokenRow {
 
 // Stepped hue scales, each its own gallery.
 // slate (neutral) first, then hue scales by wavelength: red → violet.
-const SCALE_GROUPS = ["slate", "rose", "amber", "green", "teal", "blue", "purple"];
+const SCALE_GROUPS = [
+  "slate",
+  "rose",
+  "amber",
+  "green",
+  "teal",
+  "blue",
+  "purple",
+];
 // Base primitives (black + white), shown atop the scales.
 const BASE_GROUPS = ["black", "white"];
 // Alpha scrims/overlays — their own gallery (rendered over a checkerboard).
@@ -39,7 +47,10 @@ function rgbToHex(rgb: string): string {
 }
 
 /** Raw declared values per theme (e.g. "var(--color-white)" or "#f8fafc"). */
-function collectDeclaredTokens(): { light: Map<string, string>; dark: Map<string, string> } {
+function collectDeclaredTokens(): {
+  light: Map<string, string>;
+  dark: Map<string, string>;
+} {
   const light = new Map<string, string>();
   const dark = new Map<string, string>();
 
@@ -134,8 +145,12 @@ function useTokens(): TokenRow[] | null {
 function useThemeGlobal(): string {
   const [theme, setTheme] = useState(() => {
     try {
-      const g = new URLSearchParams(window.location.search).get("globals") ?? "";
-      const entry = g.split(";").map((s) => s.split(":")).find(([k]) => k === "theme");
+      const g =
+        new URLSearchParams(window.location.search).get("globals") ?? "";
+      const entry = g
+        .split(";")
+        .map((s) => s.split(":"))
+        .find(([k]) => k === "theme");
       return entry?.[1] || "light";
     } catch {
       return "light";
@@ -179,6 +194,7 @@ const NEUTRAL = new Set([
   "muted-foreground",
   "accent",
   "accent-foreground",
+  "accent-pressed",
   "border",
   "ring",
 ]);
@@ -200,7 +216,7 @@ const SECTIONS: Section[] = [
   {
     key: "primary",
     label: "Primary — brand purple",
-    desc: "The main call-to-action. primary fill + primary-foreground text, plus hover / active states. Colored solids stay constant across themes.",
+    desc: "The main call-to-action. primary fill + primary-foreground text, plus hover / pressed states. Colored solids stay constant across themes.",
     test: (n) => n === "primary" || n.startsWith("primary-"),
   },
   {
@@ -263,12 +279,22 @@ const sectionOf = (name: string): Section | undefined =>
   SECTIONS.find((s) => s.test(bareName(name)));
 
 // Within a section: solid base → foreground → interaction states → surface set.
-const SUFFIX_RANK = ["", "foreground", "hover", "active", "surface", "surface-foreground", "border"];
+const SUFFIX_RANK = [
+  "",
+  "foreground",
+  "hover",
+  "pressed",
+  "surface",
+  "surface-foreground",
+  "border",
+];
 function withinSection(a: TokenRow, b: TokenRow): number {
   const an = bareName(a.name);
   const bn = bareName(b.name);
   const suffix = (n: string) => {
-    const hit = SUFFIX_RANK.filter((s) => s && n.endsWith(s)).sort((x, y) => y.length - x.length)[0];
+    const hit = SUFFIX_RANK.filter((s) => s && n.endsWith(s)).sort(
+      (x, y) => y.length - x.length,
+    )[0];
     return SUFFIX_RANK.indexOf(hit ?? "");
   };
   const ra = suffix(an);
@@ -352,7 +378,13 @@ function Gallery({ children }: { children: React.ReactNode }) {
 }
 
 /** A section's swatches in a single gallery, ordered solid → foreground → states → surface set. */
-function SectionGallery({ tokens, theme }: { tokens: TokenRow[]; theme: "light" | "dark" }) {
+function SectionGallery({
+  tokens,
+  theme,
+}: {
+  tokens: TokenRow[];
+  theme: "light" | "dark";
+}) {
   return (
     <Gallery>
       {[...tokens].sort(withinSection).map((r) => (
@@ -374,7 +406,9 @@ export function PaletteScales() {
   if (!rows) return <p>Reading tokens…</p>;
   // Base primitives (black, white) in one gallery.
   const baseRows = BASE_GROUPS.flatMap((group) =>
-    rows.filter((r) => groupOf(r.name) === group).sort((a, b) => a.name.localeCompare(b.name)),
+    rows
+      .filter((r) => groupOf(r.name) === group)
+      .sort((a, b) => a.name.localeCompare(b.name)),
   );
   // Alpha scrims/overlays, shown over a checkerboard so transparency reads.
   const alphaRows = rows
@@ -434,7 +468,9 @@ export function SemanticTokens() {
   // Grouped into explicit sections (neutral chrome → brand roles → status hues →
   // plumbing → decorative). Tokens not matching any section are dropped from the
   // semantic view (primitives are already excluded by PALETTE_GROUPS).
-  const semantic = rows.filter((r) => !PALETTE_GROUPS.includes(groupOf(r.name)));
+  const semantic = rows.filter(
+    (r) => !PALETTE_GROUPS.includes(groupOf(r.name)),
+  );
   const sections = SECTIONS.map((s) => ({
     section: s,
     tokens: semantic.filter((r) => sectionOf(r.name)?.key === s.key),
@@ -445,48 +481,63 @@ export function SemanticTokens() {
     // color that would otherwise override the dark panel's inherited light text.
     const fg = theme === "dark" ? "#e5e7eb" : "inherit";
     return (
-    <div
-      data-theme={theme}
-      style={{
-        flex: 1,
-        minWidth: 0,
-        // Match vertical padding so columns align at the top in side-by-side;
-        // only the tinted dark panel gets horizontal inset (light stays flush-left).
-        padding: theme === "dark" ? "12px 16px" : "12px 0",
-        borderRadius: 8,
-        background: theme === "dark" ? "#0f172a" : "transparent",
-        color: fg,
-      }}
-    >
-      {selected === "side-by-side" && (
-        <p
-          style={{
-            fontSize: 12,
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-            color: fg,
-          }}
-        >
-          {theme}
-        </p>
-      )}
-      {sections.map(({ section, tokens }) => (
-        <section key={section.key} style={{ marginBottom: 8 }}>
-          <h4 style={{ margin: "12px 0 0", color: fg }}>{section.label}</h4>
-          <p style={{ fontSize: 12, opacity: 0.7, margin: "2px 0 0", maxWidth: 560, color: fg }}>
-            {section.desc}
+      <div
+        data-theme={theme}
+        style={{
+          flex: 1,
+          minWidth: 0,
+          // Match vertical padding so columns align at the top in side-by-side;
+          // only the tinted dark panel gets horizontal inset (light stays flush-left).
+          padding: theme === "dark" ? "12px 16px" : "12px 0",
+          borderRadius: 8,
+          background: theme === "dark" ? "#0f172a" : "transparent",
+          color: fg,
+        }}
+      >
+        {selected === "side-by-side" && (
+          <p
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+              color: fg,
+            }}
+          >
+            {theme}
           </p>
-          <SectionGallery tokens={tokens} theme={theme} />
-        </section>
-      ))}
-    </div>
+        )}
+        {sections.map(({ section, tokens }) => (
+          <section key={section.key} style={{ marginBottom: 8 }}>
+            <h4 style={{ margin: "12px 0 0", color: fg }}>{section.label}</h4>
+            <p
+              style={{
+                fontSize: 12,
+                opacity: 0.7,
+                margin: "2px 0 0",
+                maxWidth: 560,
+                color: fg,
+              }}
+            >
+              {section.desc}
+            </p>
+            <SectionGallery tokens={tokens} theme={theme} />
+          </section>
+        ))}
+      </div>
     );
   };
 
   if (selected === "side-by-side") {
     return (
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 16 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "flex-start",
+          gap: 16,
+        }}
+      >
         {themeView("light")}
         {themeView("dark")}
       </div>

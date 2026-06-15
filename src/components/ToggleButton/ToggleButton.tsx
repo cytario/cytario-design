@@ -8,8 +8,10 @@ import { type Size, sizeStyles } from "../_shared/styles";
 export type ToggleButtonVariant = "default" | "primary" | "outlined";
 export type ToggleButtonSize = Size;
 
-export interface ToggleButtonProps
-  extends Omit<AriaToggleButtonProps, "className"> {
+export interface ToggleButtonProps extends Omit<
+  AriaToggleButtonProps,
+  "className"
+> {
   /** Visual style variant */
   variant?: ToggleButtonVariant;
   /** Size preset */
@@ -27,7 +29,10 @@ const squareSizeStyles: Record<ToggleButtonSize, string> = {
   lg: "h-10 w-10 text-lg",
 };
 
-const variantStyles: Record<ToggleButtonVariant, { base: string; selected: string }> = {
+const variantStyles: Record<
+  ToggleButtonVariant,
+  { base: string; selected: string }
+> = {
   default: {
     base: [
       "bg-transparent text-foreground",
@@ -42,7 +47,7 @@ const variantStyles: Record<ToggleButtonVariant, { base: string; selected: strin
       "hover:bg-accent",
       "pressed:bg-accent",
     ].join(" "),
-    selected: "bg-primary-active text-primary-foreground",
+    selected: "bg-primary-pressed text-primary-foreground",
   },
   outlined: {
     base: [

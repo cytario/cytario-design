@@ -22,6 +22,9 @@
     "accent-foreground": {
       "$value": "{color.slate.900}"
     },
+    "accent-pressed": {
+      "$value": "{color.slate.300}"
+    },
     "border": {
       "$value": "{color.slate.200}"
     },
@@ -41,10 +44,10 @@
       "$value": "{color.white}"
     },
     "primary-hover": {
-      "$value": "{color.purple.600}"
-    },
-    "primary-active": {
       "$value": "{color.purple.800}"
+    },
+    "primary-pressed": {
+      "$value": "{color.purple.900}"
     },
     "secondary": {
       "$value": "{color.teal.700}"
@@ -55,6 +58,9 @@
     "secondary-hover": {
       "$value": "{color.teal.800}"
     },
+    "secondary-pressed": {
+      "$value": "{color.teal.900}"
+    },
     "destructive": {
       "$value": "{color.rose.600}"
     },
@@ -63,6 +69,9 @@
     },
     "destructive-hover": {
       "$value": "{color.rose.700}"
+    },
+    "destructive-pressed": {
+      "$value": "{color.rose.800}"
     },
     "destructive-surface": {
       "$value": "{color.rose.50}"
@@ -82,6 +91,9 @@
     "success-hover": {
       "$value": "{color.green.800}"
     },
+    "success-pressed": {
+      "$value": "{color.green.900}"
+    },
     "success-surface": {
       "$value": "{color.green.50}"
     },
@@ -98,7 +110,10 @@
       "$value": "{color.slate.900}"
     },
     "warning-hover": {
-      "$value": "{color.amber.600}"
+      "$value": "{color.amber.400}"
+    },
+    "warning-pressed": {
+      "$value": "{color.amber.300}"
     },
     "warning-surface": {
       "$value": "{color.amber.50}"
@@ -117,6 +132,9 @@
     },
     "info-hover": {
       "$value": "{color.blue.700}"
+    },
+    "info-pressed": {
+      "$value": "{color.blue.800}"
     },
     "info-surface": {
       "$value": "{color.blue.50}"
