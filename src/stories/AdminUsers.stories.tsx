@@ -1,13 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { fn } from "storybook/test";
-import {
-  UserPlus,
-  Users,
-  UsersRound,
-  ShieldCheck,
-  X,
-} from "lucide-react";
+import { UserPlus, Users, UsersRound, ShieldCheck, X } from "lucide-react";
 
 import { Button } from "../components/Button";
 import { Dialog } from "../components/Dialog";
@@ -60,7 +54,11 @@ const mockUsers: UserRow[] = [
     email: "t.berger@cytario.com",
     enabled: true,
     adminGroups: [],
-    groups: ["/cytario", "/cytario/engineering", "/cytario/engineering/platform"],
+    groups: [
+      "/cytario",
+      "/cytario/engineering",
+      "/cytario/engineering/platform",
+    ],
   },
   {
     id: "u-003",
@@ -84,7 +82,11 @@ const mockUsers: UserRow[] = [
     email: "e.rossi@cytario.com",
     enabled: true,
     adminGroups: [],
-    groups: ["/cytario", "/cytario/engineering", "/cytario/engineering/frontend"],
+    groups: [
+      "/cytario",
+      "/cytario/engineering",
+      "/cytario/engineering/frontend",
+    ],
   },
   {
     id: "u-006",
@@ -114,10 +116,7 @@ const mockUsers: UserRow[] = [
 
 function StatusPill({ enabled }: { enabled: boolean }) {
   return (
-    <Badge
-      variant={enabled ? "green" : "neutral"}
-      size="sm"
-    >
+    <Badge variant={enabled ? "green" : "neutral"} size="sm">
       {enabled ? "Active" : "Disabled"}
     </Badge>
   );
@@ -163,7 +162,12 @@ function InviteUserDialog({
   onOpenChange: (open: boolean) => void;
 }) {
   return (
-    <Dialog isOpen={isOpen} onOpenChange={onOpenChange} title="Invite User" size="md">
+    <Dialog
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      title="Invite User"
+      size="md"
+    >
       <Fieldset>
         <Input
           label="Email"
@@ -225,7 +229,11 @@ function AdminUsersPage() {
       {/* App Header */}
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
+          <img
+            src="logos/cytario-logo-purple.svg"
+            alt="cytario"
+            className="h-6"
+          />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
@@ -235,13 +243,18 @@ function AdminUsersPage() {
         </div>
       </header>
 
-      <div className="flex-grow bg-background px-4 sm:px-6 lg:px-8 py-4">
+      <div className="grow bg-background px-4 sm:px-6 lg:px-8 py-4">
         <div className="mx-auto max-w-7xl">
           <SectionHeader title="/cytario">
             <span className="text-sm text-muted-foreground">
               {mockUsers.length} users
             </span>
-            <Button variant="secondary" size="sm" iconLeft={UserPlus} onPress={() => setShowInvite(true)}>
+            <Button
+              variant="secondary"
+              size="sm"
+              iconLeft={UserPlus}
+              onPress={() => setShowInvite(true)}
+            >
               Invite User
             </Button>
             <Button variant="secondary" size="sm" iconLeft={UsersRound}>
@@ -256,8 +269,12 @@ function AdminUsersPage() {
                 <Column>
                   <Checkbox
                     slot="selection"
-                    isSelected={selectedCount === mockUsers.length && mockUsers.length > 0}
-                    isIndeterminate={selectedCount > 0 && selectedCount < mockUsers.length}
+                    isSelected={
+                      selectedCount === mockUsers.length && mockUsers.length > 0
+                    }
+                    isIndeterminate={
+                      selectedCount > 0 && selectedCount < mockUsers.length
+                    }
                     onChange={toggleAll}
                     aria-label="Select all users"
                   />
@@ -348,14 +365,18 @@ function AdminUsersEmpty() {
     <div className="min-h-screen bg-card">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
+          <img
+            src="logos/cytario-logo-purple.svg"
+            alt="cytario"
+            className="h-6"
+          />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
         </div>
       </header>
 
-      <div className="flex-grow bg-background px-4 sm:px-6 lg:px-8 py-4">
+      <div className="grow bg-background px-4 sm:px-6 lg:px-8 py-4">
         <div className="mx-auto max-w-7xl">
           <SectionHeader title="/cytario" />
           <EmptyState
@@ -397,14 +418,18 @@ function AdminUsersWithSelection() {
     <div className="min-h-screen bg-card">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img src="logos/cytario-logo-purple.svg" alt="cytario" className="h-6" />
+          <img
+            src="logos/cytario-logo-purple.svg"
+            alt="cytario"
+            className="h-6"
+          />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
         </div>
       </header>
 
-      <div className="flex-grow bg-background px-4 sm:px-6 lg:px-8 py-4">
+      <div className="grow bg-background px-4 sm:px-6 lg:px-8 py-4">
         <div className="mx-auto max-w-7xl">
           <SectionHeader title="/cytario">
             <span className="text-sm text-muted-foreground">
@@ -419,7 +444,9 @@ function AdminUsersWithSelection() {
                   <Checkbox
                     slot="selection"
                     isSelected={selectedCount === mockUsers.length}
-                    isIndeterminate={selectedCount > 0 && selectedCount < mockUsers.length}
+                    isIndeterminate={
+                      selectedCount > 0 && selectedCount < mockUsers.length
+                    }
                     onChange={() =>
                       setSelectedRows(
                         selectedCount === mockUsers.length
@@ -452,7 +479,9 @@ function AdminUsersWithSelection() {
                       </span>
                     </Cell>
                     <Cell>
-                      <span className="text-muted-foreground">{user.email}</span>
+                      <span className="text-muted-foreground">
+                        {user.email}
+                      </span>
                     </Cell>
                     <Cell>
                       <StatusPill enabled={user.enabled} />

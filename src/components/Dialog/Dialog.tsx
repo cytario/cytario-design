@@ -43,8 +43,8 @@ export function Dialog({
       className={[
         "fixed inset-0 z-50 bg-backdrop backdrop-blur-sm",
         "flex items-center justify-center",
-        "data-[entering]:animate-in data-[entering]:fade-in",
-        "data-[exiting]:animate-out data-[exiting]:fade-out",
+        "entering:animate-in entering:fade-in",
+        "exiting:animate-out exiting:fade-out",
       ].join(" ")}
     >
       <Modal
@@ -52,8 +52,8 @@ export function Dialog({
           "w-full mx-4",
           sizeStyles[size],
           "bg-background rounded-lg shadow-xl max-h-[85vh] flex flex-col",
-          "data-[entering]:animate-in data-[entering]:zoom-in-95 data-[entering]:fade-in",
-          "data-[exiting]:animate-out data-[exiting]:zoom-out-95 data-[exiting]:fade-out",
+          "entering:animate-in entering:zoom-in-95 entering:fade-in",
+          "exiting:animate-out exiting:zoom-out-95 exiting:fade-out",
           className,
         ]
           .filter(Boolean)

@@ -83,9 +83,7 @@ export const UserProfileMenu: Story = {
               href="https://auth.cytario.com/admin"
               target="_blank"
               endContent={
-                <span className="text-xs text-muted-foreground">
-                  External
-                </span>
+                <span className="text-xs text-muted-foreground">External</span>
               }
             >
               Admin Console
@@ -104,7 +102,7 @@ export const UserProfileMenu: Story = {
         icon={User}
         aria-label="User menu"
         variant="ghost"
-        className="flex-shrink-0 w-8 h-8"
+        className="shrink-0 w-8 h-8"
       />
     </Menu>
   ),
@@ -169,9 +167,7 @@ export const WithEndContent: Story = {
             id="cut"
             icon={Edit}
             endContent={
-              <kbd className="text-xs text-muted-foreground">
-                Cmd+X
-              </kbd>
+              <kbd className="text-xs text-muted-foreground">Cmd+X</kbd>
             }
           >
             Cut
@@ -180,9 +176,7 @@ export const WithEndContent: Story = {
             id="copy"
             icon={Copy}
             endContent={
-              <kbd className="text-xs text-muted-foreground">
-                Cmd+C
-              </kbd>
+              <kbd className="text-xs text-muted-foreground">Cmd+C</kbd>
             }
           >
             Copy
@@ -231,7 +225,7 @@ export const UserMenu: Story = {
         icon={User}
         aria-label="User menu"
         variant="ghost"
-        className="flex-shrink-0 w-8 h-8 text-white"
+        className="shrink-0 w-8 h-8 text-white"
       />
     ),
   },
@@ -326,21 +320,13 @@ export const ItemsWithEndContent: Story = {
         id: "edit",
         label: "Edit",
         icon: Edit,
-        endContent: (
-          <kbd className="text-xs text-muted-foreground">
-            Cmd+E
-          </kbd>
-        ),
+        endContent: <kbd className="text-xs text-muted-foreground">Cmd+E</kbd>,
       },
       {
         id: "copy",
         label: "Copy",
         icon: Copy,
-        endContent: (
-          <kbd className="text-xs text-muted-foreground">
-            Cmd+C
-          </kbd>
-        ),
+        endContent: <kbd className="text-xs text-muted-foreground">Cmd+C</kbd>,
       },
       {
         id: "export",
@@ -393,7 +379,11 @@ export const ColumnVisibility: Story = {
           </MenuSection>
         }
       >
-        <IconButton icon={Columns3} aria-label="Toggle columns" variant="ghost" />
+        <IconButton
+          icon={Columns3}
+          aria-label="Toggle columns"
+          variant="ghost"
+        />
       </Menu>
     );
   },
@@ -410,7 +400,9 @@ export const CheckboxMenuItems: Story = {
           <MenuCheckboxItem id="grid">Show Grid</MenuCheckboxItem>
           <MenuCheckboxItem id="labels">Show Labels</MenuCheckboxItem>
           <MenuCheckboxItem id="rulers">Show Rulers</MenuCheckboxItem>
-          <MenuCheckboxItem id="guides" isDisabled>Show Guides</MenuCheckboxItem>
+          <MenuCheckboxItem id="guides" isDisabled>
+            Show Guides
+          </MenuCheckboxItem>
         </>
       }
     >
@@ -436,12 +428,18 @@ export const MixedCheckboxAndActions: Story = {
             <MenuSection header="Overlays">
               <MenuCheckboxItem id="annotations">Annotations</MenuCheckboxItem>
               <MenuCheckboxItem id="heatmap">Heatmap</MenuCheckboxItem>
-              <MenuCheckboxItem id="segmentation">Segmentation</MenuCheckboxItem>
+              <MenuCheckboxItem id="segmentation">
+                Segmentation
+              </MenuCheckboxItem>
             </MenuSection>
 
             <MenuSeparator />
 
-            <MenuItem id="reset-view" icon={Settings} onAction={() => setSelectedKeys(new Set())}>
+            <MenuItem
+              id="reset-view"
+              icon={Settings}
+              onAction={() => setSelectedKeys(new Set())}
+            >
               Clear All Overlays
             </MenuItem>
           </>
