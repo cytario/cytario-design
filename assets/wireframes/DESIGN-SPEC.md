@@ -39,8 +39,8 @@ Wireframes for two redesigned modal dialogs: **ConnectionInfoDialog** and **File
 - **Region** -- Only shown for AWS provider
 - **Endpoint** -- Shows "(default AWS endpoint)" if empty for AWS; shows the actual URL for custom providers
 - **Role ARN** -- Only shown for AWS provider; hidden if empty
-- **Created by** -- Read-only, visually de-emphasized with `--color-text-secondary`
-- **Connection ID** -- Read-only, visually de-emphasized with `--color-text-secondary`, shown last (least important)
+- **Created by** -- Read-only, visually de-emphasized with `--color-muted-foreground`
+- **Connection ID** -- Read-only, visually de-emphasized with `--color-muted-foreground`, shown last (least important)
 
 **Footer**: Three action groups, spread with space-between:
 - Left: "Open Bucket" (secondary variant)
@@ -95,8 +95,8 @@ Wireframes for two redesigned modal dialogs: **ConnectionInfoDialog** and **File
 - **Last Modified** -- ISO-ish datetime with UTC (e.g., "2026-02-18 14:32 UTC")
 - **Content Type** -- MIME type (e.g., "image/tiff")
 - **Storage Class** -- S3 storage class (e.g., "STANDARD", "GLACIER")
-- **ETag** -- Truncated S3 hash, visually de-emphasized with `--color-text-secondary`
-- **Version ID** -- Truncated, de-emphasized with `--color-text-secondary`; hidden entirely if bucket is not versioned
+- **ETag** -- Truncated S3 hash, visually de-emphasized with `--color-muted-foreground`
+- **Version ID** -- Truncated, de-emphasized with `--color-muted-foreground`; hidden entirely if bucket is not versioned
 
 **Footer**: Three actions:
 - Left: "Open File" (secondary variant) -- navigates to the file viewer
@@ -143,7 +143,7 @@ The body metadata remains visible during confirmation -- the user can still see 
 - All form fields have visible labels (no placeholder-only fields)
 - Tab order follows visual layout: top-to-bottom through fields, then footer buttons left-to-right
 - Escape key closes the dialog from any state (view mode, edit mode, or delete confirmation)
-- **Contrast**: Read-only / de-emphasized values use `--color-text-secondary` (neutral-600, #4B5563, 7.2:1 ratio) -- NOT `--color-text-tertiary` (neutral-400, #9CA3AF, 2.9:1 ratio) which fails WCAG AA at body text sizes
+- **Contrast**: Read-only / de-emphasized values use `--color-muted-foreground` (slate-600, ~7:1 ratio). The old `--color-text-tertiary` (slate-400, ~2.9:1, fails WCAG AA at body-text sizes) was removed from the token system for exactly this reason -- there is no longer a third, lower-contrast text tier
 
 ## Review Notes
 

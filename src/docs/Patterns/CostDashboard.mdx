@@ -14,8 +14,8 @@ This pattern demonstrates how cytario-design components compose to form a cost m
 The dashboard uses a single-column layout (`max-w-5xl`) with vertical stacking (`space-y-6`). All sections are visible on one scrollable page -- no tabs or hidden content by default.
 
 ```
-Page (bg surface-subtle)
-  Header (surface-default, border-bottom)
+Page (bg card)
+  Header (background, border-bottom)
   PeriodSelector (horizontal scrollable strip)
   [conditional] Banner (warning, for MTD)
   MetricCardRow (3 cards: Total Spend, MoM, YoY)
