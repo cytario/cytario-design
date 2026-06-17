@@ -80,7 +80,7 @@ After modifying tokens, run `npm run build:tokens`. If adding a new color scale,
 All components follow the same pattern:
 
 1. **Behavior + accessibility**: Wrap a React Aria Component (e.g., `Button`, `TextField`, `Select`, `Table`)
-2. **Styling**: Tailwind v4 canonical utility classes. Use standard utilities where they exist (`font-semibold`, `text-sm`, `gap-4`, `rounded-md`). Use token syntax only for custom semantic tokens (e.g., `bg-(--color-action-primary)`, `text-(--color-text-secondary)`). Never use verbose forms like `[var(--spacing-4)]` or `(number:--font-weight-semibold)`.
+2. **Styling**: Tailwind v4 canonical utility classes. Use standard utilities where they exist (`font-semibold`, `text-sm`, `gap-4`, `rounded-md`), including the semantic color utilities generated from the design tokens (`bg-primary`, `text-muted-foreground`, `bg-destructive`, `border-border`). Use arbitrary token syntax (`bg-(--color-badge-purple-bg)`) only for the decorative `badge`/`delta`/`progress` palettes that are deliberately excluded from the `@theme` layer. Never use verbose forms like `[var(--spacing-4)]` or `(number:--font-weight-semibold)`.
 3. **Stories**: CSF3 format, import from `storybook/react` and `storybook/test` (Storybook 10 paths)
 4. **Tests**: Vitest + React Testing Library. Test by user perspective (query by role/label). Do not test React Aria internals.
 

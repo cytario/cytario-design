@@ -93,7 +93,7 @@ src/components/ComponentName/
 ### Approach
 
 - **Behavior and accessibility**: React Aria Components provide keyboard navigation, ARIA attributes, and focus management out of the box. Components wrap React Aria primitives with cytario styling.
-- **Styling**: Tailwind CSS v4 utility classes referencing design token CSS custom properties (e.g., `bg-[var(--color-action-primary)]`). No runtime CSS-in-JS.
+- **Styling**: Tailwind CSS v4 utility classes, including the idiomatic semantic color utilities generated from the design tokens (e.g., `bg-primary`, `text-muted-foreground`, `bg-destructive`). No runtime CSS-in-JS.
 - **Stories**: CSF3 format with `args`, `argTypes`, and `play` functions for interaction tests. All stories are automatically checked by the a11y addon (axe-core).
 - **Tests**: Vitest with React Testing Library. Test by user perspective -- query by role and label, verify behavior and accessibility attributes. Do not test React Aria internals.
 
