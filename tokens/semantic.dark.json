@@ -50,16 +50,16 @@
       "$value": "{color.purple.900}"
     },
     "secondary": {
-      "$value": "{color.teal.700}"
+      "$value": "{color.teal.300}"
     },
     "secondary-foreground": {
-      "$value": "{color.white}"
+      "$value": "{color.teal.950}"
     },
     "secondary-hover": {
-      "$value": "{color.teal.800}"
+      "$value": "{color.teal.400}"
     },
     "secondary-pressed": {
-      "$value": "{color.teal.900}"
+      "$value": "{color.teal.500}"
     },
     "destructive": {
       "$value": "{color.rose.600}"
