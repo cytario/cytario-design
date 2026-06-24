@@ -1,6 +1,7 @@
+import { Fragment } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, fn, userEvent, within } from "storybook/test";
-import { ArrowRight, Download, Mail, Trash2 } from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
 import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
@@ -37,136 +38,7 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-// --- Real-world usage stories (from cytario-web) ---
-
-export const Primary: Story = {
-  args: { variant: "primary", size: "lg", children: "Submit" },
-};
-
-export const Secondary: Story = {
-  args: { variant: "secondary", size: "lg", children: "Back" },
-};
-
-export const Ghost: Story = {
-  args: { variant: "ghost", children: "Ghost" },
-};
-
-export const Destructive: Story = {
-  args: { variant: "destructive", size: "lg", children: "Remove Data Connection" },
-};
-
-export const DestructiveClearStorage: Story = {
-  name: "Destructive: Clear Local Storage",
-  args: { variant: "destructive", children: "Clear Local Storage" },
-};
-
-export const Success: Story = {
-  args: { variant: "success", children: "Success" },
-};
-
-export const Warning: Story = {
-  args: { variant: "warning", children: "Warning" },
-};
-
-export const Info: Story = {
-  args: { variant: "info", children: "Info" },
-};
-
-export const Neutral: Story = {
-  args: { variant: "neutral", children: "Neutral" },
-};
-
-export const Outline: Story = {
-  args: { variant: "outline", children: "Outline" },
-};
-
-// --- Real-world patterns ---
-
-export const FormWizardNext: Story = {
-  name: "Form Wizard: Next",
-  args: { variant: "primary", size: "lg", children: "Next", type: "button" },
-};
-
-export const FormWizardSubmit: Story = {
-  name: "Form Wizard: Submit",
-  args: { variant: "primary", size: "lg", children: "Connecting...", isDisabled: true },
-};
-
-export const GoBack: Story = {
-  name: "Go Back",
-  args: { variant: "neutral", children: "Go Back" },
-};
-
-export const ConvertToParquet: Story = {
-  name: "Convert to Parquet",
-  args: { variant: "neutral", children: "Convert to Parquet" },
-};
-
-export const DisabledDownload: Story = {
-  name: "Disabled Download",
-  args: { size: "lg", isDisabled: true, children: "Download file" },
-};
-
-// --- Size stories ---
-
-export const ExtraSmall: Story = {
-  args: { size: "xs", children: "Extra Small" },
-};
-
-export const Small: Story = {
-  args: { size: "sm", children: "Small" },
-};
-
-export const Large: Story = {
-  args: { size: "lg", children: "Large" },
-};
-
-// --- Icon stories ---
-
-export const WithIconLeft: Story = {
-  args: { iconLeft: Mail, children: "Send Email" },
-};
-
-export const WithIconRight: Story = {
-  args: { iconRight: ArrowRight, children: "Next" },
-};
-
-export const WithBothIcons: Story = {
-  args: { iconLeft: Download, iconRight: ArrowRight, children: "Download" },
-};
-
-export const DestructiveWithIcon: Story = {
-  args: { variant: "destructive", iconLeft: Trash2, children: "Delete" },
-};
-
-// --- State stories ---
-
-export const Disabled: Story = {
-  args: { isDisabled: true, children: "Disabled" },
-};
-
-export const Loading: Story = {
-  args: { isLoading: true, children: "Loading\u2026" },
-};
-
-export const LoadingWithIcon: Story = {
-  args: { isLoading: true, iconLeft: Mail, children: "Sending\u2026" },
-};
-
-// --- Playground ---
-
-export const Playground: Story = {
-  args: {
-    variant: "primary",
-    size: "md",
-    isLoading: false,
-    isDisabled: false,
-    children: "Playground",
-  },
-};
-
-// --- All variants grid ---
-
+// Every variant × size — the canonical visual reference.
 const variants = [
   "primary",
   "secondary",
@@ -180,23 +52,76 @@ const variants = [
 ] as const;
 const sizes = ["xs", "sm", "md", "lg"] as const;
 
+const labelStyle = {
+  fontSize: "12px",
+  fontWeight: 600,
+  color: "var(--color-muted-foreground)",
+  textTransform: "capitalize" as const,
+};
+
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: `auto repeat(${sizes.length}, max-content)`,
+        gap: "12px",
+        alignItems: "center",
+        justifyItems: "start",
+      }}
+    >
+      <span />
+      {sizes.map((size) => (
+        <span key={size} style={{ ...labelStyle, textTransform: "uppercase" }}>
+          {size}
+        </span>
+      ))}
       {variants.map((variant) => (
-        <div
-          key={variant}
-          style={{ display: "flex", gap: "12px", alignItems: "center" }}
-        >
+        <Fragment key={variant}>
+          <span style={labelStyle}>{variant}</span>
           {sizes.map((size) => (
             <Button key={`${variant}-${size}`} variant={variant} size={size}>
-              {variant} {size}
+              Button
             </Button>
           ))}
-        </div>
+        </Fragment>
       ))}
     </div>
   ),
+};
+
+export const Playground: Story = {
+  args: {
+    variant: "primary",
+    size: "md",
+    isLoading: false,
+    isDisabled: false,
+    children: "Playground",
+  },
+};
+
+// --- Icons (not covered by the variant grid) ---
+
+export const WithIconLeft: Story = {
+  args: { iconLeft: Mail, children: "Send Email" },
+};
+
+export const WithIconRight: Story = {
+  args: { iconRight: ArrowRight, children: "Next" },
+};
+
+export const WithBothIcons: Story = {
+  args: { iconLeft: Download, iconRight: ArrowRight, children: "Download" },
+};
+
+// --- States ---
+
+export const Loading: Story = {
+  args: { isLoading: true, children: "Loading…" },
+};
+
+export const Disabled: Story = {
+  args: { isDisabled: true, children: "Disabled" },
 };
 
 // --- Interaction test ---

@@ -23,7 +23,7 @@ const sizeMap = {
 export function Icon({
   icon: LucideComponent,
   size = "md",
-  strokeWidth,
+  strokeWidth = 2,
   "aria-label": ariaLabel,
   className,
 }: IconProps) {
