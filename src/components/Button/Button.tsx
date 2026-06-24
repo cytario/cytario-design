@@ -13,7 +13,6 @@ import {
 } from "../_shared/styles";
 import { Icon } from "../Icon";
 import { Spinner } from "../Spinner";
-import { useInputGroup } from "../Form/InputGroup/InputGroupContext";
 
 export type { ButtonVariant };
 export type ButtonSize = Size;
@@ -29,6 +28,7 @@ export interface ButtonProps extends AriaButtonProps {
   iconLeft?: LucideIcon;
   /** Lucide icon rendered after children */
   iconRight?: LucideIcon;
+  className?: string;
 }
 
 const iconSizeMap = {
@@ -37,21 +37,6 @@ const iconSizeMap = {
   md: "sm",
   lg: "md",
 } as const;
-
-function groupRadiusClass(
-  position: "start" | "middle" | "end" | "standalone",
-): string {
-  switch (position) {
-    case "start":
-      return "rounded-l-md rounded-r-none";
-    case "middle":
-      return "rounded-none";
-    case "end":
-      return "rounded-r-md rounded-l-none";
-    default:
-      return "rounded-md";
-  }
-}
 
 export function Button({
   variant = "primary",
@@ -64,43 +49,22 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
-  const { inGroup, position } = useInputGroup();
-
-  const groupGhost =
-    inGroup && variant === "ghost"
-      ? "bg-background text-muted-foreground border border-border hover:bg-accent hover:text-foreground hover:border-border pressed:bg-accent pressed:text-foreground"
-      : "";
-
-  const radiusClass = inGroup ? groupRadiusClass(position) : "rounded-md";
-
-  const marginClass =
-    inGroup && position !== "start" && position !== "standalone"
-      ? "-ml-px"
-      : "";
-
-  const focusRing = inGroup
-    ? "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 focus-visible:z-10"
-    : "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  const cx = twMerge(
+    "inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer",
+    "rounded-md",
+    "font-medium",
+    "leading-tight",
+    "outline-none transition-colors",
+    "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+    "disabled:opacity-50 disabled:pointer-events-none",
+    isLoading ? "pointer-events-none" : "",
+    variantStyles[variant],
+    sizeStyles[size],
+    className,
+  );
 
   return (
-    <AriaButton
-      {...props}
-      isDisabled={isDisabled || isLoading}
-      className={twMerge(
-        "inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer",
-        radiusClass,
-        "font-medium",
-        "leading-tight",
-        "outline-none transition-colors",
-        focusRing,
-        "disabled:opacity-50 disabled:pointer-events-none",
-        isLoading ? "pointer-events-none" : "",
-        groupGhost || variantStyles[variant],
-        sizeStyles[size],
-        marginClass,
-        className as string,
-      )}
-    >
+    <AriaButton {...props} isDisabled={isDisabled || isLoading} className={cx}>
       {isLoading && <Spinner size={iconSizeMap[size]} />}
       {!isLoading && iconLeft && (
         <Icon icon={iconLeft} size={iconSizeMap[size]} />

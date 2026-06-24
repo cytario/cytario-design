@@ -8,8 +8,6 @@ import type { SelectItem } from "../components/Form/Select";
 import { Label } from "../components/Form/Label";
 import { Fieldset } from "../components/Form/Fieldset";
 import { RadioGroup, RadioButton } from "../components/Form/Radio";
-import { InputGroup } from "../components/Form/InputGroup";
-import { InputAddon } from "../components/Form/InputAddon";
 import { FormWizard } from "../components/FormWizard/FormWizard";
 import { FormWizardProgress } from "../components/FormWizard/FormWizardProgress";
 import { FormWizardNav } from "../components/FormWizard/FormWizardNav";
@@ -101,14 +99,12 @@ function LocationStep({
     <Fieldset>
       <div className="flex flex-col gap-1">
         <Label>S3 URI</Label>
-        <InputGroup>
-          <InputAddon>s3://</InputAddon>
-          <Input
-            aria-label="S3 URI"
-            placeholder="my-bucket/path/prefix"
-            size="lg"
-          />
-        </InputGroup>
+        <Input
+          aria-label="S3 URI"
+          prefix="s3://"
+          placeholder="my-bucket/path/prefix"
+          size="lg"
+        />
         <p className="text-sm text-muted-foreground">
           Enter the bucket name and optional path prefix where your whole-slide
           images are stored (e.g. my-bucket/data/images).

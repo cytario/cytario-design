@@ -30,6 +30,9 @@ export type { IconButtonProps } from "./components/IconButton";
 export { Input } from "./components/Form/Input";
 export type { InputProps } from "./components/Form/Input";
 
+export { InputPassword } from "./components/Form/InputPassword";
+export type { InputPasswordProps } from "./components/Form/InputPassword";
+
 export { Select } from "./components/Form/Select";
 export type { SelectProps, SelectItem } from "./components/Form/Select";
 
@@ -77,16 +80,6 @@ export type { LabelProps } from "./components/Form/Label";
 
 export { Fieldset } from "./components/Form/Fieldset";
 export type { FieldsetProps } from "./components/Form/Fieldset";
-
-export {
-  InputGroup,
-  InputGroupContext,
-  useInputGroup,
-} from "./components/Form/InputGroup";
-export type { InputGroupProps, GroupPosition } from "./components/Form/InputGroup";
-
-export { InputAddon } from "./components/Form/InputAddon";
-export type { InputAddonProps } from "./components/Form/InputAddon";
 
 export { Heading, H1, H2, H3 } from "./components/Heading";
 export type {
