@@ -105,6 +105,8 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
+          "Introduction",
+          "Foundation",
           "Components",
           [
             //
@@ -115,6 +117,9 @@ const preview: Preview = {
             "*",
           ],
           "Compositions",
+          "Patterns",
+          "Guidelines",
+          "*",
         ],
       },
     },
