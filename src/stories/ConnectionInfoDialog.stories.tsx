@@ -5,7 +5,7 @@ import { Pencil } from "lucide-react";
 import { Dialog } from "../components/Dialog";
 import { DialogFooter } from "../components/Dialog/DialogFooter";
 import { Button } from "../components/Button";
-import { ButtonLink } from "../components/ButtonLink";
+import { ButtonLink } from "../components/Button";
 import { Input } from "../components/Form/Input";
 import { Select, type SelectItem } from "../components/Form/Select";
 import { DescriptionList } from "../components/DescriptionList";

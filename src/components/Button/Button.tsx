@@ -1,36 +1,28 @@
-import type React from "react";
+import type { ReactNode } from "react";
 import {
   Button as AriaButton,
   type ButtonProps as AriaButtonProps,
 } from "react-aria-components";
-import { twMerge } from "tailwind-merge";
-import {
-  type Size,
-  type ButtonVariant,
-  variantStyles,
-  sizeStyles,
-} from "../_shared/styles";
-import { Icon, type IconValue } from "../Icon";
-import { Spinner } from "../Spinner";
+import { type Size, type ButtonVariant } from "../_shared/styles";
+import { buttonClassName } from "./styles";
+import { ButtonContent } from "./ButtonContent";
+import { type IconValue } from "../Icon";
 
 export type { ButtonVariant };
 export type ButtonSize = Size;
 
-export interface ButtonProps extends AriaButtonProps {
+/** Shared visual props for the button family (Button, ButtonLink). */
+export interface ButtonBaseProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  /** Shows a spinner and disables interaction */
   isLoading?: boolean;
   iconLeft?: IconValue;
   iconRight?: IconValue;
   className?: string;
 }
 
-const iconSizeMap = {
-  xs: "sm",
-  sm: "sm",
-  md: "sm",
-  lg: "md",
-} as const;
+export type ButtonProps = Omit<AriaButtonProps, "className"> & ButtonBaseProps;
 
 export function Button({
   variant = "primary",
@@ -43,30 +35,20 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
-  const cx = twMerge(
-    "inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer",
-    "rounded-md",
-    "font-medium",
-    "leading-tight",
-    "outline-none transition-colors",
-    "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-    "disabled:opacity-50 disabled:pointer-events-none",
-    isLoading ? "pointer-events-none" : "",
-    variantStyles[variant],
-    sizeStyles[size],
-    className,
-  );
-
   return (
-    <AriaButton {...props} isDisabled={isDisabled || isLoading} className={cx}>
-      {isLoading && <Spinner size={iconSizeMap[size]} />}
-      {!isLoading && iconLeft && (
-        <Icon icon={iconLeft} size={iconSizeMap[size]} />
-      )}
-      {children as React.ReactNode}
-      {!isLoading && iconRight && (
-        <Icon icon={iconRight} size={iconSizeMap[size]} />
-      )}
+    <AriaButton
+      {...props}
+      isDisabled={isDisabled || isLoading}
+      className={buttonClassName({ variant, size, isLoading, className })}
+    >
+      <ButtonContent
+        isLoading={isLoading}
+        size={size}
+        iconLeft={iconLeft}
+        iconRight={iconRight}
+      >
+        {children as ReactNode}
+      </ButtonContent>
     </AriaButton>
   );
 }

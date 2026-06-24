@@ -1,39 +1,28 @@
-import type React from "react";
+import type { ReactNode } from "react";
 import {
   Link as AriaLink,
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import {
-  type Size,
   type ButtonVariant,
   variantStyles,
-  sizeStyles,
+  iconSizeMap,
 } from "../_shared/styles";
+import { buttonClassName } from "./styles";
+import { ButtonContent } from "./ButtonContent";
+import { type ButtonBaseProps } from "./Button";
 import { Icon, type IconValue } from "../Icon";
 import { Tooltip } from "../Tooltip";
 
-export type { ButtonVariant };
-export type ButtonSize = Size;
-
-export interface ButtonLinkProps extends AriaLinkProps {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  iconLeft?: IconValue;
-  iconRight?: IconValue;
-  className?: string;
-}
-
-const iconSizeMap = {
-  xs: "sm",
-  sm: "sm",
-  md: "sm",
-  lg: "md",
-} as const;
+export type ButtonLinkProps = Omit<AriaLinkProps, "className"> &
+  ButtonBaseProps;
 
 export function ButtonLink({
   variant = "primary",
   size = "md",
+  isLoading = false,
+  isDisabled,
   iconLeft,
   iconRight,
   className,
@@ -43,21 +32,23 @@ export function ButtonLink({
   return (
     <AriaLink
       {...props}
-      className={twMerge(
-        "inline-flex items-center justify-center gap-2 cursor-pointer",
-        "rounded-md",
-        "font-medium",
-        "leading-tight",
-        "outline-none transition-colors no-underline",
-        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        variantStyles[variant],
-        sizeStyles[size],
+      isDisabled={isDisabled || isLoading}
+      className={buttonClassName({
+        variant,
+        size,
+        isLoading,
         className,
-      )}
+        extra: "no-underline",
+      })}
     >
-      {iconLeft && <Icon icon={iconLeft} size={iconSizeMap[size]} />}
-      {children as React.ReactNode}
-      {iconRight && <Icon icon={iconRight} size={iconSizeMap[size]} />}
+      <ButtonContent
+        isLoading={isLoading}
+        size={size}
+        iconLeft={iconLeft}
+        iconRight={iconRight}
+      >
+        {children as ReactNode}
+      </ButtonContent>
     </AriaLink>
   );
 }
@@ -99,10 +90,12 @@ export function IconButtonLink({
       {...props}
       aria-label={ariaLabel}
       className={twMerge(
-        "inline-flex items-center justify-center cursor-pointer",
-        "rounded-md",
-        "outline-none transition-colors no-underline",
-        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        `
+          inline-flex items-center justify-center cursor-pointer
+          rounded-md
+          outline-none transition-colors no-underline
+          focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+        `,
         variantStyles[variant],
         squareSizeStyles[size],
         className,

@@ -102,11 +102,11 @@ export type {
   BreadcrumbItem,
 } from "./components/Breadcrumbs";
 
-export { ButtonLink, IconButtonLink } from "./components/ButtonLink";
+export { ButtonLink, IconButtonLink } from "./components/Button";
 export type {
   ButtonLinkProps,
   IconButtonLinkProps,
-} from "./components/ButtonLink";
+} from "./components/Button";
 
 export { ToggleButton } from "./components/ToggleButton";
 export type {

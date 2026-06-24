@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "storybook/react";
 import { Ban, FileSearch, Inbox, Layers2, Plus, Search, SearchX } from "lucide-react";
 import { EmptyState } from "./EmptyState";
 import { Button } from "../Button";
-import { ButtonLink } from "../ButtonLink";
+import { ButtonLink } from "../Button";
 
 const meta: Meta<typeof EmptyState> = {
   title: "Components/EmptyState",

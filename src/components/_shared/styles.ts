@@ -9,6 +9,13 @@ export const sizeStyles: Record<Size, string> = {
   lg: "px-6 py-3 text-lg",
 };
 
+export const iconSizeMap = {
+  xs: "sm",
+  sm: "sm",
+  md: "sm",
+  lg: "md",
+} as const;
+
 /* ── Button ── */
 
 export type ButtonVariant =
