@@ -1,5 +1,4 @@
 import type React from "react";
-import type { LucideIcon } from "lucide-react";
 import {
   Link as AriaLink,
   type LinkProps as AriaLinkProps,
@@ -11,22 +10,17 @@ import {
   variantStyles,
   sizeStyles,
 } from "../_shared/styles";
-import { Icon } from "../Icon";
+import { Icon, type IconValue } from "../Icon";
 import { Tooltip } from "../Tooltip";
 
 export type { ButtonVariant };
 export type ButtonSize = Size;
 
-export interface ButtonLinkProps extends Omit<AriaLinkProps, "className"> {
-  /** Visual style variant */
+export interface ButtonLinkProps extends AriaLinkProps {
   variant?: ButtonVariant;
-  /** Size preset */
   size?: ButtonSize;
-  /** Lucide icon rendered before children */
-  iconLeft?: LucideIcon;
-  /** Lucide icon rendered after children */
-  iconRight?: LucideIcon;
-  /** Additional CSS classes */
+  iconLeft?: IconValue;
+  iconRight?: IconValue;
   className?: string;
 }
 
@@ -71,8 +65,8 @@ export function ButtonLink({
 // --- IconButtonLink ---
 
 export interface IconButtonLinkProps extends Omit<AriaLinkProps, "className"> {
-  /** Lucide icon to render */
-  icon: LucideIcon;
+  /** Icon to render */
+  icon: IconValue;
   /** Required for accessibility — also used as tooltip content */
   "aria-label": string;
   /** Visual style variant */
@@ -119,9 +113,7 @@ export function IconButtonLink({
   );
 
   if (showTooltip) {
-    return (
-      <Tooltip content={ariaLabel}>{link}</Tooltip>
-    );
+    return <Tooltip content={ariaLabel}>{link}</Tooltip>;
   }
 
   return link;

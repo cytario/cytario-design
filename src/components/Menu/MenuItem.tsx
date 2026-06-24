@@ -1,13 +1,12 @@
 import type React from "react";
-import type { LucideIcon } from "lucide-react";
 import { MenuItem as AriaMenuItem } from "react-aria-components";
-import { Icon } from "../Icon";
+import { Icon, type IconValue } from "../Icon";
 
 export interface MenuItemProps {
   id: string;
   /** Item label */
   children: React.ReactNode;
-  icon?: LucideIcon;
+  icon?: IconValue;
   /** End-slot content: badges, shortcuts, chevrons */
   endContent?: React.ReactNode;
   onAction?: () => void;

@@ -1,20 +1,16 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Heart } from "lucide-react";
 import { Icon } from "./Icon";
 
 describe("Icon", () => {
-  it("renders as decorative by default", () => {
+  it("is always decorative (aria-hidden, not focusable, no img role)", () => {
     const { container } = render(<Icon icon={Heart} />);
     const svg = container.querySelector("svg");
     expect(svg).not.toBeNull();
     expect(svg?.getAttribute("aria-hidden")).toBe("true");
-  });
-
-  it("is meaningful when aria-label is provided", () => {
-    render(<Icon icon={Heart} aria-label="Favorite" />);
-    const icon = screen.getByRole("img", { name: "Favorite" });
-    expect(icon).not.toHaveAttribute("aria-hidden");
+    expect(svg?.getAttribute("focusable")).toBe("false");
+    expect(svg?.getAttribute("role")).toBeNull();
   });
 
   it("renders correct size", () => {

@@ -4,10 +4,10 @@ import {
   AlertTriangle,
   AlertCircle,
   CheckCircle2,
-  X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { Icon, type IconValue } from "../Icon";
 
 export type BannerVariant = "info" | "warning" | "danger" | "success";
 
@@ -19,7 +19,7 @@ export interface BannerProps {
   /** Bold lead text */
   title?: string;
   /** Leading icon (auto-selected per variant if not set) */
-  icon?: LucideIcon;
+  icon?: IconValue;
   /** Shows dismiss button */
   dismissible?: boolean;
   /** Dismiss callback */
@@ -76,7 +76,7 @@ export function Banner({
   if (dismissed) return null;
 
   const config = variantConfig[variant];
-  const IconComponent = icon ?? config.icon;
+  const resolvedIcon = icon ?? config.icon;
 
   const handleDismiss = () => {
     setDismissed(true);
@@ -93,10 +93,10 @@ export function Banner({
         className,
       )}
     >
-      <IconComponent
-        size={20}
-        className={twMerge("shrink-0 mt-0.5", config.iconClass)}
-        aria-hidden="true"
+      <Icon
+        icon={resolvedIcon}
+        size="md"
+        className={twMerge("mt-0.5", config.iconClass)}
       />
       <div className="flex-1">
         {title && (
@@ -114,7 +114,7 @@ export function Banner({
           className="shrink-0 rounded-sm p-0.5 opacity-70 hover:opacity-100 transition-opacity outline-none focus-visible:ring-2 focus-visible:ring-current"
           aria-label="Dismiss"
         >
-          <X size={16} aria-hidden="true" />
+          <Icon icon="X" size="sm" />
         </button>
       )}
     </div>

@@ -15,8 +15,13 @@ export type {
 export { Spinner } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
 
-export { Icon } from "./components/Icon";
-export type { IconProps } from "./components/Icon";
+export { Icon, iconRegistry } from "./components/Icon";
+export type {
+  IconProps,
+  IconName,
+  IconComponent,
+  IconValue,
+} from "./components/Icon";
 
 export { Tooltip } from "./components/Tooltip";
 export type { TooltipProps } from "./components/Tooltip";

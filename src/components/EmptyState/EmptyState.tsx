@@ -1,9 +1,8 @@
 import type React from "react";
-import type { LucideIcon } from "lucide-react";
-import { Icon } from "../Icon";
+import { Icon, type IconValue } from "../Icon";
 
 export interface EmptyStateProps {
-  icon?: LucideIcon;
+  icon?: IconValue;
   title: string;
   description?: string;
   action?: React.ReactNode;

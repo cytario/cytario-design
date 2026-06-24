@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "storybook/react";
-import { AlertTriangle, Heart, Search, Settings } from "lucide-react";
 import { Icon } from "./Icon";
 
 const meta: Meta<typeof Icon> = {
@@ -8,19 +7,19 @@ const meta: Meta<typeof Icon> = {
   argTypes: {
     size: {
       control: "select",
-      options: ["sm", "md", "lg", "xl"],
+      options: ["xs", "sm", "md", "lg", "xl"],
     },
     strokeWidth: {
       control: { type: "number", min: 0.5, max: 4, step: 0.25 },
     },
   },
-  args: { icon: Heart },
+  args: { icon: "Heart" },
 };
 
 export default meta;
 type Story = StoryObj<typeof Icon>;
 
-const sizes = ["sm", "md", "lg", "xl"] as const;
+const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
 
 const labelStyle = {
   fontSize: "12px",
@@ -37,7 +36,7 @@ export const AllSizes: Story = {
           key={size}
           style={{ display: "flex", flexDirection: "column", gap: "8px", alignItems: "center" }}
         >
-          <Icon icon={Search} size={size} />
+          <Icon icon="Search" size={size} />
           <span style={labelStyle}>{size}</span>
         </div>
       ))}
@@ -46,13 +45,9 @@ export const AllSizes: Story = {
 };
 
 export const Default: Story = {
-  args: { icon: Heart, size: "md" },
-};
-
-export const WithLabel: Story = {
-  args: { icon: AlertTriangle, "aria-label": "Warning" },
+  args: { icon: "Heart", size: "md" },
 };
 
 export const CustomStrokeWidth: Story = {
-  args: { icon: Settings, strokeWidth: 1 },
+  args: { icon: "Settings", strokeWidth: 1 },
 };

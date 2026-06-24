@@ -1,16 +1,15 @@
-import type { LucideIcon } from "lucide-react";
 import {
   Button as AriaButton,
   type ButtonProps as AriaButtonProps,
 } from "react-aria-components";
 import { type ButtonVariant, variantStyles } from "../_shared/styles";
-import { Icon } from "../Icon";
+import { Icon, type IconValue } from "../Icon";
 import { Spinner } from "../Spinner";
 import { Tooltip } from "../Tooltip";
 
 export interface IconButtonProps extends Omit<AriaButtonProps, "className"> {
-  /** Lucide icon to render */
-  icon: LucideIcon;
+  /** Icon to render */
+  icon: IconValue;
   /** Required for accessibility — also used as tooltip content */
   "aria-label": string;
   /** Visual style variant */

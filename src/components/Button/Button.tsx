@@ -1,5 +1,4 @@
 import type React from "react";
-import type { LucideIcon } from "lucide-react";
 import {
   Button as AriaButton,
   type ButtonProps as AriaButtonProps,
@@ -11,23 +10,18 @@ import {
   variantStyles,
   sizeStyles,
 } from "../_shared/styles";
-import { Icon } from "../Icon";
+import { Icon, type IconValue } from "../Icon";
 import { Spinner } from "../Spinner";
 
 export type { ButtonVariant };
 export type ButtonSize = Size;
 
 export interface ButtonProps extends AriaButtonProps {
-  /** Visual style variant */
   variant?: ButtonVariant;
-  /** Size preset */
   size?: ButtonSize;
-  /** Shows a spinner and disables interaction */
   isLoading?: boolean;
-  /** Lucide icon rendered before children */
-  iconLeft?: LucideIcon;
-  /** Lucide icon rendered after children */
-  iconRight?: LucideIcon;
+  iconLeft?: IconValue;
+  iconRight?: IconValue;
   className?: string;
 }
 
