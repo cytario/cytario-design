@@ -29,10 +29,15 @@ export type { TooltipProps } from "./components/Tooltip";
 export { TruncatedText } from "./components/TruncatedText";
 export type { TruncatedTextProps } from "./components/TruncatedText";
 
-export { IconButton, IconButtonLink } from "./components/IconButton";
+export {
+  IconButton,
+  IconButtonLink,
+  IconButtonToggle,
+} from "./components/IconButton";
 export type {
   IconButtonProps,
   IconButtonLinkProps,
+  IconButtonToggleProps,
 } from "./components/IconButton";
 
 export { Input } from "./components/Form/Input";
@@ -114,16 +119,6 @@ export type {
   ToggleButtonVariant,
   ToggleButtonSize,
 } from "./components/ToggleButton";
-
-export {
-  ToggleButtonGroup,
-  ToggleButtonGroupItem,
-} from "./components/ToggleButtonGroup";
-export type {
-  ToggleButtonGroupProps,
-  ToggleButtonGroupItemProps,
-  ToggleButtonGroupSize,
-} from "./components/ToggleButtonGroup";
 
 export {
   Menu,

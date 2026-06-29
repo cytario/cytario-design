@@ -1,9 +1,15 @@
 import type { ElementType } from "react";
-import { Button as AriaButton, Link as AriaLink } from "react-aria-components";
+import {
+  Button as AriaButton,
+  Link as AriaLink,
+  ToggleButton as AriaToggleButton,
+  type ToggleButtonProps as AriaToggleButtonProps,
+} from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import {
   type ButtonVariant,
   type ButtonSize,
+  selectedStyles,
   variantStyles,
 } from "../_shared/styles";
 import { type ButtonProps, type ButtonLinkProps } from "../Button";
@@ -51,6 +57,8 @@ function IconButtonBase({
     buttonBaseClass,
     isLoading ? "pointer-events-none" : "",
     variantStyles[variant],
+    // No-op unless the wrapper is a ToggleButton (react-aria sets data-selected).
+    selectedStyles[variant],
     squareSizeStyles[size],
     className,
   );
@@ -69,7 +77,10 @@ function IconButtonBase({
   );
 }
 
-export type IconButtonProps = Omit<ButtonProps, "iconLeft" | "iconRight"> & {
+export type IconButtonProps = Omit<
+  ButtonProps,
+  "iconLeft" | "iconRight" | "children"
+> & {
   icon: IconValue;
   label: string;
 };
@@ -80,7 +91,7 @@ export function IconButton(props: IconButtonProps) {
 
 export type IconButtonLinkProps = Omit<
   ButtonLinkProps,
-  "iconLeft" | "iconRight"
+  "iconLeft" | "iconRight" | "children"
 > & {
   icon: IconValue;
   label: string;
@@ -88,4 +99,20 @@ export type IconButtonLinkProps = Omit<
 
 export function IconButtonLink(props: IconButtonLinkProps) {
   return <IconButtonBase as={AriaLink} {...props} />;
+}
+
+export type IconButtonToggleProps = Omit<
+  AriaToggleButtonProps,
+  "className" | "children"
+> & {
+  icon: IconValue;
+  label: string;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  isLoading?: boolean;
+};
+
+/** Icon button with a persistent on/off state (react-aria ToggleButton): `isSelected` toggles `aria-pressed` and the selected background. */
+export function IconButtonToggle(props: IconButtonToggleProps) {
+  return <IconButtonBase as={AriaToggleButton} {...props} />;
 }

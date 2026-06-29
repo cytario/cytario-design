@@ -113,6 +113,7 @@ const preview: Preview = {
             "Icon",
             "IconButton",
             "IconButtonLink",
+            "IconButtonToggle",
             "Button",
             "ButtonLink",
             "*",

@@ -66,3 +66,18 @@ export const variantStyles: Record<ButtonVariant, string> = {
     pressed:bg-accent-pressed
   `,
 };
+
+/** Selected (toggled-on) background per variant — reuses each variant's pressed
+ * tone. Keyed on react-aria's `data-selected` (`selected:`), so it only takes
+ * effect on ToggleButton-backed components. Literal classes for Tailwind. */
+export const selectedStyles: Record<ButtonVariant, string> = {
+  primary: "selected:bg-primary-pressed",
+  secondary: "selected:bg-secondary-pressed",
+  destructive: "selected:bg-destructive-pressed",
+  success: "selected:bg-success-pressed",
+  warning: "selected:bg-warning-pressed",
+  info: "selected:bg-info-pressed",
+  neutral: "selected:bg-accent-pressed",
+  outline: "selected:bg-accent-pressed",
+  ghost: "selected:bg-accent-pressed",
+};
