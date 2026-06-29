@@ -1,27 +1,22 @@
-import {
-  forwardRef,
-  useId,
-  useState,
-  type InputHTMLAttributes,
-} from "react";
+import { forwardRef, useId, useState, type InputHTMLAttributes } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { twMerge } from "tailwind-merge";
-import { type Size, sizeStyles } from "../../_shared/styles";
+import { type ButtonSize, sizeStyles } from "../../_shared/styles";
 import { Icon } from "../../Icon";
 
-export interface InputPasswordProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "size"> {
+export interface InputPasswordProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "type" | "size"
+> {
   label?: string;
   description?: string;
   errorMessage?: string;
-  size?: Size;
+  size?: ButtonSize;
   isRequired?: boolean;
   isDisabled?: boolean;
   /** Disable only the visibility toggle; the input stays interactive. */
   isToggleDisabled?: boolean;
-  /** Localized label for the "show password" toggle. */
   showPasswordLabel?: string;
-  /** Localized label for the "hide password" toggle. */
   hidePasswordLabel?: string;
 }
 

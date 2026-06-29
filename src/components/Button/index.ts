@@ -5,5 +5,5 @@ export type {
   ButtonVariant,
   ButtonSize,
 } from "./Button";
-export { ButtonLink, IconButtonLink } from "./ButtonLink";
-export type { ButtonLinkProps, IconButtonLinkProps } from "./ButtonLink";
+export { ButtonLink } from "./ButtonLink";
+export type { ButtonLinkProps } from "./ButtonLink";

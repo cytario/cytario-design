@@ -29,8 +29,11 @@ export type { TooltipProps } from "./components/Tooltip";
 export { TruncatedText } from "./components/TruncatedText";
 export type { TruncatedTextProps } from "./components/TruncatedText";
 
-export { IconButton } from "./components/IconButton";
-export type { IconButtonProps } from "./components/IconButton";
+export { IconButton, IconButtonLink } from "./components/IconButton";
+export type {
+  IconButtonProps,
+  IconButtonLinkProps,
+} from "./components/IconButton";
 
 export { Input } from "./components/Form/Input";
 export type { InputProps } from "./components/Form/Input";
@@ -102,11 +105,8 @@ export type {
   BreadcrumbItem,
 } from "./components/Breadcrumbs";
 
-export { ButtonLink, IconButtonLink } from "./components/Button";
-export type {
-  ButtonLinkProps,
-  IconButtonLinkProps,
-} from "./components/Button";
+export { ButtonLink } from "./components/Button";
+export type { ButtonLinkProps } from "./components/Button";
 
 export { ToggleButton } from "./components/ToggleButton";
 export type {

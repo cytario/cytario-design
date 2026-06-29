@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import type { Meta, StoryObj } from "storybook/react";
-import { ArrowRight, Download, ExternalLink, Settings } from "lucide-react";
-import { ButtonLink, IconButtonLink } from "./ButtonLink";
+import { ArrowRight, Download } from "lucide-react";
+import { ButtonLink } from "./ButtonLink";
 
 const meta: Meta<typeof ButtonLink> = {
   title: "Components/ButtonLink",
@@ -109,20 +109,4 @@ export const WithIconLeft: Story = {
 
 export const WithIconRight: Story = {
   args: { iconRight: ArrowRight, children: "Next Page" },
-};
-
-// --- IconButtonLink (distinct component) ---
-
-export const IconLink: StoryObj<typeof IconButtonLink> = {
-  render: () => (
-    <div style={{ display: "flex", gap: "12px" }}>
-      <IconButtonLink href="#" icon={Settings} aria-label="Settings" />
-      <IconButtonLink
-        href="#"
-        icon={ExternalLink}
-        aria-label="Open external"
-        variant="primary"
-      />
-    </div>
-  ),
 };

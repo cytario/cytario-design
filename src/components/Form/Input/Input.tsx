@@ -7,7 +7,7 @@ import {
   ColorField,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
-import { type Size, sizeStyles } from "../../_shared/styles";
+import { type ButtonSize, sizeStyles } from "../../_shared/styles";
 import { Label } from "../Label";
 
 const alignClasses = {
@@ -26,7 +26,7 @@ export interface InputProps extends Omit<
   description?: string;
   errorMessage?: string;
   type?: "text" | "email" | "password" | "number";
-  size?: Size;
+  size?: ButtonSize;
   prefix?: string;
   align?: "left" | "center" | "right";
   className?: string;
@@ -125,10 +125,7 @@ export function Input({
       )}
 
       {description && (
-        <Text
-          slot="description"
-          className="text-sm text-muted-foreground"
-        >
+        <Text slot="description" className="text-sm text-muted-foreground">
           {description}
         </Text>
       )}

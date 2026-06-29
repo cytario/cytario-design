@@ -11,7 +11,7 @@ import {
   type SelectProps as AriaSelectProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
-import { type Size, sizeStyles } from "../../_shared/styles";
+import { type ButtonSize, sizeStyles } from "../../_shared/styles";
 import { Label } from "../Label";
 
 export interface SelectItem {
@@ -29,7 +29,7 @@ export interface SelectProps extends Omit<
   description?: string;
   errorMessage?: string;
   /** Controls padding and font size */
-  size?: Size;
+  size?: ButtonSize;
   /** Custom visual renderer for items in the dropdown and trigger.
    *  `item.name` remains the accessible label (used for typeahead and screen readers). */
   renderItem?: (item: SelectItem) => React.ReactNode;
@@ -73,9 +73,7 @@ export function Select({
             bg-background
           `,
           sizeStyles[size],
-          hasError
-            ? "border-destructive-border"
-            : "border-border",
+          hasError ? "border-destructive-border" : "border-border",
         )}
       >
         <SelectValue

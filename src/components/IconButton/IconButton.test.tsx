@@ -5,16 +5,14 @@ import { Settings, Trash2, X } from "lucide-react";
 import { IconButton } from "./IconButton";
 
 describe("IconButton", () => {
-  it("renders with correct aria-label", () => {
-    render(<IconButton icon={Settings} aria-label="Settings" showTooltip={false} />);
+  it("renders with correct label", () => {
+    render(<IconButton icon={Settings} label="Settings" />);
     expect(screen.getByRole("button", { name: "Settings" })).toBeDefined();
   });
 
   it("calls onPress when clicked", async () => {
     const onPress = vi.fn();
-    render(
-      <IconButton icon={X} aria-label="Close" onPress={onPress} showTooltip={false} />,
-    );
+    render(<IconButton icon={X} label="Close" onPress={onPress} />);
 
     await userEvent.click(screen.getByRole("button"));
     expect(onPress).toHaveBeenCalledTimes(1);
@@ -25,10 +23,9 @@ describe("IconButton", () => {
     render(
       <IconButton
         icon={Settings}
-        aria-label="Settings"
+        label="Settings"
         onPress={onPress}
         isDisabled
-        showTooltip={false}
       />,
     );
 
@@ -41,10 +38,9 @@ describe("IconButton", () => {
     render(
       <IconButton
         icon={Settings}
-        aria-label="Settings"
+        label="Settings"
         onPress={onPress}
         isLoading
-        showTooltip={false}
       />,
     );
 
@@ -62,7 +58,7 @@ describe("IconButton", () => {
 
   it("renders icon as decorative (aria-hidden)", () => {
     const { container } = render(
-      <IconButton icon={Settings} aria-label="Settings" showTooltip={false} />,
+      <IconButton icon={Settings} label="Settings" />,
     );
 
     const svg = container.querySelector("svg");
@@ -71,9 +67,7 @@ describe("IconButton", () => {
 
   it("supports keyboard activation with Enter", async () => {
     const onPress = vi.fn();
-    render(
-      <IconButton icon={X} aria-label="Close" onPress={onPress} showTooltip={false} />,
-    );
+    render(<IconButton icon={X} label="Close" onPress={onPress} />);
 
     screen.getByRole("button").focus();
     await userEvent.keyboard("{Enter}");
@@ -82,9 +76,7 @@ describe("IconButton", () => {
 
   it("supports keyboard activation with Space", async () => {
     const onPress = vi.fn();
-    render(
-      <IconButton icon={X} aria-label="Close" onPress={onPress} showTooltip={false} />,
-    );
+    render(<IconButton icon={X} label="Close" onPress={onPress} />);
 
     screen.getByRole("button").focus();
     await userEvent.keyboard(" ");
@@ -92,23 +84,14 @@ describe("IconButton", () => {
   });
 
   it("applies variant styles", () => {
-    render(
-      <IconButton
-        icon={Trash2}
-        aria-label="Delete"
-        variant="destructive"
-        showTooltip={false}
-      />,
-    );
+    render(<IconButton icon={Trash2} label="Delete" variant="destructive" />);
 
     const button = screen.getByRole("button");
     expect(button.className).toContain("bg-destructive");
   });
 
   it("applies size styles", () => {
-    render(
-      <IconButton icon={Settings} aria-label="Settings" size="lg" showTooltip={false} />,
-    );
+    render(<IconButton icon={Settings} label="Settings" size="lg" />);
 
     const button = screen.getByRole("button");
     expect(button.className).toContain("h-12");
@@ -116,9 +99,7 @@ describe("IconButton", () => {
   });
 
   it("applies xs size styles", () => {
-    render(
-      <IconButton icon={Settings} aria-label="Settings" size="xs" showTooltip={false} />,
-    );
+    render(<IconButton icon={Settings} label="Settings" size="xs" />);
 
     const button = screen.getByRole("button");
     expect(button.className).toContain("h-7");

@@ -3,10 +3,10 @@ import {
   type ToggleButtonProps as AriaToggleButtonProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
-import { type Size, sizeStyles } from "../_shared/styles";
+import { type ButtonSize, sizeStyles } from "../_shared/styles";
 
 export type ToggleButtonVariant = "default" | "primary" | "outlined";
-export type ToggleButtonSize = Size;
+export type ToggleButtonSize = ButtonSize;
 
 export interface ToggleButtonProps extends Omit<
   AriaToggleButtonProps,

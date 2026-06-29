@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
-import { type Size, iconSizeMap } from "../_shared/styles";
+import { type ButtonSize, iconSizeMap } from "../_shared/styles";
 import { Icon, type IconValue } from "../Icon";
 import { Spinner } from "../Spinner";
 
 interface ButtonContentProps {
   isLoading?: boolean;
-  size: Size;
+  size: ButtonSize;
   iconLeft?: IconValue;
   iconRight?: IconValue;
   children?: ReactNode;
@@ -22,7 +22,9 @@ export function ButtonContent({
   return (
     <>
       {isLoading && <Spinner size={iconSizeMap[size]} />}
-      {!isLoading && iconLeft && <Icon icon={iconLeft} size={iconSizeMap[size]} />}
+      {!isLoading && iconLeft && (
+        <Icon icon={iconLeft} size={iconSizeMap[size]} />
+      )}
       {children}
       {!isLoading && iconRight && (
         <Icon icon={iconRight} size={iconSizeMap[size]} />

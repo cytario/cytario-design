@@ -1,84 +1,96 @@
-import {
-  Button as AriaButton,
-  type ButtonProps as AriaButtonProps,
-} from "react-aria-components";
+import type { ElementType } from "react";
+import { Button as AriaButton, Link as AriaLink } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import {
   type ButtonVariant,
+  type ButtonSize,
   variantStyles,
   iconSizeMap,
 } from "../_shared/styles";
+import { type ButtonProps, type ButtonLinkProps } from "../Button";
+import { buttonBaseClass } from "../Button/Button";
 import { Icon, type IconValue } from "../Icon";
 import { Spinner } from "../Spinner";
 import { Tooltip } from "../Tooltip";
 
-export interface IconButtonProps extends Omit<AriaButtonProps, "className"> {
-  /** Icon to render */
-  icon: IconValue;
-  /** Required for accessibility — also used as tooltip content */
-  "aria-label": string;
-  /** Visual style variant */
-  variant?: ButtonVariant;
-  /** Size preset */
-  size?: "xs" | "sm" | "md" | "lg";
-  /** Show tooltip on hover (default true) */
-  showTooltip?: boolean;
-  /** Shows a spinner and disables interaction */
-  isLoading?: boolean;
-  /** Additional CSS classes */
-  className?: string;
-}
-
-const squareSizeStyles = {
+const squareSizeStyles: Record<ButtonSize, string> = {
   xs: "h-7 w-7", // 28px
   sm: "h-8 w-8", // 32px
   md: "h-10 w-10", // 40px
   lg: "h-12 w-12", // 48px
-} as const;
+};
 
-export function IconButton({
+interface IconButtonBaseProps {
+  as: ElementType;
+  icon: IconValue;
+  label: string;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  isLoading?: boolean;
+  isDisabled?: boolean;
+  className?: string;
+}
+
+/**
+ * Shared square icon button: builds the className, wraps in a Tooltip, and
+ * renders the icon (or a spinner while loading). The wrapper element is
+ * polymorphic via `as`; the public IconButton/IconButtonLink pass their own
+ * precisely-typed props through.
+ */
+function IconButtonBase({
+  as: Component,
   icon,
-  "aria-label": ariaLabel,
+  label,
   variant = "ghost",
   size = "md",
-  showTooltip = true,
   isLoading = false,
   isDisabled,
   className,
   ...props
-}: IconButtonProps) {
+}: IconButtonBaseProps & Record<string, unknown>) {
   const cx = twMerge(
-    `
-      inline-flex items-center justify-center shrink-0 cursor-pointer
-      rounded-full
-      outline-none transition-colors
-      focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-      disabled:opacity-50 disabled:pointer-events-none
-    `,
+    buttonBaseClass,
     isLoading ? "pointer-events-none" : "",
     variantStyles[variant],
     squareSizeStyles[size],
     className,
   );
 
-  const button = (
-    <AriaButton
-      {...props}
-      aria-label={ariaLabel}
-      isDisabled={isDisabled || isLoading}
-      className={cx}
-    >
-      {isLoading ? (
-        <Spinner size={iconSizeMap[size]} />
-      ) : (
-        <Icon icon={icon} size={iconSizeMap[size]} />
-      )}
-    </AriaButton>
+  return (
+    <Tooltip content={label}>
+      <Component
+        {...props}
+        aria-label={label}
+        isDisabled={isDisabled || isLoading}
+        className={cx}
+      >
+        {isLoading ? (
+          <Spinner size={iconSizeMap[size]} />
+        ) : (
+          <Icon icon={icon} size={iconSizeMap[size]} />
+        )}
+      </Component>
+    </Tooltip>
   );
+}
 
-  if (showTooltip) {
-    return <Tooltip content={ariaLabel}>{button}</Tooltip>;
-  }
+export type IconButtonProps = Omit<ButtonProps, "iconLeft" | "iconRight"> & {
+  icon: IconValue;
+  label: string;
+};
 
-  return button;
+export function IconButton(props: IconButtonProps) {
+  return <IconButtonBase as={AriaButton} {...props} />;
+}
+
+export type IconButtonLinkProps = Omit<
+  ButtonLinkProps,
+  "iconLeft" | "iconRight"
+> & {
+  icon: IconValue;
+  label: string;
+};
+
+export function IconButtonLink(props: IconButtonLinkProps) {
+  return <IconButtonBase as={AriaLink} {...props} />;
 }

@@ -26,13 +26,12 @@ const meta: Meta<typeof IconButton> = {
       control: "select",
       options: ["xs", "sm", "md", "lg"],
     },
-    showTooltip: { control: "boolean" },
     isLoading: { control: "boolean" },
     isDisabled: { control: "boolean" },
   },
   args: {
     icon: Settings,
-    "aria-label": "Settings",
+    label: "Settings",
     onPress: fn(),
   },
 };
@@ -87,8 +86,7 @@ export const AllVariants: Story = {
               variant={variant}
               size={size}
               icon={Settings}
-              aria-label={`${variant} ${size}`}
-              showTooltip={false}
+              label={`${variant} ${size}`}
             />
           ))}
         </Fragment>
@@ -102,8 +100,7 @@ export const Playground: Story = {
     variant: "ghost",
     size: "md",
     icon: Settings,
-    "aria-label": "Settings",
-    showTooltip: true,
+    label: "Settings",
     isLoading: false,
     isDisabled: false,
   },
@@ -112,21 +109,17 @@ export const Playground: Story = {
 // --- States ---
 
 export const Loading: Story = {
-  args: { isLoading: true, icon: Settings, "aria-label": "Loading" },
+  args: { isLoading: true, icon: Settings, label: "Loading" },
 };
 
 export const Disabled: Story = {
-  args: { isDisabled: true, icon: Settings, "aria-label": "Settings" },
-};
-
-export const WithoutTooltip: Story = {
-  args: { showTooltip: false, icon: X, "aria-label": "Close" },
+  args: { isDisabled: true, icon: Settings, label: "Settings" },
 };
 
 // --- Interaction test ---
 
 export const ClickInteraction: Story = {
-  args: { variant: "ghost", icon: X, "aria-label": "Close" },
+  args: { variant: "ghost", icon: X, label: "Close" },
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole("button", { name: "Close" });

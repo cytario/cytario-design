@@ -100,7 +100,7 @@ export const UserProfileMenu: Story = {
     >
       <IconButton
         icon={User}
-        aria-label="User menu"
+        label="User menu"
         variant="ghost"
         className="shrink-0 w-8 h-8"
       />
@@ -223,7 +223,7 @@ export const UserMenu: Story = {
     children: (
       <IconButton
         icon={User}
-        aria-label="User menu"
+        label="User menu"
         variant="ghost"
         className="shrink-0 w-8 h-8 text-white"
       />
@@ -259,7 +259,7 @@ export const WithIconButtonTrigger: Story = {
     children: (
       <IconButton
         icon={MoreVertical}
-        aria-label="More actions"
+        label="More actions"
         variant="ghost"
       />
     ),
@@ -381,7 +381,7 @@ export const ColumnVisibility: Story = {
       >
         <IconButton
           icon={Columns3}
-          aria-label="Toggle columns"
+          label="Toggle columns"
           variant="ghost"
         />
       </Menu>

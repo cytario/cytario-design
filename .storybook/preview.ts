@@ -112,6 +112,7 @@ const preview: Preview = {
             //
             "Icon",
             "IconButton",
+            "IconButtonLink",
             "Button",
             "ButtonLink",
             "*",
