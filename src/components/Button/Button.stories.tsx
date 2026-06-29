@@ -8,26 +8,8 @@ const meta: Meta<typeof Button> = {
   title: "Components/Button",
   component: Button,
   argTypes: {
-    variant: {
-      control: "select",
-      options: [
-        "primary",
-        "secondary",
-        "destructive",
-        "success",
-        "warning",
-        "info",
-        "neutral",
-        "outline",
-        "ghost",
-      ],
-    },
-    size: {
-      control: "select",
-      options: ["xs", "sm", "md", "lg"],
-    },
-    isLoading: { control: "boolean" },
-    isDisabled: { control: "boolean" },
+    variant: { control: "select" },
+    size: { control: "select" },
   },
   args: {
     children: "Button",

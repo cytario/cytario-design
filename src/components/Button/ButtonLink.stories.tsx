@@ -7,24 +7,8 @@ const meta: Meta<typeof ButtonLink> = {
   title: "Components/ButtonLink",
   component: ButtonLink,
   argTypes: {
-    variant: {
-      control: "select",
-      options: [
-        "primary",
-        "secondary",
-        "destructive",
-        "success",
-        "warning",
-        "info",
-        "neutral",
-        "outline",
-        "ghost",
-      ],
-    },
-    size: {
-      control: "select",
-      options: ["sm", "md", "lg"],
-    },
+    variant: { control: "select" },
+    size: { control: "select" },
   },
   args: {
     children: "Link",
@@ -96,6 +80,8 @@ export const Playground: Story = {
   args: {
     variant: "primary",
     size: "md",
+    isLoading: false,
+    isDisabled: false,
     children: "Playground",
     href: "#",
   },

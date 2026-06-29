@@ -8,24 +8,8 @@ const meta: Meta<typeof IconButtonLink> = {
   title: "Components/IconButtonLink",
   component: IconButtonLink,
   argTypes: {
-    variant: {
-      control: "select",
-      options: [
-        "primary",
-        "secondary",
-        "destructive",
-        "success",
-        "warning",
-        "info",
-        "neutral",
-        "outline",
-        "ghost",
-      ],
-    },
-    size: {
-      control: "select",
-      options: ["sm", "md", "lg"],
-    },
+    variant: { control: "select" },
+    size: { control: "select" },
   },
   args: {
     icon: "ExternalLink",
@@ -43,6 +27,8 @@ export const Playground: Story = {
     size: "md",
     icon: "Settings",
     label: "Settings",
+    isLoading: false,
+    isDisabled: false,
     href: "#",
   },
 };

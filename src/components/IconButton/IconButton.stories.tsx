@@ -8,26 +8,8 @@ const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
   component: IconButton,
   argTypes: {
-    variant: {
-      control: "select",
-      options: [
-        "primary",
-        "secondary",
-        "destructive",
-        "success",
-        "warning",
-        "info",
-        "neutral",
-        "outline",
-        "ghost",
-      ],
-    },
-    size: {
-      control: "select",
-      options: ["xs", "sm", "md", "lg"],
-    },
-    isLoading: { control: "boolean" },
-    isDisabled: { control: "boolean" },
+    variant: { control: "select" },
+    size: { control: "select" },
   },
   args: {
     icon: Settings,
