@@ -6,13 +6,13 @@ import { IconGallery } from "./IconReference";
 
 # Icons
 
-Icons are drawn from [Lucide](https://lucide.dev) and rendered through the `Icon` component at four preset sizes (`sm` 16, `md` 20, `lg` 24, `xl` 32). Icons are decorative — the accessible name lives on the surrounding control (e.g. `IconButton`'s `aria-label`) or adjacent text.
+Icons are drawn from [Lucide](https://lucide.dev) and rendered through the `Icon` component at five preset sizes (`xs` 14, `sm` 16, `md` 20, `lg` 24, `xl` 32). Icons are decorative — the accessible name lives on the surrounding control (e.g. `IconButton`'s `label`) or adjacent text.
 
 Reference an icon by its registered name:
 
 ```tsx
 <Icon icon="Search" size="md" />
-<IconButton icon="Trash2" aria-label="Delete" />
+<IconButton icon="Trash2" label="Delete" />
 <Button iconLeft="Download">Export</Button>
 ```
 
