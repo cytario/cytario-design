@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ArrowRight, Mail } from "lucide-react";
-import { ButtonLink } from "./ButtonLink";
+import { ButtonLink } from "./Button";
 
 describe("ButtonLink", () => {
   it("renders as a link with correct text", () => {

@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { ArrowRight, Download } from "lucide-react";
-import { ButtonLink } from "./ButtonLink";
+import { ButtonLink } from "./Button";
 
 const meta: Meta<typeof ButtonLink> = {
   title: "Components/ButtonLink",
