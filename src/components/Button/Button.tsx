@@ -11,7 +11,6 @@ import {
   type ButtonVariant,
   sizeStyles,
   variantStyles,
-  iconSizeMap,
 } from "../_shared/styles";
 import { Icon, type IconValue } from "../Icon";
 import { Spinner } from "../Spinner";
@@ -69,12 +68,10 @@ function ButtonBase({
 
   return (
     <Component {...props} isDisabled={isDisabled || isLoading} className={cx}>
-      {isLoading && <Spinner size={iconSizeMap[size]} />}
-      {!isLoading && iconLeft && <Icon icon={iconLeft} size={iconSizeMap[size]} />}
+      {isLoading && <Spinner size={size} />}
+      {!isLoading && iconLeft && <Icon icon={iconLeft} size={size} />}
       {children as ReactNode}
-      {!isLoading && iconRight && (
-        <Icon icon={iconRight} size={iconSizeMap[size]} />
-      )}
+      {!isLoading && iconRight && <Icon icon={iconRight} size={size} />}
     </Component>
   );
 }
@@ -85,7 +82,8 @@ export function Button(props: ButtonProps) {
   return <ButtonBase as={AriaButton} {...props} />;
 }
 
-export type ButtonLinkProps = Omit<AriaLinkProps, "className"> & ButtonBaseProps;
+export type ButtonLinkProps = Omit<AriaLinkProps, "className"> &
+  ButtonBaseProps;
 
 export function ButtonLink(props: ButtonLinkProps) {
   return <ButtonBase as={AriaLink} {...props} />;

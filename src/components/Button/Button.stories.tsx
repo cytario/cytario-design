@@ -2,7 +2,10 @@ import { Fragment } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, fn, userEvent, within } from "storybook/test";
 import { ArrowRight, Download, Mail } from "lucide-react";
+import { iconRegistry } from "../Icon";
 import { Button } from "./Button";
+
+const iconOptions = [undefined, ...Object.keys(iconRegistry)];
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -10,6 +13,8 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: { control: "select" },
     size: { control: "select" },
+    iconLeft: { control: "select", options: iconOptions },
+    iconRight: { control: "select", options: iconOptions },
   },
   args: {
     children: "Button",
@@ -32,6 +37,7 @@ const variants = [
   "outline",
   "ghost",
 ] as const;
+
 const sizes = ["xs", "sm", "md", "lg"] as const;
 
 const labelStyle = {

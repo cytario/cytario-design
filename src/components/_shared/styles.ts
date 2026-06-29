@@ -1,18 +1,11 @@
 export type ButtonSize = "xs" | "sm" | "md" | "lg";
 
 export const sizeStyles: Record<ButtonSize, string> = {
-  xs: "px-2 py-1 text-xs",
+  xs: "px-2 py-1.5 text-xs",
   sm: "px-3 py-1.5 text-sm",
   md: "px-4 py-2 text-base",
   lg: "px-6 py-3 text-lg",
 };
-
-export const iconSizeMap = {
-  xs: "sm",
-  sm: "sm",
-  md: "sm",
-  lg: "md",
-} as const;
 
 export type ButtonVariant =
   | "primary"

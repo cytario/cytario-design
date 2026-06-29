@@ -1,17 +1,12 @@
+import { twMerge } from "tailwind-merge";
+import { ButtonSize } from "../_shared/styles";
+import { sizeMap } from "../Icon/Icon";
+
 export interface SpinnerProps {
-  /** Size preset */
-  size?: "sm" | "md" | "lg";
-  /** Accessible label — when provided, the spinner is announced to screen readers */
+  size?: ButtonSize;
   "aria-label"?: string;
-  /** Additional CSS classes */
   className?: string;
 }
-
-const sizeMap = {
-  sm: "h-4 w-4",
-  md: "h-5 w-5",
-  lg: "h-6 w-6",
-} as const;
 
 export function Spinner({
   size = "md",
@@ -25,11 +20,11 @@ export function Spinner({
       role={isDecorative ? undefined : "status"}
       aria-label={ariaLabel}
       aria-hidden={isDecorative ? "true" : undefined}
-      className={[sizeMap[size], "animate-spin", className]
-        .filter(Boolean)
-        .join(" ")}
+      className={twMerge("animate-spin", className)}
       viewBox="0 0 24 24"
       fill="none"
+      width={sizeMap[size]}
+      height={sizeMap[size]}
     >
       <circle
         className="opacity-25"

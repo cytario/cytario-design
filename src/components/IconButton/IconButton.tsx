@@ -5,7 +5,6 @@ import {
   type ButtonVariant,
   type ButtonSize,
   variantStyles,
-  iconSizeMap,
 } from "../_shared/styles";
 import { type ButtonProps, type ButtonLinkProps } from "../Button";
 import { buttonBaseClass } from "../Button/Button";
@@ -13,7 +12,7 @@ import { Icon, type IconValue } from "../Icon";
 import { Spinner } from "../Spinner";
 import { Tooltip } from "../Tooltip";
 
-const squareSizeStyles: Record<ButtonSize, string> = {
+export const squareSizeStyles: Record<ButtonSize, string> = {
   xs: "h-7 w-7", // 28px
   sm: "h-8 w-8", // 32px
   md: "h-10 w-10", // 40px
@@ -64,11 +63,7 @@ function IconButtonBase({
         isDisabled={isDisabled || isLoading}
         className={cx}
       >
-        {isLoading ? (
-          <Spinner size={iconSizeMap[size]} />
-        ) : (
-          <Icon icon={icon} size={iconSizeMap[size]} />
-        )}
+        {isLoading ? <Spinner size={size} /> : <Icon icon={icon} size={size} />}
       </Component>
     </Tooltip>
   );

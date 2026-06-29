@@ -18,7 +18,7 @@ export interface IconProps {
   className?: string;
 }
 
-const sizeMap = {
+export const sizeMap = {
   xs: 14,
   sm: 16,
   md: 20,
@@ -27,7 +27,12 @@ const sizeMap = {
 } as const;
 
 /** An icon rendered at one of the design system's preset sizes. */
-export function Icon({ icon, size = "md", strokeWidth = 2, className }: IconProps) {
+export function Icon({
+  icon,
+  size = "md",
+  strokeWidth = 2,
+  className,
+}: IconProps) {
   const Component: IconComponent =
     typeof icon === "string" ? iconRegistry[icon] : icon;
 
