@@ -7,8 +7,7 @@ import {
   ColorField,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
-import { type Size, sizeStyles } from "../../_shared/styles";
-import { useInputGroup } from "../InputGroup/InputGroupContext";
+import { type ButtonSize, sizeStyles } from "../../_shared/styles";
 import { Label } from "../Label";
 
 const alignClasses = {
@@ -27,29 +26,10 @@ export interface InputProps extends Omit<
   description?: string;
   errorMessage?: string;
   type?: "text" | "email" | "password" | "number";
-  size?: Size;
+  size?: ButtonSize;
   prefix?: string;
   align?: "left" | "center" | "right";
   className?: string;
-}
-
-/**
- * Returns Tailwind border-radius classes for the border-bearing element
- * based on InputGroup position context.
- */
-function groupRadiusClasses(
-  position: "start" | "middle" | "end" | "standalone",
-): string {
-  switch (position) {
-    case "start":
-      return "rounded-l-(--border-radius-md) rounded-r-none";
-    case "middle":
-      return "rounded-none";
-    case "end":
-      return "rounded-r-(--border-radius-md) rounded-l-none";
-    default:
-      return "rounded-md";
-  }
 }
 
 export function Input({
@@ -70,19 +50,12 @@ export function Input({
   const Field: ElementType = FieldProp;
 
   const isInvalid = !!errorMessage;
-  const { inGroup, position } = useInputGroup();
 
   const borderColor = isInvalid
     ? "border-destructive-border"
     : "border-border hover:border-border";
 
-  const radiusClass = inGroup ? groupRadiusClasses(position) : "rounded-md";
-
-  /** When not first in a group, overlap left border with previous sibling */
-  const marginClass =
-    inGroup && position !== "start" && position !== "standalone"
-      ? "-ml-px"
-      : "";
+  const radiusClass = "rounded-md";
 
   return (
     <Field
@@ -91,12 +64,7 @@ export function Input({
       isDisabled={isDisabled}
       isRequired={isRequired}
       isInvalid={isInvalid}
-      className={twMerge(
-        "flex w-full flex-col gap-1",
-        inGroup ? "min-w-0 flex-1" : "",
-        marginClass,
-        className,
-      )}
+      className={twMerge("flex w-full flex-col gap-1", className)}
     >
       {label && <Label isRequired={isRequired}>{label}</Label>}
 
@@ -110,7 +78,6 @@ export function Input({
             "outline-none transition-colors",
             borderColor,
             "focus-within:ring-2 focus-within:ring-ring focus-within:border-ring",
-            inGroup && "focus-within:z-10",
             isDisabled && "opacity-50 pointer-events-none",
           )}
         >
@@ -152,17 +119,13 @@ export function Input({
             "outline-none transition-colors",
             borderColor,
             "focus:ring-2 focus:ring-ring focus:border-ring",
-            inGroup && "focus:z-10",
             "disabled:opacity-50 disabled:pointer-events-none",
           )}
         />
       )}
 
       {description && (
-        <Text
-          slot="description"
-          className="text-sm text-muted-foreground"
-        >
+        <Text slot="description" className="text-sm text-muted-foreground">
           {description}
         </Text>
       )}

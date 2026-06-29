@@ -1,25 +1,23 @@
 import { Fragment } from "react";
 import type { Meta, StoryObj } from "storybook/react";
-import { expect, fn, userEvent, within } from "storybook/test";
-import { Settings, X } from "lucide-react";
-import { IconButton } from "./IconButton";
+import { ArrowRight, Download } from "lucide-react";
+import { ButtonLink } from "./Button";
 
-const meta: Meta<typeof IconButton> = {
-  title: "Components/IconButton",
-  component: IconButton,
+const meta: Meta<typeof ButtonLink> = {
+  title: "Components/ButtonLink",
+  component: ButtonLink,
   argTypes: {
     variant: { control: "select" },
     size: { control: "select" },
   },
   args: {
-    icon: Settings,
-    label: "Settings",
-    onPress: fn(),
+    children: "Link",
+    href: "#",
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof IconButton>;
+type Story = StoryObj<typeof ButtonLink>;
 
 // Every variant × size — the canonical visual reference.
 const variants = [
@@ -33,7 +31,7 @@ const variants = [
   "outline",
   "ghost",
 ] as const;
-const sizes = ["xs", "sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
 const labelStyle = {
   fontSize: "12px",
@@ -63,13 +61,14 @@ export const AllVariants: Story = {
         <Fragment key={variant}>
           <span style={labelStyle}>{variant}</span>
           {sizes.map((size) => (
-            <IconButton
+            <ButtonLink
               key={`${variant}-${size}`}
+              href="#"
               variant={variant}
               size={size}
-              icon={Settings}
-              label={`${variant} ${size}`}
-            />
+            >
+              Link
+            </ButtonLink>
           ))}
         </Fragment>
       ))}
@@ -79,34 +78,21 @@ export const AllVariants: Story = {
 
 export const Playground: Story = {
   args: {
-    variant: "ghost",
+    variant: "primary",
     size: "md",
-    icon: Settings,
-    label: "Settings",
     isLoading: false,
     isDisabled: false,
+    children: "Playground",
+    href: "#",
   },
 };
 
-// --- States ---
+// --- Icons (not covered by the variant grid) ---
 
-export const Loading: Story = {
-  args: { isLoading: true, icon: Settings, label: "Loading" },
+export const WithIconLeft: Story = {
+  args: { iconLeft: Download, children: "Download" },
 };
 
-export const Disabled: Story = {
-  args: { isDisabled: true, icon: Settings, label: "Settings" },
-};
-
-// --- Interaction test ---
-
-export const ClickInteraction: Story = {
-  args: { variant: "ghost", icon: X, label: "Close" },
-  play: async ({ canvasElement, args }) => {
-    const canvas = within(canvasElement);
-    const button = canvas.getByRole("button", { name: "Close" });
-
-    await userEvent.click(button);
-    await expect(args.onPress).toHaveBeenCalledTimes(1);
-  },
+export const WithIconRight: Story = {
+  args: { iconRight: ArrowRight, children: "Next Page" },
 };

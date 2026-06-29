@@ -24,22 +24,25 @@ assets/
   logos/              # SVGO-optimized SVG logo variants + PNGs
   approvals/          # Agency approval PDFs (reference only)
 tokens/
-  base.json           # Primitive tokens (colors, spacing, typography) in W3C DTCG format
-  semantic.json       # Semantic aliases referencing base tokens
+  primitives.json     # Primitive tokens (colors, spacing, typography) in W3C DTCG format
+  semantic.light.json # Semantic aliases (light theme) referencing primitives
+  semantic.dark.json  # Semantic aliases (dark theme)
 scripts/
   build-tokens.ts     # Style Dictionary build script
 src/
   tokens/
-    variables.css     # AUTO-GENERATED — do not edit manually
-    tokens.ts         # AUTO-GENERATED — do not edit manually
+    variables.css      # AUTO-GENERATED (light) — do not edit manually
+    variables-dark.css # AUTO-GENERATED ([data-theme="dark"]) — do not edit manually
+    tokens.ts          # AUTO-GENERATED — do not edit manually
   styles/
     tailwind.css      # Tailwind v4 @theme with brand color scales
     global.css        # Imports tailwind.css + variables.css, global styles
   components/         # React components (co-located: .tsx + .stories.tsx + .test.tsx)
-    Button/           # Primary, secondary, ghost, destructive variants
-    Input/            # TextField with label, error, description
-    Select/           # Dropdown with popover, keyboard nav
+    Button/           # text button; variants from _shared/styles
+    Form/             # form controls — Input, InputPassword, Select, Checkbox, Radio, …
     Table/            # Sortable data table, compact/comfortable sizes
+    _shared/          # shared style builders (variantStyles, sizeStyles)
+    _composites/      # multi-component demo stories (AuthScreens, …)
   docs/               # MDX documentation pages
     Introduction.mdx
     Foundation/       # Logo, Colors, Typography, Spacing
@@ -67,19 +70,22 @@ npm run lint                 # ESLint on src/
 ## Design Token Pipeline
 
 ```
-tokens/base.json + tokens/semantic.json (W3C DTCG JSON)
+tokens/primitives.json + tokens/semantic.{light,dark}.json (W3C DTCG JSON)
   -> Style Dictionary v4 (scripts/build-tokens.ts)
-  -> src/tokens/variables.css (CSS custom properties with --color-*, --spacing-*, etc.)
-  -> src/tokens/tokens.ts (TypeScript constants)
+  -> src/tokens/variables.css       (light-theme CSS custom properties: --color-*, --spacing-*, …)
+  -> src/tokens/variables-dark.css  ([data-theme="dark"] overrides)
+  -> src/tokens/tokens.ts           (TypeScript constants)
 ```
 
 After modifying tokens, run `npm run build:tokens`. If adding a new color scale, also add entries to the `@theme` block in `src/styles/tailwind.css`.
+
+**The generated CSS is not auto-rebuilt.** `npm run dev`, `build`, and `build:lib` do *not* run `build:tokens` — after editing token JSON you must run `npm run build:tokens` yourself, or Storybook/the published library will serve the previous (stale) values.
 
 ## Component Architecture
 
 All components follow the same pattern:
 
-1. **Behavior + accessibility**: Wrap a React Aria Component (e.g., `Button`, `TextField`, `Select`, `Table`)
+1. **Behavior + accessibility**: Wrap a React Aria Component (e.g., `Button`, `TextField`, `Select`, `Table`). **Exception**: `InputPassword` intentionally renders a ref-forwarded native `<input>` (not RAC `TextField`) so it works in server-driven native forms — the cytario-keycloak Keycloakify login theme re-uses it and depends on native DOM events + native form submission. Do not "upgrade" it to RAC.
 2. **Styling**: Tailwind v4 canonical utility classes. Use standard utilities where they exist (`font-semibold`, `text-sm`, `gap-4`, `rounded-md`), including the semantic color utilities generated from the design tokens (`bg-primary`, `text-muted-foreground`, `bg-destructive`, `border-border`). Use arbitrary token syntax (`bg-(--color-badge-purple-bg)`) only for the decorative `badge`/`delta`/`progress` palettes that are deliberately excluded from the `@theme` layer. Never use verbose forms like `[var(--spacing-4)]` or `(number:--font-weight-semibold)`.
 3. **Stories**: CSF3 format, import from `storybook/react` and `storybook/test` (Storybook 10 paths)
 4. **Tests**: Vitest + React Testing Library. Test by user perspective (query by role/label). Do not test React Aria internals.
@@ -101,6 +107,17 @@ Packages consolidated into `storybook` core (do NOT install separately): `@story
 - **MDX tables**: `remark-gfm` is configured in addon-docs options to enable GFM markdown table syntax in MDX files
 - **Theme**: Custom cytario theme in `.storybook/theme.ts` uses purple for sidebar/accents. Sidebar icon colors are overridden via CSS in `.storybook/manager-head.html`
 - **Static assets**: `assets/` directory is served via `staticDirs` config — reference logos as `logos/cytario-logo-purple.svg` in MDX
+
+## Story House Style
+
+Stories are CSF3 and exist to document a component, not to enumerate every prop value. Keep them lean — **a story earns its slot only if it shows a prop, state, or combination not already visible elsewhere.**
+
+- **Title**: `Components/<Name>`, or `Components/Form/<Name>` for form controls. Co-locate `<Name>.stories.tsx` with the component.
+- **Lead with the overview grid.** First export is `AllVariants` (or `AllSizes`) — a labeled CSS grid: rows = variant, columns = size, axis labels in `var(--color-muted-foreground)`. This is the canonical visual reference.
+- **No slop.** Because the grid already shows every variant × size, do **not** add per-variant or per-size stories — they are pure duplication. Likewise never add label-only stories (same component, different `children`/`href` text) that exercise no new prop. This is the single most common bloat; a typical component needs ~6–8 stories, not 30.
+- **Then**: `Playground` (every control wired via `args` + `argTypes`), followed by the few stories the grid can't express (icons, loading, disabled, error, description…), and finally one `*Interaction` play test (`storybook/test`).
+- **Sidebar order** is pinned via `options.storySort` in `.storybook/preview.ts` (`order: ["Components", ["Icon", "IconButton", …, "*"], "Compositions"]`). Within a single file, story order = export order (no `storySort.method`, so don't rely on alphabetical).
+- **Real-world demos** that compose several components belong in `_composites/` stories, not as variations on a primitive's story file.
 
 ## Regulatory Context
 

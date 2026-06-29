@@ -1,0 +1,36 @@
+{/* Icons.mdx */}
+import { Meta } from "@storybook/addon-docs/blocks";
+import { IconGallery } from "./IconReference";
+
+<Meta title="Foundation/Icons" />
+
+# Icons
+
+Icons are drawn from [Lucide](https://lucide.dev) and rendered through the `Icon` component at five preset sizes (`xs` 14, `sm` 16, `md` 20, `lg` 24, `xl` 32). Icons are decorative — the accessible name lives on the surrounding control (e.g. `IconButton`'s `label`) or adjacent text.
+
+Reference an icon by its registered name:
+
+```tsx
+<Icon icon="Search" size="md" />
+<IconButton icon="Trash2" label="Delete" />
+<Button iconLeft="Download">Export</Button>
+```
+
+The name is the Lucide export name, type-checked against the registry. An unknown name is a compile error.
+
+## Adding an icon
+
+Icons are an **allowlist** in `src/components/Icon/icon-registry.ts` — only registered icons ship in the bundle, keeping it tree-shakeable (no wildcard import of Lucide's full set). To use a new one, add it to the registry; its name then becomes available everywhere.
+
+For a one-off (or an icon not yet registered), pass the component directly instead of a name:
+
+```tsx
+import { Plug } from "lucide-react";
+<Icon icon={Plug} />
+```
+
+Custom (non-Lucide) SVGs work the same way — pass any component accepting Lucide-style props (`size`, `strokeWidth`, `className`).
+
+## Registered icons
+
+<IconGallery />

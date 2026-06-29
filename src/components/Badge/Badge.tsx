@@ -1,6 +1,6 @@
 import type React from "react";
-import type { LucideIcon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { Icon, type IconValue } from "../Icon";
 
 export type BadgeVariant =
   | "neutral"
@@ -21,7 +21,7 @@ export interface BadgeProps {
   /** Size preset */
   size?: BadgeSize;
   /** Optional leading icon */
-  icon?: LucideIcon;
+  icon?: IconValue;
   /** Merge override */
   className?: string;
 }
@@ -46,16 +46,11 @@ const sizeStyles: Record<BadgeSize, string> = {
   md: "px-2 py-0.5",
 };
 
-const iconSizeMap: Record<BadgeSize, number> = {
-  sm: 12,
-  md: 14,
-};
-
 export function Badge({
   children,
   variant = "neutral",
   size = "sm",
-  icon: IconComponent,
+  icon,
   className,
 }: BadgeProps) {
   return (
@@ -68,9 +63,7 @@ export function Badge({
         className,
       )}
     >
-      {IconComponent && (
-        <IconComponent size={iconSizeMap[size]} aria-hidden="true" />
-      )}
+      {icon && <Icon icon={icon} size="xs" />}
       {children}
     </span>
   );

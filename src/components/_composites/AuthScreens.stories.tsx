@@ -1,14 +1,12 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
-import { Eye, EyeOff } from "lucide-react";
 
 import { Banner } from "../Banner";
 import { Button } from "../Button";
 import { Checkbox } from "../Form/Checkbox";
 import { Heading } from "../Heading";
-import { IconButton } from "../IconButton";
 import { Input } from "../Form/Input";
-import { InputGroup } from "../Form/InputGroup";
+import { InputPassword } from "../Form/InputPassword";
 import { Link } from "../Link";
 
 /* ------------------------------------------------------------------ */
@@ -41,9 +39,8 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
 }
 
 /**
- * Password input with visibility toggle, using InputGroup + IconButton.
+ * Password input with built-in visibility toggle (InputPassword).
  */
-let passwordFieldId = 0;
 function PasswordField({
   label = "Password",
   placeholder = "Enter password",
@@ -61,45 +58,16 @@ function PasswordField({
   isDisabled?: boolean;
   isRequired?: boolean;
 }) {
-  const [visible, setVisible] = useState(false);
-  const [id] = useState(() => `password-field-${++passwordFieldId}`);
-
   return (
-    <div className="flex flex-col gap-1">
-      <label
-        htmlFor={id}
-        className="text-sm font-medium text-foreground"
-      >
-        {label}
-        {isRequired && (
-          <span
-            aria-hidden="true"
-            className="ml-0.5 text-destructive"
-          >
-            *
-          </span>
-        )}
-      </label>
-      <InputGroup>
-        <Input
-          id={id}
-          type={visible ? "text" : "password"}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          errorMessage={errorMessage}
-          isDisabled={isDisabled}
-        />
-        <IconButton
-          icon={visible ? EyeOff : Eye}
-          aria-label={visible ? "Hide password" : "Show password"}
-          variant="ghost"
-          showTooltip={false}
-          onPress={() => setVisible(!visible)}
-          isDisabled={isDisabled}
-        />
-      </InputGroup>
-    </div>
+    <InputPassword
+      label={label}
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      errorMessage={errorMessage}
+      isDisabled={isDisabled}
+      isRequired={isRequired}
+    />
   );
 }
 
@@ -109,11 +77,7 @@ function PasswordField({
  */
 function AuthHeading({ children }: { children: React.ReactNode }) {
   return (
-    <Heading
-      as="h2"
-      size="lg"
-      className="font-normal text-center mb-4"
-    >
+    <Heading as="h2" size="lg" className="font-normal text-center mb-4">
       {children}
     </Heading>
   );
@@ -125,9 +89,7 @@ function AuthHeading({ children }: { children: React.ReactNode }) {
 function AuthFooter({ children }: { children: React.ReactNode }) {
   return (
     <div className="mt-6 pt-6 border-t border-border">
-      <p className="text-center text-sm text-muted-foreground">
-        {children}
-      </p>
+      <p className="text-center text-sm text-muted-foreground">{children}</p>
     </div>
   );
 }

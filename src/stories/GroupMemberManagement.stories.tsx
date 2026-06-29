@@ -326,7 +326,7 @@ function GroupMemberManagement() {
                 <Menu items={menuItemsFor(member)}>
                   <IconButton
                     icon={MoreVertical}
-                    aria-label={`Actions for ${member.name}`}
+                    label={`Actions for ${member.name}`}
                     variant="ghost"
                     size="sm"
                   />

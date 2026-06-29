@@ -1,15 +1,11 @@
-/* ── Shared sizes ── */
+export type ButtonSize = "xs" | "sm" | "md" | "lg";
 
-export type Size = "xs" | "sm" | "md" | "lg";
-
-export const sizeStyles: Record<Size, string> = {
-  xs: "px-2 py-1 text-xs",
+export const sizeStyles: Record<ButtonSize, string> = {
+  xs: "px-2 py-1.5 text-xs",
   sm: "px-3 py-1.5 text-sm",
   md: "px-4 py-2 text-base",
   lg: "px-6 py-3 text-lg",
 };
-
-/* ── Button ── */
 
 export type ButtonVariant =
   | "primary"
@@ -23,50 +19,65 @@ export type ButtonVariant =
   | "ghost";
 
 export const variantStyles: Record<ButtonVariant, string> = {
-  primary: [
-    "bg-primary text-primary-foreground",
-    "hover:bg-primary-hover",
-    "pressed:bg-primary-pressed",
-  ].join(" "),
-  secondary: [
-    "bg-secondary text-secondary-foreground",
-    "hover:bg-secondary-hover",
-    "pressed:bg-secondary-pressed",
-  ].join(" "),
-  destructive: [
-    "bg-destructive text-destructive-foreground",
-    "hover:bg-destructive-hover",
-    "pressed:bg-destructive-pressed",
-  ].join(" "),
-  success: [
-    "bg-success text-success-foreground",
-    "hover:bg-success-hover",
-    "pressed:bg-success-pressed",
-  ].join(" "),
-  warning: [
-    "bg-warning text-warning-foreground",
-    "hover:bg-warning-hover",
-    "pressed:bg-warning-pressed",
-  ].join(" "),
-  info: [
-    "bg-info text-info-foreground",
-    "hover:bg-info-hover",
-    "pressed:bg-info-pressed",
-  ].join(" "),
-  neutral: [
-    "bg-muted text-foreground",
-    "hover:bg-accent",
-    "pressed:bg-accent-pressed",
-  ].join(" "),
-  outline: [
-    "bg-transparent text-foreground",
-    "border border-border",
-    "hover:bg-muted",
-    "pressed:bg-accent-pressed",
-  ].join(" "),
-  ghost: [
-    "bg-transparent text-foreground",
-    "hover:bg-muted",
-    "pressed:bg-accent-pressed",
-  ].join(" "),
+  primary: `
+    bg-primary text-primary-foreground
+    hover:bg-primary-hover
+    pressed:bg-primary-pressed
+  `,
+  secondary: `
+    bg-secondary text-secondary-foreground
+    hover:bg-secondary-hover
+    pressed:bg-secondary-pressed
+  `,
+  destructive: `
+    bg-destructive text-destructive-foreground
+    hover:bg-destructive-hover
+    pressed:bg-destructive-pressed
+  `,
+  success: `
+    bg-success text-success-foreground
+    hover:bg-success-hover
+    pressed:bg-success-pressed
+  `,
+  warning: `
+    bg-warning text-warning-foreground
+    hover:bg-warning-hover
+    pressed:bg-warning-pressed
+  `,
+  info: `
+    bg-info text-info-foreground
+    hover:bg-info-hover
+    pressed:bg-info-pressed
+  `,
+  neutral: `
+    bg-muted text-foreground
+    hover:bg-accent
+    pressed:bg-accent-pressed
+  `,
+  outline: `
+    bg-transparent text-foreground
+    border border-border
+    hover:bg-muted
+    pressed:bg-accent-pressed
+  `,
+  ghost: `
+    bg-transparent text-foreground
+    hover:bg-muted
+    pressed:bg-accent-pressed
+  `,
+};
+
+/** Selected (toggled-on) background per variant — reuses each variant's pressed
+ * tone. Keyed on react-aria's `data-selected` (`selected:`), so it only takes
+ * effect on ToggleButton-backed components. Literal classes for Tailwind. */
+export const selectedStyles: Record<ButtonVariant, string> = {
+  primary: "selected:bg-primary-pressed",
+  secondary: "selected:bg-secondary-pressed",
+  destructive: "selected:bg-destructive-pressed",
+  success: "selected:bg-success-pressed",
+  warning: "selected:bg-warning-pressed",
+  info: "selected:bg-info-pressed",
+  neutral: "selected:bg-accent-pressed",
+  outline: "selected:bg-accent-pressed",
+  ghost: "selected:bg-accent-pressed",
 };

@@ -15,8 +15,13 @@ export type {
 export { Spinner } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
 
-export { Icon } from "./components/Icon";
-export type { IconProps } from "./components/Icon";
+export { Icon, iconRegistry } from "./components/Icon";
+export type {
+  IconProps,
+  IconName,
+  IconComponent,
+  IconValue,
+} from "./components/Icon";
 
 export { Tooltip } from "./components/Tooltip";
 export type { TooltipProps } from "./components/Tooltip";
@@ -24,11 +29,22 @@ export type { TooltipProps } from "./components/Tooltip";
 export { TruncatedText } from "./components/TruncatedText";
 export type { TruncatedTextProps } from "./components/TruncatedText";
 
-export { IconButton } from "./components/IconButton";
-export type { IconButtonProps } from "./components/IconButton";
+export {
+  IconButton,
+  IconButtonLink,
+  IconButtonToggle,
+} from "./components/IconButton";
+export type {
+  IconButtonProps,
+  IconButtonLinkProps,
+  IconButtonToggleProps,
+} from "./components/IconButton";
 
 export { Input } from "./components/Form/Input";
 export type { InputProps } from "./components/Form/Input";
+
+export { InputPassword } from "./components/Form/InputPassword";
+export type { InputPasswordProps } from "./components/Form/InputPassword";
 
 export { Select } from "./components/Form/Select";
 export type { SelectProps, SelectItem } from "./components/Form/Select";
@@ -78,16 +94,6 @@ export type { LabelProps } from "./components/Form/Label";
 export { Fieldset } from "./components/Form/Fieldset";
 export type { FieldsetProps } from "./components/Form/Fieldset";
 
-export {
-  InputGroup,
-  InputGroupContext,
-  useInputGroup,
-} from "./components/Form/InputGroup";
-export type { InputGroupProps, GroupPosition } from "./components/Form/InputGroup";
-
-export { InputAddon } from "./components/Form/InputAddon";
-export type { InputAddonProps } from "./components/Form/InputAddon";
-
 export { Heading, H1, H2, H3 } from "./components/Heading";
 export type {
   HeadingProps,
@@ -104,11 +110,8 @@ export type {
   BreadcrumbItem,
 } from "./components/Breadcrumbs";
 
-export { ButtonLink, IconButtonLink } from "./components/ButtonLink";
-export type {
-  ButtonLinkProps,
-  IconButtonLinkProps,
-} from "./components/ButtonLink";
+export { ButtonLink } from "./components/Button";
+export type { ButtonLinkProps } from "./components/Button";
 
 export { ToggleButton } from "./components/ToggleButton";
 export type {
@@ -116,16 +119,6 @@ export type {
   ToggleButtonVariant,
   ToggleButtonSize,
 } from "./components/ToggleButton";
-
-export {
-  ToggleButtonGroup,
-  ToggleButtonGroupItem,
-} from "./components/ToggleButtonGroup";
-export type {
-  ToggleButtonGroupProps,
-  ToggleButtonGroupItemProps,
-  ToggleButtonGroupSize,
-} from "./components/ToggleButtonGroup";
 
 export {
   Menu,

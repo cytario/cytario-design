@@ -4,7 +4,7 @@ import { expect, userEvent, within } from "storybook/test";
 import { Dialog } from "./Dialog";
 import { DialogFooter } from "./DialogFooter";
 import { Button } from "../Button";
-import { ButtonLink } from "../ButtonLink";
+import { ButtonLink } from "../Button";
 import { DescriptionList } from "../DescriptionList";
 
 const meta: Meta<typeof Dialog> = {

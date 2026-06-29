@@ -23,7 +23,7 @@
       "$value": "{color.slate.100}"
     },
     "accent-pressed": {
-      "$value": "{color.slate.900}"
+      "$value": "{color.slate.700}"
     },
     "border": {
       "$value": "{color.slate.700}"

@@ -1,59 +1,50 @@
-import type React from "react";
-import type { LucideIcon } from "lucide-react";
+import type { ElementType, ReactNode } from "react";
 import {
   Button as AriaButton,
   type ButtonProps as AriaButtonProps,
+  Link as AriaLink,
+  type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import {
-  type Size,
+  type ButtonSize,
   type ButtonVariant,
-  variantStyles,
   sizeStyles,
+  variantStyles,
 } from "../_shared/styles";
-import { Icon } from "../Icon";
+import { Icon, type IconValue } from "../Icon";
 import { Spinner } from "../Spinner";
-import { useInputGroup } from "../Form/InputGroup/InputGroupContext";
 
-export type { ButtonVariant };
-export type ButtonSize = Size;
+export type { ButtonVariant, ButtonSize };
 
-export interface ButtonProps extends AriaButtonProps {
-  /** Visual style variant */
+/** Layout, shape and state classes shared by the text buttons (Button, ButtonLink). */
+export const buttonBaseClass = `
+  inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer
+  rounded-full
+  font-medium
+  leading-tight
+  outline-none transition-colors no-underline
+  focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+  disabled:opacity-50 disabled:pointer-events-none
+`;
+
+/** Shared visual props for the button family (Button, ButtonLink). */
+export interface ButtonBaseProps {
   variant?: ButtonVariant;
-  /** Size preset */
   size?: ButtonSize;
-  /** Shows a spinner and disables interaction */
   isLoading?: boolean;
-  /** Lucide icon rendered before children */
-  iconLeft?: LucideIcon;
-  /** Lucide icon rendered after children */
-  iconRight?: LucideIcon;
+  iconLeft?: IconValue;
+  iconRight?: IconValue;
+  className?: string;
 }
 
-const iconSizeMap = {
-  xs: "sm",
-  sm: "sm",
-  md: "sm",
-  lg: "md",
-} as const;
-
-function groupRadiusClass(
-  position: "start" | "middle" | "end" | "standalone",
-): string {
-  switch (position) {
-    case "start":
-      return "rounded-l-md rounded-r-none";
-    case "middle":
-      return "rounded-none";
-    case "end":
-      return "rounded-r-md rounded-l-none";
-    default:
-      return "rounded-md";
-  }
-}
-
-export function Button({
+/**
+ * Shared text button: builds the className and renders the icon/label/icon
+ * content (or a spinner while loading). The wrapper element is polymorphic via
+ * `as`; the public Button/ButtonLink pass their own precisely-typed props.
+ */
+function ButtonBase({
+  as: Component,
   variant = "primary",
   size = "md",
   isLoading = false,
@@ -63,52 +54,37 @@ export function Button({
   className,
   children,
   ...props
-}: ButtonProps) {
-  const { inGroup, position } = useInputGroup();
-
-  const groupGhost =
-    inGroup && variant === "ghost"
-      ? "bg-background text-muted-foreground border border-border hover:bg-accent hover:text-foreground hover:border-border pressed:bg-accent pressed:text-foreground"
-      : "";
-
-  const radiusClass = inGroup ? groupRadiusClass(position) : "rounded-md";
-
-  const marginClass =
-    inGroup && position !== "start" && position !== "standalone"
-      ? "-ml-px"
-      : "";
-
-  const focusRing = inGroup
-    ? "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 focus-visible:z-10"
-    : "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+}: ButtonBaseProps & {
+  as: ElementType;
+  isDisabled?: boolean;
+} & Record<string, unknown>) {
+  const cx = twMerge(
+    buttonBaseClass,
+    isLoading ? "pointer-events-none" : "",
+    variantStyles[variant],
+    sizeStyles[size],
+    className,
+  );
 
   return (
-    <AriaButton
-      {...props}
-      isDisabled={isDisabled || isLoading}
-      className={twMerge(
-        "inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer",
-        radiusClass,
-        "font-medium",
-        "leading-tight",
-        "outline-none transition-colors",
-        focusRing,
-        "disabled:opacity-50 disabled:pointer-events-none",
-        isLoading ? "pointer-events-none" : "",
-        groupGhost || variantStyles[variant],
-        sizeStyles[size],
-        marginClass,
-        className as string,
-      )}
-    >
-      {isLoading && <Spinner size={iconSizeMap[size]} />}
-      {!isLoading && iconLeft && (
-        <Icon icon={iconLeft} size={iconSizeMap[size]} />
-      )}
-      {children as React.ReactNode}
-      {!isLoading && iconRight && (
-        <Icon icon={iconRight} size={iconSizeMap[size]} />
-      )}
-    </AriaButton>
+    <Component {...props} isDisabled={isDisabled || isLoading} className={cx}>
+      {isLoading && <Spinner size={size} />}
+      {!isLoading && iconLeft && <Icon icon={iconLeft} size={size} />}
+      {children as ReactNode}
+      {!isLoading && iconRight && <Icon icon={iconRight} size={size} />}
+    </Component>
   );
+}
+
+export type ButtonProps = Omit<AriaButtonProps, "className"> & ButtonBaseProps;
+
+export function Button(props: ButtonProps) {
+  return <ButtonBase as={AriaButton} {...props} />;
+}
+
+export type ButtonLinkProps = Omit<AriaLinkProps, "className"> &
+  ButtonBaseProps;
+
+export function ButtonLink(props: ButtonLinkProps) {
+  return <ButtonBase as={AriaLink} {...props} />;
 }

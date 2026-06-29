@@ -4,7 +4,7 @@ import { expect, fn, userEvent, within } from "storybook/test";
 import { Dialog } from "../components/Dialog";
 import { DialogFooter } from "../components/Dialog/DialogFooter";
 import { Button } from "../components/Button";
-import { ButtonLink } from "../components/ButtonLink";
+import { ButtonLink } from "../components/Button";
 import { DescriptionList } from "../components/DescriptionList";
 import { InlineConfirmation } from "../components/InlineConfirmation";
 

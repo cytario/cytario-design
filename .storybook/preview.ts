@@ -28,7 +28,8 @@ const preview: Preview = {
 
       // Set data-theme on the preview iframe's <html> so body bg responds
       useEffect(() => {
-        const theme = selectedTheme === "side-by-side" ? "light" : selectedTheme;
+        const theme =
+          selectedTheme === "side-by-side" ? "light" : selectedTheme;
         document.documentElement.setAttribute("data-theme", theme);
       }, [selectedTheme]);
 
@@ -43,7 +44,7 @@ const preview: Preview = {
               style: {
                 flex: 1,
                 padding: "1rem",
-                backgroundColor: "var(--color-surface-default)",
+                backgroundColor: "var(--color-background)",
                 borderRadius: "8px",
               },
             },
@@ -54,7 +55,7 @@ const preview: Preview = {
                   fontSize: "12px",
                   fontWeight: 600,
                   marginBottom: "0.5rem",
-                  color: "var(--color-text-secondary)",
+                  color: "var(--color-muted-foreground)",
                   textTransform: "uppercase" as const,
                   letterSpacing: "0.05em",
                 },
@@ -70,7 +71,7 @@ const preview: Preview = {
               style: {
                 flex: 1,
                 padding: "1rem",
-                backgroundColor: "var(--color-surface-default)",
+                backgroundColor: "var(--color-background)",
                 borderRadius: "8px",
               },
             },
@@ -81,7 +82,7 @@ const preview: Preview = {
                   fontSize: "12px",
                   fontWeight: 600,
                   marginBottom: "0.5rem",
-                  color: "var(--color-text-secondary)",
+                  color: "var(--color-muted-foreground)",
                   textTransform: "uppercase" as const,
                   letterSpacing: "0.05em",
                 },
@@ -101,6 +102,29 @@ const preview: Preview = {
     },
   ],
   parameters: {
+    options: {
+      storySort: {
+        order: [
+          "Introduction",
+          "Foundation",
+          "Components",
+          [
+            //
+            "Icon",
+            "IconButton",
+            "IconButtonLink",
+            "IconButtonToggle",
+            "Button",
+            "ButtonLink",
+            "*",
+          ],
+          "Compositions",
+          "Patterns",
+          "Guidelines",
+          "*",
+        ],
+      },
+    },
     docs: {
       theme: lightTheme,
     },

@@ -17,15 +17,15 @@ describe("Spinner", () => {
     expect(spinner).not.toHaveAttribute("aria-hidden");
   });
 
-  it("applies size classes", () => {
+  it("sizes via width/height matching the Icon preset", () => {
     const { container: sm } = render(<Spinner size="sm" />);
-    expect(sm.querySelector("svg")?.getAttribute("class")).toContain("h-4 w-4");
+    expect(sm.querySelector("svg")?.getAttribute("width")).toBe("16");
 
     const { container: md } = render(<Spinner size="md" />);
-    expect(md.querySelector("svg")?.getAttribute("class")).toContain("h-5 w-5");
+    expect(md.querySelector("svg")?.getAttribute("width")).toBe("20");
 
     const { container: lg } = render(<Spinner size="lg" />);
-    expect(lg.querySelector("svg")?.getAttribute("class")).toContain("h-6 w-6");
+    expect(lg.querySelector("svg")?.getAttribute("width")).toBe("24");
   });
 
   it("applies custom className", () => {

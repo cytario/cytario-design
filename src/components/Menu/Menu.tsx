@@ -1,5 +1,4 @@
 import type React from "react";
-import type { LucideIcon } from "lucide-react";
 import type { Selection } from "react-aria-components";
 import {
   MenuTrigger,
@@ -7,12 +6,12 @@ import {
   MenuItem as AriaMenuItem,
   Popover,
 } from "react-aria-components";
-import { Icon } from "../Icon";
+import { Icon, type IconValue } from "../Icon";
 
 export interface MenuItemData {
   id: string;
   label: string;
-  icon?: LucideIcon;
+  icon?: IconValue;
   onAction?: () => void;
   /** When set, renders the menu item as a navigational link */
   href?: string;

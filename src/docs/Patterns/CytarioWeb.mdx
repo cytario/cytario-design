@@ -69,7 +69,7 @@ A 3-step modal wizard for connecting S3-compatible cloud storage.
 | Step | Name | Fields |
 |------|------|--------|
 | 1 | Storage Provider | Visibility (Select), Provider Type (RadioButton: AWS S3 / Other), Provider Name (Input, conditional) |
-| 2 | Data Location | S3 URI (Input with "s3://" prefix via InputGroup+InputAddon), Region (Select, AWS only) |
+| 2 | Data Location | S3 URI (Input with `prefix="s3://"`), Region (Select, AWS only) |
 | 3 | Access | Role ARN (Input, AWS) or Endpoint URL (Input, Other) |
 
 ### Components Used
@@ -80,8 +80,7 @@ A 3-step modal wizard for connecting S3-compatible cloud storage.
 | **FormWizardProgress** | Step indicator with numbered circles, labels, and connecting lines. |
 | **Field** | Each form field with label, description, and error message. |
 | **Fieldset** | Groups related fields within each step. |
-| **Input** | Text inputs for S3 URI, Role ARN, Endpoint, Provider Name. |
-| **InputGroup + InputAddon** | S3 URI field with "s3://" prefix. |
+| **Input** | Text inputs for Role ARN, Endpoint, Provider Name; S3 URI uses `prefix="s3://"`. |
 | **Select** | Visibility dropdown and AWS Region dropdown. |
 | **RadioButton** | Provider type toggle (AWS S3 / Other). |
 | **Button** | Back (secondary), Next (primary), Connect Storage (primary, last step). |
