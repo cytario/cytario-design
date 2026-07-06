@@ -1,4 +1,4 @@
-import type { ElementType } from "react";
+import type { ElementType, Ref } from "react";
 import {
   Button as AriaButton,
   Link as AriaLink,
@@ -34,6 +34,7 @@ interface IconButtonBaseProps {
   isLoading?: boolean;
   isDisabled?: boolean;
   className?: string;
+  ref?: Ref<HTMLButtonElement | HTMLAnchorElement>;
 }
 
 /**
@@ -51,6 +52,7 @@ function IconButtonBase({
   isLoading = false,
   isDisabled,
   className,
+  ref,
   ...props
 }: IconButtonBaseProps & Record<string, unknown>) {
   const cx = twMerge(
@@ -67,6 +69,7 @@ function IconButtonBase({
     <Tooltip content={label}>
       <Component
         {...props}
+        ref={ref}
         aria-label={label}
         isDisabled={isDisabled || isLoading}
         className={cx}
@@ -83,6 +86,7 @@ export type IconButtonProps = Omit<
 > & {
   icon: IconValue;
   label: string;
+  ref?: Ref<HTMLButtonElement>;
 };
 
 export function IconButton(props: IconButtonProps) {
@@ -95,6 +99,7 @@ export type IconButtonLinkProps = Omit<
 > & {
   icon: IconValue;
   label: string;
+  ref?: Ref<HTMLAnchorElement>;
 };
 
 export function IconButtonLink(props: IconButtonLinkProps) {
@@ -110,6 +115,7 @@ export type IconButtonToggleProps = Omit<
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
+  ref?: Ref<HTMLButtonElement>;
 };
 
 /** Icon button with a persistent on/off state (react-aria ToggleButton): `isSelected` toggles `aria-pressed` and the selected background. */

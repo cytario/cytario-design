@@ -1,6 +1,12 @@
 export { Menu } from "./Menu";
 export type { MenuProps, MenuItemData } from "./Menu";
 
+export { useContextMenu } from "./useContextMenu";
+export type {
+  UseContextMenuProps,
+  UseContextMenuResult,
+} from "./useContextMenu";
+
 export { MenuItem } from "./MenuItem";
 export type { MenuItemProps } from "./MenuItem";
 

@@ -16,6 +16,7 @@ import {
   Columns3,
 } from "lucide-react";
 import { Menu } from "./Menu";
+import { useContextMenu } from "./useContextMenu";
 import { MenuItem } from "./MenuItem";
 import { MenuCheckboxItem } from "./MenuCheckboxItem";
 import { MenuSection } from "./MenuSection";
@@ -257,11 +258,7 @@ export const WithIconButtonTrigger: Story = {
       { id: "delete", label: "Delete", icon: Trash2, isDanger: true },
     ],
     children: (
-      <IconButton
-        icon={MoreVertical}
-        label="More actions"
-        variant="ghost"
-      />
+      <IconButton icon={MoreVertical} label="More actions" variant="ghost" />
     ),
   },
 };
@@ -379,11 +376,7 @@ export const ColumnVisibility: Story = {
           </MenuSection>
         }
       >
-        <IconButton
-          icon={Columns3}
-          label="Toggle columns"
-          variant="ghost"
-        />
+        <IconButton icon={Columns3} label="Toggle columns" variant="ghost" />
       </Menu>
     );
   },
@@ -449,4 +442,63 @@ export const MixedCheckboxAndActions: Story = {
       </Menu>
     );
   },
+};
+
+// --- Context menu (right-click, cursor-anchored) ---
+
+const fileMenuContent = (
+  <>
+    <MenuItem id="open" icon="ArrowRight">
+      Open
+    </MenuItem>
+    <MenuItem id="open-new-tab" icon="ExternalLink">
+      Open in new tab
+    </MenuItem>
+    <MenuSeparator />
+    <MenuItem id="copy" icon="Copy">
+      Copy S3 URI
+    </MenuItem>
+    <MenuItem id="delete" icon="Trash2" isDanger>
+      Delete
+    </MenuItem>
+  </>
+);
+
+function ContextMenuRow({ label }: { label: string }) {
+  const { targetProps, triggerProps, menu } = useContextMenu({
+    content: fileMenuContent,
+  });
+  return (
+    <div
+      {...targetProps}
+      className="group flex h-9 w-72 items-center justify-between rounded-md border border-border px-3 text-sm hover:bg-muted"
+    >
+      <span>{label}</span>
+      <IconButton
+        {...triggerProps}
+        icon="EllipsisVertical"
+        label={`Actions for ${label}`}
+        variant="ghost"
+        size="xs"
+      />
+      {menu}
+    </div>
+  );
+}
+
+/**
+ * The same menu content triggered by right-click at the cursor via
+ * `useContextMenu`, instead of a click on a trigger. Right-click a row to open
+ * at the pointer; right-click another row while one is open and it moves; any
+ * outside click closes. The kebab opens the same menu from the keyboard.
+ */
+export const ContextMenu: Story = {
+  name: "Context Menu (right-click)",
+  render: () => (
+    <div className="flex flex-col gap-2 p-8">
+      <ContextMenuRow label="specimen-001.ome.tif" />
+      <ContextMenuRow label="specimen-002.ome.tif" />
+      <ContextMenuRow label="specimen-003.ome.tif" />
+    </div>
+  ),
 };
