@@ -27,18 +27,13 @@ export interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  neutral:
-    "bg-(--color-badge-neutral-bg) text-(--color-badge-neutral-text)",
-  purple:
-    "bg-(--color-badge-purple-bg) text-(--color-badge-purple-text)",
+  neutral: "bg-(--color-badge-neutral-bg) text-(--color-badge-neutral-text)",
+  purple: "bg-(--color-badge-purple-bg) text-(--color-badge-purple-text)",
   teal: "bg-(--color-badge-teal-bg) text-(--color-badge-teal-text)",
   rose: "bg-(--color-badge-rose-bg) text-(--color-badge-rose-text)",
-  slate:
-    "bg-(--color-badge-slate-bg) text-(--color-badge-slate-text)",
-  green:
-    "bg-(--color-badge-green-bg) text-(--color-badge-green-text)",
-  amber:
-    "bg-(--color-badge-amber-bg) text-(--color-badge-amber-text)",
+  slate: "bg-(--color-badge-slate-bg) text-(--color-badge-slate-text)",
+  green: "bg-(--color-badge-green-bg) text-(--color-badge-green-text)",
+  amber: "bg-(--color-badge-amber-bg) text-(--color-badge-amber-text)",
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
@@ -57,7 +52,7 @@ export function Badge({
     <span
       className={twMerge(
         "inline-flex items-center gap-1 rounded-full",
-        "text-xs font-medium leading-tight",
+        "text-xs font-medium leading-tight tracking-wider tabular-nums",
         variantStyles[variant],
         sizeStyles[size],
         className,

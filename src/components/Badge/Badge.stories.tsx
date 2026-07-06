@@ -1,19 +1,18 @@
+import { Fragment } from "react";
 import type { Meta, StoryObj } from "storybook/react";
-import { Cloud, AlertTriangle, CheckCircle, Tag } from "lucide-react";
+import { Cloud } from "lucide-react";
+import { iconRegistry } from "../Icon";
 import { Badge } from "./Badge";
+
+const iconOptions = [undefined, ...Object.keys(iconRegistry)];
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
   component: Badge,
   argTypes: {
-    variant: {
-      control: "select",
-      options: ["neutral", "purple", "teal", "rose", "slate", "green", "amber"],
-    },
-    size: {
-      control: "select",
-      options: ["sm", "md"],
-    },
+    variant: { control: "select" },
+    size: { control: "select" },
+    icon: { control: "select", options: iconOptions },
   },
   args: {
     children: "Badge",
@@ -23,84 +22,7 @@ const meta: Meta<typeof Badge> = {
 export default meta;
 type Story = StoryObj<typeof Badge>;
 
-// --- Variant stories ---
-
-export const Neutral: Story = {
-  args: { variant: "neutral", children: "Neutral" },
-};
-
-export const Purple: Story = {
-  args: { variant: "purple", children: "Brand" },
-};
-
-export const Teal: Story = {
-  args: { variant: "teal", children: "Accent" },
-};
-
-export const Rose: Story = {
-  args: { variant: "rose", children: "Critical" },
-};
-
-export const Slate: Story = {
-  args: { variant: "slate", children: "Split Charge" },
-};
-
-export const Green: Story = {
-  args: { variant: "green", children: "Active" },
-};
-
-export const Amber: Story = {
-  args: { variant: "amber", children: "MTD" },
-};
-
-// --- Size stories ---
-
-export const Small: Story = {
-  args: { size: "sm", children: "Small" },
-};
-
-export const Medium: Story = {
-  args: { size: "md", children: "Medium" },
-};
-
-// --- With icon ---
-
-export const WithIcon: Story = {
-  args: { variant: "teal", icon: Cloud, children: "AWS" },
-};
-
-export const WarningWithIcon: Story = {
-  args: { variant: "amber", icon: AlertTriangle, children: "MTD" },
-};
-
-export const SuccessWithIcon: Story = {
-  args: { variant: "green", icon: CheckCircle, children: "Active" },
-};
-
-// --- Dapanoskop usage stories ---
-
-export const SplitCharge: Story = {
-  name: "dapanoskop: Split Charge",
-  args: { variant: "slate", children: "Split Charge" },
-};
-
-export const MtdLabel: Story = {
-  name: "dapanoskop: MTD",
-  args: { variant: "amber", icon: AlertTriangle, children: "MTD" },
-};
-
-export const ProviderAws: Story = {
-  name: "dapanoskop: Provider AWS",
-  args: { variant: "teal", icon: Cloud, children: "AWS" },
-};
-
-export const WorkloadCount: Story = {
-  name: "dapanoskop: Workload Count",
-  args: { variant: "neutral", icon: Tag, children: "12 workloads" },
-};
-
-// --- All variants grid ---
-
+// Every variant × size — the canonical visual reference.
 const variants = [
   "neutral",
   "purple",
@@ -111,27 +33,56 @@ const variants = [
   "amber",
 ] as const;
 
+const sizes = ["sm", "md"] as const;
+
+const labelStyle = {
+  fontSize: "12px",
+  fontWeight: 600,
+  color: "var(--color-muted-foreground)",
+  textTransform: "capitalize" as const,
+};
+
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: `auto repeat(${sizes.length}, max-content)`,
+        gap: "12px",
+        alignItems: "center",
+        justifyItems: "start",
+      }}
+    >
+      <span />
+      {sizes.map((size) => (
+        <span key={size} style={{ ...labelStyle, textTransform: "uppercase" }}>
+          {size}
+        </span>
+      ))}
       {variants.map((variant) => (
-        <Badge key={variant} variant={variant}>
-          {variant}
-        </Badge>
+        <Fragment key={variant}>
+          <span style={labelStyle}>{variant}</span>
+          {sizes.map((size) => (
+            <Badge key={`${variant}-${size}`} variant={variant} size={size}>
+              {variant}
+            </Badge>
+          ))}
+        </Fragment>
       ))}
     </div>
   ),
 };
 
-export const AllVariantsMd: Story = {
-  name: "All Variants (md)",
-  render: () => (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-      {variants.map((variant) => (
-        <Badge key={variant} variant={variant} size="md">
-          {variant}
-        </Badge>
-      ))}
-    </div>
-  ),
+export const Playground: Story = {
+  args: { variant: "neutral", size: "sm", children: "Badge" },
+};
+
+// --- Focused examples (not covered by the variant grid) ---
+
+export const WithIcon: Story = {
+  args: { variant: "teal", icon: Cloud, children: "AWS" },
+};
+
+export const Count: Story = {
+  args: { variant: "neutral", children: 1234 },
 };
