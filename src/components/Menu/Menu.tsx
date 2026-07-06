@@ -6,7 +6,9 @@ import {
   MenuItem as AriaMenuItem,
   Popover,
 } from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 import { Icon, type IconValue } from "../Icon";
+import { popoverStyles } from "./menuStyles";
 
 export interface MenuItemData {
   id: string;
@@ -44,14 +46,6 @@ export interface MenuProps {
   className?: string;
 }
 
-const popoverStyles = [
-  "bg-background rounded-md",
-  "shadow-lg border border-border",
-  "py-1 min-w-48",
-  "entering:animate-in entering:fade-in entering:zoom-in-95",
-  "exiting:animate-out exiting:fade-out exiting:zoom-out-95",
-].join(" ");
-
 export function Menu({
   items,
   content,
@@ -63,16 +57,15 @@ export function Menu({
   onSelectionChange,
   className,
 }: MenuProps) {
-  const selectionProps = selectionMode && selectionMode !== "none"
-    ? { selectionMode, selectedKeys, defaultSelectedKeys, onSelectionChange }
-    : {};
+  const selectionProps =
+    selectionMode && selectionMode !== "none"
+      ? { selectionMode, selectedKeys, defaultSelectedKeys, onSelectionChange }
+      : {};
 
   return (
     <MenuTrigger>
       {children}
-      <Popover
-        className={[popoverStyles, className].filter(Boolean).join(" ")}
-      >
+      <Popover className={twMerge(popoverStyles, className)}>
         {items ? (
           <AriaMenu
             items={items}
@@ -96,9 +89,7 @@ export function Menu({
                   "focus:bg-muted",
                   "hover:bg-muted",
                   "disabled:opacity-50 disabled:pointer-events-none",
-                  item.isDanger
-                    ? "text-destructive"
-                    : "text-foreground",
+                  item.isDanger ? "text-destructive" : "text-foreground",
                 ]
                   .filter(Boolean)
                   .join(" ")}

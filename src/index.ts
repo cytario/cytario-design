@@ -127,6 +127,7 @@ export {
   MenuSection,
   MenuHeader,
   MenuSeparator,
+  useContextMenu,
 } from "./components/Menu";
 export type {
   MenuProps,
@@ -136,6 +137,8 @@ export type {
   MenuSectionProps,
   MenuHeaderProps,
   MenuSeparatorProps,
+  UseContextMenuProps,
+  UseContextMenuResult,
 } from "./components/Menu";
 
 export { Popover, PopoverTrigger, PopoverContent } from "./components/Popover";
