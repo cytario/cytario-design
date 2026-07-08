@@ -67,6 +67,7 @@ import {
   Plug,
   Plus,
   RotateCcw,
+  RotateCw,
   Search,
   SearchX,
   Send,
@@ -162,6 +163,7 @@ export type IconName =
   | "Plug"
   | "Plus"
   | "RotateCcw"
+  | "RotateCw"
   | "Search"
   | "SearchX"
   | "Send"
@@ -260,6 +262,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   Plug,
   Plus,
   RotateCcw,
+  RotateCw,
   Search,
   SearchX,
   Send,
