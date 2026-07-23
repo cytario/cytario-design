@@ -66,7 +66,7 @@ function PeriodStrip({
           >
             {label}
             {isMtd && (
-              <Badge variant="amber" size="sm" className="ml-1.5">
+              <Badge color="amber" size="sm" className="ml-1.5">
                 MTD
               </Badge>
             )}
@@ -196,7 +196,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
               {cc.name}
             </a>
             {cc.isSplitCharge && (
-              <Badge variant="slate">Split Charge</Badge>
+              <Badge color="slate">Split Charge</Badge>
             )}
           </div>
           <span className="text-xl font-semibold tabular-nums">

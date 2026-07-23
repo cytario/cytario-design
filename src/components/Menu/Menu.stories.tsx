@@ -25,7 +25,7 @@ import { MenuSeparator } from "./MenuSeparator";
 import { Button } from "../Button";
 import { IconButton } from "../IconButton";
 import { Badge } from "../Badge";
-import { PathPill } from "../Pill";
+import { PathPill } from "../PathPill";
 
 const meta: Meta<typeof Menu> = {
   title: "Components/Menu",
@@ -136,7 +136,7 @@ export const WithSections: Story = {
               href="https://example.com"
               target="_blank"
               endContent={
-                <Badge variant="teal" size="sm">
+                <Badge color="teal" size="sm">
                   New
                 </Badge>
               }
@@ -186,7 +186,7 @@ export const WithEndContent: Story = {
             id="download"
             icon={Download}
             endContent={
-              <Badge variant="purple" size="sm">
+              <Badge color="purple" size="sm">
                 Pro
               </Badge>
             }
@@ -330,7 +330,7 @@ export const ItemsWithEndContent: Story = {
         label: "Export",
         icon: Download,
         endContent: (
-          <Badge variant="purple" size="sm">
+          <Badge color="purple" size="sm">
             Pro
           </Badge>
         ),

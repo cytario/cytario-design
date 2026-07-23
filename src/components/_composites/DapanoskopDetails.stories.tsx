@@ -253,7 +253,7 @@ function WorkloadDetailPage() {
                 </Cell>
                 <Cell>
                   <Badge
-                    variant={categoryBadgeVariant(row.category)}
+                    color={categoryBadgeColor(row.category)}
                     size="sm"
                   >
                     {row.category}
@@ -273,7 +273,7 @@ function WorkloadDetailPage() {
   );
 }
 
-function categoryBadgeVariant(category: string) {
+function categoryBadgeColor(category: string) {
   switch (category) {
     case "Compute":
       return "purple" as const;

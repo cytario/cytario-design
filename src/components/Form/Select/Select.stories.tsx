@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "storybook/react";
-import { Pill } from "../../Pill";
+import { Badge } from "../../Badge";
 import { Select, type SelectItem } from "./Select";
 
 const meta: Meta<typeof Select> = {
@@ -70,7 +70,7 @@ export const CustomRender: Story = {
       { id: "/cytario/pathology", name: "Pathology" },
       { id: "/cytario/research", name: "Research" },
     ],
-    renderItem: (item: SelectItem) => <Pill>{item.name}</Pill>,
+    renderItem: (item: SelectItem) => <Badge>{item.name}</Badge>,
   },
 };
 

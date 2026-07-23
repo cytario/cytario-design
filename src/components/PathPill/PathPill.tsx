@@ -1,16 +1,29 @@
 import { twMerge } from "tailwind-merge";
-import { Pill, type PillColor, pillColorFromName } from "./Pill";
+import { Badge, type BadgeColor } from "../Badge";
+
+const hashColors = [
+  "purple",
+  "teal",
+  "rose",
+  "green",
+  "amber",
+] as const satisfies BadgeColor[];
+
+export function pillColorFromName(name = ""): BadgeColor {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hashColors[Math.abs(hash) % hashColors.length];
+}
 
 export interface PathPillProps {
   children: string;
-  /** Number of trailing segments to show; earlier ones collapse to dots. Defaults to all. */
   visibleCount?: number;
-  /** Override per-segment color. Falls back to hash-based `pillColorFromName`. */
-  colorFn?: (segment: string, index: number) => PillColor;
+  colorFn?: (segment: string, index: number) => BadgeColor;
   className?: string;
 }
 
-/** Renders a slash-separated path as overlapping, hash-colored pill segments. */
 export function PathPill({
   children,
   visibleCount,
@@ -36,14 +49,14 @@ export function PathPill({
         const cx = twMerge(!isLast && "pr-5 -mr-4", isCollapsed && "pr-3");
         const color = colorFn ? colorFn(segment, i) : pillColorFromName(segment);
         return (
-          <Pill
+          <Badge
             key={`pill-${i}-${segment}`}
             className={cx}
             color={color}
             aria-hidden={isCollapsed || undefined}
           >
             {isCollapsed ? undefined : segment}
-          </Pill>
+          </Badge>
         );
       })}
     </div>
