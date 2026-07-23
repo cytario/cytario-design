@@ -3,7 +3,6 @@ import { twMerge } from "tailwind-merge";
 import { Icon, type IconValue } from "../Icon";
 
 export type BadgeColor =
-  | "neutral"
   | "purple"
   | "teal"
   | "rose"
@@ -22,8 +21,6 @@ export interface BadgeProps
 }
 
 const colorStyles: Record<BadgeColor, string> = {
-  neutral:
-    "bg-badge-neutral-bg text-badge-neutral-text border-badge-neutral-text/20",
   purple:
     "bg-badge-purple-bg text-badge-purple-text border-badge-purple-text/20",
   teal: "bg-badge-teal-bg text-badge-teal-text border-badge-teal-text/20",

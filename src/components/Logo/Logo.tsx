@@ -49,6 +49,7 @@ export function Logo({
         <path
           key={key}
           d={d}
+          aria-hidden="true"
           style={{
             fill: key === "o" ? "var(--logo-highlight)" : undefined,
             animation: "logo-fade-in 0.4s ease-out both",

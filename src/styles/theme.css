@@ -234,8 +234,6 @@
     --color-badge-slate-text: var(--color-slate-700);
     --color-badge-rose-bg: var(--color-rose-100);
     --color-badge-rose-text: var(--color-rose-700);
-    --color-badge-neutral-bg: var(--color-slate-100);
-    --color-badge-neutral-text: var(--color-slate-700);
     --color-badge-green-bg: var(--color-green-100);
     --color-badge-green-text: var(--color-green-700);
     --color-badge-amber-bg: var(--color-amber-100);
@@ -330,8 +328,6 @@
     --color-badge-slate-text: var(--color-slate-200);
     --color-badge-rose-bg: var(--color-rose-800);
     --color-badge-rose-text: var(--color-rose-200);
-    --color-badge-neutral-bg: var(--color-slate-700);
-    --color-badge-neutral-text: var(--color-slate-200);
     --color-badge-green-bg: var(--color-green-800);
     --color-badge-green-text: var(--color-green-200);
     --color-badge-amber-bg: var(--color-amber-800);
@@ -575,8 +571,6 @@
   --color-badge-slate-text: var(--color-badge-slate-text);
   --color-badge-rose-bg: var(--color-badge-rose-bg);
   --color-badge-rose-text: var(--color-badge-rose-text);
-  --color-badge-neutral-bg: var(--color-badge-neutral-bg);
-  --color-badge-neutral-text: var(--color-badge-neutral-text);
   --color-badge-green-bg: var(--color-badge-green-bg);
   --color-badge-green-text: var(--color-badge-green-text);
   --color-badge-amber-bg: var(--color-badge-amber-bg);

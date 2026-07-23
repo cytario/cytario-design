@@ -117,7 +117,7 @@ const mockUsers: UserRow[] = [
 
 function StatusPill({ enabled }: { enabled: boolean }) {
   return (
-    <Badge color={enabled ? "green" : "neutral"} size="sm">
+    <Badge color={enabled ? "green" : "slate"} size="sm">
       {enabled ? "Active" : "Disabled"}
     </Badge>
   );

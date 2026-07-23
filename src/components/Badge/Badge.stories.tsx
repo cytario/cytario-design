@@ -23,7 +23,6 @@ export default meta;
 type Story = StoryObj<typeof Badge>;
 
 const colors = [
-  "neutral",
   "purple",
   "teal",
   "rose",
@@ -81,5 +80,5 @@ export const WithIcon: Story = {
 };
 
 export const Count: Story = {
-  args: { color: "neutral", children: 1234 },
+  args: { color: "slate", children: 1234 },
 };
