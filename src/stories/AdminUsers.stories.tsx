@@ -11,7 +11,7 @@ import { Fieldset } from "../components/Form/Fieldset";
 import { Checkbox } from "../components/Form/Checkbox";
 import { Badge } from "../components/Badge";
 import { EmptyState } from "../components/EmptyState";
-import { PathPill } from "../components/Pill";
+import { PathPill } from "../components/PathPill";
 import { SectionHeader } from "../components/SectionHeader";
 import {
   Table,
@@ -116,7 +116,7 @@ const mockUsers: UserRow[] = [
 
 function StatusPill({ enabled }: { enabled: boolean }) {
   return (
-    <Badge variant={enabled ? "green" : "neutral"} size="sm">
+    <Badge color={enabled ? "green" : "neutral"} size="sm">
       {enabled ? "Active" : "Disabled"}
     </Badge>
   );

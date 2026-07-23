@@ -181,7 +181,7 @@ export type {
 } from "./components/SegmentedControl";
 
 export { Badge } from "./components/Badge";
-export type { BadgeProps, BadgeVariant, BadgeSize } from "./components/Badge";
+export type { BadgeProps, BadgeColor, BadgeSize } from "./components/Badge";
 
 export { Card } from "./components/Card";
 export type { CardProps, CardPadding } from "./components/Card";
@@ -209,8 +209,8 @@ export type { MetricCardProps, MetricCardSize } from "./components/MetricCard";
 export { SectionHeader } from "./components/SectionHeader";
 export type { SectionHeaderProps } from "./components/SectionHeader";
 
-export { Pill, pillColorFromName, PathPill } from "./components/Pill";
-export type { PillProps, PillColor, PathPillProps } from "./components/Pill";
+export { PathPill, pillColorFromName } from "./components/PathPill";
+export type { PathPillProps } from "./components/PathPill";
 
 export { FormWizard, useFormWizard } from "./components/FormWizard";
 export type {

@@ -43,7 +43,7 @@ export const WithCount: Story = {
   },
   render: (args) => (
     <SectionHeader {...args}>
-      <Badge variant="slate">142 results</Badge>
+      <Badge color="slate">142 results</Badge>
     </SectionHeader>
   ),
 };
