@@ -1,6 +1,6 @@
 import { createElement, useEffect } from "react";
 import type { Preview } from "storybook/react";
-import "../src/styles/global.css";
+import "../src/styles/tailwind.css";
 import { lightTheme } from "./theme";
 
 const preview: Preview = {

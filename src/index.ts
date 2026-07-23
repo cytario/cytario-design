@@ -1,5 +1,8 @@
 "use client";
 
+// Brand color constants for consumers that need direct hex values (e.g. SVG logos)
+export { ColorTeal500, ColorPurple700 } from "./colors";
+
 // React Aria re-exports for consumer integration
 export { RouterProvider } from "react-aria-components";
 export type { RouterConfig, Key } from "react-aria-components";
@@ -220,6 +223,3 @@ export type { FormWizardProgressProps } from "./components/FormWizard";
 
 export { FormWizardNav } from "./components/FormWizard";
 export type { FormWizardNavProps } from "./components/FormWizard";
-
-// Design tokens (TypeScript constants)
-export * from "./tokens/tokens";

@@ -5,9 +5,6 @@ node_modules/
 dist/
 storybook-static/
 
-# Generated tokens (built from source in tokens/)
-src/tokens/
-
 # Environment
 .env
 .env.*
