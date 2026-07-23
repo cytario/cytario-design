@@ -8,10 +8,12 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUp,
+  ArrowUpRight,
   Ban,
   Bookmark,
   BookmarkCheck,
   Braces,
+  Building2,
   Check,
   CheckCircle,
   CheckCircle2,
@@ -20,11 +22,14 @@ import {
   ChevronUp,
   Circle,
   CircleDot,
+  CircleSlash,
   Clock,
   Cloud,
   Columns2,
   Columns3,
   Copy,
+  CreditCard,
+  Database,
   Download,
   Edit,
   EllipsisVertical,
@@ -46,9 +51,11 @@ import {
   ImageOff,
   Inbox,
   Info,
+  KeyRound,
   Lasso,
   Layers,
   Layers2,
+  LayoutDashboard,
   LayoutGrid,
   List,
   ListFilter,
@@ -59,6 +66,7 @@ import {
   Microscope,
   Minus,
   MoreVertical,
+  Network,
   PanelLeftClose,
   PanelLeftOpen,
   PanelRightClose,
@@ -66,8 +74,12 @@ import {
   Pencil,
   Plug,
   Plus,
+  Power,
+  PowerOff,
+  RefreshCw,
   RotateCcw,
   RotateCw,
+  ScrollText,
   Search,
   SearchX,
   Send,
@@ -76,6 +88,7 @@ import {
   ShieldCheck,
   Spline,
   Square,
+  SquarePen,
   Star,
   Table,
   Tag,
@@ -104,10 +117,12 @@ export type IconName =
   | "ArrowDown"
   | "ArrowRight"
   | "ArrowUp"
+  | "ArrowUpRight"
   | "Ban"
   | "Bookmark"
   | "BookmarkCheck"
   | "Braces"
+  | "Building2"
   | "Check"
   | "CheckCircle"
   | "CheckCircle2"
@@ -116,11 +131,14 @@ export type IconName =
   | "ChevronUp"
   | "Circle"
   | "CircleDot"
+  | "CircleSlash"
   | "Clock"
   | "Cloud"
   | "Columns2"
   | "Columns3"
   | "Copy"
+  | "CreditCard"
+  | "Database"
   | "Download"
   | "Edit"
   | "EllipsisVertical"
@@ -142,9 +160,11 @@ export type IconName =
   | "ImageOff"
   | "Inbox"
   | "Info"
+  | "KeyRound"
   | "Lasso"
   | "Layers"
   | "Layers2"
+  | "LayoutDashboard"
   | "LayoutGrid"
   | "List"
   | "ListFilter"
@@ -155,6 +175,7 @@ export type IconName =
   | "Microscope"
   | "Minus"
   | "MoreVertical"
+  | "Network"
   | "PanelLeftClose"
   | "PanelLeftOpen"
   | "PanelRightClose"
@@ -162,8 +183,12 @@ export type IconName =
   | "Pencil"
   | "Plug"
   | "Plus"
+  | "Power"
+  | "PowerOff"
+  | "RefreshCw"
   | "RotateCcw"
   | "RotateCw"
+  | "ScrollText"
   | "Search"
   | "SearchX"
   | "Send"
@@ -172,6 +197,7 @@ export type IconName =
   | "ShieldCheck"
   | "Spline"
   | "Square"
+  | "SquarePen"
   | "Star"
   | "Table"
   | "Tag"
@@ -203,10 +229,12 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   ArrowDown,
   ArrowRight,
   ArrowUp,
+  ArrowUpRight: ArrowUpRight,
   Ban,
   Bookmark,
   BookmarkCheck,
   Braces,
+  Building2: Building2,
   Check,
   CheckCircle,
   CheckCircle2,
@@ -215,11 +243,14 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   ChevronUp,
   Circle,
   CircleDot,
+  CircleSlash: CircleSlash,
   Clock,
   Cloud,
   Columns2,
   Columns3,
   Copy,
+  CreditCard: CreditCard,
+  Database: Database,
   Download,
   Edit,
   EllipsisVertical,
@@ -241,9 +272,11 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   ImageOff,
   Inbox,
   Info,
+  KeyRound: KeyRound,
   Lasso,
   Layers,
   Layers2,
+  LayoutDashboard: LayoutDashboard,
   LayoutGrid,
   List,
   ListFilter,
@@ -254,6 +287,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   Microscope,
   Minus,
   MoreVertical,
+  Network: Network,
   PanelLeftClose,
   PanelLeftOpen,
   PanelRightClose,
@@ -261,8 +295,12 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   Pencil,
   Plug,
   Plus,
+  Power: Power,
+  PowerOff: PowerOff,
+  RefreshCw: RefreshCw,
   RotateCcw,
   RotateCw,
+  ScrollText: ScrollText,
   Search,
   SearchX,
   Send,
@@ -271,6 +309,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   ShieldCheck,
   Spline,
   Square,
+  SquarePen: SquarePen,
   Star,
   Table,
   Tag,

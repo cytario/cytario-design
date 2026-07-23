@@ -46,7 +46,7 @@ export const UserProfileMenu: Story = {
           <MenuSection aria-label="User identity">
             <MenuHeader>
               <div className="flex items-center gap-3 px-3 py-2">
-                <div className="flex size-8 items-center justify-center rounded-full bg-(--color-badge-purple-bg) text-(--color-badge-purple-text)">
+                <div className="flex size-8 items-center justify-center rounded-full bg-badge-purple-bg text-badge-purple-text">
                   <User className="size-4" />
                 </div>
                 <div className="flex flex-col">

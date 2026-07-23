@@ -2,23 +2,25 @@ import type React from "react";
 import { twMerge } from "tailwind-merge";
 
 const hashColors = {
-  purple: "bg-(--color-badge-purple-bg) text-(--color-badge-purple-text) border-(--color-badge-purple-text)/20",
-  teal: "bg-(--color-badge-teal-bg) text-(--color-badge-teal-text) border-(--color-badge-teal-text)/20",
-  rose: "bg-(--color-badge-rose-bg) text-(--color-badge-rose-text) border-(--color-badge-rose-text)/20",
-  green: "bg-(--color-badge-green-bg) text-(--color-badge-green-text) border-(--color-badge-green-text)/20",
-  amber: "bg-(--color-badge-amber-bg) text-(--color-badge-amber-text) border-(--color-badge-amber-text)/20",
-} as const;
+  purple:
+    "bg-badge-purple-bg text-badge-purple-text border-badge-purple-text/20",
+  teal: "bg-badge-teal-bg text-badge-teal-text border-badge-teal-text/20",
+  rose: "bg-badge-rose-bg text-badge-rose-text border-badge-rose-text/20",
+  green: "bg-badge-green-bg text-badge-green-text border-badge-green-text/20",
+  amber: "bg-badge-amber-bg text-badge-amber-text border-badge-amber-text/20",
+};
 
 export const colorStyles = {
   ...hashColors,
-  slate:
-    "bg-(--color-badge-slate-bg) text-(--color-badge-slate-text) border-(--color-badge-slate-text)/20",
+  slate: "bg-badge-slate-bg text-badge-slate-text border-badge-slate-text/20",
 } as const;
 
 export type PillColor = keyof typeof colorStyles;
 
-export interface PillProps
-  extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children" | "color"> {
+export interface PillProps extends Omit<
+  React.HTMLAttributes<HTMLSpanElement>,
+  "children" | "color"
+> {
   children?: string;
   color?: PillColor;
 }

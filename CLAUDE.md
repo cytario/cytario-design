@@ -12,31 +12,22 @@ cytario is a digital pathology / spatial biology company. The design system serv
 - **React 18 + 19** + **TypeScript 5.9** (strict mode) — components support React 18 and 19; CI tests against both via matrix
 - **Tailwind CSS v4** (via `@tailwindcss/vite` plugin, `@theme` block in `src/styles/tailwind.css`)
 - **React Aria Components** (Adobe) — headless accessible primitives for all interactive components
-- **Style Dictionary v4** — transforms W3C DTCG token JSON into CSS custom properties and TypeScript constants
 - **Vitest** + **React Testing Library** for component tests
-- **npm** as package manager
+- **Design tokens** in `src/styles/theme.css` — single hand-maintained CSS: primitives (raw hex in `:root`), light semantics (`:root` with `var()`), dark overrides (`[data-theme="dark"]`), and `@theme inline` for Tailwind v4. Validate dark-theme invariant with `npm run validate:tokens`.
 
 ## Project Structure
 
 ```
 .storybook/           # Storybook config (main.ts, preview.ts, theme.ts, manager.ts)
-assets/
-  logos/              # SVGO-optimized SVG logo variants + PNGs
-  approvals/          # Agency approval PDFs (reference only)
-tokens/
-  primitives.json     # Primitive tokens (colors, spacing, typography) in W3C DTCG format
-  semantic.light.json # Semantic aliases (light theme) referencing primitives
-  semantic.dark.json  # Semantic aliases (dark theme)
+  assets/
+    logos/              # SVGO-optimized SVG logo variants + PNGs
+    approvals/          # Agency approval PDFs (reference only)
 scripts/
-  build-tokens.ts     # Style Dictionary build script
+  validate-tokens.ts  # CI script: verifies dark-theme invariant (every :root color has a [data-theme="dark"] override)
 src/
-  tokens/
-    variables.css      # AUTO-GENERATED (light) — do not edit manually
-    variables-dark.css # AUTO-GENERATED ([data-theme="dark"]) — do not edit manually
-    tokens.ts          # AUTO-GENERATED — do not edit manually
   styles/
-    tailwind.css      # Tailwind v4 @theme with brand color scales
-    global.css        # Imports tailwind.css + variables.css, global styles
+    theme.css          # Single source-of-truth: primitives (:root), light semantics (:root), dark semantics ([data-theme="dark"]), @theme inline (Tailwind v4)
+    tailwind.css      # Imports theme.css; Tailwind v4 entry point
   components/         # React components (co-located: .tsx + .stories.tsx + .test.tsx)
     Button/           # text button; variants from _shared/styles
     Form/             # form controls — Input, InputPassword, Select, Checkbox, Radio, …
@@ -53,7 +44,7 @@ src/
 
 ```bash
 npm install              # Install dependencies
-npm run build:tokens         # Generate CSS/TS from token JSON (run after changing tokens/)
+npm run validate:tokens     # Verify dark-theme invariant (every :root color has a [data-theme="dark"] counterpart)
 npm run dev                  # Start Storybook at http://localhost:6006
 npm run build                # Build static Storybook to storybook-static/
 npx vitest run        # Run all tests once
@@ -64,22 +55,26 @@ npm run lint                 # ESLint on src/
 
 - **Purple `#5c2483`** — primary brand color (wordmark). Token: `--color-purple-700` / `--color-brand-primary`
 - **Teal `#35b7b8`** — accent color (icon, primary actions). Token: `--color-teal-500` / `--color-brand-accent`
-- Both have full 50-900 scales in `tokens/base.json`
+- Both have full 50-900 scales in `src/styles/theme.css`
 - Teal-500 fails WCAG AA contrast on white for normal text — use teal-700 (`#217d7e`) or darker for text
 
 ## Design Token Pipeline
 
-```
-tokens/primitives.json + tokens/semantic.{light,dark}.json (W3C DTCG JSON)
-  -> Style Dictionary v4 (scripts/build-tokens.ts)
-  -> src/tokens/variables.css       (light-theme CSS custom properties: --color-*, --spacing-*, …)
-  -> src/tokens/variables-dark.css  ([data-theme="dark"] overrides)
-  -> src/tokens/tokens.ts           (TypeScript constants)
-```
+Design tokens live in a single hand-maintained file: `src/styles/theme.css`. There is no build step — the CSS is the source of truth.
 
-After modifying tokens, run `npm run build:tokens`. If adding a new color scale, also add entries to the `@theme` block in `src/styles/tailwind.css`.
+- **Primitives** (`:root`): raw hex/rgba values for color scales, spacing, typography (`--color-purple-500`)
+- **Semantic light** (`:root`): `var()` references to primitives (`--color-primary: var(--color-purple-500)`)
+- **Semantic dark** (`[data-theme="dark"]`): overrides for every semantic token
+- **`@theme inline`**: maps tokens to Tailwind v4 utility names (`--color-primary → primary`)
 
-**The generated CSS is not auto-rebuilt.** `npm run dev`, `build`, and `build:lib` do *not* run `build:tokens` — after editing token JSON you must run `npm run build:tokens` yourself, or Storybook/the published library will serve the previous (stale) values.
+The entire block lives in `@layer cytario-design` so consumer app styles (unlayered) can always override.
+
+**Adding or modifying tokens:**
+1. Edit `src/styles/theme.css` directly.
+2. If adding a new color scale, add entries in all four sections (primitives, light semantics, dark semantics, `@theme inline`).
+3. Run `npm run validate:tokens` to verify the dark-theme invariant.
+
+**No auto-rebuild needed.** CSS imports are static — Storybook and the published library pick up changes immediately on reload.
 
 ## Component Architecture
 
@@ -165,6 +160,6 @@ Releases are automated via **semantic-release** — version bumps, changelogs, a
 ## Common Pitfalls
 
 - Do not install `@storybook/addon-essentials`, `@storybook/blocks`, or `@storybook/test` as separate packages — they are part of `storybook` core in v10
-- Do not edit `src/tokens/variables.css` or `src/tokens/tokens.ts` — they are generated by `npm run build:tokens`
+- Do not import any font-face from a CDN — `@font-face` declarations live in `src/styles/theme.css`
 - Always use conventional commit format — semantic-release depends on it for versioning
 - Storybook sidebar icon colors are controlled via CSS in `.storybook/manager-head.html`, not via the theme API

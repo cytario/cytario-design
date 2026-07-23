@@ -27,13 +27,13 @@ export interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  neutral: "bg-(--color-badge-neutral-bg) text-(--color-badge-neutral-text)",
-  purple: "bg-(--color-badge-purple-bg) text-(--color-badge-purple-text)",
-  teal: "bg-(--color-badge-teal-bg) text-(--color-badge-teal-text)",
-  rose: "bg-(--color-badge-rose-bg) text-(--color-badge-rose-text)",
-  slate: "bg-(--color-badge-slate-bg) text-(--color-badge-slate-text)",
-  green: "bg-(--color-badge-green-bg) text-(--color-badge-green-text)",
-  amber: "bg-(--color-badge-amber-bg) text-(--color-badge-amber-text)",
+  neutral: "bg-badge-neutral-bg text-badge-neutral-text",
+  purple: "bg-badge-purple-bg text-badge-purple-text",
+  teal: "bg-badge-teal-bg text-badge-teal-text",
+  rose: "bg-badge-rose-bg text-badge-rose-text",
+  slate: "bg-badge-slate-bg text-badge-slate-text",
+  green: "bg-badge-green-bg text-badge-green-text",
+  amber: "bg-badge-amber-bg text-badge-amber-text",
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
