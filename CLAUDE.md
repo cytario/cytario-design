@@ -28,7 +28,6 @@ src/
   styles/
     theme.css          # Single source-of-truth: primitives (:root), light semantics (:root), dark semantics ([data-theme="dark"]), @theme inline (Tailwind v4)
     tailwind.css      # Imports theme.css; Tailwind v4 entry point
-    global.css        # Imports tailwind.css (which transitively imports theme.css), global styles
   components/         # React components (co-located: .tsx + .stories.tsx + .test.tsx)
     Button/           # text button; variants from _shared/styles
     Form/             # form controls — Input, InputPassword, Select, Checkbox, Radio, …
@@ -161,6 +160,6 @@ Releases are automated via **semantic-release** — version bumps, changelogs, a
 ## Common Pitfalls
 
 - Do not install `@storybook/addon-essentials`, `@storybook/blocks`, or `@storybook/test` as separate packages — they are part of `storybook` core in v10
-- Do not import any font-face from a CDN — `@font-face` declarations live in `src/styles/global.css`
+- Do not import any font-face from a CDN — `@font-face` declarations live in `src/styles/theme.css`
 - Always use conventional commit format — semantic-release depends on it for versioning
 - Storybook sidebar icon colors are controlled via CSS in `.storybook/manager-head.html`, not via the theme API

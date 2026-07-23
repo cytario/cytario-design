@@ -41,7 +41,6 @@ cytario-design/
     styles/
       theme.css           # single hand-maintained token file — primitives, light/dark semantics, @theme inline
       tailwind.css        # Tailwind v4 entry point (imports theme.css)
-      global.css          # global styles + font-face declarations (imports tailwind.css)
     components/
       Button/           # Button.tsx, Button.stories.tsx, Button.test.tsx
       Input/            # Input.tsx, Input.stories.tsx, Input.test.tsx

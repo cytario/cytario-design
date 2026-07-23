@@ -2,7 +2,7 @@
  * Dark-theme invariant checker.
  *
  * Verifies that every semantic `--color-*` token defined under `:root` in
- * `src/tokens/theme.css` also has a corresponding override under
+ * `src/styles/theme.css` also has a corresponding override under
  * `[data-theme="dark"]`. Primitives (raw hex/rgba values) are theme-agnostic
  * and excluded from the check — only var()-backed semantics need a dark
  * counterpart.
