@@ -3,9 +3,9 @@ import { addons } from "storybook/preview-api";
 
 /**
  * Live color-token reference. Reads every `--color-*` custom property straight
- * from the loaded token stylesheets (`variables.css` = `:root`,
- * `variables-dark.css` = `[data-theme="dark"]`) and resolves each under both
- * themes. Nothing is hardcoded, so this view cannot drift from the tokens.
+ * from the loaded token stylesheet (`theme.css` — `:root` for light,
+ * `[data-theme="dark"]` for dark) and resolves each under both themes.
+ * Nothing is hardcoded, so this view cannot drift from the tokens.
  */
 
 interface TokenRow {

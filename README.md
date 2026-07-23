@@ -10,7 +10,7 @@ Single source of truth for the cytario corporate identity -- from brand foundati
 | UI framework | React 19, TypeScript 5.9 |
 | Styling | Tailwind CSS v4, CSS custom properties |
 | Accessibility | React Aria Components (Adobe) |
-| Design tokens | W3C DTCG JSON, Style Dictionary v4 |
+| Design tokens | CSS custom properties (`src/styles/theme.css`) |
 | Testing | Vitest, React Testing Library, axe-core (addon-a11y) |
 
 ## Getting started
@@ -23,7 +23,6 @@ Single source of truth for the cytario corporate identity -- from brand foundati
 
 ```bash
 npm install
-npm run build:tokens   # generate CSS variables + TypeScript constants from token JSON
 npm run dev            # start Storybook at http://localhost:6006
 ```
 
@@ -36,18 +35,13 @@ cytario-design/
     logos/              # SVG and PNG logo variants (full, reduced, black, white, on-purple)
     fonts/              # Montserrat font files
     approvals/          # approved brand materials
-  tokens/
-    base.json           # primitive color, spacing, typography tokens (W3C DTCG)
-    semantic.json       # semantic aliases referencing base tokens
   scripts/
-    build-tokens.ts     # Style Dictionary build script
+    validate-tokens.ts # CI script to verify dark-theme invariant
   src/
-    tokens/
-      variables.css     # auto-generated CSS custom properties (do not edit)
-      tokens.ts         # auto-generated TypeScript constants (do not edit)
     styles/
-      tailwind.css      # Tailwind v4 @theme configuration
-      global.css        # global styles and font-face declarations
+      theme.css           # single hand-maintained token file — primitives, light/dark semantics, @theme inline
+      tailwind.css        # Tailwind v4 entry point (imports theme.css)
+      global.css          # global styles + font-face declarations (imports tailwind.css)
     components/
       Button/           # Button.tsx, Button.stories.tsx, Button.test.tsx
       Input/            # Input.tsx, Input.stories.tsx, Input.test.tsx
@@ -58,26 +52,20 @@ cytario-design/
 
 ## Design tokens
 
-Tokens follow the W3C Design Token Community Group (DTCG) format and live in `tokens/`.
+Tokens are hand-maintained in `src/styles/theme.css` — a single CSS file that is the source of truth:
 
-**Pipeline:**
+- **Primitives** (`:root`): raw hex/rgba values (`--color-purple-500`)
+- **Semantic light** (`:root`): `var()` refs to primitives (`--color-primary: var(--color-purple-500)`)
+- **Semantic dark** (`[data-theme="dark"]`): overrides for every semantic token
+- **`@theme inline`**: maps tokens to Tailwind v4 utility names
 
-```
-tokens/base.json + tokens/semantic.json
-  -> Style Dictionary v4 (scripts/build-tokens.ts)
-  -> src/tokens/variables.css   (CSS custom properties)
-  -> src/tokens/tokens.ts       (TypeScript constants)
-```
-
-Semantic tokens reference base tokens using `{color.purple.700}` syntax.
+All token CSS lives in `@layer cytario-design` so consumer app styles can override.
 
 ### Adding or modifying tokens
 
-1. Edit `tokens/base.json` (primitives) or `tokens/semantic.json` (aliases).
-2. Run `npm run build:tokens` to regenerate the output files.
-3. If you added a new color scale, also add matching entries to `src/styles/tailwind.css` under the `@theme` block so Tailwind utility classes are available.
-
-**Do not edit `src/tokens/variables.css` or `src/tokens/tokens.ts` directly** -- they are overwritten on every build.
+1. Edit `src/styles/theme.css` directly.
+2. If adding a new color scale, add entries in all four sections (primitives, light semantics, dark semantics, `@theme inline`).
+3. Run `npm run validate:tokens` to verify the dark-theme invariant (every `:root` color has a `[data-theme="dark"]` counterpart).
 
 ## Component development
 
@@ -113,7 +101,7 @@ The cytario brand is built on two primary colors:
 | Purple | `#5c2483` | `--color-purple-700` / `--color-brand-primary` | Primary brand color, headings, secondary actions |
 | Teal | `#35b7b8` | `--color-teal-500` / `--color-brand-accent` | Accent color, primary actions, interactive elements |
 
-Both colors have a full 50--900 scale defined in `tokens/base.json` for use in hover states, backgrounds, and subtle tints.
+Both colors have a full 50--900 scale defined in `src/styles/theme.css` for use in hover states, backgrounds, and subtle tints.
 
 ## Available components
 
@@ -130,7 +118,7 @@ Both colors have a full 50--900 scale defined in `tokens/base.json` for use in h
 |---|---|
 | `npm run dev` | Start Storybook dev server on port 6006 |
 | `npm run build` | Build static Storybook site to `storybook-static/` |
-| `npm run build:tokens` | Generate CSS and TypeScript from token JSON |
+| `npm run validate:tokens` | Verify dark-theme invariant in token CSS |
 | `npm test` | Run Vitest test suite (watch mode) |
 | `npx vitest run` | Run tests once (CI mode) |
 | `npm run lint` | Lint `src/` with ESLint |
