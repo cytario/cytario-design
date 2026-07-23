@@ -34,7 +34,7 @@
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
     "validate:tokens": "node scripts/validate-tokens.ts",
-    "build:css": "tailwindcss -i src/styles/tailwind.css -o dist/index.css --minify && cp src/styles/fonts/*.ttf dist/fonts/",
+    "build:css": "tailwindcss -i src/styles/tailwind.css -o dist/index.css --minify && mkdir -p dist/fonts && cp src/styles/fonts/*.ttf dist/fonts/",
     "build:lib": "tsup && npm run build:css",
     "test": "vitest",
     "lint": "eslint src/",
