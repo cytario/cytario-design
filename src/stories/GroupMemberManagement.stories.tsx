@@ -133,7 +133,7 @@ const statusConfig: Record<
     label: "Invited",
   },
   disabled: {
-    dotClass: "bg-neutral-400",
+    dotClass: "bg-slate-400",
     label: "Disabled",
   },
 };

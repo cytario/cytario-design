@@ -52,15 +52,15 @@ function formatPercentage(current: number, previous: number): string | null {
 }
 
 const directionColors: Record<Direction, string> = {
-  increase: "text-(--color-delta-increase-text)",
-  decrease: "text-(--color-delta-decrease-text)",
-  flat: "text-(--color-delta-flat-text)",
+  increase: "text-delta-increase-text",
+  decrease: "text-delta-decrease-text",
+  flat: "text-delta-flat-text",
 };
 
 const reverseDirectionColors: Record<Direction, string> = {
-  increase: "text-(--color-delta-decrease-text)",
-  decrease: "text-(--color-delta-increase-text)",
-  flat: "text-(--color-delta-flat-text)",
+  increase: "text-delta-decrease-text",
+  decrease: "text-delta-increase-text",
+  flat: "text-delta-flat-text",
 };
 
 const directionIcons: Record<Direction, React.ComponentType<{ size: number; "aria-hidden": boolean }>> = {
@@ -70,9 +70,9 @@ const directionIcons: Record<Direction, React.ComponentType<{ size: number; "ari
 };
 
 const directionBgColors: Record<Direction, string> = {
-  increase: "bg-(--color-delta-increase-bg)",
-  decrease: "bg-(--color-delta-decrease-bg)",
-  flat: "bg-(--color-delta-flat-bg)",
+  increase: "bg-delta-increase-bg",
+  decrease: "bg-delta-decrease-bg",
+  flat: "bg-delta-flat-bg",
 };
 
 export function DeltaIndicator({

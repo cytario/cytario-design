@@ -17,14 +17,14 @@ describe("Badge", () => {
   it("applies the default neutral variant", () => {
     const { container } = render(<Badge>Default</Badge>);
     expect(container.firstElementChild?.className).toContain(
-      "bg-(--color-badge-neutral-bg)",
+      "bg-badge-neutral-bg",
     );
   });
 
   it("applies the specified variant", () => {
     const { container } = render(<Badge variant="purple">Brand</Badge>);
     expect(container.firstElementChild?.className).toContain(
-      "bg-(--color-badge-purple-bg)",
+      "bg-badge-purple-bg",
     );
   });
 

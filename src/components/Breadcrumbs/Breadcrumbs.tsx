@@ -50,7 +50,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
                   {item.label}
                 </Link>
                 <ChevronRight
-                  className="shrink-0 text-neutral-400"
+                  className="shrink-0 text-slate-400"
                   size={16}
                   aria-hidden="true"
                 />
