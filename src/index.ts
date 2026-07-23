@@ -18,6 +18,20 @@ export type {
 export { Spinner } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
 
+export { Heading, H1, H2, H3, H4, H5, H6 } from "./components/Heading";
+export type {
+  HeadingProps,
+  HeadingLevel,
+  HeadingSize,
+  HeadingWeight,
+} from "./components/Heading";
+
+export { Text } from "./components/Text";
+export type { TextProps, TextVariant, TextWeight } from "./components/Text";
+
+export { Prose } from "./components/Prose";
+export type { ProseProps } from "./components/Prose";
+
 export { Icon, iconRegistry } from "./components/Icon";
 export type {
   IconProps,
@@ -96,13 +110,6 @@ export type { LabelProps } from "./components/Form/Label";
 
 export { Fieldset } from "./components/Form/Fieldset";
 export type { FieldsetProps } from "./components/Form/Fieldset";
-
-export { Heading, H1, H2, H3 } from "./components/Heading";
-export type {
-  HeadingProps,
-  HeadingLevel,
-  HeadingSize,
-} from "./components/Heading";
 
 export { Link } from "./components/Link";
 export type { LinkProps, LinkVariant } from "./components/Link";
@@ -208,6 +215,13 @@ export type { MetricCardProps, MetricCardSize } from "./components/MetricCard";
 
 export { SectionHeader } from "./components/SectionHeader";
 export type { SectionHeaderProps } from "./components/SectionHeader";
+
+export { DescriptionList } from "./components/DescriptionList";
+export type {
+  DescriptionListProps,
+  DescriptionListItemProps,
+  DescriptionListLayout,
+} from "./components/DescriptionList";
 
 export { PathPill, pillColorFromName } from "./components/PathPill";
 export type { PathPillProps } from "./components/PathPill";

@@ -116,6 +116,9 @@ const preview: Preview = {
           "Components",
           [
             //
+            "Heading",
+            "Text",
+            "Prose",
             "Icon",
             "IconButton",
             "IconButtonLink",
