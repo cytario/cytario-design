@@ -13,6 +13,7 @@ import { Badge } from "../components/Badge";
 import { EmptyState } from "../components/EmptyState";
 import { PathPill } from "../components/PathPill";
 import { SectionHeader } from "../components/SectionHeader";
+import { Logo } from "../components/Logo";
 import {
   Table,
   TableHeader,
@@ -229,11 +230,7 @@ function AdminUsersPage() {
       {/* App Header */}
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img
-            src="logos/cytario-logo-purple.svg"
-            alt="cytario"
-            className="h-6"
-          />
+          <Logo color="#ffffff" scale={0.8} />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
@@ -365,11 +362,7 @@ function AdminUsersEmpty() {
     <div className="min-h-screen bg-card">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img
-            src="logos/cytario-logo-purple.svg"
-            alt="cytario"
-            className="h-6"
-          />
+          <Logo color="#ffffff" scale={0.8} />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
@@ -418,11 +411,7 @@ function AdminUsersWithSelection() {
     <div className="min-h-screen bg-card">
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
-          <img
-            src="logos/cytario-logo-purple.svg"
-            alt="cytario"
-            className="h-6"
-          />
+          <Logo color="#ffffff" scale={0.8} />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>

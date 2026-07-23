@@ -241,6 +241,9 @@
     --color-badge-amber-bg: var(--color-amber-100);
     --color-badge-amber-text: var(--color-amber-800);
 
+    --logo-fill: var(--color-primary);
+    --logo-highlight: var(--color-secondary);
+
     --ds-color-text-body: rgb(55, 65, 81);
     --ds-gradient-brand: linear-gradient(135deg, #5c2483 0%, #4a1d6a 100%);
     --ds-gradient-brand-reverse: linear-gradient(
@@ -334,6 +337,9 @@
     --color-badge-amber-bg: var(--color-amber-800);
     --color-badge-amber-text: var(--color-amber-200);
 
+    --logo-fill: var(--color-primary-foreground);
+    --logo-highlight: var(--color-secondary);
+
     --ds-color-text-body: rgb(209, 213, 219);
     --ds-gradient-brand: linear-gradient(135deg, #9b4fcb 0%, #7a2ea8 100%);
     --ds-gradient-brand-reverse: linear-gradient(
@@ -374,6 +380,26 @@
   }
   50% {
     opacity: 1;
+  }
+}
+
+@keyframes logo-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes logo-fade-in {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 

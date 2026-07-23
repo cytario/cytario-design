@@ -1,13 +1,13 @@
 "use client";
 
-// Brand color constants for consumers that need direct hex values (e.g. SVG logos)
-export { ColorTeal500, ColorPurple700 } from "./colors";
-
 // React Aria re-exports for consumer integration
 export { RouterProvider } from "react-aria-components";
 export type { RouterConfig, Key } from "react-aria-components";
 
 // Components
+export { Logo } from "./components/Logo";
+export type { LogoProps } from "./components/Logo";
+
 export { Button } from "./components/Button";
 export type {
   ButtonProps,

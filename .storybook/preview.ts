@@ -103,11 +103,17 @@ const preview: Preview = {
   ],
   parameters: {
     options: {
-      storySort: {
-        order: [
-          "Introduction",
-          "Foundation",
-          "Components",
+    storySort: {
+      order: [
+        "Introduction",
+        "Foundation",
+        [
+          //
+          "Logo",
+          "Colors",
+          "*",
+        ],
+        "Components",
           [
             //
             "Icon",
