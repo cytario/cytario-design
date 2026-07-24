@@ -89,7 +89,7 @@ function CostCenterDetailPage() {
         </span>
       </div>
 
-      <H2 weight="bold">{cc.name}</H2>
+      <H2>{cc.name}</H2>
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -118,7 +118,7 @@ function CostCenterDetailPage() {
       </div>
 
       {/* Cost trend placeholder */}
-      <Card padding="lg">
+      <Card className="p-6">
         <H3>{cc.name} Cost Trend</H3>
         <div className="mt-4 h-48 flex items-center justify-center rounded-md bg-card text-muted-foreground text-sm">
           Bar chart placeholder (12-month trend for {cc.name})
@@ -126,7 +126,7 @@ function CostCenterDetailPage() {
       </Card>
 
       {/* Workload breakdown (always visible, not expandable) */}
-      <Card padding="md">
+      <Card className="p-4">
         <H3 className="mb-4">Workload Breakdown</H3>
         <Table size="compact" aria-label="Workload breakdown">
           <TableHeader>
@@ -203,7 +203,7 @@ function WorkloadDetailPage() {
       </div>
 
       <div>
-        <H2 weight="bold">Workload: {wl.name}</H2>
+        <H2>Workload: {wl.name}</H2>
         <p className="text-sm text-muted-foreground mt-1">
           Cost Center: Engineering
         </p>
@@ -236,7 +236,7 @@ function WorkloadDetailPage() {
       </div>
 
       {/* Usage type breakdown */}
-      <Card padding="none">
+      <Card>
         <Table size="comfortable" aria-label="Usage type breakdown">
           <TableHeader>
             <Column isRowHeader>Usage Type</Column>
@@ -253,7 +253,7 @@ function WorkloadDetailPage() {
                 </Cell>
                 <Cell>
                   <Badge
-                    variant={categoryBadgeVariant(row.category)}
+                    color={categoryBadgeColor(row.category)}
                     size="sm"
                   >
                     {row.category}
@@ -273,7 +273,7 @@ function WorkloadDetailPage() {
   );
 }
 
-function categoryBadgeVariant(category: string) {
+function categoryBadgeColor(category: string) {
   switch (category) {
     case "Compute":
       return "purple" as const;
@@ -282,7 +282,7 @@ function categoryBadgeVariant(category: string) {
     case "Support":
       return "slate" as const;
     default:
-      return "neutral" as const;
+      return "slate" as const;
   }
 }
 
@@ -301,7 +301,7 @@ function StorageDetailPage() {
       </div>
 
       <div>
-        <H2 weight="bold">Storage Volume Breakdown</H2>
+        <H2>Storage Volume Breakdown</H2>
         <p className="text-sm text-muted-foreground mt-1">
           Distribution of stored data across S3 storage tiers
         </p>
@@ -328,7 +328,7 @@ function StorageDetailPage() {
       </div>
 
       {/* Pie chart placeholder */}
-      <Card padding="lg">
+      <Card className="p-6">
         <H3>Tier Distribution by Volume</H3>
         <div className="mt-4 h-64 flex items-center justify-center rounded-md bg-card text-muted-foreground text-sm">
           Pie chart placeholder (storage tier distribution)
@@ -336,7 +336,7 @@ function StorageDetailPage() {
       </Card>
 
       {/* Tier table */}
-      <Card padding="none">
+      <Card>
         <Table size="comfortable" aria-label="Storage tier breakdown">
           <TableHeader>
             <Column isRowHeader>Tier</Column>
@@ -404,7 +404,7 @@ function StorageCostDetailPage() {
       </div>
 
       <div>
-        <H2 weight="bold">Storage Cost Breakdown</H2>
+        <H2>Storage Cost Breakdown</H2>
         <p className="text-sm text-muted-foreground mt-1">
           All storage usage types across all workloads
         </p>
@@ -428,7 +428,7 @@ function StorageCostDetailPage() {
       </div>
 
       {/* Placeholder for the full usage type table */}
-      <Card padding="lg">
+      <Card className="p-6">
         <div className="h-48 flex items-center justify-center rounded-md bg-card text-muted-foreground text-sm">
           Usage type table placeholder (all storage usage types across workloads)
         </div>

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "storybook/react";
 import { PathPill } from "./PathPill";
 
 const meta: Meta<typeof PathPill> = {
-  title: "Components/Pill/PathPill",
+  title: "Components/PathPill",
   component: PathPill,
   argTypes: {
     children: { control: "text" },

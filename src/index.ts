@@ -1,13 +1,13 @@
 "use client";
 
-// Brand color constants for consumers that need direct hex values (e.g. SVG logos)
-export { ColorTeal500, ColorPurple700 } from "./colors";
-
 // React Aria re-exports for consumer integration
 export { RouterProvider } from "react-aria-components";
 export type { RouterConfig, Key } from "react-aria-components";
 
 // Components
+export { Logo } from "./components/Logo";
+export type { LogoProps } from "./components/Logo";
+
 export { Button } from "./components/Button";
 export type {
   ButtonProps,
@@ -17,6 +17,19 @@ export type {
 
 export { Spinner } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
+
+export { Heading, H1, H2, H3, H4, H5, H6 } from "./components/Heading";
+export type {
+  HeadingProps,
+  HeadingLevel,
+  HeadingSize,
+} from "./components/Heading";
+
+export { Prose } from "./components/Prose";
+export type { ProseProps } from "./components/Prose";
+
+export { Description } from "./components/Description";
+export type { DescriptionProps, DescriptionSize } from "./components/Description";
 
 export { Icon, iconRegistry } from "./components/Icon";
 export type {
@@ -97,13 +110,6 @@ export type { LabelProps } from "./components/Form/Label";
 export { Fieldset } from "./components/Form/Fieldset";
 export type { FieldsetProps } from "./components/Form/Fieldset";
 
-export { Heading, H1, H2, H3 } from "./components/Heading";
-export type {
-  HeadingProps,
-  HeadingLevel,
-  HeadingSize,
-} from "./components/Heading";
-
 export { Link } from "./components/Link";
 export type { LinkProps, LinkVariant } from "./components/Link";
 
@@ -181,10 +187,10 @@ export type {
 } from "./components/SegmentedControl";
 
 export { Badge } from "./components/Badge";
-export type { BadgeProps, BadgeVariant, BadgeSize } from "./components/Badge";
+export type { BadgeProps, BadgeColor, BadgeSize } from "./components/Badge";
 
 export { Card } from "./components/Card";
-export type { CardProps, CardPadding } from "./components/Card";
+export type { CardProps } from "./components/Card";
 
 export { DeltaIndicator } from "./components/DeltaIndicator";
 export type {
@@ -209,8 +215,15 @@ export type { MetricCardProps, MetricCardSize } from "./components/MetricCard";
 export { SectionHeader } from "./components/SectionHeader";
 export type { SectionHeaderProps } from "./components/SectionHeader";
 
-export { Pill, pillColorFromName, PathPill } from "./components/Pill";
-export type { PillProps, PillColor, PathPillProps } from "./components/Pill";
+export { DescriptionList } from "./components/DescriptionList";
+export type {
+  DescriptionListProps,
+  DescriptionListItemProps,
+  DescriptionListLayout,
+} from "./components/DescriptionList";
+
+export { PathPill, pillColorFromName } from "./components/PathPill";
+export type { PathPillProps } from "./components/PathPill";
 
 export { FormWizard, useFormWizard } from "./components/FormWizard";
 export type {

@@ -9,7 +9,7 @@ import { ButtonLink } from "../components/Button";
 import { Input } from "../components/Form/Input";
 import { Select, type SelectItem } from "../components/Form/Select";
 import { DescriptionList } from "../components/DescriptionList";
-import { Pill } from "../components/Pill";
+import { Badge } from "../components/Badge";
 
 /* ------------------------------------------------------------------ */
 /*  Domain types (app-specific, not part of the design system)         */
@@ -91,7 +91,7 @@ function ViewMode({
     <>
       <DescriptionList>
         <DescriptionList.Item label="Provider">
-          <Pill>{connection.provider}</Pill>
+          <Badge>{connection.provider}</Badge>
         </DescriptionList.Item>
 
         {connection.ownerScope && (

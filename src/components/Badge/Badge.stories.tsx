@@ -10,7 +10,7 @@ const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
   component: Badge,
   argTypes: {
-    variant: { control: "select" },
+    color: { control: "select" },
     size: { control: "select" },
     icon: { control: "select", options: iconOptions },
   },
@@ -22,9 +22,7 @@ const meta: Meta<typeof Badge> = {
 export default meta;
 type Story = StoryObj<typeof Badge>;
 
-// Every variant × size — the canonical visual reference.
-const variants = [
-  "neutral",
+const colors = [
   "purple",
   "teal",
   "rose",
@@ -33,7 +31,7 @@ const variants = [
   "amber",
 ] as const;
 
-const sizes = ["sm", "md"] as const;
+const sizes = ["xs", "sm", "md", "lg"] as const;
 
 const labelStyle = {
   fontSize: "12px",
@@ -59,12 +57,12 @@ export const AllVariants: Story = {
           {size}
         </span>
       ))}
-      {variants.map((variant) => (
-        <Fragment key={variant}>
-          <span style={labelStyle}>{variant}</span>
+      {colors.map((color) => (
+        <Fragment key={color}>
+          <span style={labelStyle}>{color}</span>
           {sizes.map((size) => (
-            <Badge key={`${variant}-${size}`} variant={variant} size={size}>
-              {variant}
+            <Badge key={`${color}-${size}`} color={color} size={size}>
+              {color}
             </Badge>
           ))}
         </Fragment>
@@ -74,15 +72,13 @@ export const AllVariants: Story = {
 };
 
 export const Playground: Story = {
-  args: { variant: "neutral", size: "sm", children: "Badge" },
+  args: { color: "slate", size: "sm", children: "Badge" },
 };
 
-// --- Focused examples (not covered by the variant grid) ---
-
 export const WithIcon: Story = {
-  args: { variant: "teal", icon: Cloud, children: "AWS" },
+  args: { color: "teal", icon: Cloud, children: "AWS" },
 };
 
 export const Count: Story = {
-  args: { variant: "neutral", children: 1234 },
+  args: { color: "slate", children: 1234 },
 };

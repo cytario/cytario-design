@@ -1,5 +1,6 @@
 {/* Logo.mdx */}
 import { Meta } from "@storybook/addon-docs/blocks";
+import { Logo } from "../../components/Logo";
 
 <Meta title="Foundation/Logo" />
 
@@ -7,250 +8,120 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 The cytario logo is the most recognizable element of the brand. Use it consistently and with care.
 
-**Naming convention:** Files with the `tagline` suffix include the brand claim beneath the wordmark. Files without a suffix are the standard compact form. The `mono-` prefix indicates a single-color monochrome variant.
-
 ---
 
-## With tagline
+## React component
 
-The tagline variants include the brand claim and should be used whenever space permits. They are the primary representation of the cytario brand.
+Use the `<Logo>` React component in application UIs (headers, sidebars, auth screens). It renders an inline SVG with CSS animations, no image requests, and **automatically follows the active theme** — purple wordmark on light backgrounds, white wordmark on dark backgrounds.
 
-<div style={{
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: 24,
-  marginTop: 24,
-}}>
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#ffffff",
-  }}>
-    <img src="logos/cytario-logo-purple-tagline.svg" alt="Purple logo with tagline" style={{ maxWidth: 280, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-purple-tagline.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
-      Primary logo for light backgrounds. Purple wordmark + teal icon + brand tagline. Use whenever space permits.
-    </p>
+```tsx
+import { Logo } from "@cytario/design";
+
+<Logo />              // theme-driven (purple on light, white on dark)
+<Logo scale={1.4} />  // scale factor
+```
+
+### Theme-driven colors
+
+The logo uses `--logo-fill` and `--logo-highlight` CSS variables that switch automatically with `[data-theme="dark"]`. No prop needed — the logo adapts to its context.
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginTop: 24 }}>
+  <div style={{ border: "1px solid #e5e7eb", borderRadius: 12, padding: 48, textAlign: "center", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <Logo scale={3} />
+    <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14 }}>light theme</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>Purple wordmark + teal accent</p>
   </div>
-
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#111827",
-  }}>
-    <img src="logos/cytario-logo-white-tagline.svg" alt="White logo with tagline" style={{ maxWidth: 280, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-white-tagline.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#9ca3af" }}>
-      Primary logo for dark backgrounds. White wordmark + teal icon + brand tagline.
-    </p>
+  <div data-theme="dark" style={{ border: "1px solid #1e293b", borderRadius: 12, padding: 48, textAlign: "center", background: "#0f172a", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <Logo scale={3} />
+    <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14, color: "#fff" }}>dark theme</p>
+    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#94a3b8" }}>White wordmark + teal accent</p>
   </div>
+</div>
+
+### On brand purple
+
+The logo does not automatically detect non-theme backgrounds. On a brand-purple background, pass `color="#ffffff"` to force a white wordmark:
+
+```tsx
+<Logo color="#ffffff" />
+```
+
+<div style={{ borderRadius: 12, padding: 48, textAlign: "center", background: "#5c2483", marginTop: 24, display: "flex", flexDirection: "column", alignItems: "center" }}>
+  <Logo scale={3} color="#ffffff" />
+</div>
+
+### Escape hatch (custom colors)
+
+Pass `color` and `highlightColor` to override the theme-driven values. Set both to the same value for monochrome.
+
+```tsx
+<Logo color="#000000" highlightColor="#000000" />  // monochrome black
+<Logo color="#ffffff" highlightColor="#ffffff" />  // monochrome white
+<Logo color="#dc2626" highlightColor="#2563eb" />  // custom
+```
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginTop: 24 }}>
+  <div data-theme="dark" style={{ border: "1px solid #1e293b", borderRadius: 12, padding: 48, textAlign: "center", background: "#0f172a", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <Logo scale={2} color="#ffffff" highlightColor="#ffffff" />
+    <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14, color: "#fff" }}>Monochrome white</p>
+  </div>
+  <div style={{ border: "1px solid #e5e7eb", borderRadius: 12, padding: 48, textAlign: "center", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <Logo scale={2} color="#000000" highlightColor="#000000" />
+    <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14 }}>Monochrome black</p>
+  </div>
+</div>
+
+### Scaling
+
+```tsx
+<Logo scale={1.4} />
+```
+
+<div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-start", marginTop: 24 }}>
+  <Logo scale={0.8} />
+  <Logo scale={1} />
+  <Logo scale={1.4} />
+  <Logo scale={2} />
 </div>
 
 ---
 
-## Standard
+## Static SVG assets
 
-The standard logo omits the brand tagline for compact spaces, co-branding, app headers, and contexts where the tagline is not needed.
+For non-React contexts (email, print, regulatory documents), use the static SVG files in `assets/logos/`.
 
-<div style={{
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: 24,
-  marginTop: 24,
-}}>
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#ffffff",
-  }}>
-    <img src="logos/cytario-logo-purple.svg" alt="Purple logo" style={{ maxWidth: 200, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-purple.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
-      Standard logo for light backgrounds. Purple wordmark + teal icon.
-    </p>
-  </div>
-
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#111827",
-  }}>
-    <img src="logos/cytario-logo-white.svg" alt="White logo" style={{ maxWidth: 200, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-white.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#9ca3af" }}>
-      Standard logo for dark backgrounds. White wordmark + teal icon.
-    </p>
-  </div>
-
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#5c2483",
-  }}>
-    <img src="logos/cytario-logo-on-purple.svg" alt="Logo on purple" style={{ maxWidth: 240, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-on-purple.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#d4b3eb" }}>
-      Preferred placement on the brand purple background. White wordmark + teal icon on purple rectangle. This is the recommended way to display the logo when you control the background color.
-    </p>
-  </div>
-</div>
+| Context | File |
+|---------|------|
+| Marketing / hero with tagline (light bg) | `cytario-logo-purple-tagline.svg` |
+| Marketing / hero with tagline (dark bg) | `cytario-logo-white-tagline.svg` |
+| Compact logo (light bg) | `cytario-logo-purple.svg` |
+| Compact logo (dark bg) | `cytario-logo-white.svg` |
+| Monochrome white (dark bg, minimal color) | `cytario-logo-mono-white.svg` |
+| Monochrome black (B&W print, regulatory) | `cytario-logo-mono-black.svg` |
 
 ---
 
-## Monochrome
+## Brand guidelines
 
-Single-color variants for contexts where the full color palette is not appropriate.
+**Clear space:** Maintain minimum clear space equal to the height of the "c" in "cytario" around the logo.
 
-<div style={{
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: 24,
-  marginTop: 24,
-}}>
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#111827",
-  }}>
-    <img src="logos/cytario-logo-mono-white.svg" alt="Monochrome white logo" style={{ maxWidth: 200, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#ffffff" }}>cytario-logo-mono-white.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#9ca3af" }}>
-      All-white monochrome. Use on dark backgrounds where the teal accent is too prominent.
-    </p>
-  </div>
+**Minimum sizes:** With tagline — 120 px screen / 30 mm print. Standard — 48 px screen / 12 mm print.
 
-  <div style={{
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    padding: 32,
-    textAlign: "center",
-    background: "#ffffff",
-  }}>
-    <img src="logos/cytario-logo-mono-black.svg" alt="Monochrome black logo" style={{ maxWidth: 200, marginBottom: 16 }} />
-    <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>cytario-logo-mono-black.svg</p>
-    <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>
-      All-black monochrome. For B&W print, fax headers, regulatory docs, and high-contrast contexts.
-    </p>
-  </div>
-</div>
+**Do:**
+- Use the provided component or SVG files — never recreate the logo
+- Place on solid, uncluttered backgrounds
+- Let the logo follow the theme automatically
+- Maintain the correct aspect ratio at all times
 
----
+**Don't:**
+- Stretch, rotate, or skew the logo
+- Change the logo colors (use the escape hatch only when strictly necessary)
+- Place on busy or low-contrast backgrounds
+- Add drop shadows, outlines, or effects
+- Crop or partially obscure the logo
 
-## When to use which variant
+**Registered trademark:** The cytario name and logo carry the &reg; mark. It is already incorporated into the logo component and SVG files.
 
-| Context | Variant | File |
-|---------|---------|------|
-| Marketing materials, website hero, slide decks | With tagline (light bg) | `cytario-logo-purple-tagline.svg` |
-| Marketing on dark backgrounds | With tagline (dark bg) | `cytario-logo-white-tagline.svg` |
-| App header, sidebar, co-branding | Standard (light bg) | `cytario-logo-purple.svg` |
-| Dark UI, dark backgrounds | Standard (dark bg) | `cytario-logo-white.svg` |
-| Branded backgrounds (preferred) | On purple | `cytario-logo-on-purple.svg` |
-| Dark bg, minimal color | Monochrome white | `cytario-logo-mono-white.svg` |
-| B&W print, regulatory docs | Monochrome black | `cytario-logo-mono-black.svg` |
+**Regulatory use:** For regulatory submissions, use the monochrome black variant (`cytario-logo-mono-black.svg`) to ensure legibility in grayscale printing and archival formats.
 
----
-
-## Clear space
-
-Maintain a minimum clear space around the logo equal to the height of the "c" in "cytario." No other graphic elements, text, or edges should encroach on this zone.
-
-<div style={{
-  background: "#f9fafb",
-  borderRadius: 12,
-  padding: 48,
-  textAlign: "center",
-  marginTop: 16,
-  marginBottom: 24,
-}}>
-  <div style={{
-    display: "inline-block",
-    border: "2px dashed #35b7b8",
-    padding: 32,
-    borderRadius: 8,
-  }}>
-    <img src="logos/cytario-logo-purple-tagline.svg" alt="Logo with clear space" style={{ maxWidth: 200 }} />
-  </div>
-  <p style={{ marginTop: 12, fontSize: 13, color: "#6b7280" }}>
-    Dashed border represents minimum clear space zone.
-  </p>
-</div>
-
----
-
-## Minimum sizes
-
-| Variant | Print minimum | Screen minimum |
-|---------|--------------|----------------|
-| With tagline | 30 mm wide | 120 px wide |
-| Standard | 12 mm wide | 48 px wide |
-
-Below these sizes, the logo becomes illegible. Use the standard variant at small sizes.
-
----
-
-## Do / Don't
-
-<div style={{
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: 24,
-  marginTop: 16,
-}}>
-  <div style={{
-    borderRadius: 12,
-    padding: 24,
-    background: "#f0fdf4",
-    borderLeft: "4px solid #16a34a",
-  }}>
-    <p style={{ margin: "0 0 12px", fontWeight: 700, color: "#16a34a", fontSize: 13, textTransform: "uppercase", letterSpacing: "0.05em" }}>Do</p>
-    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, color: "#374151" }}>
-      <li>Use provided SVG files -- never recreate the logo</li>
-      <li>Place on solid, uncluttered backgrounds</li>
-      <li>Use the white or mono-white variant on dark backgrounds</li>
-      <li>Use the on-purple variant when placing on brand purple</li>
-      <li>Maintain the correct aspect ratio at all times</li>
-      <li>Respect the minimum clear space</li>
-    </ul>
-  </div>
-
-  <div style={{
-    borderRadius: 12,
-    padding: 24,
-    background: "#fef2f2",
-    borderLeft: "4px solid #dc2626",
-  }}>
-    <p style={{ margin: "0 0 12px", fontWeight: 700, color: "#dc2626", fontSize: 13, textTransform: "uppercase", letterSpacing: "0.05em" }}>Don't</p>
-    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, color: "#374151" }}>
-      <li>Stretch, rotate, or skew the logo</li>
-      <li>Change the logo colors</li>
-      <li>Place on busy or low-contrast backgrounds</li>
-      <li>Add drop shadows, outlines, or effects</li>
-      <li>Crop or partially obscure the logo</li>
-      <li>Use the purple variant on dark backgrounds</li>
-    </ul>
-  </div>
-</div>
-
----
-
-## Brand governance
-
-The cytario mark, logo and visual identity are intellectual property of Slash-m GmbH. The current logo suite was approved on **05.11.2024**.
-
-**Modification requests:** Any proposed change to the logo -- including new color variants, size adaptations, or co-branding lockups -- must be submitted for approval before production. Do not create new logo variants independently.
-
-**Registered trademark:** The cytario name and logo carry the registered trademark symbol (&#174;). Include the &#174; mark on first prominent use in any document or material. It is already incorporated into the approved logo files.
-
-**Regulatory use:** For regulatory submissions (Technical Documentation, Instructions for Use, Declaration of Conformity), use the **monochrome black** variant (`cytario-logo-mono-black.svg`) to ensure legibility in grayscale printing and archival formats.
+**Governance:** The cytario mark is intellectual property of Slash-m GmbH. The current logo suite was approved on 05.11.2024. Any proposed change must be submitted for approval before production.

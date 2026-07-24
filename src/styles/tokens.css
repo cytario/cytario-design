@@ -23,6 +23,8 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
 
+  /* Font sizes, weights, and line heights use Tailwind v4 defaults (rem-based, with line-height pairing). */
+
   --color-purple-50: var(--color-purple-50);
   --color-purple-100: var(--color-purple-100);
   --color-purple-200: var(--color-purple-200);

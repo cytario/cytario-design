@@ -8,6 +8,7 @@ import { Heading } from "../Heading";
 import { Input } from "../Form/Input";
 import { InputPassword } from "../Form/InputPassword";
 import { Link } from "../Link";
+import { Logo } from "../Logo";
 
 /* ------------------------------------------------------------------ */
 /*  Story-local helpers                                                */
@@ -24,11 +25,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
           <div className="px-8 pt-10 pb-8">
             {/* Logo */}
             <div className="flex justify-center mb-6">
-              <img
-                src="logos/cytario-logo-purple.svg"
-                alt="cytario"
-                className="h-10"
-              />
+              <Logo scale={1.2} />
             </div>
             {children}
           </div>
@@ -77,7 +74,7 @@ function PasswordField({
  */
 function AuthHeading({ children }: { children: React.ReactNode }) {
   return (
-    <Heading as="h2" size="lg" className="font-normal text-center mb-4">
+    <Heading as="h2" size="h2" className="font-normal text-center mb-4">
       {children}
     </Heading>
   );

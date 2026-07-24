@@ -115,7 +115,7 @@ Page
 | Name | Text | Text search | Links to user edit modal |
 | ID | Monospace | Text search | Hidden by default, copyable |
 | Email | Text | Text search | Middle-ellipsis, copyable |
-| Status | Badge | Select (All/Active/Disabled) | Green "Active" or neutral "Disabled" pill |
+| Status | Badge | Select (All/Active/Disabled) | Green "Active" or slate "Disabled" badge |
 | Admin Groups | PathPill[] | Select with group list | Shows colored path pills with dot indicators |
 | Groups | PathPill[] | Select with group list | Full path pills |
 
@@ -183,8 +183,8 @@ The main data browsing experience with multiple view modes.
 | `@headlessui/react` Dialog | `Dialog` (React Aria) | Modal overlay handling |
 | `@headlessui/react` Field | `Field` | Label + description + error wrapper |
 | `@tanstack/react-table` Table | `Table` (React Aria) | Significant API difference — see note below |
-| `Pill` (custom) | `Badge` + `Pill` (new) | Badge for status, Pill for hash-colored labels |
-| `PathPill` (custom) | `PathPill` (new) | Hierarchical path display |
+| `Pill` (custom) | `Badge` | Unified: `color` prop (default `slate`), always bordered, sizes xs/sm/md/lg |
+| `PathPill` (custom) | `PathPill` | Hierarchical path display using `Badge` segments; `pillColorFromName` lives here |
 | `Placeholder` | `EmptyState` | Same pattern, renamed |
 | `Section` / `Container` | Layout wrappers | Not part of component library (app-level) |
 | `SectionHeader` | `SectionHeader` (new) | Title + action buttons |

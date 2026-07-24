@@ -1,6 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { PathPill } from "./PathPill";
+import { PathPill, pillColorFromName } from "./PathPill";
+
+describe("pillColorFromName", () => {
+  it("returns a deterministic color for a given string", () => {
+    const first = pillColorFromName("test");
+    const second = pillColorFromName("test");
+    expect(first).toBe(second);
+  });
+
+  it("returns different colors for different strings", () => {
+    const a = pillColorFromName("science");
+    const b = pillColorFromName("engineering");
+    expect(a).not.toBe(b);
+  });
+});
 
 describe("PathPill", () => {
   it("renders single segment", () => {
@@ -34,7 +48,6 @@ describe("PathPill", () => {
       <PathPill visibleCount={1}>cytario/lab/team</PathPill>,
     );
     const hidden = container.querySelectorAll("[aria-hidden='true']");
-    // "cytario" and "lab" are collapsed
     expect(hidden).toHaveLength(2);
   });
 

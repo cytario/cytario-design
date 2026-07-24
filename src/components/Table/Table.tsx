@@ -29,12 +29,16 @@ const tableSizeClass: Record<TableSize, string> = {
   comfortable: "[--table-row-py:theme(spacing.3)]",
 };
 
-export function Table({ size = "comfortable", className, ...props }: DataTableProps) {
+export function Table({
+  size = "comfortable",
+  className,
+  ...props
+}: DataTableProps) {
   return (
     <AriaTable
       {...props}
       className={[
-        "w-full border-collapse text-(--font-size-sm) text-foreground",
+        "w-full border-collapse text-sm text-foreground",
         tableSizeClass[size],
         className,
       ]
@@ -72,7 +76,11 @@ export function Column(props: ColumnProps) {
           {props.children as React.ReactNode}
           {allowsSorting && (
             <span aria-hidden="true" className="text-muted-foreground">
-              {sortDirection === "ascending" ? "\u25B2" : sortDirection === "descending" ? "\u25BC" : "\u25B4"}
+              {sortDirection === "ascending"
+                ? "\u25B2"
+                : sortDirection === "descending"
+                  ? "\u25BC"
+                  : "\u25B4"}
             </span>
           )}
         </span>

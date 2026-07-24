@@ -29,6 +29,7 @@
 
 @import "tw-animate-css";
 @plugin "tailwindcss-react-aria-components";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -139,30 +140,6 @@
     --border-radius-xl: 16px;
     --border-radius-full: 9999px;
 
-    /* ---- Primitives: font size ---- */
-    --font-size-xs: 12px;
-    --font-size-sm: 14px;
-    --font-size-base: 16px;
-    --font-size-lg: 18px;
-    --font-size-xl: 20px;
-    --font-size-2xl: 24px;
-    --font-size-3xl: 30px;
-    --font-size-4xl: 36px;
-    --font-size-5xl: 48px;
-
-    /* ---- Primitives: font weight ---- */
-    --font-weight-light: 300;
-    --font-weight-regular: 400;
-    --font-weight-medium: 500;
-    --font-weight-semibold: 600;
-    --font-weight-bold: 700;
-    --font-weight-extrabold: 800;
-
-    /* ---- Primitives: line height ---- */
-    --line-height-tight: 1.25;
-    --line-height-normal: 1.5;
-    --line-height-relaxed: 1.625;
-
     /* ---- Light-mode semantic tokens ---- */
     --color-background: var(--color-white);
     --color-foreground: var(--color-slate-900);
@@ -234,12 +211,13 @@
     --color-badge-slate-text: var(--color-slate-700);
     --color-badge-rose-bg: var(--color-rose-100);
     --color-badge-rose-text: var(--color-rose-700);
-    --color-badge-neutral-bg: var(--color-slate-100);
-    --color-badge-neutral-text: var(--color-slate-700);
     --color-badge-green-bg: var(--color-green-100);
     --color-badge-green-text: var(--color-green-700);
     --color-badge-amber-bg: var(--color-amber-100);
     --color-badge-amber-text: var(--color-amber-800);
+
+    --logo-fill: var(--color-primary);
+    --logo-highlight: var(--color-teal-500);
 
     --ds-color-text-body: rgb(55, 65, 81);
     --ds-gradient-brand: linear-gradient(135deg, #5c2483 0%, #4a1d6a 100%);
@@ -327,12 +305,13 @@
     --color-badge-slate-text: var(--color-slate-200);
     --color-badge-rose-bg: var(--color-rose-800);
     --color-badge-rose-text: var(--color-rose-200);
-    --color-badge-neutral-bg: var(--color-slate-700);
-    --color-badge-neutral-text: var(--color-slate-200);
     --color-badge-green-bg: var(--color-green-800);
     --color-badge-green-text: var(--color-green-200);
     --color-badge-amber-bg: var(--color-amber-800);
     --color-badge-amber-text: var(--color-amber-200);
+
+    --logo-fill: var(--color-primary-foreground);
+    --logo-highlight: var(--color-teal-500);
 
     --ds-color-text-body: rgb(209, 213, 219);
     --ds-gradient-brand: linear-gradient(135deg, #9b4fcb 0%, #7a2ea8 100%);
@@ -377,6 +356,26 @@
   }
 }
 
+@keyframes logo-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes logo-fade-in {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
 /**
  * Tailwind v4 @theme inline — maps every color token to itself via var() so
  * that utilities like bg-primary, text-muted-foreground, bg-badge-purple-bg
@@ -391,6 +390,8 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+
+  /* Font sizes, weights, and line heights use Tailwind v4 defaults (rem-based, with line-height pairing). */
 
   --color-purple-50: var(--color-purple-50);
   --color-purple-100: var(--color-purple-100);
@@ -549,8 +550,6 @@
   --color-badge-slate-text: var(--color-badge-slate-text);
   --color-badge-rose-bg: var(--color-badge-rose-bg);
   --color-badge-rose-text: var(--color-badge-rose-text);
-  --color-badge-neutral-bg: var(--color-badge-neutral-bg);
-  --color-badge-neutral-text: var(--color-badge-neutral-text);
   --color-badge-green-bg: var(--color-badge-green-bg);
   --color-badge-green-text: var(--color-badge-green-text);
   --color-badge-amber-bg: var(--color-badge-amber-bg);

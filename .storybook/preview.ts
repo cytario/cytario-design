@@ -107,9 +107,17 @@ const preview: Preview = {
         order: [
           "Introduction",
           "Foundation",
+          [
+            //
+            "Logo",
+            "Colors",
+            "*",
+          ],
           "Components",
           [
             //
+            "Heading",
+            "Prose",
             "Icon",
             "IconButton",
             "IconButtonLink",
