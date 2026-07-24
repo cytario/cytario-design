@@ -74,7 +74,7 @@ function PasswordField({
  */
 function AuthHeading({ children }: { children: React.ReactNode }) {
   return (
-    <Heading as="h2" size="lg" className="font-normal text-center mb-4">
+    <Heading as="h2" size="h2" className="font-normal text-center mb-4">
       {children}
     </Heading>
   );

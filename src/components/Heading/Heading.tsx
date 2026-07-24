@@ -38,31 +38,43 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
 );
 
 /** Convenience: renders `<h1>` with h1 styles (4xl→5xl responsive, bold) */
-export function H1(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h1" />;
-}
+export const H1 = forwardRef<HTMLHeadingElement, Omit<HeadingProps, "as">>(
+  function H1(props, ref) {
+    return <Heading {...props} ref={ref} as="h1" />;
+  },
+);
 
 /** Convenience: renders `<h2>` with h2 styles (2xl→3xl responsive, bold) */
-export function H2(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h2" />;
-}
+export const H2 = forwardRef<HTMLHeadingElement, Omit<HeadingProps, "as">>(
+  function H2(props, ref) {
+    return <Heading {...props} ref={ref} as="h2" />;
+  },
+);
 
 /** Convenience: renders `<h3>` with h3 styles (lg→xl responsive, bold) */
-export function H3(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h3" />;
-}
+export const H3 = forwardRef<HTMLHeadingElement, Omit<HeadingProps, "as">>(
+  function H3(props, ref) {
+    return <Heading {...props} ref={ref} as="h3" />;
+  },
+);
 
 /** Convenience: renders `<h4>` with h4 styles (base→lg responsive, semibold) */
-export function H4(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h4" />;
-}
+export const H4 = forwardRef<HTMLHeadingElement, Omit<HeadingProps, "as">>(
+  function H4(props, ref) {
+    return <Heading {...props} ref={ref} as="h4" />;
+  },
+);
 
 /** Convenience: renders `<h5>` with h5 styles (sm→base responsive, semibold) */
-export function H5(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h5" />;
-}
+export const H5 = forwardRef<HTMLHeadingElement, Omit<HeadingProps, "as">>(
+  function H5(props, ref) {
+    return <Heading {...props} ref={ref} as="h5" />;
+  },
+);
 
 /** Convenience: renders `<h6>` with h6 styles (sm, semibold) */
-export function H6(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h6" />;
-}
+export const H6 = forwardRef<HTMLHeadingElement, Omit<HeadingProps, "as">>(
+  function H6(props, ref) {
+    return <Heading {...props} ref={ref} as="h6" />;
+  },
+);

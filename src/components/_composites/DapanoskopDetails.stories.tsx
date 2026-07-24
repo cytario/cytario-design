@@ -282,7 +282,7 @@ function categoryBadgeColor(category: string) {
     case "Support":
       return "slate" as const;
     default:
-      return "neutral" as const;
+      return "slate" as const;
   }
 }
 
