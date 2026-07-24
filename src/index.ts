@@ -23,14 +23,13 @@ export type {
   HeadingProps,
   HeadingLevel,
   HeadingSize,
-  HeadingWeight,
 } from "./components/Heading";
-
-export { Text } from "./components/Text";
-export type { TextProps, TextVariant, TextWeight } from "./components/Text";
 
 export { Prose } from "./components/Prose";
 export type { ProseProps } from "./components/Prose";
+
+export { Description } from "./components/Description";
+export type { DescriptionProps, DescriptionSize } from "./components/Description";
 
 export { Icon, iconRegistry } from "./components/Icon";
 export type {
@@ -191,7 +190,7 @@ export { Badge } from "./components/Badge";
 export type { BadgeProps, BadgeColor, BadgeSize } from "./components/Badge";
 
 export { Card } from "./components/Card";
-export type { CardProps, CardPadding } from "./components/Card";
+export type { CardProps } from "./components/Card";
 
 export { DeltaIndicator } from "./components/DeltaIndicator";
 export type {

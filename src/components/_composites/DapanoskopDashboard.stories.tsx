@@ -169,7 +169,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
       : null;
 
   return (
-    <Card padding="none">
+    <Card>
       <div className="p-4">
         {/* Header row */}
         <div className="flex items-center justify-between">
@@ -359,7 +359,7 @@ function DashboardPage({ showMtdBanner = false }: { showMtdBanner?: boolean }) {
         </div>
 
         {/* Cost Trend placeholder */}
-        <Card padding="lg">
+        <Card className="p-6">
           <H3>Cost Trend</H3>
           <div className="mt-4 h-48 flex items-center justify-center rounded-md bg-card text-muted-foreground text-sm">
             Stacked bar chart placeholder (12-month trend by cost center)
@@ -397,7 +397,7 @@ function DashboardPage({ showMtdBanner = false }: { showMtdBanner?: boolean }) {
         </div>
 
         {/* Tagging Coverage */}
-        <Card padding="md">
+        <Card className="p-4">
           <ProgressBar
             value={taggingCoverage.taggedPercentage}
             label="Tagging Coverage"

@@ -6,6 +6,7 @@ import {
   AlignRight,
   Archive,
   ArrowDown,
+  ArrowLeft,
   ArrowRight,
   ArrowUp,
   ArrowUpRight,
@@ -14,6 +15,7 @@ import {
   BookmarkCheck,
   Braces,
   Building2,
+  Calendar,
   Check,
   CheckCircle,
   CheckCircle2,
@@ -63,6 +65,7 @@ import {
   Mail,
   MapPin,
   Maximize,
+  Menu,
   Microscope,
   Minus,
   MoreVertical,
@@ -105,6 +108,8 @@ import {
   ZoomOut,
   type LucideIcon,
 } from "lucide-react";
+import { LinkedinIcon } from "./icons/LinkedinIcon";
+import { GithubIcon } from "./icons/GithubIcon";
 
 /** Union of every registered icon name. */
 export type IconName =
@@ -115,6 +120,7 @@ export type IconName =
   | "AlignRight"
   | "Archive"
   | "ArrowDown"
+  | "ArrowLeft"
   | "ArrowRight"
   | "ArrowUp"
   | "ArrowUpRight"
@@ -123,6 +129,7 @@ export type IconName =
   | "BookmarkCheck"
   | "Braces"
   | "Building2"
+  | "Calendar"
   | "Check"
   | "CheckCircle"
   | "CheckCircle2"
@@ -153,6 +160,7 @@ export type IconName =
   | "FolderPlus"
   | "FolderTree"
   | "Fullscreen"
+  | "Github"
   | "Grid2x2"
   | "Grid3x3"
   | "Heart"
@@ -166,12 +174,14 @@ export type IconName =
   | "Layers2"
   | "LayoutDashboard"
   | "LayoutGrid"
+  | "Linkedin"
   | "List"
   | "ListFilter"
   | "LogOut"
   | "Mail"
   | "MapPin"
   | "Maximize"
+  | "Menu"
   | "Microscope"
   | "Minus"
   | "MoreVertical"
@@ -227,6 +237,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   AlignRight,
   Archive,
   ArrowDown,
+  ArrowLeft,
   ArrowRight,
   ArrowUp,
   ArrowUpRight: ArrowUpRight,
@@ -235,6 +246,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   BookmarkCheck,
   Braces,
   Building2: Building2,
+  Calendar,
   Check,
   CheckCircle,
   CheckCircle2,
@@ -265,6 +277,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   FolderPlus,
   FolderTree,
   Fullscreen,
+  Github: GithubIcon as unknown as LucideIcon,
   Grid2x2,
   Grid3x3,
   Heart,
@@ -278,12 +291,14 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   Layers2,
   LayoutDashboard: LayoutDashboard,
   LayoutGrid,
+  Linkedin: LinkedinIcon as unknown as LucideIcon,
   List,
   ListFilter,
   LogOut,
   Mail,
   MapPin,
   Maximize,
+  Menu,
   Microscope,
   Minus,
   MoreVertical,

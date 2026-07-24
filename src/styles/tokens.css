@@ -23,30 +23,7 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
 
-  /* Font sizes — wire to :root --font-size-* tokens */
-  --text-xs: var(--font-size-xs);
-  --text-sm: var(--font-size-sm);
-  --text-base: var(--font-size-base);
-  --text-lg: var(--font-size-lg);
-  --text-xl: var(--font-size-xl);
-  --text-2xl: var(--font-size-2xl);
-  --text-3xl: var(--font-size-3xl);
-  --text-4xl: var(--font-size-4xl);
-  --text-5xl: var(--font-size-5xl);
-  --text-6xl: var(--font-size-6xl);
-
-  /* Font weights — map Tailwind's names to our tokens */
-  --font-weight-light: var(--font-weight-light);
-  --font-weight-normal: var(--font-weight-regular);
-  --font-weight-medium: var(--font-weight-medium);
-  --font-weight-semibold: var(--font-weight-semibold);
-  --font-weight-bold: var(--font-weight-bold);
-  --font-weight-extrabold: var(--font-weight-extrabold);
-
-  /* Line heights */
-  --leading-tight: var(--line-height-tight);
-  --leading-normal: var(--line-height-normal);
-  --leading-relaxed: var(--line-height-relaxed);
+  /* Font sizes, weights, and line heights use Tailwind v4 defaults (rem-based, with line-height pairing). */
 
   --color-purple-50: var(--color-purple-50);
   --color-purple-100: var(--color-purple-100);

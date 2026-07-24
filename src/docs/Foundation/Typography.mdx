@@ -11,111 +11,59 @@ cytario uses **Montserrat** as its primary typeface. It is a geometric sans-seri
 
 ## Font family
 
-<div style={{
-  background: "#f9fafb",
-  borderRadius: 12,
-  padding: 32,
-  marginTop: 16,
-  marginBottom: 32,
-}}>
-  <p style={{ fontFamily: "'Montserrat', system-ui, sans-serif", fontSize: 36, fontWeight: 700, margin: "0 0 8px", color: "#111827" }}>
+<div
+  style={{
+    background: "#f9fafb",
+    borderRadius: 12,
+    padding: 32,
+    marginTop: 16,
+    marginBottom: 32,
+  }}
+>
+  <p
+    style={{
+      fontFamily: "'Montserrat', system-ui, sans-serif",
+      fontSize: 36,
+      fontWeight: 700,
+      margin: "0 0 8px",
+      color: "#111827",
+    }}
+  >
     Montserrat
   </p>
-  <p style={{ fontFamily: "'Montserrat', system-ui, sans-serif", fontSize: 16, margin: 0, color: "#6b7280" }}>
-    ABCDEFGHIJKLMNOPQRSTUVWXYZ<br/>
-    abcdefghijklmnopqrstuvwxyz<br/>
+  <p
+    style={{
+      fontFamily: "'Montserrat', system-ui, sans-serif",
+      fontSize: 16,
+      margin: 0,
+      color: "#6b7280",
+    }}
+  >
+    ABCDEFGHIJKLMNOPQRSTUVWXYZ
+    <br />
+    abcdefghijklmnopqrstuvwxyz
+    <br />
     0123456789 !@#$%^&amp;*()
   </p>
 </div>
 
 <p style={{ fontSize: 13, color: "#6b7280" }}>
-  Token: <code>font-family: "Montserrat", system-ui, sans-serif</code><br/>
+  Token: <code>font-family: "Montserrat", system-ui, sans-serif</code>
+  <br />
   Fallback stack: system-ui ensures readable text if the web font fails to load.
 </p>
 
 ---
 
-## Type scale
+## Type scale, font weights, and line heights
 
-<table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14, marginTop: 16 }}>
-  <thead>
-    <tr style={{ borderBottom: "2px solid #e5e7eb", textAlign: "left" }}>
-      <th style={{ padding: "8px 12px", width: 120 }}>Token</th>
-      <th style={{ padding: "8px 12px", width: 60 }}>Size</th>
-      <th style={{ padding: "8px 12px" }}>Specimen</th>
-    </tr>
-  </thead>
-  <tbody>
-    {[
-      { token: "5xl", size: "48px" },
-      { token: "4xl", size: "36px" },
-      { token: "3xl", size: "30px" },
-      { token: "2xl", size: "24px" },
-      { token: "xl", size: "20px" },
-      { token: "lg", size: "18px" },
-      { token: "base", size: "16px" },
-      { token: "sm", size: "14px" },
-      { token: "xs", size: "12px" },
-    ].map(({ token, size }) => (
-      <tr key={token} style={{ borderBottom: "1px solid #f3f4f6" }}>
-        <td style={{ padding: "12px" }}>
-          <code style={{ fontSize: 12 }}>--font-size-{token}</code>
-        </td>
-        <td style={{ padding: "12px", color: "#6b7280" }}>{size}</td>
-        <td style={{ padding: "12px" }}>
-          <span style={{
-            fontFamily: "'Montserrat', system-ui, sans-serif",
-            fontSize: size,
-            fontWeight: 400,
-            lineHeight: 1.25,
-            color: "#111827",
-          }}>
-            Digital pathology
-          </span>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+cytario uses **Tailwind v4's defaults** for font size, font weight, and line height — no custom overrides. This keeps text accessible (rem-based, scales with browser font-size) and avoids reinventing what Tailwind already does well.
 
----
+See the Tailwind docs for the full reference:
 
-## Font weights
-
-<div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 16, marginBottom: 32 }}>
-  {[
-    { token: "light", weight: 300 },
-    { token: "regular", weight: 400 },
-    { token: "medium", weight: 500 },
-    { token: "semibold", weight: 600 },
-    { token: "bold", weight: 700 },
-    { token: "extrabold", weight: 800 },
-  ].map(({ token, weight }) => (
-    <div key={token} style={{ display: "flex", alignItems: "baseline", gap: 16 }}>
-      <code style={{ fontSize: 12, width: 200, flexShrink: 0, color: "#6b7280" }}>
-        --font-weight-{token} ({weight})
-      </code>
-      <span style={{
-        fontFamily: "'Montserrat', system-ui, sans-serif",
-        fontSize: 24,
-        fontWeight: weight,
-        color: "#111827",
-      }}>
-        The quick brown fox jumps over the lazy dog
-      </span>
-    </div>
-  ))}
-</div>
-
----
-
-## Line heights
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--line-height-tight` | 1.25 | Headings, display text, compact UI labels |
-| `--line-height-normal` | 1.5 | Body text, paragraphs, form labels |
-| `--line-height-relaxed` | 1.625 | Long-form content, documentation prose |
+- [Font size](https://tailwindcss.com/docs/font-size) — `text-xs` through `text-9xl` (rem-based, with paired line-heights)
+- [Font weight](https://tailwindcss.com/docs/font-weight) — `font-thin` through `font-black`
+- [Line height](https://tailwindcss.com/docs/line-height) — `leading-none` through `leading-loose`
 
 ---
 
@@ -123,8 +71,8 @@ cytario uses **Montserrat** as its primary typeface. It is a geometric sans-seri
 
 **Headings** use semibold or bold weight with tight line height. Color: `--color-foreground` (slate-900).
 
-**Body text** uses regular weight at base size (16px) with normal line height. Color: `--color-muted-foreground` (slate-600) for supporting content, `--color-foreground` for main content.
+**Body text** uses regular weight at base size with normal line height. Color: `--color-muted-foreground` (slate-600) for supporting content, `--color-foreground` for main content.
 
-**Captions and labels** use sm (14px) or xs (12px) at medium weight. Color: `--color-muted-foreground` for least-prominent text — the type hierarchy is two levels (foreground / muted-foreground); the old third tier was dropped because slate-400 fails WCAG AA on white.
+**Captions and labels** use `text-sm` or `text-xs` at medium weight. Color: `--color-muted-foreground` for least-prominent text — the type hierarchy is two levels (foreground / muted-foreground); the old third tier was dropped because slate-400 fails WCAG AA on white.
 
-**Never** use light (300) weight below 18px -- it becomes hard to read on lower-resolution screens.
+**Never** use `font-light` below `text-lg` — it becomes hard to read on lower-resolution screens.

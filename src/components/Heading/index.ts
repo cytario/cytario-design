@@ -3,5 +3,4 @@ export type {
   HeadingProps,
   HeadingLevel,
   HeadingSize,
-  HeadingWeight,
 } from "./Heading";

@@ -3,117 +3,66 @@ import type React from "react";
 import { twMerge } from "tailwind-merge";
 
 export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-export type HeadingSize =
-  | "xs"
-  | "sm"
-  | "md"
-  | "lg"
-  | "xl"
-  | "2xl"
-  | "3xl"
-  | "4xl"
-  | "5xl";
-export type HeadingWeight = "medium" | "semibold" | "bold";
+export type HeadingSize = HeadingLevel | "hero";
 
-export interface HeadingProps
-  extends React.HTMLAttributes<HTMLHeadingElement> {
-  /** HTML heading element to render */
+export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: HeadingLevel;
-  /** Visual size (defaults to match the `as` level) */
   size?: HeadingSize;
-  /** Font weight (defaults to "semibold") */
-  weight?: HeadingWeight;
   children: React.ReactNode;
 }
 
-const defaultSizeMap: Record<HeadingLevel, HeadingSize> = {
-  h1: "5xl",
-  h2: "3xl",
-  h3: "2xl",
-  h4: "xl",
-  h5: "lg",
-  h6: "sm",
-};
-
-const sizeStyles: Record<HeadingSize, string> = {
-  xs: "text-sm",
-  sm: "text-base",
-  md: "text-lg",
-  lg: "text-xl",
-  xl: "text-2xl",
-  "2xl": "text-3xl",
-  "3xl": "text-4xl",
-  "4xl": "text-5xl",
-  "5xl": "text-6xl",
-};
-
-const weightStyles: Record<HeadingWeight, string> = {
-  medium: "font-medium",
-  semibold: "font-semibold",
-  bold: "font-bold",
+const sizeMap = {
+  h1: "text-4xl sm:text-5xl leading-tight font-bold",
+  h2: "text-2xl sm:text-3xl leading-tight font-bold",
+  h3: "text-lg sm:text-xl leading-snug font-bold",
+  h4: "text-base sm:text-lg font-semibold",
+  h5: "text-sm sm:text-base font-semibold",
+  h6: "text-sm font-semibold",
+  hero: "text-4xl sm:text-5xl lg:text-6xl leading-tight font-bold",
 };
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   function Heading(
-    { as: Tag = "h2", size, weight = "semibold", className, children, ...rest },
+    { as: Tag = "h2", size, className, children, ...rest },
     ref,
   ) {
-    const resolvedSize = size ?? defaultSizeMap[Tag];
+    const resolvedSize = size ?? Tag;
+    const cx = twMerge("text-inherit mb-4", sizeMap[resolvedSize], className);
 
     return (
-      <Tag
-        ref={ref}
-        className={twMerge(
-          weightStyles[weight],
-          "text-foreground",
-          sizeStyles[resolvedSize],
-          className,
-        )}
-        {...rest}
-      >
+      <Tag ref={ref} className={cx} {...rest}>
         {children}
       </Tag>
     );
   },
 );
 
-/** Convenience: renders `<h1>` at 5xl size (60px) with bold weight */
+/** Convenience: renders `<h1>` with h1 styles (4xl→5xl responsive, bold) */
 export function H1(props: Omit<HeadingProps, "as">) {
-  return (
-    <Heading
-      {...props}
-      as="h1"
-      size={props.size ?? "5xl"}
-      weight={props.weight ?? "bold"}
-    />
-  );
+  return <Heading {...props} as="h1" />;
 }
 
-/** Convenience: renders `<h2>` at 3xl size (36px) with bold weight */
+/** Convenience: renders `<h2>` with h2 styles (2xl→3xl responsive, bold) */
 export function H2(props: Omit<HeadingProps, "as">) {
-  return (
-    <Heading {...props} as="h2" size={props.size ?? "3xl"} weight={props.weight ?? "bold"} />
-  );
+  return <Heading {...props} as="h2" />;
 }
 
-/** Convenience: renders `<h3>` at 2xl size (30px) with bold weight */
+/** Convenience: renders `<h3>` with h3 styles (lg→xl responsive, bold) */
 export function H3(props: Omit<HeadingProps, "as">) {
-  return (
-    <Heading {...props} as="h3" size={props.size ?? "2xl"} weight={props.weight ?? "bold"} />
-  );
+  return <Heading {...props} as="h3" />;
 }
 
-/** Convenience: renders `<h4>` at xl size (24px) */
+/** Convenience: renders `<h4>` with h4 styles (base→lg responsive, semibold) */
 export function H4(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h4" size={props.size ?? "xl"} />;
+  return <Heading {...props} as="h4" />;
 }
 
-/** Convenience: renders `<h5>` at lg size (20px) */
+/** Convenience: renders `<h5>` with h5 styles (sm→base responsive, semibold) */
 export function H5(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h5" size={props.size ?? "lg"} />;
+  return <Heading {...props} as="h5" />;
 }
 
-/** Convenience: renders `<h6>` at sm size (16px) */
+/** Convenience: renders `<h6>` with h6 styles (sm, semibold) */
 export function H6(props: Omit<HeadingProps, "as">) {
-  return <Heading {...props} as="h6" size={props.size ?? "sm"} />;
+  return <Heading {...props} as="h6" />;
 }

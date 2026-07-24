@@ -117,7 +117,6 @@ const preview: Preview = {
           [
             //
             "Heading",
-            "Text",
             "Prose",
             "Icon",
             "IconButton",
