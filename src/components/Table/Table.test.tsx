@@ -133,4 +133,45 @@ describe("Table", () => {
     expect(rows[2]).toHaveTextContent("Gamma");
     expect(rows[3]).toHaveTextContent("Alpha");
   });
+
+  it("includes selected-state styling on rows", () => {
+    render(
+      <Table aria-label="Selection table">
+        <TableHeader>
+          <Column id="name" isRowHeader>Name</Column>
+        </TableHeader>
+        <TableBody>
+          <Row>
+            <Cell>Only</Cell>
+          </Row>
+        </TableBody>
+      </Table>,
+    );
+    const row = screen.getAllByRole("row")[1];
+    // Selected-state classes are part of the Row's base styles so they
+    // survive in the built CSS without relying on consumer Tailwind.
+    expect(row.className).toContain("data-[selected]:bg-accent");
+    expect(row.className).toContain("data-[selected]:ring-2");
+  });
+
+  it("consumer className overrides internal row styles via twMerge", () => {
+    render(
+      <Table aria-label="Custom table">
+        <TableHeader>
+          <Column id="name" isRowHeader>Name</Column>
+        </TableHeader>
+        <TableBody>
+          <Row className="hover:bg-red-200">
+            <Cell>Only</Cell>
+          </Row>
+        </TableBody>
+      </Table>,
+    );
+    const row = screen.getAllByRole("row")[1];
+    // twMerge should let consumer's hover:bg-red-200 win over internal hover:bg-muted
+    expect(row.className).toContain("hover:bg-red-200");
+    expect(row.className).not.toContain("hover:bg-muted");
+    // Non-conflicting built-in classes survive
+    expect(row.className).toContain("border-b");
+  });
 });

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, userEvent, within } from "storybook/test";
 import { useState } from "react";
-import type { SortDescriptor } from "react-aria-components";
+import type { Selection as AriaSelection, SortDescriptor } from "react-aria-components";
 import { Table, TableHeader, Column, TableBody, Row, Cell } from "./Table";
 
 /* ------------------------------------------------------------------ */
@@ -143,6 +143,48 @@ function SortableTable({ size }: { size?: "compact" | "comfortable" }) {
 
 export const Sortable: Story = {
   render: (args) => <SortableTable size={args.size} />,
+  args: { size: "comfortable" },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Selection                                                          */
+/* ------------------------------------------------------------------ */
+
+function SelectionTable({ size }: { size?: "compact" | "comfortable" }) {
+  const [selectedKeys, setSelectedKeys] = useState<AriaSelection>(
+    new Set([2, 5]),
+  );
+
+  return (
+    <Table
+      aria-label="Selectable pathology cases"
+      selectionMode="multiple"
+      selectedKeys={selectedKeys}
+      onSelectionChange={setSelectedKeys}
+      size={size}
+    >
+      <TableHeader>
+        <Column id="caseId" isRowHeader>Case ID</Column>
+        <Column id="specimenId">Specimen ID</Column>
+        <Column id="status">Status</Column>
+        <Column id="priority">Priority</Column>
+      </TableHeader>
+      <TableBody>
+        {cases.map((c) => (
+          <Row key={c.id} id={c.id}>
+            <Cell>{c.caseId}</Cell>
+            <Cell>{c.specimenId}</Cell>
+            <Cell>{c.status}</Cell>
+            <Cell>{c.priority}</Cell>
+          </Row>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+
+export const Selection: Story = {
+  render: (args) => <SelectionTable size={args.size} />,
   args: { size: "comfortable" },
 };
 
