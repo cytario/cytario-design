@@ -6,8 +6,10 @@ import type { HeadingLevel } from "../Heading";
 
 export interface SectionHeaderProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
-  /** Section title rendered as a heading (default H2) */
-  title: string;
+  /** Section title rendered as a heading (default H2). Accepts ReactNode
+   * so a Badge/pill can be composed inline, e.g.:
+   * `title={<>{name} <Badge>{version}</Badge></>}` */
+  title: React.ReactNode;
   /** Heading level for the title (default "h2") */
   as?: HeadingLevel;
   /** Optional action elements (buttons, badges, etc.) rendered on the right */
