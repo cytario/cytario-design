@@ -48,6 +48,7 @@ import {
   Fullscreen,
   Grid2x2,
   Grid3x3,
+  Hand,
   Heart,
   Image,
   ImageOff,
@@ -69,12 +70,14 @@ import {
   Microscope,
   Minus,
   MoreVertical,
+  Move,
   Network,
   PanelLeftClose,
   PanelLeftOpen,
   PanelRightClose,
   PanelRightOpen,
   Pencil,
+  Pentagon,
   Plug,
   Plus,
   Power,
@@ -163,6 +166,7 @@ export type IconName =
   | "Github"
   | "Grid2x2"
   | "Grid3x3"
+  | "Hand"
   | "Heart"
   | "Image"
   | "ImageOff"
@@ -185,12 +189,14 @@ export type IconName =
   | "Microscope"
   | "Minus"
   | "MoreVertical"
+  | "Move"
   | "Network"
   | "PanelLeftClose"
   | "PanelLeftOpen"
   | "PanelRightClose"
   | "PanelRightOpen"
   | "Pencil"
+  | "Pentagon"
   | "Plug"
   | "Plus"
   | "Power"
@@ -280,6 +286,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   Github: GithubIcon as unknown as LucideIcon,
   Grid2x2,
   Grid3x3,
+  Hand,
   Heart,
   Image,
   ImageOff,
@@ -302,12 +309,14 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   Microscope,
   Minus,
   MoreVertical,
+  Move,
   Network: Network,
   PanelLeftClose,
   PanelLeftOpen,
   PanelRightClose,
   PanelRightOpen,
   Pencil,
+  Pentagon,
   Plug,
   Plus,
   Power: Power,
