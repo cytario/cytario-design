@@ -391,6 +391,10 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
 
+  /* Tooltip must paint above React Aria overlays (Menu, Dialog, Popover),
+   * which useOverlayPosition forces to zIndex 100000. */
+  --z-index-tooltip: 100001;
+
   /* Font sizes, weights, and line heights use Tailwind v4 defaults (rem-based, with line-height pairing). */
 
   --color-purple-50: var(--color-purple-50);

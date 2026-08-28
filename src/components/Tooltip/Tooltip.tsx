@@ -32,7 +32,7 @@ const tooltipOffset = 12;
 const viewportMargin = 4; // minimum gap to the viewport edge
 
 const tooltipCx = [
-  "fixed z-50 px-2 py-1 rounded shadow-lg",
+  "fixed z-tooltip px-2 py-1 rounded shadow-lg",
   // Natural content width (capped at max-w-xs): being positioned near the
   // right viewport edge must shift the tooltip left, not squeeze its layout.
   "w-max max-w-xs",
@@ -151,7 +151,10 @@ export function Tooltip({ content, children }: TooltipProps) {
     if (!focusVisible) return;
 
     const rect = target.getBoundingClientRect();
-    const center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    const center = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    };
     // Anchor at the element center so incidental mouse movement over the
     // focused trigger doesn't immediately cancel the keyboard-shown tooltip.
     restAnchorRef.current = center;
