@@ -106,6 +106,7 @@ export function IconButtonLink(props: IconButtonLinkProps) {
   return <IconButtonBase as={AriaLink} {...props} />;
 }
 
+/** @deprecated Use IconButton with aria-pressed instead. No consumers remain. */
 export type IconButtonToggleProps = Omit<
   AriaToggleButtonProps,
   "className" | "children"
@@ -118,7 +119,7 @@ export type IconButtonToggleProps = Omit<
   ref?: Ref<HTMLButtonElement>;
 };
 
-/** Icon button with a persistent on/off state (react-aria ToggleButton): `isSelected` toggles `aria-pressed` and the selected background. */
+/** @deprecated Use IconButton with aria-pressed instead. No consumers remain. */
 export function IconButtonToggle(props: IconButtonToggleProps) {
   return <IconButtonBase as={AriaToggleButton} {...props} />;
 }
