@@ -31,6 +31,7 @@ import {
   Columns3,
   Copy,
   CreditCard,
+  Crosshair,
   Database,
   Download,
   Edit,
@@ -148,6 +149,7 @@ export type IconName =
   | "Columns3"
   | "Copy"
   | "CreditCard"
+  | "Crosshair"
   | "Database"
   | "Download"
   | "Edit"
@@ -268,6 +270,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   Columns3,
   Copy,
   CreditCard: CreditCard,
+  Crosshair,
   Database: Database,
   Download,
   Edit,
