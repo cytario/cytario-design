@@ -1,4 +1,4 @@
-import type { ElementType } from "react";
+import type { ElementType, ReactNode } from "react";
 import {
   TextField,
   Input as AriaInput,
@@ -7,7 +7,7 @@ import {
   ColorField,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
-import { type ButtonSize, sizeStyles } from "../../_shared/styles";
+import { type ButtonSize } from "../../_shared/styles";
 import { Label } from "../Label";
 
 const alignClasses = {
@@ -27,10 +27,18 @@ export interface InputProps extends Omit<
   errorMessage?: string;
   type?: "text" | "email" | "password" | "number";
   size?: ButtonSize;
-  prefix?: string;
+  prefix?: ReactNode;
+  suffix?: ReactNode;
   align?: "left" | "center" | "right";
   className?: string;
 }
+
+export const sizeStyles: Record<ButtonSize, string> = {
+  xs: "text-xs h-6",
+  sm: "text-sm h-7",
+  md: "text-base h-8",
+  lg: "text-lg h-10",
+};
 
 export function Input({
   as: FieldProp = TextField,
@@ -41,6 +49,7 @@ export function Input({
   type = "text",
   size = "md",
   prefix,
+  suffix,
   align = "left",
   isDisabled,
   isRequired,
@@ -57,6 +66,31 @@ export function Input({
 
   const radiusClass = "rounded-md";
 
+  const inputCx = twMerge(
+    `
+      w-full
+      bg-transparent text-foreground
+      placeholder:text-muted-foreground
+      outline-none border-none
+    `,
+    sizeStyles[size],
+    alignClasses[align],
+  );
+
+  const containerCx = twMerge(
+    `
+      flex items-center gap-1 px-2
+      border bg-background
+      outline-none transition-colors
+      focus-within:ring-2 
+      focus-within:ring-ring 
+      focus-within:border-ring
+      `,
+    radiusClass,
+    borderColor,
+    isDisabled && "opacity-50 pointer-events-none",
+  );
+
   return (
     <Field
       {...props}
@@ -66,63 +100,19 @@ export function Input({
       isInvalid={isInvalid}
       className={twMerge("flex w-full flex-col gap-1", className)}
     >
+      {/* Label */}
       {label && <Label isRequired={isRequired}>{label}</Label>}
 
-      {prefix ? (
-        <div
-          className={twMerge(
-            "flex items-center overflow-hidden",
-            radiusClass,
-            "border",
-            "bg-background",
-            "outline-none transition-colors",
-            borderColor,
-            "focus-within:ring-2 focus-within:ring-ring focus-within:border-ring",
-            isDisabled && "opacity-50 pointer-events-none",
-          )}
-        >
-          <span
-            className={twMerge(
-              "self-stretch flex items-center shrink-0 select-none",
-              "bg-card",
-              "border-r border-r-border",
-              "text-muted-foreground",
-              sizeStyles[size],
-            )}
-          >
-            {prefix}
-          </span>
-          <AriaInput
-            placeholder={placeholder}
-            className={twMerge(
-              "w-full bg-transparent",
-              sizeStyles[size],
-              alignClasses[align],
-              "text-foreground",
-              "placeholder:text-muted-foreground",
-              "outline-none border-none",
-            )}
-          />
-        </div>
-      ) : (
-        <AriaInput
-          placeholder={placeholder}
-          className={twMerge(
-            "w-full",
-            sizeStyles[size],
-            alignClasses[align],
-            radiusClass,
-            "border",
-            "text-foreground",
-            "bg-background",
-            "placeholder:text-muted-foreground",
-            "outline-none transition-colors",
-            borderColor,
-            "focus:ring-2 focus:ring-ring focus:border-ring",
-            "disabled:opacity-50 disabled:pointer-events-none",
-          )}
-        />
-      )}
+      <div className={containerCx}>
+        {/* Prefix */}
+        {prefix}
+
+        {/* Input */}
+        <AriaInput placeholder={placeholder} className={inputCx} />
+
+        {/* Suffix */}
+        {suffix}
+      </div>
 
       {description && (
         <Text slot="description" className="text-sm text-muted-foreground">
