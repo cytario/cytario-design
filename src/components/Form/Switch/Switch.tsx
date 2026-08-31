@@ -27,38 +27,40 @@ export function Switch({
     <SwitchField {...props}>
       <SwitchButton className="relative cursor-pointer">
         {({ isSelected, isFocusVisible }) => (
-          /* Track */
-          <div
-            className={twMerge(
-              `
-                flex items-center
-                border-2 border-border
-                w-9 h-5 rounded-full transition-colors shrink-0
-              `,
-              isFocusVisible && "ring-2 ring-ring ring-offset-2",
-              !isSelected && "bg-border",
-            )}
-            style={isSelected ? { backgroundColor: color } : undefined}
-          >
-            {/* Knob */}
+          <>
+            {/* Track */}
             <div
               className={twMerge(
                 `
-                  absolute top-0 left-0 w-5 h-5
-                  rounded-full
-                  transition-transform
+                  flex items-center
                   border-2 border-border
-                  
+                  w-9 h-5 rounded-full transition-colors shrink-0
                 `,
-                isSelected
-                  ? "translate-x-4 bg-card"
-                  : "translate-x-0 bg-background",
+                isFocusVisible && "ring-2 ring-ring ring-offset-2",
+                !isSelected && "bg-border",
               )}
-            />
-          </div>
+              style={isSelected ? { backgroundColor: color } : undefined}
+            >
+              {/* Knob */}
+              <div
+                className={twMerge(
+                  `
+                    absolute top-0 left-0 w-5 h-5
+                    rounded-full
+                    transition-transform
+                    border-2 border-border
+                    
+                  `,
+                  isSelected
+                    ? "translate-x-4 bg-card"
+                    : "translate-x-0 bg-background",
+                )}
+              />
+            </div>
+            {children && <span>{children}</span>}
+          </>
         )}
       </SwitchButton>
-      {children && <span>{children}</span>}
     </SwitchField>
   );
 }
