@@ -8,12 +8,13 @@ export type { RouterConfig, Key } from "react-aria-components";
 export { Logo } from "./components/Logo";
 export type { LogoProps } from "./components/Logo";
 
-export { Button } from "./components/Button";
+export { Button, buttonBaseClass } from "./components/Button";
 export type {
   ButtonProps,
   ButtonVariant,
   ButtonSize,
 } from "./components/Button";
+export { variantStyles, selectedStyles } from "./components/_shared/styles";
 
 export { Spinner } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
@@ -224,6 +225,9 @@ export type {
 
 export { PathPill, pillColorFromName } from "./components/PathPill";
 export type { PathPillProps } from "./components/PathPill";
+
+export { MetricText } from "./components/MetricText";
+export type { MetricTextProps } from "./components/MetricText";
 
 export { FormWizard, useFormWizard } from "./components/FormWizard";
 export type {

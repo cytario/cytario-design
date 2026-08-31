@@ -1,78 +1,66 @@
 import type React from "react";
 import {
-  Switch as AriaSwitch,
-  type SwitchProps as AriaSwitchProps,
+  SwitchField,
+  SwitchButton,
+  type SwitchFieldProps as AriaSwitchFieldProps,
 } from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 
 type PresetColor = "primary" | "success" | "destructive";
 
-export interface SwitchProps
-  extends Omit<AriaSwitchProps, "children" | "className"> {
+export interface SwitchProps extends Omit<
+  AriaSwitchFieldProps,
+  "children" | "className"
+> {
   children?: React.ReactNode;
-  /** Preset color name or any valid CSS color string for the track when selected */
-  color?: PresetColor | (string & {});
+  color?: string;
   className?: string;
-}
-
-const trackColorMap: Record<PresetColor, string> = {
-  primary: "bg-primary",
-  success: "bg-success",
-  destructive: "bg-destructive",
-};
-
-const presetColors = new Set<string>(Object.keys(trackColorMap));
-
-function isPresetColor(color: string): color is PresetColor {
-  return presetColors.has(color);
 }
 
 export function Switch({
   children,
-  color = "primary",
+  color = "var(--color-primary)",
   className,
   ...props
 }: SwitchProps) {
-  const isPreset = isPresetColor(color);
-
   return (
-    <AriaSwitch
-      {...props}
-      className={[
-        "group flex items-center gap-2 text-sm text-foreground cursor-pointer",
-        "disabled:opacity-50 disabled:cursor-default",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-    >
-      {({ isSelected }) => (
-        <>
-          <div
-            className={[
-              "w-9 h-5 rounded-full transition-colors shrink-0 p-0.5",
-              "group-focus-visible:ring-2 group-focus-visible:ring-ring group-focus-visible:ring-offset-2",
-              isSelected && isPreset
-                ? trackColorMap[color]
-                : !isSelected
-                  ? "bg-border"
-                  : "",
-            ].join(" ")}
-            style={
-              isSelected && !isPreset
-                ? { backgroundColor: color }
-                : undefined
-            }
-          >
+    <SwitchField {...props}>
+      <SwitchButton className="relative cursor-pointer">
+        {({ isSelected, isFocusVisible }) => (
+          <>
+            {/* Track */}
             <div
-              className={[
-                "w-4 h-4 rounded-full bg-background transition-transform shadow-sm",
-                isSelected ? "translate-x-4" : "translate-x-0",
-              ].join(" ")}
-            />
-          </div>
-          {children && <span>{children}</span>}
-        </>
-      )}
-    </AriaSwitch>
+              className={twMerge(
+                `
+                  flex items-center
+                  border-2 border-border
+                  w-9 h-5 rounded-full transition-colors shrink-0
+                `,
+                isFocusVisible && "ring-2 ring-ring ring-offset-2",
+                !isSelected && "bg-border",
+              )}
+              style={isSelected ? { backgroundColor: color } : undefined}
+            >
+              {/* Knob */}
+              <div
+                className={twMerge(
+                  `
+                    absolute top-0 left-0 w-5 h-5
+                    rounded-full
+                    transition-transform
+                    border-2 border-border
+                    
+                  `,
+                  isSelected
+                    ? "translate-x-4 bg-card"
+                    : "translate-x-0 bg-background",
+                )}
+              />
+            </div>
+            {children && <span>{children}</span>}
+          </>
+        )}
+      </SwitchButton>
+    </SwitchField>
   );
 }
