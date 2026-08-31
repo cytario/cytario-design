@@ -226,6 +226,9 @@ export type {
 export { PathPill, pillColorFromName } from "./components/PathPill";
 export type { PathPillProps } from "./components/PathPill";
 
+export { MetricText } from "./components/MetricText";
+export type { MetricTextProps } from "./components/MetricText";
+
 export { FormWizard, useFormWizard } from "./components/FormWizard";
 export type {
   FormWizardProps,

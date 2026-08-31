@@ -1,6 +1,7 @@
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 import { Icon, type IconValue } from "../Icon";
+import { MetricText } from "../MetricText";
 
 export type BadgeColor =
   | "purple"
@@ -12,8 +13,10 @@ export type BadgeColor =
 
 export type BadgeSize = "xs" | "sm" | "md" | "lg";
 
-export interface BadgeProps
-  extends Omit<React.HTMLAttributes<HTMLSpanElement>, "color"> {
+export interface BadgeProps extends Omit<
+  React.HTMLAttributes<HTMLSpanElement>,
+  "color"
+> {
   children?: React.ReactNode;
   color?: BadgeColor;
   size?: BadgeSize;
@@ -46,10 +49,9 @@ export function Badge({
   ...rest
 }: BadgeProps) {
   return (
-    <span
+    <MetricText
       className={twMerge(
         "inline-flex items-center gap-1 rounded-full border",
-        "font-medium leading-tight tracking-wider tabular-nums",
         colorStyles[color],
         sizeStyles[size],
         className,
@@ -58,6 +60,6 @@ export function Badge({
     >
       {icon && <Icon icon={icon} size="xs" />}
       {children}
-    </span>
+    </MetricText>
   );
 }
