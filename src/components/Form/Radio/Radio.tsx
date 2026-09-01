@@ -5,6 +5,7 @@ import {
   type RadioGroupProps as AriaRadioGroupProps,
   type RadioProps as AriaRadioProps,
 } from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 
 export interface RadioGroupProps
   extends Omit<AriaRadioGroupProps, "children" | "className"> {
@@ -12,8 +13,7 @@ export interface RadioGroupProps
   className?: string;
 }
 
-export interface RadioProps
-  extends Omit<AriaRadioProps, "children" | "className"> {
+export interface RadioProps extends Omit<AriaRadioProps, "children" | "className"> {
   children?: React.ReactNode;
   className?: string;
 }
@@ -24,17 +24,21 @@ export interface RadioButtonProps
   className?: string;
 }
 
-export function RadioGroup({ children, className, ...props }: RadioGroupProps) {
+export function RadioGroup({
+  children,
+  className,
+  orientation = "vertical",
+  ...props
+}: RadioGroupProps) {
   return (
     <AriaRadioGroup
       {...props}
-      className={[
-        "flex flex-col gap-2",
-        "disabled:opacity-50",
+      orientation={orientation}
+      className={twMerge(
+        "flex gap-2 disabled:opacity-50",
+        orientation === "horizontal" ? "flex-row" : "flex-col",
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      )}
     >
       {children}
     </AriaRadioGroup>
