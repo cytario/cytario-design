@@ -68,7 +68,6 @@ export const ButtonStyle: Story = {
       {...args}
       aria-label="View mode"
       orientation="horizontal"
-      className="flex flex-row gap-2"
     >
       <RadioButton value="grid">Grid</RadioButton>
       <RadioButton value="list">List</RadioButton>
@@ -84,7 +83,6 @@ export const ButtonStyleWithDefault: Story = {
       defaultValue="list"
       aria-label="View mode"
       orientation="horizontal"
-      className="flex flex-row gap-2"
     >
       <RadioButton value="grid">Grid</RadioButton>
       <RadioButton value="list">List</RadioButton>
