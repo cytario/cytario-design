@@ -11,6 +11,21 @@ export interface CheckboxProps
   className?: string;
 }
 
+// Clicking an interactive element inside the label (e.g. a link) must not
+// toggle the checkbox. react-aria-components drives selection from React-level
+// handlers on the wrapping <label>, so stopping synthetic propagation in the
+// bubble phase blocks them. The native label -> hidden-input forwarding is
+// skipped by browsers for interactive targets, and default behavior (link
+// navigation) is untouched.
+function stopToggleForInteractive(e: React.SyntheticEvent) {
+  if (
+    e.target instanceof Element &&
+    e.target.closest("a, button, input, select, textarea")
+  ) {
+    e.stopPropagation();
+  }
+}
+
 export function Checkbox({ children, className, ...props }: CheckboxProps) {
   return (
     <AriaCheckbox
@@ -42,7 +57,16 @@ export function Checkbox({ children, className, ...props }: CheckboxProps) {
               <div className="w-3 h-0.5 bg-primary-foreground rounded-full" />
             )}
           </div>
-          {children && <span>{children}</span>}
+          {children && (
+            <span
+              onPointerDown={stopToggleForInteractive}
+              onPointerUp={stopToggleForInteractive}
+              onMouseDown={stopToggleForInteractive}
+              onClick={stopToggleForInteractive}
+            >
+              {children}
+            </span>
+          )}
         </>
       )}
     </AriaCheckbox>

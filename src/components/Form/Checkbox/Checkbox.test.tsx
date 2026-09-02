@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Checkbox } from "./Checkbox";
@@ -20,6 +20,22 @@ describe("Checkbox", () => {
 
     await userEvent.click(screen.getByRole("checkbox"));
     expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not toggle when clicking a link inside the label", () => {
+    const onChange = vi.fn();
+    render(
+      <Checkbox onChange={onChange}>
+        I agree to the{" "}
+        <a href="https://example.com/terms">Terms of Use</a>
+      </Checkbox>,
+    );
+
+    // fireEvent, not userEvent: user-event's click behavior forwards label
+    // clicks to the label's control unconditionally, which real browsers skip
+    // for interactive targets (links are interactive content per the HTML spec).
+    fireEvent.click(screen.getByRole("link", { name: "Terms of Use" }));
+    expect(onChange).not.toHaveBeenCalled();
   });
 
   it("is checked when defaultSelected", () => {
