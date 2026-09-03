@@ -2,6 +2,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -9,7 +10,6 @@ import {
   Menu as AriaMenu,
   MenuTrigger,
   Popover,
-  Pressable,
   type PressEvent,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -31,7 +31,13 @@ export interface UseContextMenuResult {
    * Spread on a keyboard/click trigger (e.g. an `IconButton`): opens the menu
    * anchored to that element. Uses the press event's target — no ref wiring.
    */
-  triggerProps: { onPress: (event: PressEvent) => void };
+  triggerProps: {
+    onPress: (event: PressEvent) => void;
+    onClick: (event: React.MouseEvent) => void;
+    "aria-haspopup": "menu";
+    "aria-expanded": boolean;
+    "aria-controls": string | undefined;
+  };
   /** Render this wherever — it portals itself. */
   menu: ReactNode;
   isOpen: boolean;
@@ -61,6 +67,7 @@ export function useContextMenu({
   className,
 }: UseContextMenuProps): UseContextMenuResult {
   // The anchor point in viewport coords; null when closed.
+  const popoverId = useId();
   const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
   const anchorRef = useRef<HTMLSpanElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -120,22 +127,23 @@ export function useContextMenu({
     >
       {/* Hidden anchor: MenuTrigger positions the popover at this element, which
           we move to the cursor. We open programmatically (controlled isOpen),
-          never by pressing it. Pressable satisfies MenuTrigger's trigger slot. */}
-      <Pressable>
-        <span
-          ref={anchorRef}
-          aria-hidden
-          className="pointer-events-none fixed h-0 w-0"
-          style={{ left: anchor?.x ?? 0, top: anchor?.y ?? 0 }}
-        />
-      </Pressable>
+          never by pressing it. */}
+      <span
+        ref={anchorRef}
+        aria-hidden
+        tabIndex={-1}
+        className="pointer-events-none fixed h-0 w-0"
+        style={{ left: anchor?.x ?? 0, top: anchor?.y ?? 0 }}
+      />
       <Popover
         isNonModal
+        triggerRef={anchorRef}
         placement="bottom start"
         ref={popoverRef}
         className={twMerge(popoverStyles, className)}
       >
         <AriaMenu
+          id={popoverId}
           autoFocus="first"
           onAction={(key) => {
             onAction?.(String(key));
@@ -151,7 +159,15 @@ export function useContextMenu({
 
   return {
     targetProps: { onContextMenu },
-    triggerProps: { onPress },
+    triggerProps: {
+      onPress,
+      onClick: (e: React.MouseEvent) => {
+        e.preventDefault();
+      },
+      "aria-haspopup": "menu",
+      "aria-expanded": isOpen,
+      "aria-controls": isOpen ? popoverId : undefined,
+    },
     menu,
     isOpen,
     close,
