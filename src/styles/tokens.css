@@ -13,6 +13,18 @@
  *   @import "@cytario/design/styles.css";
  *   @import "tailwindcss";
  */
+/* Deliberate boundary: kill the Tailwind default color namespace, then
+ * re-declare only the cataloged tokens in the inline block below. Without
+ * this, off-catalog utilities (e.g. bg-emerald-500) generate rules pointing
+ * at variables that never ship — a silent runtime no-op. Resets must live in
+ * a plain @theme block; inside @theme inline they have no effect.
+ * Animations are deliberately NOT reset: the stock Tailwind set (spin, pulse,
+ * ping, bounce) is treated as plumbing, and cytario-design adds its own
+ * (fade-in, pulse-once, progress-bar) on top. */
+@theme {
+  --color-*: initial;
+}
+
 @theme inline {
   --font-montserrat: "Montserrat", system-ui, sans-serif;
   --font-sans: "Montserrat", system-ui, sans-serif;
