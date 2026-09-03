@@ -376,6 +376,17 @@
   }
 }
 
+/* Stock Tailwind animation keyframes (spin, pulse, ping, bounce) ship with
+ * the default theme when used. Only custom animations need keyframes here. */
+@keyframes progress-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
 /**
  * Tailwind v4 @theme inline — maps every color token to itself via var() so
  * that utilities like bg-primary, text-muted-foreground, bg-badge-purple-bg
@@ -386,6 +397,7 @@
   --font-sans: "Montserrat", system-ui, sans-serif;
   --animate-fade-in: fade-in 0.3s ease-in forwards;
   --animate-pulse-once: pulse-once 0.1s ease-in-out 1 forwards;
+  --animate-progress-bar: progress-bar 1.5s ease-in-out infinite;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
