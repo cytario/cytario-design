@@ -10,7 +10,6 @@ import {
   Menu as AriaMenu,
   MenuTrigger,
   Popover,
-  Pressable,
   type PressEvent,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -34,6 +33,7 @@ export interface UseContextMenuResult {
    */
   triggerProps: {
     onPress: (event: PressEvent) => void;
+    onClick: (event: React.MouseEvent) => void;
     "aria-haspopup": "menu";
     "aria-expanded": boolean;
     "aria-controls": string | undefined;
@@ -127,23 +127,23 @@ export function useContextMenu({
     >
       {/* Hidden anchor: MenuTrigger positions the popover at this element, which
           we move to the cursor. We open programmatically (controlled isOpen),
-          never by pressing it. Pressable satisfies MenuTrigger's trigger slot. */}
-      <Pressable>
-        <span
-          ref={anchorRef}
-          aria-hidden
-          className="pointer-events-none fixed h-0 w-0"
-          style={{ left: anchor?.x ?? 0, top: anchor?.y ?? 0 }}
-        />
-      </Pressable>
+          never by pressing it. */}
+      <span
+        ref={anchorRef}
+        aria-hidden
+        tabIndex={-1}
+        className="pointer-events-none fixed h-0 w-0"
+        style={{ left: anchor?.x ?? 0, top: anchor?.y ?? 0 }}
+      />
       <Popover
         isNonModal
-        id={popoverId}
+        triggerRef={anchorRef}
         placement="bottom start"
         ref={popoverRef}
         className={twMerge(popoverStyles, className)}
       >
         <AriaMenu
+          id={popoverId}
           autoFocus="first"
           onAction={(key) => {
             onAction?.(String(key));
@@ -161,6 +161,9 @@ export function useContextMenu({
     targetProps: { onContextMenu },
     triggerProps: {
       onPress,
+      onClick: (e: React.MouseEvent) => {
+        e.preventDefault();
+      },
       "aria-haspopup": "menu",
       "aria-expanded": isOpen,
       "aria-controls": isOpen ? popoverId : undefined,
