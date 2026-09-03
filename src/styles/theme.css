@@ -393,22 +393,26 @@
  * resolve at runtime and stay theme-reactive (dark mode just works).
  */
 @theme inline {
+  /* Fonts */
   --font-montserrat: "Montserrat", system-ui, sans-serif;
   --font-sans: "Montserrat", system-ui, sans-serif;
+
+  /* Animations */
   --animate-fade-in: fade-in 0.3s ease-in forwards;
   --animate-pulse-once: pulse-once 0.1s ease-in-out 1 forwards;
   --animate-progress-bar: progress-bar 1.5s ease-in-out infinite;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
 
   /* Tooltip must paint above React Aria overlays (Menu, Dialog, Popover),
    * which useOverlayPosition forces to zIndex 100000. */
   --z-index-tooltip: 100001;
 
-  /* Font sizes, weights, and line heights use Tailwind v4 defaults (rem-based, with line-height pairing). */
-
+  /* Color Primitives */
   --color-purple-50: var(--color-purple-50);
   --color-purple-100: var(--color-purple-100);
   --color-purple-200: var(--color-purple-200);
@@ -486,6 +490,8 @@
   --color-blue-800: var(--color-blue-800);
   --color-blue-900: var(--color-blue-900);
   --color-blue-950: var(--color-blue-950);
+
+  /* Color Tokens */
   --color-white: var(--color-white);
   --color-black: var(--color-black);
   --color-alpha-black80: var(--color-alpha-black80);
