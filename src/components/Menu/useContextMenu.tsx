@@ -2,6 +2,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -66,6 +67,7 @@ export function useContextMenu({
   className,
 }: UseContextMenuProps): UseContextMenuResult {
   // The anchor point in viewport coords; null when closed.
+  const popoverId = useId();
   const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
   const anchorRef = useRef<HTMLSpanElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -136,7 +138,7 @@ export function useContextMenu({
       </Pressable>
       <Popover
         isNonModal
-        id="context-menu-popover"
+        id={popoverId}
         placement="bottom start"
         ref={popoverRef}
         className={twMerge(popoverStyles, className)}
@@ -161,7 +163,7 @@ export function useContextMenu({
       onPress,
       "aria-haspopup": "menu",
       "aria-expanded": isOpen,
-      "aria-controls": isOpen ? "context-menu-popover" : undefined,
+      "aria-controls": isOpen ? popoverId : undefined,
     },
     menu,
     isOpen,
