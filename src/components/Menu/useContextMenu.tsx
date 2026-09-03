@@ -31,7 +31,12 @@ export interface UseContextMenuResult {
    * Spread on a keyboard/click trigger (e.g. an `IconButton`): opens the menu
    * anchored to that element. Uses the press event's target — no ref wiring.
    */
-  triggerProps: { onPress: (event: PressEvent) => void };
+  triggerProps: {
+    onPress: (event: PressEvent) => void;
+    "aria-haspopup": "menu";
+    "aria-expanded": boolean;
+    "aria-controls": string | undefined;
+  };
   /** Render this wherever — it portals itself. */
   menu: ReactNode;
   isOpen: boolean;
@@ -131,6 +136,7 @@ export function useContextMenu({
       </Pressable>
       <Popover
         isNonModal
+        id="context-menu-popover"
         placement="bottom start"
         ref={popoverRef}
         className={twMerge(popoverStyles, className)}
@@ -151,7 +157,12 @@ export function useContextMenu({
 
   return {
     targetProps: { onContextMenu },
-    triggerProps: { onPress },
+    triggerProps: {
+      onPress,
+      "aria-haspopup": "menu",
+      "aria-expanded": isOpen,
+      "aria-controls": isOpen ? "context-menu-popover" : undefined,
+    },
     menu,
     isOpen,
     close,
