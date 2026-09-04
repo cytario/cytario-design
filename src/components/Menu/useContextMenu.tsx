@@ -18,6 +18,8 @@ import { popoverStyles } from "./menuStyles";
 export interface UseContextMenuProps {
   /** Menu body — compose `MenuItem` / `MenuSeparator` / `MenuSection`. */
   content: ReactNode;
+  /** Accessible name for the menu (sets `aria-label` on the `<menu>`). */
+  label?: string;
   /** Called with the activated item key (fires alongside each item's own `onAction`). */
   onAction?: (key: string) => void;
   /** Extra classes for the menu popover. */
@@ -63,6 +65,7 @@ export interface UseContextMenuResult {
  */
 export function useContextMenu({
   content,
+  label,
   onAction,
   className,
 }: UseContextMenuProps): UseContextMenuResult {
@@ -144,6 +147,7 @@ export function useContextMenu({
       >
         <AriaMenu
           id={popoverId}
+          aria-label={label}
           autoFocus="first"
           onAction={(key) => {
             onAction?.(String(key));
