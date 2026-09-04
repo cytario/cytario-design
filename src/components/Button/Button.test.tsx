@@ -122,6 +122,11 @@ describe("Button", () => {
     expect(button.className).toContain("text-xs");
   });
 
+  it("applies custom className passthrough", () => {
+    render(<Button className="custom-class">Custom</Button>);
+    expect(screen.getByRole("button").className).toContain("custom-class");
+  });
+
   it("renders with neutral variant", () => {
     render(<Button variant="neutral">Neutral</Button>);
     const button = screen.getByRole("button", { name: "Neutral" });

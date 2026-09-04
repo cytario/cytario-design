@@ -38,6 +38,11 @@ describe("Select", () => {
     expect(screen.getByRole("button")).toHaveTextContent("FISH");
   });
 
+  it("displays error message", () => {
+    render(<Select items={items} errorMessage="Selection is required" />);
+    expect(screen.getByText("Selection is required")).toBeDefined();
+  });
+
   it("is disabled when isDisabled is true", () => {
     render(<Select items={items} isDisabled />);
     expect(screen.getByRole("button")).toHaveAttribute("disabled");
