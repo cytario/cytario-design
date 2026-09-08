@@ -16,7 +16,7 @@ export interface SliderProps
   label?: string;
   /** Formats the current value for the right-aligned readout. */
   output?: (value: number) => string;
-  /** Description text below the track (e.g. floor / maximum bounds). */
+  /** Description text below the track (e.g. min / max bounds). */
   description?: string;
   /** Error text below the track. */
   errorMessage?: string;

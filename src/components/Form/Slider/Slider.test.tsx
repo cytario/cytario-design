@@ -29,10 +29,10 @@ describe("Slider", () => {
         defaultValue={32}
         minValue={8}
         maxValue={256}
-        description="provider max 256 GiB"
+        description="max 256 GiB"
       />,
     );
-    expect(screen.getByText("provider max 256 GiB")).toBeDefined();
+    expect(screen.getByText("max 256 GiB")).toBeDefined();
   });
 
   it("renders the error message in place of the description when invalid", () => {
@@ -42,12 +42,12 @@ describe("Slider", () => {
         defaultValue={32}
         minValue={8}
         maxValue={256}
-        description="provider max 256 GiB"
-        errorMessage="Below the application floor"
+        description="max 256 GiB"
+        errorMessage="Below the application minimum"
       />,
     );
-    expect(screen.getByText("Below the application floor")).toBeDefined();
-    expect(screen.queryByText("provider max 256 GiB")).toBeNull();
+    expect(screen.getByText("Below the application minimum")).toBeDefined();
+    expect(screen.queryByText("max 256 GiB")).toBeNull();
   });
 
   it("calls onChange when the thumb is moved with the keyboard", async () => {
