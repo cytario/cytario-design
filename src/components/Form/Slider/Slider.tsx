@@ -25,9 +25,10 @@ export interface SliderProps
 }
 
 /**
- * Single-value slider. The value readout is formatted by the caller via
- * `output` — react-aria's SliderOutput/NumberFormatter would force a raw
- * number, and consumers need unit-aware text ("32 GiB").
+ * Single-value slider. Layout follows the react-aria styling guide: the track
+ * is the pointer hit area, a slim rail inside it carries the fill, and the
+ * thumb relies on RAC's inline `transform: translate(-50%, -50%)` for
+ * centering — no Tailwind translate on the thumb (they would stack).
  */
 export function Slider({
   label,
@@ -43,22 +44,41 @@ export function Slider({
     <AriaSlider
       {...props}
       isDisabled={isDisabled}
-      className={twMerge("w-full flex flex-col gap-2", className)}
+      className={twMerge(
+        // data-disabled lands on the root (tailwindcss-react-aria-components
+        // maps the disabled: variant onto it).
+        "w-full flex flex-col gap-2 disabled:opacity-50 disabled:cursor-default",
+        className,
+      )}
     >
       {({ state }) => (
         <>
           <div className="flex items-center justify-between">
             {label && <Label>{label}</Label>}
             {output && (
-              <span className="text-sm font-medium text-foreground">
+              <span className="text-sm font-medium text-foreground tabular-nums">
                 {output(state.values[0])}
               </span>
             )}
           </div>
-          <SliderTrack className="group relative h-5 w-full cursor-pointer disabled:cursor-default">
-            <div className="absolute top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-border" />
-            <SliderFill className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-primary group-disabled:opacity-50" />
-            <SliderThumb className="top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border-2 border-primary bg-background dragging:cursor-grabbing focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
+          {/* Track: 24px hit area; the 6px rail inside is the visible bar.
+              RAC gives the fill `height: 100%` of its positioned ancestor, so
+              the rail (not the padded track) must be the fill's parent. */}
+          <SliderTrack className="flex h-6 w-full cursor-pointer items-center">
+            <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-border">
+              <SliderFill className="h-full rounded-full bg-primary" />
+            </div>
+            <SliderThumb
+              className={twMerge(
+                "top-1/2 h-4 w-4 rounded-full bg-background",
+                "border-2 border-primary",
+                "shadow-sm",
+                "transition-[box-shadow,border-color]",
+                "hovered:border-primary-hover",
+                "dragging:cursor-grabbing",
+                "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              )}
+            />
           </SliderTrack>
           {(description || errorMessage) && (
             <p
