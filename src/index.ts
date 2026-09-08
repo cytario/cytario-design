@@ -108,6 +108,9 @@ export type {
 export { Label } from "./components/Form/Label";
 export type { LabelProps } from "./components/Form/Label";
 
+export { Slider } from "./components/Form/Slider";
+export type { SliderProps } from "./components/Form/Slider";
+
 export { Fieldset } from "./components/Form/Fieldset";
 export type { FieldsetProps } from "./components/Form/Fieldset";
 
