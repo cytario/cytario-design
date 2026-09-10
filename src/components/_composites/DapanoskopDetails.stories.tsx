@@ -3,18 +3,12 @@ import type { Meta, StoryObj } from "storybook/react";
 import { Badge } from "../Badge";
 import { Banner } from "../Banner";
 import { Card } from "../Card";
+import { DataTable } from "../DataTable";
+import type { CellRenderers, ColumnConfig } from "../DataTable";
 import { DeltaIndicator } from "../DeltaIndicator";
 import { MetricCard } from "../MetricCard";
 import { ProgressBar } from "../ProgressBar";
 import { H2, H3 } from "../Heading";
-import {
-  Table,
-  TableHeader,
-  Column,
-  TableBody,
-  Row,
-  Cell,
-} from "../Table";
 import {
   costCenters,
   storageMetrics,
@@ -24,7 +18,101 @@ import {
   usageTypesDataPipeline,
   formatUsd,
   formatBytes,
+  type StorageTier,
+  type UsageTypeRow,
+  type Workload,
 } from "../../stories/dapanoskop-mock-data";
+
+/* ------------------------------------------------------------------ */
+/*  Shared table configurations                                        */
+/* ------------------------------------------------------------------ */
+
+const workloadColumns: ColumnConfig[] = [
+  { id: "name", header: "Workload", size: 240, anchor: true, enableSorting: true },
+  { id: "currentCostUsd", header: "Current", size: 160, align: "right", enableSorting: true, sortingFn: "basic" },
+  { id: "prevMonthCostUsd", header: "vs Last Month", size: 160 },
+  { id: "yoyCostUsd", header: "vs Last Year", size: 160 },
+];
+
+const workloadRenderers: CellRenderers<Workload> = {
+  name: (wl) =>
+    wl.name === "Untagged" ? (
+      <span className="font-medium text-destructive">{wl.name}</span>
+    ) : (
+      <a
+        href="#"
+        onClick={(e) => e.preventDefault()}
+        className="text-primary hover:underline no-underline"
+      >
+        {wl.name}
+      </a>
+    ),
+  currentCostUsd: (wl) => (
+    <span className="tabular-nums font-medium">
+      {formatUsd(wl.currentCostUsd)}
+    </span>
+  ),
+  prevMonthCostUsd: (wl) => (
+    <DeltaIndicator current={wl.currentCostUsd} previous={wl.prevMonthCostUsd} />
+  ),
+  yoyCostUsd: (wl) =>
+    wl.yoyCostUsd > 0 ? (
+      <DeltaIndicator current={wl.currentCostUsd} previous={wl.yoyCostUsd} />
+    ) : (
+      <span className="text-muted-foreground">N/A</span>
+    ),
+};
+
+const usageTypeColumns: ColumnConfig[] = [
+  { id: "usageType", header: "Usage Type", size: 240, anchor: true, enableSorting: true },
+  { id: "category", header: "Category", size: 160 },
+  { id: "costUsd", header: "Cost", size: 160, align: "right", enableSorting: true, sortingFn: "basic" },
+];
+
+const usageTypeRenderers: CellRenderers<UsageTypeRow> = {
+  usageType: (row) => <span className="font-medium">{row.usageType}</span>,
+  category: (row) => (
+    <Badge color={categoryBadgeColor(row.category)} size="sm">
+      {row.category}
+    </Badge>
+  ),
+  costUsd: (row) => (
+    <span className="tabular-nums font-medium">{formatUsd(row.costUsd)}</span>
+  ),
+};
+
+const tierColumns: ColumnConfig[] = [
+  { id: "tier", header: "Tier", size: 200, anchor: true, enableSorting: true },
+  { id: "gbMonths", header: "Volume", size: 160, align: "right", enableSorting: true, sortingFn: "basic" },
+  { id: "costUsd", header: "Cost", size: 160, align: "right", enableSorting: true, sortingFn: "basic" },
+  { id: "pct", header: "% of Total", size: 140, align: "right" },
+];
+
+const tierRenderers: CellRenderers<StorageTier & { pct: number }> = {
+  tier: (row) => (
+    <span className="flex items-center gap-2">
+      <span
+        className="inline-block w-3 h-3 rounded-full"
+        style={{
+          backgroundColor:
+            tierColors[row.tier] ?? "var(--color-muted-foreground)",
+        }}
+      />
+      {row.tier}
+    </span>
+  ),
+  gbMonths: (row) => (
+    <span className="tabular-nums">
+      {row.gbMonths >= 1000
+        ? `${(row.gbMonths / 1000).toFixed(1)} TB`
+        : `${row.gbMonths.toFixed(1)} GB`}
+    </span>
+  ),
+  costUsd: (row) => (
+    <span className="tabular-nums font-medium">{formatUsd(row.costUsd)}</span>
+  ),
+  pct: (row) => <span className="tabular-nums">{row.pct.toFixed(1)}%</span>,
+};
 
 /* ------------------------------------------------------------------ */
 /*  Shared: Back link                                                  */
@@ -128,59 +216,14 @@ function CostCenterDetailPage() {
       {/* Workload breakdown (always visible, not expandable) */}
       <Card className="p-4">
         <H3 className="mb-4">Workload Breakdown</H3>
-        <Table size="compact" aria-label="Workload breakdown">
-          <TableHeader>
-            <Column isRowHeader>Workload</Column>
-            <Column>Current</Column>
-            <Column>vs Last Month</Column>
-            <Column>vs Last Year</Column>
-          </TableHeader>
-          <TableBody>
-            {cc.workloads.map((wl) => {
-              const isUntagged = wl.name === "Untagged";
-              return (
-                <Row key={wl.name}>
-                  <Cell>
-                    {isUntagged ? (
-                      <span className="font-medium text-destructive">
-                        {wl.name}
-                      </span>
-                    ) : (
-                      <a
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                        className="text-primary hover:underline no-underline"
-                      >
-                        {wl.name}
-                      </a>
-                    )}
-                  </Cell>
-                  <Cell>
-                    <span className="tabular-nums font-medium">
-                      {formatUsd(wl.currentCostUsd)}
-                    </span>
-                  </Cell>
-                  <Cell>
-                    <DeltaIndicator
-                      current={wl.currentCostUsd}
-                      previous={wl.prevMonthCostUsd}
-                    />
-                  </Cell>
-                  <Cell>
-                    {wl.yoyCostUsd > 0 ? (
-                      <DeltaIndicator
-                        current={wl.currentCostUsd}
-                        previous={wl.yoyCostUsd}
-                      />
-                    ) : (
-                      <span className="text-muted-foreground">N/A</span>
-                    )}
-                  </Cell>
-                </Row>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <DataTable
+          columns={workloadColumns}
+          data={cc.workloads}
+          cellRenderers={workloadRenderers}
+          tableId="storybook-dapanoskop-cc-workloads"
+          ariaLabel="Workload breakdown"
+          getRowId={(wl) => wl.name}
+        />
       </Card>
     </PageShell>
   );
@@ -237,37 +280,14 @@ function WorkloadDetailPage() {
 
       {/* Usage type breakdown */}
       <Card>
-        <Table size="comfortable" aria-label="Usage type breakdown">
-          <TableHeader>
-            <Column isRowHeader>Usage Type</Column>
-            <Column>Category</Column>
-            <Column>Cost</Column>
-          </TableHeader>
-          <TableBody>
-            {usageTypesDataPipeline.map((row) => (
-              <Row key={row.usageType}>
-                <Cell>
-                  <span className="font-medium">
-                    {row.usageType}
-                  </span>
-                </Cell>
-                <Cell>
-                  <Badge
-                    color={categoryBadgeColor(row.category)}
-                    size="sm"
-                  >
-                    {row.category}
-                  </Badge>
-                </Cell>
-                <Cell>
-                  <span className="tabular-nums font-medium">
-                    {formatUsd(row.costUsd)}
-                  </span>
-                </Cell>
-              </Row>
-            ))}
-          </TableBody>
-        </Table>
+        <DataTable
+          columns={usageTypeColumns}
+          data={usageTypesDataPipeline}
+          cellRenderers={usageTypeRenderers}
+          tableId="storybook-dapanoskop-usage-types"
+          ariaLabel="Usage type breakdown"
+          getRowId={(row) => row.usageType}
+        />
       </Card>
     </PageShell>
   );
@@ -337,53 +357,20 @@ function StorageDetailPage() {
 
       {/* Tier table */}
       <Card>
-        <Table size="comfortable" aria-label="Storage tier breakdown">
-          <TableHeader>
-            <Column isRowHeader>Tier</Column>
-            <Column>Volume</Column>
-            <Column>Cost</Column>
-            <Column>% of Total</Column>
-          </TableHeader>
-          <TableBody>
-            {storageTiers.map((row) => {
-              const pct =
-                storageTierTotal > 0
-                  ? (row.gbMonths / storageTierTotal) * 100
-                  : 0;
-              return (
-                <Row key={row.tier}>
-                  <Cell>
-                    <span className="flex items-center gap-2">
-                      <span
-                        className="inline-block w-3 h-3 rounded-full"
-                        style={{
-                          backgroundColor:
-                            tierColors[row.tier] ?? "var(--color-muted-foreground)",
-                        }}
-                      />
-                      {row.tier}
-                    </span>
-                  </Cell>
-                  <Cell>
-                    <span className="tabular-nums">
-                      {row.gbMonths >= 1000
-                        ? `${(row.gbMonths / 1000).toFixed(1)} TB`
-                        : `${row.gbMonths.toFixed(1)} GB`}
-                    </span>
-                  </Cell>
-                  <Cell>
-                    <span className="tabular-nums font-medium">
-                      {formatUsd(row.costUsd)}
-                    </span>
-                  </Cell>
-                  <Cell>
-                    <span className="tabular-nums">{pct.toFixed(1)}%</span>
-                  </Cell>
-                </Row>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <DataTable
+          columns={tierColumns}
+          data={storageTiers.map((row) => ({
+            ...row,
+            pct:
+              storageTierTotal > 0
+                ? (row.gbMonths / storageTierTotal) * 100
+                : 0,
+          }))}
+          cellRenderers={tierRenderers}
+          tableId="storybook-dapanoskop-storage-tiers"
+          ariaLabel="Storage tier breakdown"
+          getRowId={(row) => row.tier}
+        />
       </Card>
     </PageShell>
   );

@@ -1,27 +1,22 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "storybook/react";
 import { fn } from "storybook/test";
+import type { OnChangeFn, RowSelectionState } from "@tanstack/react-table";
 import { UserPlus, Users, UsersRound, ShieldCheck, X } from "lucide-react";
 
+import { Badge } from "../components/Badge";
 import { Button } from "../components/Button";
+import { DataTable } from "../components/DataTable";
+import type { CellRenderers, ColumnConfig } from "../components/DataTable";
+import { SelectionFooter } from "../components/DataTable";
 import { Dialog } from "../components/Dialog";
 import { Input } from "../components/Form/Input";
 import { Select } from "../components/Form/Select";
 import { Fieldset } from "../components/Form/Fieldset";
-import { Checkbox } from "../components/Form/Checkbox";
-import { Badge } from "../components/Badge";
 import { EmptyState } from "../components/EmptyState";
 import { PathPill } from "../components/PathPill";
 import { SectionHeader } from "../components/SectionHeader";
 import { Logo } from "../components/Logo";
-import {
-  Table,
-  TableHeader,
-  Column,
-  TableBody,
-  Row,
-  Cell,
-} from "../components/Table";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -124,30 +119,66 @@ function StatusPill({ enabled }: { enabled: boolean }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Selection footer                                                   */
+/*  Users table                                                        */
 /* ------------------------------------------------------------------ */
 
-function SelectionFooter({
-  selectedCount,
-  totalCount,
-  onReset,
-  children,
+const usersColumns: ColumnConfig[] = [
+  { id: "name", header: "Name", size: 200, anchor: true, enableSorting: true },
+  { id: "email", header: "Email", size: 240, enableSorting: true },
+  { id: "enabled", header: "Status", size: 140, enableSorting: true },
+  { id: "adminGroups", header: "Admin Groups", size: 260 },
+  { id: "groups", header: "Groups", size: 300 },
+];
+
+const usersRenderers: CellRenderers<UserRow> = {
+  name: (user) => (
+    <a
+      href="#"
+      onClick={(e) => e.preventDefault()}
+      className="font-medium text-teal-700 hover:underline no-underline"
+    >
+      {user.name}
+    </a>
+  ),
+  email: (user) => <span className="text-muted-foreground">{user.email}</span>,
+  enabled: (user) => <StatusPill enabled={user.enabled} />,
+  adminGroups: (user) => (
+    <div className="flex flex-wrap gap-1">
+      {user.adminGroups.map((path) => (
+        <PathPill key={path}>{path}</PathPill>
+      ))}
+    </div>
+  ),
+  groups: (user) => (
+    <div className="flex flex-wrap gap-1">
+      {user.groups.map((path) => (
+        <PathPill key={path}>{path}</PathPill>
+      ))}
+    </div>
+  ),
+};
+
+function UsersTable({
+  rowSelection,
+  onRowSelectionChange,
+  columns = usersColumns,
 }: {
-  selectedCount: number;
-  totalCount: number;
-  onReset: () => void;
-  children?: React.ReactNode;
+  rowSelection: RowSelectionState;
+  onRowSelectionChange: OnChangeFn<RowSelectionState>;
+  columns?: ColumnConfig[];
 }) {
   return (
-    <div className="sticky bottom-0 flex items-center gap-4 border-t border-border bg-background px-4 py-3 shadow-lg">
-      <span className="text-sm font-medium text-foreground">
-        {selectedCount} of {totalCount} selected
-      </span>
-      <Button variant="ghost" size="sm" onPress={onReset}>
-        Clear selection
-      </Button>
-      <div className="ml-auto flex items-center gap-2">{children}</div>
-    </div>
+    <DataTable
+      columns={columns}
+      data={mockUsers}
+      cellRenderers={usersRenderers}
+      tableId="storybook-admin-users"
+      ariaLabel="Users"
+      enableRowSelection
+      rowSelection={rowSelection}
+      onRowSelectionChange={onRowSelectionChange}
+      getRowId={(user) => user.id}
+    />
   );
 }
 
@@ -204,39 +235,18 @@ function InviteUserDialog({
 /* ------------------------------------------------------------------ */
 
 function AdminUsersPage() {
-  const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [showInvite, setShowInvite] = useState(false);
-  const selectedCount = selectedRows.size;
-
-  const toggleRow = (id: string) => {
-    setSelectedRows((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const toggleAll = () => {
-    if (selectedCount === mockUsers.length) {
-      setSelectedRows(new Set());
-    } else {
-      setSelectedRows(new Set(mockUsers.map((u) => u.id)));
-    }
-  };
+  const selectedCount = Object.values(rowSelection).filter(Boolean).length;
 
   return (
     <div className="min-h-screen bg-card">
-      {/* App Header */}
       <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
           <Logo color="#ffffff" scale={0.8} />
           <span className="text-sm text-slate-400">Admin</span>
           <span className="text-sm text-slate-500">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
-        </div>
-        <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold">
-          ML
         </div>
       </header>
 
@@ -246,96 +256,29 @@ function AdminUsersPage() {
             <span className="text-sm text-muted-foreground">
               {mockUsers.length} users
             </span>
-            <Button
-              variant="secondary"
+            <Input
+              placeholder="Search users…"
+              className="w-64"
               size="sm"
-              iconLeft={UserPlus}
-              onPress={() => setShowInvite(true)}
-            >
-              Invite User
-            </Button>
+            />
             <Button variant="secondary" size="sm" iconLeft={UsersRound}>
               Bulk Invite
             </Button>
+            <Button variant="primary" size="sm" iconLeft={UserPlus} onPress={() => setShowInvite(true)}>
+              Invite User
+            </Button>
           </SectionHeader>
 
-          {/* Users table */}
-          <div className="overflow-x-auto">
-            <Table size="comfortable" aria-label="Users">
-              <TableHeader>
-                <Column>
-                  <Checkbox
-                    slot="selection"
-                    isSelected={
-                      selectedCount === mockUsers.length && mockUsers.length > 0
-                    }
-                    isIndeterminate={
-                      selectedCount > 0 && selectedCount < mockUsers.length
-                    }
-                    onChange={toggleAll}
-                    aria-label="Select all users"
-                  />
-                </Column>
-                <Column isRowHeader>Name</Column>
-                <Column>Email</Column>
-                <Column>Status</Column>
-                <Column>Admin Groups</Column>
-                <Column>Groups</Column>
-              </TableHeader>
-              <TableBody>
-                {mockUsers.map((user) => (
-                  <Row key={user.id}>
-                    <Cell>
-                      <Checkbox
-                        slot="selection"
-                        isSelected={selectedRows.has(user.id)}
-                        onChange={() => toggleRow(user.id)}
-                        aria-label={`Select ${user.name}`}
-                      />
-                    </Cell>
-                    <Cell>
-                      <a
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                        className="font-medium text-teal-700 hover:underline no-underline"
-                      >
-                        {user.name}
-                      </a>
-                    </Cell>
-                    <Cell>
-                      <span className="text-muted-foreground">
-                        {user.email}
-                      </span>
-                    </Cell>
-                    <Cell>
-                      <StatusPill enabled={user.enabled} />
-                    </Cell>
-                    <Cell>
-                      <div className="flex flex-wrap gap-1">
-                        {user.adminGroups.map((path) => (
-                          <PathPill key={path}>{path}</PathPill>
-                        ))}
-                      </div>
-                    </Cell>
-                    <Cell>
-                      <div className="flex flex-wrap gap-1">
-                        {user.groups.map((path) => (
-                          <PathPill key={path}>{path}</PathPill>
-                        ))}
-                      </div>
-                    </Cell>
-                  </Row>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+          <UsersTable
+            rowSelection={rowSelection}
+            onRowSelectionChange={setRowSelection}
+          />
 
-          {/* Selection footer */}
           {selectedCount > 0 && (
             <SelectionFooter
               selectedCount={selectedCount}
               totalCount={mockUsers.length}
-              onReset={() => setSelectedRows(new Set())}
+              onReset={() => setRowSelection({})}
             >
               <Button variant="secondary" size="sm" iconLeft={ShieldCheck}>
                 Add to Group
@@ -393,19 +336,12 @@ function AdminUsersEmpty() {
 /* ------------------------------------------------------------------ */
 
 function AdminUsersWithSelection() {
-  const [selectedRows, setSelectedRows] = useState<Set<string>>(
-    new Set(["u-002", "u-004", "u-005"]),
-  );
-  const selectedCount = selectedRows.size;
-
-  const toggleRow = (id: string) => {
-    setSelectedRows((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({
+    "u-002": true,
+    "u-004": true,
+    "u-005": true,
+  });
+  const selectedCount = Object.values(rowSelection).filter(Boolean).length;
 
   return (
     <div className="min-h-screen bg-card">
@@ -426,72 +362,16 @@ function AdminUsersWithSelection() {
             </span>
           </SectionHeader>
 
-          <div className="overflow-x-auto">
-            <Table size="comfortable" aria-label="Users">
-              <TableHeader>
-                <Column>
-                  <Checkbox
-                    slot="selection"
-                    isSelected={selectedCount === mockUsers.length}
-                    isIndeterminate={
-                      selectedCount > 0 && selectedCount < mockUsers.length
-                    }
-                    onChange={() =>
-                      setSelectedRows(
-                        selectedCount === mockUsers.length
-                          ? new Set()
-                          : new Set(mockUsers.map((u) => u.id)),
-                      )
-                    }
-                    aria-label="Select all users"
-                  />
-                </Column>
-                <Column isRowHeader>Name</Column>
-                <Column>Email</Column>
-                <Column>Status</Column>
-                <Column>Groups</Column>
-              </TableHeader>
-              <TableBody>
-                {mockUsers.map((user) => (
-                  <Row key={user.id}>
-                    <Cell>
-                      <Checkbox
-                        slot="selection"
-                        isSelected={selectedRows.has(user.id)}
-                        onChange={() => toggleRow(user.id)}
-                        aria-label={`Select ${user.name}`}
-                      />
-                    </Cell>
-                    <Cell>
-                      <span className="font-medium text-foreground">
-                        {user.name}
-                      </span>
-                    </Cell>
-                    <Cell>
-                      <span className="text-muted-foreground">
-                        {user.email}
-                      </span>
-                    </Cell>
-                    <Cell>
-                      <StatusPill enabled={user.enabled} />
-                    </Cell>
-                    <Cell>
-                      <div className="flex flex-wrap gap-1">
-                        {user.groups.map((path) => (
-                          <PathPill key={path}>{path}</PathPill>
-                        ))}
-                      </div>
-                    </Cell>
-                  </Row>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+          <UsersTable
+            rowSelection={rowSelection}
+            onRowSelectionChange={setRowSelection}
+            columns={usersColumns.filter((c) => c.id !== "adminGroups")}
+          />
 
           <SelectionFooter
             selectedCount={selectedCount}
             totalCount={mockUsers.length}
-            onReset={() => setSelectedRows(new Set())}
+            onReset={() => setRowSelection({})}
           >
             <Button variant="secondary" size="sm" iconLeft={ShieldCheck}>
               Add to Group
