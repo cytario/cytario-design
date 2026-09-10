@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-table";
 import { ReactNode, useCallback, useMemo, useRef } from "react";
 
+import { EmptyState } from "../EmptyState";
+
 import { NoFilterResults } from "./NoFilterResults";
 import { TableBodyRow } from "./TableBodyRow";
 import { TableHeaderRow } from "./TableHeaderRow";
@@ -198,6 +200,12 @@ export function Table<TData extends object>({
         <table className="min-w-full" aria-hidden="true">
           <tbody>
             {data.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length + 1}>
+                  <EmptyState icon="Inbox" title="No results" />
+                </td>
+              </tr>
+            ) : table.getRowModel().rows.length === 0 ? (
               <tr>
                 <td colSpan={columns.length + 1}>
                   <NoFilterResults tableId={tableId} />

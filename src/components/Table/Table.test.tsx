@@ -106,5 +106,19 @@ describe("Table", () => {
       />,
     );
     expect(await screen.findByText("No results")).toBeTruthy();
+    // Genuinely empty data offers no filter-clearing action.
+    expect(screen.queryByRole("button", { name: "Clear all filters" })).toBeNull();
+  });
+
+  it("renders the filter empty state when active filters exclude every row", async () => {
+    renderTable("dt-filtered-empty");
+    const input = screen.getByLabelText("Filter by Name");
+    await userEvent.type(input, "zzz");
+    await waitFor(() =>
+      expect(screen.getByText("No results match your filters")).toBeTruthy(),
+    );
+    expect(
+      screen.getByRole("button", { name: "Clear all filters" }),
+    ).toBeTruthy();
   });
 });

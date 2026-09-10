@@ -18,7 +18,7 @@ export function SelectionFooter({
     <div
       role="toolbar"
       aria-label={`Bulk actions for ${selectedCount} selected items`}
-      className="sticky bottom-0 z-20 border-t border-border bg-white/95 backdrop-blur px-6 py-3"
+      className="sticky bottom-0 z-20 border-t border-border bg-background/95 backdrop-blur px-6 py-3"
     >
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-3">
