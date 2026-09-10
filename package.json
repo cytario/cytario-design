@@ -71,6 +71,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "conventional-changelog-conventionalcommits": "^10.4.0",
     "eslint": "10.0.1",
     "jsdom": "^28.1.0",
     "prettier": "3.8.1",
