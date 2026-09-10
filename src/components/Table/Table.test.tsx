@@ -1,177 +1,124 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
-import { useState } from "react";
-import type { SortDescriptor } from "react-aria-components";
-import { Table, TableHeader, Column, TableBody, Row, Cell } from "./Table";
+import { describe, expect, it, beforeEach } from "vitest";
 
-/* ------------------------------------------------------------------ */
-/*  Helpers                                                            */
-/* ------------------------------------------------------------------ */
+import { Table, type CellRenderers, type ColumnConfig } from "./Table";
 
-interface Item {
-  id: number;
+interface Row {
+  id: string;
   name: string;
-  value: number;
+  kind: string;
 }
 
-const items: Item[] = [
-  { id: 1, name: "Alpha", value: 30 },
-  { id: 2, name: "Beta",  value: 10 },
-  { id: 3, name: "Gamma", value: 20 },
+const columns: ColumnConfig[] = [
+  {
+    id: "name",
+    header: "Name",
+    size: 200,
+    enableSorting: true,
+    anchor: true,
+    enableColumnFilter: true,
+    filterType: "text",
+  },
+  {
+    id: "kind",
+    header: "Kind",
+    size: 140,
+    enableSorting: true,
+    enableColumnFilter: true,
+    filterType: "select",
+    filterOptions: [
+      { label: "Alpha", value: "alpha" },
+      { label: "Beta", value: "beta" },
+    ],
+  },
 ];
 
-function BasicTable() {
-  return (
-    <Table aria-label="Test table">
-      <TableHeader>
-        <Column id="name" isRowHeader>Name</Column>
-        <Column id="value">Value</Column>
-      </TableHeader>
-      <TableBody>
-        {items.map((item) => (
-          <Row key={item.id}>
-            <Cell>{item.name}</Cell>
-            <Cell>{item.value}</Cell>
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
-}
+const data: Row[] = [
+  { id: "1", name: "Ccc", kind: "beta" },
+  { id: "2", name: "Aaa", kind: "alpha" },
+  { id: "3", name: "Bbb", kind: "beta" },
+];
 
-function SortableTable() {
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-    column: "name",
-    direction: "ascending",
-  });
+const cellRenderers: CellRenderers<Row> = {
+  name: (row) => row.name,
+  kind: (row) => row.kind,
+};
 
-  const sorted = [...items].sort((a, b) => {
-    const col = sortDescriptor.column as keyof Item;
-    const first = a[col];
-    const second = b[col];
-    let cmp = first < second ? -1 : first > second ? 1 : 0;
-    if (sortDescriptor.direction === "descending") cmp = -cmp;
-    return cmp;
-  });
-
-  return (
+function renderTable(tableId: string) {
+  return render(
     <Table
-      aria-label="Sortable test table"
-      sortDescriptor={sortDescriptor}
-      onSortChange={setSortDescriptor}
-    >
-      <TableHeader>
-        <Column id="name" isRowHeader allowsSorting>Name</Column>
-        <Column id="value" allowsSorting>Value</Column>
-      </TableHeader>
-      <TableBody>
-        {sorted.map((item) => (
-          <Row key={item.id}>
-            <Cell>{item.name}</Cell>
-            <Cell>{item.value}</Cell>
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
+      columns={columns}
+      data={data}
+      cellRenderers={cellRenderers}
+      tableId={tableId}
+      ariaLabel="Test table"
+    />,
   );
 }
-
-/* ------------------------------------------------------------------ */
-/*  Tests                                                              */
-/* ------------------------------------------------------------------ */
 
 describe("Table", () => {
-  it("renders all rows", () => {
-    render(<BasicTable />);
-    const rows = screen.getAllByRole("row");
-    // 1 header row + 3 data rows
-    expect(rows.length).toBe(4);
+  beforeEach(() => {
+    window.localStorage.clear();
   });
 
-  it("renders correct cell content", () => {
-    render(<BasicTable />);
-    expect(screen.getByText("Alpha")).toBeDefined();
-    expect(screen.getByText("Beta")).toBeDefined();
-    expect(screen.getByText("Gamma")).toBeDefined();
+  it("renders one row per data entry with column headers", async () => {
+    renderTable("dt-basic");
+    expect(await screen.findAllByText(/^(Aaa|Bbb|Ccc)$/)).toHaveLength(3);
+    expect(screen.getByText("Name")).toBeTruthy();
+    expect(screen.getByText("Kind")).toBeTruthy();
   });
 
-  it("renders column headers", () => {
-    render(<BasicTable />);
-    expect(screen.getByRole("columnheader", { name: "Name" })).toBeDefined();
-    expect(screen.getByRole("columnheader", { name: "Value" })).toBeDefined();
+  it("sorts rows when a sortable header is clicked", async () => {
+    renderTable("dt-sort");
+    const head = screen.getByRole("button", { name: "Name" });
+    // Anchor column defaults to ascending — the first click flips to descending.
+    await userEvent.click(head);
+    await waitFor(() => {
+      const cells = screen.getAllByText(/^(Aaa|Bbb|Ccc)$/);
+      expect(cells.map((c) => c.textContent)).toEqual(["Ccc", "Bbb", "Aaa"]);
+    });
+    await userEvent.click(head);
+    await waitFor(() => {
+      const cells = screen.getAllByText(/^(Aaa|Bbb|Ccc)$/);
+      expect(cells.map((c) => c.textContent)).toEqual(["Aaa", "Bbb", "Ccc"]);
+    });
   });
 
-  it("sorts rows when column header is clicked", async () => {
-    render(<SortableTable />);
-
-    // Default: ascending by name -> Alpha, Beta, Gamma
-    let rows = screen.getAllByRole("row");
-    expect(rows[1]).toHaveTextContent("Alpha");
-    expect(rows[3]).toHaveTextContent("Gamma");
-
-    // Click Name header to toggle to descending
-    const nameHeader = screen.getByRole("columnheader", { name: /Name/i });
-    await userEvent.click(nameHeader);
-
-    rows = screen.getAllByRole("row");
-    // Descending: Gamma, Beta, Alpha
-    expect(rows[1]).toHaveTextContent("Gamma");
-    expect(rows[3]).toHaveTextContent("Alpha");
+  it("narrows rows via a text column filter and announces the count", async () => {
+    renderTable("dt-filter");
+    const input = screen.getByLabelText("Filter by Name");
+    await userEvent.type(input, "aa");
+    await waitFor(() => expect(screen.getByText("Aaa")).toBeTruthy());
+    expect(screen.queryByText("Bbb")).toBeNull();
+    expect(screen.queryByText("Ccc")).toBeNull();
+    expect(screen.getByText("Showing 1 of 3 rows")).toBeTruthy();
   });
 
-  it("sorts by a different column when clicked", async () => {
-    render(<SortableTable />);
-
-    // Click Value header to sort ascending by value
-    const valueHeader = screen.getByRole("columnheader", { name: /Value/i });
-    await userEvent.click(valueHeader);
-
-    const rows = screen.getAllByRole("row");
-    // Ascending by value: 10 (Beta), 20 (Gamma), 30 (Alpha)
-    expect(rows[1]).toHaveTextContent("Beta");
-    expect(rows[2]).toHaveTextContent("Gamma");
-    expect(rows[3]).toHaveTextContent("Alpha");
-  });
-
-  it("includes selected-state styling on rows", () => {
+  it("renders the empty state when the data is empty", async () => {
     render(
-      <Table aria-label="Selection table">
-        <TableHeader>
-          <Column id="name" isRowHeader>Name</Column>
-        </TableHeader>
-        <TableBody>
-          <Row>
-            <Cell>Only</Cell>
-          </Row>
-        </TableBody>
-      </Table>,
+      <Table
+        columns={columns}
+        data={[]}
+        cellRenderers={cellRenderers}
+        tableId="dt-empty"
+        ariaLabel="Empty table"
+      />,
     );
-    const row = screen.getAllByRole("row")[1];
-    // Selected-state classes are part of the Row's base styles so they
-    // survive in the built CSS without relying on consumer Tailwind.
-    expect(row.className).toContain("data-[selected]:bg-accent");
-    expect(row.className).toContain("data-[selected]:ring-2");
+    expect(await screen.findByText("No results")).toBeTruthy();
+    // Genuinely empty data offers no filter-clearing action.
+    expect(screen.queryByRole("button", { name: "Clear all filters" })).toBeNull();
   });
 
-  it("consumer className overrides internal row styles via twMerge", () => {
-    render(
-      <Table aria-label="Custom table">
-        <TableHeader>
-          <Column id="name" isRowHeader>Name</Column>
-        </TableHeader>
-        <TableBody>
-          <Row className="hover:bg-red-200">
-            <Cell>Only</Cell>
-          </Row>
-        </TableBody>
-      </Table>,
+  it("renders the filter empty state when active filters exclude every row", async () => {
+    renderTable("dt-filtered-empty");
+    const input = screen.getByLabelText("Filter by Name");
+    await userEvent.type(input, "zzz");
+    await waitFor(() =>
+      expect(screen.getByText("No results match your filters")).toBeTruthy(),
     );
-    const row = screen.getAllByRole("row")[1];
-    // twMerge should let consumer's hover:bg-red-200 win over internal hover:bg-muted
-    expect(row.className).toContain("hover:bg-red-200");
-    expect(row.className).not.toContain("hover:bg-muted");
-    // Non-conflicting built-in classes survive
-    expect(row.className).toContain("border-b");
+    expect(
+      screen.getByRole("button", { name: "Clear all filters" }),
+    ).toBeTruthy();
   });
 });

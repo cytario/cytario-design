@@ -21,6 +21,8 @@ export default defineConfig({
     "react-dom",
     "react/jsx-runtime",
     "lucide-react",
+    "@tanstack/react-table",
+    "zustand",
   ],
   outDir: "dist",
 });

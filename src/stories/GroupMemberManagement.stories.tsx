@@ -5,14 +5,8 @@ import { Input } from "../components/Form/Input";
 import { Select } from "../components/Form/Select";
 import type { SelectItem } from "../components/Form/Select";
 import { Dialog } from "../components/Dialog";
-import {
-  Table,
-  TableHeader,
-  Column,
-  TableBody,
-  Row,
-  Cell,
-} from "../components/Table";
+import { Table } from "../components/Table";
+import type { CellRenderers, ColumnConfig } from "../components/Table";
 import { Menu } from "../components/Menu";
 import type { MenuItemData } from "../components/Menu";
 import { IconButton } from "../components/IconButton";
@@ -160,6 +154,19 @@ function Avatar({ name, color }: { name: string; color: string }) {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Table configuration                                                */
+/* ------------------------------------------------------------------ */
+
+const memberColumns: ColumnConfig[] = [
+  { id: "name", header: "Member", size: 260, anchor: true, enableSorting: true },
+  { id: "email", header: "Email", size: 240, enableSorting: true },
+  { id: "role", header: "Role", size: 160 },
+  { id: "status", header: "Status", size: 140, enableSorting: true },
+  { id: "lastActive", header: "Last active", size: 160 },
+  { id: "actions", header: "Actions", size: 120, enableResizing: false },
+];
+
+/* ------------------------------------------------------------------ */
 /*  Composition                                                        */
 /* ------------------------------------------------------------------ */
 
@@ -239,6 +246,50 @@ function GroupMemberManagement() {
     return items;
   }
 
+  const memberRenderers: CellRenderers<Member> = {
+    name: (member) => (
+      <div className="flex items-center gap-3">
+        <Avatar name={member.name} color={member.avatarColor} />
+        <span className="font-medium">{member.name}</span>
+      </div>
+    ),
+    email: (member) => (
+      <span className="text-muted-foreground">{member.email}</span>
+    ),
+    role: (member) => (
+      <Select
+        label="Role"
+        items={roleItems}
+        selectedKey={member.role}
+        onSelectionChange={(key) =>
+          handleRoleChange(member.id, String(key))
+        }
+        className="[&_label]:sr-only min-w-[7rem]"
+      />
+    ),
+    status: (member) => (
+      <span className="inline-flex items-center gap-2 text-sm">
+        <span
+          className={`inline-block h-2 w-2 rounded-full ${statusConfig[member.status].dotClass}`}
+        />
+        {statusConfig[member.status].label}
+      </span>
+    ),
+    lastActive: (member) => (
+      <span className="text-muted-foreground">{member.lastActive}</span>
+    ),
+    actions: (member) => (
+      <Menu items={menuItemsFor(member)}>
+        <IconButton
+          icon={MoreVertical}
+          label={`Actions for ${member.name}`}
+          variant="ghost"
+          size="sm"
+        />
+      </Menu>
+    ),
+  };
+
   return (
     <div className="mx-auto max-w-5xl space-y-6 p-6">
       {/* Header */}
@@ -273,69 +324,14 @@ function GroupMemberManagement() {
       />
 
       {/* Table */}
-      <Table size="comfortable" aria-label="Group members">
-        <TableHeader>
-          <Column isRowHeader>Member</Column>
-          <Column>Email</Column>
-          <Column>Role</Column>
-          <Column>Status</Column>
-          <Column>Last active</Column>
-          <Column>
-            <span className="sr-only">Actions</span>
-          </Column>
-        </TableHeader>
-        <TableBody items={filtered}>
-          {(member) => (
-            <Row key={member.id} id={member.id}>
-              <Cell>
-                <div className="flex items-center gap-3">
-                  <Avatar name={member.name} color={member.avatarColor} />
-                  <span className="font-medium">{member.name}</span>
-                </div>
-              </Cell>
-              <Cell>
-                <span className="text-muted-foreground">
-                  {member.email}
-                </span>
-              </Cell>
-              <Cell>
-                <Select
-                  label="Role"
-                  items={roleItems}
-                  selectedKey={member.role}
-                  onSelectionChange={(key) =>
-                    handleRoleChange(member.id, String(key))
-                  }
-                  className="[&_label]:sr-only min-w-[7rem]"
-                />
-              </Cell>
-              <Cell>
-                <span className="inline-flex items-center gap-2 text-sm">
-                  <span
-                    className={`inline-block h-2 w-2 rounded-full ${statusConfig[member.status as MemberStatus].dotClass}`}
-                  />
-                  {statusConfig[member.status as MemberStatus].label}
-                </span>
-              </Cell>
-              <Cell>
-                <span className="text-muted-foreground">
-                  {member.lastActive}
-                </span>
-              </Cell>
-              <Cell>
-                <Menu items={menuItemsFor(member)}>
-                  <IconButton
-                    icon={MoreVertical}
-                    label={`Actions for ${member.name}`}
-                    variant="ghost"
-                    size="sm"
-                  />
-                </Menu>
-              </Cell>
-            </Row>
-          )}
-        </TableBody>
-      </Table>
+      <Table
+        columns={memberColumns}
+        data={filtered}
+        cellRenderers={memberRenderers}
+        tableId="storybook-group-members"
+        ariaLabel="Group members"
+        getRowId={(member) => member.id}
+      />
 
       {/* Add Member Dialog */}
       <Dialog

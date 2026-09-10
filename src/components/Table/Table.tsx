@@ -1,162 +1,232 @@
 import {
-  Cell as AriaCell,
-  Column as AriaColumn,
-  Row as AriaRow,
-  Table as AriaTable,
-  TableBody as AriaTableBody,
-  TableHeader as AriaTableHeader,
-  type CellProps as AriaCellProps,
-  type ColumnProps as AriaColumnProps,
-  type RowProps as AriaRowProps,
-  type TableBodyProps,
-  type TableHeaderProps,
-  type TableProps as AriaTableProps,
-} from "react-aria-components";
-import { twMerge } from "tailwind-merge";
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  getFacetedUniqueValues,
+  ColumnDef,
+  type Row,
+} from "@tanstack/react-table";
+import { ReactNode, useCallback, useMemo, useRef } from "react";
 
-export type TableSize = "compact" | "comfortable";
+import { EmptyState } from "../EmptyState";
 
-/* ------------------------------------------------------------------ */
-/*  Table                                                              */
-/* ------------------------------------------------------------------ */
+import { NoFilterResults } from "./NoFilterResults";
+import { TableBodyRow } from "./TableBodyRow";
+import { TableHeaderRow } from "./TableHeaderRow";
+import { CellRenderers, TableProps } from "./types";
+import { useColumnFilters } from "./useColumnFilters";
+import { useColumnVisibility } from "./useColumnVisibility";
+import { useColumnWidths } from "./useColumnWidths";
+import { useTableSorting } from "./useTableSorting";
 
-export interface DataTableProps
-  extends Omit<AriaTableProps, "className"> {
-  /** Row density */
-  size?: TableSize;
-  /** Additional classes merged into the base styles via twMerge. */
-  className?: string;
+// Re-export types for external use
+export type { ColumnConfig, TableProps, CellRenderers } from "./types";
+
+function booleanSortingFn<TData>(rowA: Row<TData>, rowB: Row<TData>, columnId: string): number {
+  const a = rowA.getValue<boolean>(columnId) ? 1 : 0;
+  const b = rowB.getValue<boolean>(columnId) ? 1 : 0;
+  return a - b;
 }
 
-const tableSizeClass: Record<TableSize, string> = {
-  compact: "[--table-row-py:theme(spacing.1)]",
-  comfortable: "[--table-row-py:theme(spacing.3)]",
-};
-
-export function Table({
-  size = "comfortable",
-  className,
-  ...props
-}: DataTableProps) {
-  return (
-    <AriaTable
-      {...props}
-      className={twMerge(
-        "w-full border-collapse text-sm text-foreground",
-        tableSizeClass[size],
-        className,
-      )}
-    />
+export function Table<TData extends object>({
+  columns,
+  data,
+  cellRenderers = {} as CellRenderers<TData>,
+  tableId = "default",
+  ariaLabel,
+  enableRowSelection,
+  rowSelection,
+  onRowSelectionChange,
+  getRowId,
+  showFilters = true,
+  defaultSorting,
+}: TableProps<TData>) {
+  const { columnSizing, setColumnSizing } = useColumnWidths(columns, tableId);
+  const anchorColumnId = columns.find((c) => c.anchor)?.id ?? columns[0]?.id;
+  // Stable identity across renders: this feeds the controlled `state.sorting`.
+  // A fresh array per render makes TanStack's internal-state update cascade
+  // into an infinite synchronous re-render loop on the first discrete event
+  // (e.g. a column-resize mousedown) while no sorting is persisted yet.
+  const effectiveDefaultSorting = useMemo(
+    () => defaultSorting ?? (anchorColumnId ? [{ id: anchorColumnId, desc: false }] : []),
+    [defaultSorting, anchorColumnId],
   );
-}
+  const { sorting, setSorting } = useTableSorting(tableId, effectiveDefaultSorting);
+  const { columnVisibility, setColumnVisibility, toggleableColumns, toggleColumn } =
+    useColumnVisibility(columns, tableId);
+  const { columnFilters, setColumnFilters, resetFilters } = useColumnFilters({
+    tableId,
+  });
 
-/* ------------------------------------------------------------------ */
-/*  TableHeader                                                        */
-/* ------------------------------------------------------------------ */
+  const indexColumnSize = enableRowSelection ? 80 : 48;
 
-export function TableHeader<T extends object>(props: TableHeaderProps<T>) {
-  return <AriaTableHeader {...props} />;
-}
+  const columnDefs: ColumnDef<TData>[] = useMemo(() => {
+    const indexColumn: ColumnDef<TData> = {
+      id: "index",
+      header: "",
+      cell: (info) => info.row.index + 1,
+      enableResizing: false,
+      enableSorting: false,
+      enableColumnFilter: false,
+      size: indexColumnSize,
+      minSize: indexColumnSize,
+      maxSize: indexColumnSize,
+    };
 
-/* ------------------------------------------------------------------ */
-/*  Column                                                             */
-/* ------------------------------------------------------------------ */
+    const dataColumns = columns.map((colConfig) => {
+      const renderer = cellRenderers[colConfig.id];
 
-export interface ColumnProps extends Omit<AriaColumnProps, "className"> {
-  /** Additional classes merged into the base styles via twMerge. */
-  className?: string;
-}
+      return {
+        id: colConfig.id,
+        accessorKey: colConfig.id as string & keyof TData,
+        header: colConfig.header,
+        cell: renderer
+          ? (info: { row: { original: TData }; getValue: () => unknown }) =>
+              renderer(info.row.original)
+          : (info: { getValue: () => unknown }) => info.getValue() as ReactNode,
+        enableResizing: colConfig.enableResizing !== false,
+        enableSorting: colConfig.enableSorting ?? false,
+        enableColumnFilter: colConfig.enableColumnFilter ?? false,
+        ...(colConfig.filterFn && { filterFn: colConfig.filterFn }),
+        sortingFn:
+          colConfig.sortingFn === "boolean"
+            ? booleanSortingFn
+            : (colConfig.sortingFn ?? "alphanumeric"),
+        size: colConfig.size ?? 150,
+        minSize: colConfig.minSize ?? 48,
+        maxSize: colConfig.maxSize ?? Number.MAX_SAFE_INTEGER,
+      } as ColumnDef<TData>;
+    });
 
-export function Column({ className, ...props }: ColumnProps) {
+    return [indexColumn, ...dataColumns];
+  }, [columns, cellRenderers, indexColumnSize]);
+
+  const table = useReactTable({
+    data,
+    columns: columnDefs,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    enableSortingRemoval: false,
+    enableColumnResizing: true,
+    columnResizeMode: "onChange",
+    enableRowSelection: !!enableRowSelection,
+    state: {
+      columnSizing,
+      sorting,
+      columnVisibility,
+      columnFilters,
+      ...(enableRowSelection && { rowSelection }),
+    },
+    onColumnSizingChange: setColumnSizing,
+    onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
+    ...(enableRowSelection && {
+      onRowSelectionChange: onRowSelectionChange,
+      getRowId: getRowId as (row: TData) => string,
+    }),
+  });
+
+  const headerRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const isSyncing = useRef(false);
+
+  const handleHeaderScroll = useCallback(() => {
+    if (isSyncing.current) return;
+    isSyncing.current = true;
+    if (headerRef.current && bodyRef.current) {
+      bodyRef.current.scrollLeft = headerRef.current.scrollLeft;
+    }
+    requestAnimationFrame(() => {
+      isSyncing.current = false;
+    });
+  }, []);
+
+  const handleBodyScroll = useCallback(() => {
+    if (isSyncing.current) return;
+    isSyncing.current = true;
+    if (bodyRef.current && headerRef.current) {
+      headerRef.current.scrollLeft = bodyRef.current.scrollLeft;
+    }
+    requestAnimationFrame(() => {
+      isSyncing.current = false;
+    });
+  }, []);
+
+  const filteredCount = table.getRowModel().rows.length;
+  const totalCount = data.length;
+  const isFiltered = filteredCount !== totalCount;
+
   return (
-    <AriaColumn
-      {...props}
-      className={twMerge(
-        "px-3 py-2 text-left font-semibold text-muted-foreground",
-        "border-b-2 border-border",
-        "cursor-default select-none outline-none",
-        "focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-[-2px]",
-        className,
-      )}
-    >
-      {({ allowsSorting, sortDirection }) => (
-        <span className="inline-flex items-center gap-1">
-          {props.children as React.ReactNode}
-          {allowsSorting && (
-            <span aria-hidden="true" className="text-muted-foreground">
-              {sortDirection === "ascending"
-                ? "\u25B2"
-                : sortDirection === "descending"
-                  ? "\u25BC"
-                  : "\u25B4"}
-            </span>
-          )}
-        </span>
-      )}
-    </AriaColumn>
-  );
-}
+    <>
+      {/* Screen-reader announcement for filter changes */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {isFiltered ? `Showing ${filteredCount} of ${totalCount} rows` : ""}
+      </div>
 
-/* ------------------------------------------------------------------ */
-/*  TableBody                                                          */
-/* ------------------------------------------------------------------ */
+      {/* Sticky header — sticks vertically, scrolls horizontally (hidden scrollbar) */}
+      <div
+        ref={headerRef}
+        className="sticky top-0 z-10 bg-white border-b border-border overflow-x-auto"
+        style={{ scrollbarWidth: "none" }}
+        onScroll={handleHeaderScroll}
+      >
+        <table className="min-w-full" aria-label={ariaLabel}>
+          <thead className="w-full">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableHeaderRow
+                key={headerGroup.id}
+                headerGroup={headerGroup}
+                columns={columns}
+                tableId={tableId}
+                toggleableColumns={toggleableColumns}
+                columnVisibility={columnVisibility}
+                toggleColumn={toggleColumn}
+                enableRowSelection={!!enableRowSelection}
+                hasFilters={columnFilters.length > 0}
+                onClearAllFilters={resetFilters}
+                showFilters={showFilters}
+              />
+            ))}
+          </thead>
+        </table>
+      </div>
 
-export function TableBody<T extends object>(props: TableBodyProps<T>) {
-  return <AriaTableBody {...props} />;
-}
-
-/* ------------------------------------------------------------------ */
-/*  Row                                                                */
-/* ------------------------------------------------------------------ */
-
-export interface RowProps<T extends object>
-  extends Omit<AriaRowProps<T>, "className"> {
-  /** Additional classes merged into the base styles via twMerge. */
-  className?: string;
-}
-
-export function Row<T extends object>({
-  className,
-  ...props
-}: RowProps<T>) {
-  return (
-    <AriaRow
-      {...props}
-      className={twMerge(
-        "border-b border-border",
-        "even:bg-card",
-        "hover:bg-muted",
-        "data-[selected]:bg-accent",
-        "data-[selected]:ring-2 data-[selected]:ring-ring data-[selected]:ring-inset",
-        "outline-none",
-        "focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-[-2px]",
-        "transition-colors",
-        className,
-      )}
-    />
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Cell                                                               */
-/* ------------------------------------------------------------------ */
-
-export interface CellProps extends Omit<AriaCellProps, "className"> {
-  /** Additional classes merged into the base styles via twMerge. */
-  className?: string;
-}
-
-export function Cell({ className, ...props }: CellProps) {
-  return (
-    <AriaCell
-      {...props}
-      className={twMerge(
-        "px-3 py-(--table-row-py)",
-        "text-foreground",
-        "outline-none",
-        "focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-[-2px]",
-        className,
-      )}
-    />
+      {/* Scrollable body — horizontal scrollbar visible */}
+      <div ref={bodyRef} className="overflow-x-auto" onScroll={handleBodyScroll}>
+        <table className="min-w-full" aria-hidden="true">
+          <tbody>
+            {data.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length + 1}>
+                  <EmptyState icon="Inbox" title="No results" />
+                </td>
+              </tr>
+            ) : table.getRowModel().rows.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length + 1}>
+                  <NoFilterResults tableId={tableId} />
+                </td>
+              </tr>
+            ) : (
+              table
+                .getRowModel()
+                .rows.map((row, index) => (
+                  <TableBodyRow
+                    key={row.id}
+                    row={row}
+                    rowIndex={index}
+                    columns={columns}
+                    enableRowSelection={!!enableRowSelection}
+                  />
+                ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }

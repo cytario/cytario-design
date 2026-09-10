@@ -66,15 +66,27 @@ export type { InputPasswordProps } from "./components/Form/InputPassword";
 export { Select } from "./components/Form/Select";
 export type { SelectProps, SelectItem } from "./components/Form/Select";
 
+// Single-option selection lists (react-aria pass-through so plugin views can
+// compose them through the design peer without a direct react-aria peer).
+export { ListBox, ListBoxItem } from "react-aria-components";
+
 export {
   Table,
-  TableHeader,
-  Column,
-  TableBody,
-  Row,
-  Cell,
+  useColumnFilters,
+  useColumnVisibility,
+  useColumnWidths,
+  useTableSorting,
+  SelectionFooter,
+  NoFilterResults,
+  useTableStore,
+  getTableStore,
 } from "./components/Table";
-export type { DataTableProps, TableSize } from "./components/Table";
+export type {
+  TableProps,
+  ColumnConfig,
+  CellRenderers,
+  SelectionFooterProps,
+} from "./components/Table";
 
 export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";

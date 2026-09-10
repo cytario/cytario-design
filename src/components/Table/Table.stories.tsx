@@ -1,237 +1,92 @@
-import type { Meta, StoryObj } from "storybook/react";
-import { expect, userEvent, within } from "storybook/test";
-import { useState } from "react";
-import type { Selection as AriaSelection, SortDescriptor } from "react-aria-components";
-import { Table, TableHeader, Column, TableBody, Row, Cell } from "./Table";
+import type { Meta, StoryObj } from "@storybook/react";
 
-/* ------------------------------------------------------------------ */
-/*  Sample data — pathology cases                                      */
-/* ------------------------------------------------------------------ */
+import { Badge } from "../Badge";
+import { Table, type CellRenderers, type ColumnConfig } from "./Table";
 
-interface PathologyCase {
-  id: number;
-  caseId: string;
-  specimenId: string;
+interface Job {
+  application: string;
   status: string;
-  priority: string;
+  submittedBy: string;
+  submittedAt: string;
 }
-
-const cases: PathologyCase[] = [
-  { id: 1, caseId: "CYT-2024-0012", specimenId: "SP-2024-A12", status: "In Review",  priority: "High" },
-  { id: 2, caseId: "CYT-2024-0034", specimenId: "SP-2024-B07", status: "Completed",  priority: "Normal" },
-  { id: 3, caseId: "CYT-2024-0056", specimenId: "SP-2024-C33", status: "Pending",    priority: "Urgent" },
-  { id: 4, caseId: "CYT-2024-0078", specimenId: "SP-2024-D19", status: "In Review",  priority: "Normal" },
-  { id: 5, caseId: "CYT-2024-0091", specimenId: "SP-2024-E45", status: "Completed",  priority: "Low" },
-  { id: 6, caseId: "CYT-2024-0103", specimenId: "SP-2024-F02", status: "Pending",    priority: "High" },
-];
-
-/* ------------------------------------------------------------------ */
-/*  Meta                                                               */
-/* ------------------------------------------------------------------ */
 
 const meta: Meta<typeof Table> = {
   title: "Components/Table",
   component: Table,
-  argTypes: {
-    size: {
-      control: "select",
-      options: ["compact", "comfortable"],
-    },
-  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Table>;
 
-/* ------------------------------------------------------------------ */
-/*  Stories                                                            */
-/* ------------------------------------------------------------------ */
+// --- Real-world usage story (jobs list, from the compute plugin) ---
 
-export const Default: Story = {
-  args: { size: "comfortable" },
-  render: (args) => (
-    <Table aria-label="Pathology cases" size={args.size}>
-      <TableHeader>
-        <Column id="caseId" isRowHeader>Case ID</Column>
-        <Column id="specimenId">Specimen ID</Column>
-        <Column id="status">Status</Column>
-        <Column id="priority">Priority</Column>
-      </TableHeader>
-      <TableBody>
-        {cases.map((c) => (
-          <Row key={c.id}>
-            <Cell>{c.caseId}</Cell>
-            <Cell>{c.specimenId}</Cell>
-            <Cell>{c.status}</Cell>
-            <Cell>{c.priority}</Cell>
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  ),
-};
-
-export const Compact: Story = {
-  args: { size: "compact" },
-  render: (args) => (
-    <Table aria-label="Pathology cases" size={args.size}>
-      <TableHeader>
-        <Column id="caseId" isRowHeader>Case ID</Column>
-        <Column id="specimenId">Specimen ID</Column>
-        <Column id="status">Status</Column>
-        <Column id="priority">Priority</Column>
-      </TableHeader>
-      <TableBody>
-        {cases.map((c) => (
-          <Row key={c.id}>
-            <Cell>{c.caseId}</Cell>
-            <Cell>{c.specimenId}</Cell>
-            <Cell>{c.status}</Cell>
-            <Cell>{c.priority}</Cell>
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  ),
-};
-
-/* ------------------------------------------------------------------ */
-/*  Sortable                                                           */
-/* ------------------------------------------------------------------ */
-
-function SortableTable({ size }: { size?: "compact" | "comfortable" }) {
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-    column: "caseId",
-    direction: "ascending",
-  });
-
-  const sorted = [...cases].sort((a, b) => {
-    const col = sortDescriptor.column as keyof PathologyCase;
-    const first = a[col];
-    const second = b[col];
-    let cmp = first < second ? -1 : first > second ? 1 : 0;
-    if (sortDescriptor.direction === "descending") cmp = -cmp;
-    return cmp;
-  });
-
-  return (
-    <Table
-      aria-label="Sortable pathology cases"
-      sortDescriptor={sortDescriptor}
-      onSortChange={setSortDescriptor}
-      size={size}
-    >
-      <TableHeader>
-        <Column id="caseId" isRowHeader allowsSorting>Case ID</Column>
-        <Column id="specimenId" allowsSorting>Specimen ID</Column>
-        <Column id="status" allowsSorting>Status</Column>
-        <Column id="priority" allowsSorting>Priority</Column>
-      </TableHeader>
-      <TableBody>
-        {sorted.map((c) => (
-          <Row key={c.id}>
-            <Cell>{c.caseId}</Cell>
-            <Cell>{c.specimenId}</Cell>
-            <Cell>{c.status}</Cell>
-            <Cell>{c.priority}</Cell>
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
-}
-
-export const Sortable: Story = {
-  render: (args) => <SortableTable size={args.size} />,
-  args: { size: "comfortable" },
-};
-
-/* ------------------------------------------------------------------ */
-/*  Selection                                                          */
-/* ------------------------------------------------------------------ */
-
-function SelectionTable({ size }: { size?: "compact" | "comfortable" }) {
-  const [selectedKeys, setSelectedKeys] = useState<AriaSelection>(
-    new Set([2, 5]),
-  );
-
-  return (
-    <Table
-      aria-label="Selectable pathology cases"
-      selectionMode="multiple"
-      selectedKeys={selectedKeys}
-      onSelectionChange={setSelectedKeys}
-      size={size}
-    >
-      <TableHeader>
-        <Column id="caseId" isRowHeader>Case ID</Column>
-        <Column id="specimenId">Specimen ID</Column>
-        <Column id="status">Status</Column>
-        <Column id="priority">Priority</Column>
-      </TableHeader>
-      <TableBody>
-        {cases.map((c) => (
-          <Row key={c.id} id={c.id}>
-            <Cell>{c.caseId}</Cell>
-            <Cell>{c.specimenId}</Cell>
-            <Cell>{c.status}</Cell>
-            <Cell>{c.priority}</Cell>
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
-}
-
-export const Selection: Story = {
-  render: (args) => <SelectionTable size={args.size} />,
-  args: { size: "comfortable" },
-};
-
-/* ------------------------------------------------------------------ */
-/*  Empty state                                                        */
-/* ------------------------------------------------------------------ */
-
-export const Empty: Story = {
-  render: (args) => (
-    <Table aria-label="Empty table" size={args.size}>
-      <TableHeader>
-        <Column id="caseId" isRowHeader>Case ID</Column>
-        <Column id="specimenId">Specimen ID</Column>
-        <Column id="status">Status</Column>
-        <Column id="priority">Priority</Column>
-      </TableHeader>
-      <TableBody renderEmptyState={() => (
-        <div className="px-3 py-8 text-center text-muted-foreground">
-          No cases found.
-        </div>
-      )}>
-        {[]}
-      </TableBody>
-    </Table>
-  ),
-};
-
-/* ------------------------------------------------------------------ */
-/*  Interaction test — sorting changes row order                       */
-/* ------------------------------------------------------------------ */
-
-export const SortInteraction: Story = {
-  render: () => <SortableTable />,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Default sort is caseId ascending — first row should be CYT-2024-0012
-    const rows = canvas.getAllByRole("row");
-    // rows[0] is the header row, rows[1] is the first data row
-    expect(rows[1]).toHaveTextContent("CYT-2024-0012");
-
-    // Click Specimen ID column to sort by specimen ascending
-    const specimenHeader = canvas.getByRole("columnheader", { name: /Specimen ID/i });
-    await userEvent.click(specimenHeader);
-
-    const rowsAfter = canvas.getAllByRole("row");
-    // SP-2024-A12 should be first after ascending sort on specimen ID
-    expect(rowsAfter[1]).toHaveTextContent("SP-2024-A12");
+const columns: ColumnConfig[] = [
+  {
+    id: "application",
+    header: "Application",
+    size: 260,
+    anchor: true,
+    enableSorting: true,
+    enableColumnFilter: true,
+    filterType: "text",
+    filterPlaceholder: "Filter by application...",
   },
+  {
+    id: "status",
+    header: "Status",
+    size: 180,
+    enableSorting: true,
+    enableColumnFilter: true,
+    filterType: "select",
+    filterOptions: [
+      { label: "Queued", value: "Queued" },
+      { label: "Running", value: "Running" },
+      { label: "Completed", value: "Completed" },
+      { label: "Failed", value: "Failed" },
+    ],
+    filterRender: (option) => <Badge color="teal">{option.label}</Badge>,
+  },
+  { id: "submittedBy", header: "Submitted by", size: 160, enableSorting: true },
+  { id: "submittedAt", header: "Submitted", size: 200, enableSorting: true },
+];
+
+const data: Job[] = [
+  {
+    application: "tissue-classifier : 1.1.2",
+    status: "Running",
+    submittedBy: "jdoe",
+    submittedAt: "2026-09-08T09:41:00Z",
+  },
+  {
+    application: "cell-segmentation : 2.0.0",
+    status: "Completed",
+    submittedBy: "asmith",
+    submittedAt: "2026-09-07T15:02:00Z",
+  },
+  {
+    application: "marker-quantification : 0.9.4",
+    status: "Failed",
+    submittedBy: "jdoe",
+    submittedAt: "2026-09-06T08:12:00Z",
+  },
+];
+
+const cellRenderers: CellRenderers<Job> = {
+  application: (row) => row.application,
+  status: (row) => <Badge color="teal">{row.status}</Badge>,
+  submittedBy: (row) => row.submittedBy,
+  submittedAt: (row) => row.submittedAt,
+};
+
+export const JobsList: Story = {
+  name: "Jobs List",
+  render: () => (
+    <Table
+      columns={columns}
+      data={data}
+      cellRenderers={cellRenderers}
+      tableId="storybook-jobs"
+      ariaLabel="Jobs"
+    />
+  ),
 };

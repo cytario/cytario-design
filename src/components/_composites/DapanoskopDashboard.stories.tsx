@@ -4,18 +4,12 @@ import type { Meta, StoryObj } from "storybook/react";
 import { Badge } from "../Badge";
 import { Banner } from "../Banner";
 import { Card } from "../Card";
+import { Table } from "../Table";
+import type { CellRenderers, ColumnConfig } from "../Table";
 import { DeltaIndicator } from "../DeltaIndicator";
 import { MetricCard } from "../MetricCard";
 import { ProgressBar } from "../ProgressBar";
 import { H1, H3 } from "../Heading";
-import {
-  Table,
-  TableHeader,
-  Column,
-  TableBody,
-  Row,
-  Cell,
-} from "../Table";
 import {
   type CostCenter,
   type Workload,
@@ -87,65 +81,60 @@ function formatPeriodLabel(period: string): string {
 /*  Workload table (story-local)                                       */
 /* ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------ */
+/*  Workload breakdown table                                            */
+/* ------------------------------------------------------------------ */
+
+const workloadColumns: ColumnConfig[] = [
+  { id: "name", header: "Workload", size: 240, anchor: true, enableSorting: true },
+  { id: "currentCostUsd", header: "Current", size: 160, align: "right", enableSorting: true, sortingFn: "basic" },
+  { id: "prevMonthCostUsd", header: "vs Last Month", size: 160 },
+  { id: "yoyCostUsd", header: "vs Last Year", size: 160 },
+];
+
+const workloadRenderers: CellRenderers<Workload> = {
+  name: (wl) =>
+    wl.name === "Untagged" ? (
+      <span className="font-medium text-destructive">{wl.name}</span>
+    ) : (
+      <a
+        href="#"
+        onClick={(e) => e.preventDefault()}
+        className="text-primary hover:underline no-underline"
+      >
+        {wl.name}
+      </a>
+    ),
+  currentCostUsd: (wl) => (
+    <span className="tabular-nums font-medium">
+      {formatUsd(wl.currentCostUsd)}
+    </span>
+  ),
+  prevMonthCostUsd: (wl) => (
+    <DeltaIndicator current={wl.currentCostUsd} previous={wl.prevMonthCostUsd} />
+  ),
+  yoyCostUsd: (wl) =>
+    wl.yoyCostUsd > 0 ? (
+      <DeltaIndicator current={wl.currentCostUsd} previous={wl.yoyCostUsd} />
+    ) : (
+      <span className="text-muted-foreground">N/A</span>
+    ),
+};
+
 function WorkloadBreakdown({
   workloads,
 }: {
   workloads: Workload[];
 }) {
   return (
-    <Table size="compact" aria-label="Workload breakdown">
-      <TableHeader>
-        <Column isRowHeader>Workload</Column>
-        <Column>Current</Column>
-        <Column>vs Last Month</Column>
-        <Column>vs Last Year</Column>
-      </TableHeader>
-      <TableBody>
-        {workloads.map((wl) => {
-          const isUntagged = wl.name === "Untagged";
-          return (
-            <Row key={wl.name}>
-              <Cell>
-                {isUntagged ? (
-                  <span className="font-medium text-destructive">
-                    {wl.name}
-                  </span>
-                ) : (
-                  <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    className="text-primary hover:underline no-underline"
-                  >
-                    {wl.name}
-                  </a>
-                )}
-              </Cell>
-              <Cell>
-                <span className="tabular-nums font-medium">
-                  {formatUsd(wl.currentCostUsd)}
-                </span>
-              </Cell>
-              <Cell>
-                <DeltaIndicator
-                  current={wl.currentCostUsd}
-                  previous={wl.prevMonthCostUsd}
-                />
-              </Cell>
-              <Cell>
-                {wl.yoyCostUsd > 0 ? (
-                  <DeltaIndicator
-                    current={wl.currentCostUsd}
-                    previous={wl.yoyCostUsd}
-                  />
-                ) : (
-                  <span className="text-muted-foreground">N/A</span>
-                )}
-              </Cell>
-            </Row>
-          );
-        })}
-      </TableBody>
-    </Table>
+    <Table
+      columns={workloadColumns}
+      data={workloads}
+      cellRenderers={workloadRenderers}
+      tableId="storybook-dapanoskop-workloads"
+      ariaLabel="Workload breakdown"
+      getRowId={(wl) => wl.name}
+    />
   );
 }
 
