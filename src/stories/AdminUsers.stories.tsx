@@ -6,9 +6,9 @@ import { UserPlus, Users, UsersRound, ShieldCheck, X } from "lucide-react";
 
 import { Badge } from "../components/Badge";
 import { Button } from "../components/Button";
-import { DataTable } from "../components/DataTable";
-import type { CellRenderers, ColumnConfig } from "../components/DataTable";
-import { SelectionFooter } from "../components/DataTable";
+import { Table } from "../components/Table";
+import type { CellRenderers, ColumnConfig } from "../components/Table";
+import { SelectionFooter } from "../components/Table";
 import { Dialog } from "../components/Dialog";
 import { Input } from "../components/Form/Input";
 import { Select } from "../components/Form/Select";
@@ -168,7 +168,7 @@ function UsersTable({
   columns?: ColumnConfig[];
 }) {
   return (
-    <DataTable
+    <Table
       columns={columns}
       data={mockUsers}
       cellRenderers={usersRenderers}

@@ -12,14 +12,14 @@ import { ReactNode, useCallback, useMemo, useRef } from "react";
 import { NoFilterResults } from "./NoFilterResults";
 import { TableBodyRow } from "./TableBodyRow";
 import { TableHeaderRow } from "./TableHeaderRow";
-import { CellRenderers, DataTableProps } from "./types";
+import { CellRenderers, TableProps } from "./types";
 import { useColumnFilters } from "./useColumnFilters";
 import { useColumnVisibility } from "./useColumnVisibility";
 import { useColumnWidths } from "./useColumnWidths";
 import { useTableSorting } from "./useTableSorting";
 
 // Re-export types for external use
-export type { ColumnConfig, DataTableProps, CellRenderers } from "./types";
+export type { ColumnConfig, TableProps, CellRenderers } from "./types";
 
 function booleanSortingFn<TData>(rowA: Row<TData>, rowB: Row<TData>, columnId: string): number {
   const a = rowA.getValue<boolean>(columnId) ? 1 : 0;
@@ -27,7 +27,7 @@ function booleanSortingFn<TData>(rowA: Row<TData>, rowB: Row<TData>, columnId: s
   return a - b;
 }
 
-export function DataTable<TData extends object>({
+export function Table<TData extends object>({
   columns,
   data,
   cellRenderers = {} as CellRenderers<TData>,
@@ -39,7 +39,7 @@ export function DataTable<TData extends object>({
   getRowId,
   showFilters = true,
   defaultSorting,
-}: DataTableProps<TData>) {
+}: TableProps<TData>) {
   const { columnSizing, setColumnSizing } = useColumnWidths(columns, tableId);
   const anchorColumnId = columns.find((c) => c.anchor)?.id ?? columns[0]?.id;
   // Stable identity across renders: this feeds the controlled `state.sorting`.

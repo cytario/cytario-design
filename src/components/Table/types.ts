@@ -61,7 +61,7 @@ export interface ColumnConfig
  */
 export type CellRenderers<TData> = Partial<Record<string, (row: TData) => ReactNode>>;
 
-export interface DataTableProps<TData extends object> {
+export interface TableProps<TData extends object> {
   columns: ColumnConfig[];
   data: TData[];
   cellRenderers?: CellRenderers<TData>;

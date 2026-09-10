@@ -1,5 +1,5 @@
-export { DataTable } from "./DataTable";
-export type { ColumnConfig, DataTableProps, CellRenderers } from "./types";
+export { Table } from "./Table";
+export type { ColumnConfig, TableProps, CellRenderers } from "./types";
 export { useColumnFilters } from "./useColumnFilters";
 export { useColumnVisibility } from "./useColumnVisibility";
 export { useColumnWidths } from "./useColumnWidths";

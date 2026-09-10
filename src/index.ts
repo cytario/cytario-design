@@ -71,7 +71,7 @@ export type { SelectProps, SelectItem } from "./components/Form/Select";
 export { ListBox, ListBoxItem } from "react-aria-components";
 
 export {
-  DataTable,
+  Table,
   useColumnFilters,
   useColumnVisibility,
   useColumnWidths,
@@ -80,13 +80,13 @@ export {
   NoFilterResults,
   useTableStore,
   getTableStore,
-} from "./components/DataTable";
+} from "./components/Table";
 export type {
-  DataTableProps,
+  TableProps,
   ColumnConfig,
   CellRenderers,
   SelectionFooterProps,
-} from "./components/DataTable";
+} from "./components/Table";
 
 export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Badge } from "../Badge";
-import { DataTable, type CellRenderers, type ColumnConfig } from "./DataTable";
+import { Table, type CellRenderers, type ColumnConfig } from "./Table";
 
 interface Job {
   application: string;
@@ -10,13 +10,13 @@ interface Job {
   submittedAt: string;
 }
 
-const meta: Meta<typeof DataTable> = {
-  title: "Components/DataTable",
-  component: DataTable,
+const meta: Meta<typeof Table> = {
+  title: "Components/Table",
+  component: Table,
 };
 
 export default meta;
-type Story = StoryObj<typeof DataTable>;
+type Story = StoryObj<typeof Table>;
 
 // --- Real-world usage story (jobs list, from the compute plugin) ---
 
@@ -81,7 +81,7 @@ const cellRenderers: CellRenderers<Job> = {
 export const JobsList: Story = {
   name: "Jobs List",
   render: () => (
-    <DataTable
+    <Table
       columns={columns}
       data={data}
       cellRenderers={cellRenderers}

@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, beforeEach } from "vitest";
 
-import { DataTable, type CellRenderers, type ColumnConfig } from "./DataTable";
+import { Table, type CellRenderers, type ColumnConfig } from "./Table";
 
 interface Row {
   id: string;
@@ -47,7 +47,7 @@ const cellRenderers: CellRenderers<Row> = {
 
 function renderTable(tableId: string) {
   return render(
-    <DataTable
+    <Table
       columns={columns}
       data={data}
       cellRenderers={cellRenderers}
@@ -57,7 +57,7 @@ function renderTable(tableId: string) {
   );
 }
 
-describe("DataTable", () => {
+describe("Table", () => {
   beforeEach(() => {
     window.localStorage.clear();
   });
@@ -97,7 +97,7 @@ describe("DataTable", () => {
 
   it("renders the empty state when the data is empty", async () => {
     render(
-      <DataTable
+      <Table
         columns={columns}
         data={[]}
         cellRenderers={cellRenderers}

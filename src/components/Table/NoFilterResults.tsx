@@ -5,7 +5,7 @@ import { useColumnFilters } from "./useColumnFilters";
 
 /**
  * "No results match your filters" empty state with a "Clear all filters"
- * action. Shared by DataTable views when column filters exclude every row.
+ * action. Shared by Table views when column filters exclude every row.
  */
 export function NoFilterResults({ tableId }: { tableId: string }) {
   const { resetFilters } = useColumnFilters({ tableId });

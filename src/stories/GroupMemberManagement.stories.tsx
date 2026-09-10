@@ -5,8 +5,8 @@ import { Input } from "../components/Form/Input";
 import { Select } from "../components/Form/Select";
 import type { SelectItem } from "../components/Form/Select";
 import { Dialog } from "../components/Dialog";
-import { DataTable } from "../components/DataTable";
-import type { CellRenderers, ColumnConfig } from "../components/DataTable";
+import { Table } from "../components/Table";
+import type { CellRenderers, ColumnConfig } from "../components/Table";
 import { Menu } from "../components/Menu";
 import type { MenuItemData } from "../components/Menu";
 import { IconButton } from "../components/IconButton";
@@ -324,7 +324,7 @@ function GroupMemberManagement() {
       />
 
       {/* Table */}
-      <DataTable
+      <Table
         columns={memberColumns}
         data={filtered}
         cellRenderers={memberRenderers}

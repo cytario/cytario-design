@@ -4,8 +4,8 @@ import type { Meta, StoryObj } from "storybook/react";
 import { Badge } from "../Badge";
 import { Banner } from "../Banner";
 import { Card } from "../Card";
-import { DataTable } from "../DataTable";
-import type { CellRenderers, ColumnConfig } from "../DataTable";
+import { Table } from "../Table";
+import type { CellRenderers, ColumnConfig } from "../Table";
 import { DeltaIndicator } from "../DeltaIndicator";
 import { MetricCard } from "../MetricCard";
 import { ProgressBar } from "../ProgressBar";
@@ -127,7 +127,7 @@ function WorkloadBreakdown({
   workloads: Workload[];
 }) {
   return (
-    <DataTable
+    <Table
       columns={workloadColumns}
       data={workloads}
       cellRenderers={workloadRenderers}
