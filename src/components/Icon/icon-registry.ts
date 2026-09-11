@@ -23,6 +23,7 @@ import {
   ChevronRight,
   ChevronUp,
   Circle,
+  CircleDashed,
   CircleDot,
   CircleSlash,
   Clock,
@@ -92,6 +93,7 @@ import {
   SearchX,
   Send,
   Settings,
+  Share2,
   Shield,
   ShieldCheck,
   Spline,
@@ -142,6 +144,7 @@ export type IconName =
   | "ChevronRight"
   | "ChevronUp"
   | "Circle"
+  | "CircleDashed"
   | "CircleDot"
   | "CircleSlash"
   | "Clock"
@@ -213,6 +216,7 @@ export type IconName =
   | "SearchX"
   | "Send"
   | "Settings"
+  | "Share2"
   | "Shield"
   | "ShieldCheck"
   | "Spline"
@@ -264,6 +268,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   ChevronRight,
   ChevronUp,
   Circle,
+  CircleDashed,
   CircleDot,
   CircleSlash: CircleSlash,
   Clock,
@@ -335,6 +340,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   SearchX,
   Send,
   Settings,
+  Share2,
   Shield,
   ShieldCheck,
   Spline,
