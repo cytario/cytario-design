@@ -99,6 +99,16 @@ describe("TruncatedText", () => {
       expect(await screen.findByText("Copied")).toBeInTheDocument();
     });
 
+    it("renders a copy icon on copyable text (hover-revealed affordance)", () => {
+      mockOverflow(false);
+      const { container } = render(
+        <TruncatedText copyValue={LONG}>Short</TruncatedText>,
+      );
+      // The copy glyph svg is present but visually hidden until hover/focus.
+      const glyph = container.querySelector("svg.opacity-0.lucide-copy");
+      expect(glyph).not.toBeNull();
+    });
+
     it("copies on Enter for keyboard users", async () => {
       const user = userEvent.setup();
       mockOverflow(false);
