@@ -170,4 +170,35 @@ describe("Table", () => {
     const trigger = await screen.findByRole("button", { name: "Filter by Name" });
     expect(trigger.querySelector("span[aria-hidden=\"true\"]")).toBeTruthy();
   });
+
+  it("activates actionable rows on click and Enter, not through interactive cell content", async () => {
+    const pressed: string[] = [];
+    render(
+      <Table
+        columns={columns}
+        data={data}
+        cellRenderers={cellRenderers}
+        tableId="dt-rowpress"
+        ariaLabel="Row activation table"
+        showIndex={false}
+        onRowPress={(row) => pressed.push(row.name)}
+      />,
+    );
+    // Actionable rows show the pointer cursor.
+    const row = screen.getByText("Aaa").closest("tr");
+    expect(row?.className).toContain("cursor-pointer");
+
+    await userEvent.click(screen.getByText("Aaa"));
+    expect(pressed).toEqual(["Aaa"]);
+
+    // Keyboard: Enter activates the focused row.
+    row?.focus();
+    await userEvent.keyboard("{Enter}");
+    expect(pressed).toEqual(["Aaa", "Aaa"]);
+
+    // The clear-all-filters trigger never activates the row (interactive
+    // content owns its click) — clicking a filter funnel is not a row press.
+    await userEvent.click(screen.getByRole("button", { name: "Filter by Name" }));
+    expect(pressed).toEqual(["Aaa", "Aaa"]);
+  });
 });

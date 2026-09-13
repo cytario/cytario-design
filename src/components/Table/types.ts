@@ -71,6 +71,13 @@ export interface TableProps<TData extends object> {
   rowSelection?: RowSelectionState;
   onRowSelectionChange?: OnChangeFn<RowSelectionState>;
   getRowId?: (row: TData) => string;
+  /**
+   * Row activation: called when an actionable row is clicked or activated
+   * with Enter/Space. Setting it renders rows with a pointer cursor so the
+   * affordance is discoverable. Interactive cell content (links, copy
+   * affordances) stops propagation and never activates the row.
+   */
+  onRowPress?: (row: TData) => void;
   showFilters?: boolean;
   /** Sorting used when the viewer has no persisted preference — defaults to
    *  the anchor column ascending. */

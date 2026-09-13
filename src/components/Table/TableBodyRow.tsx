@@ -15,6 +15,8 @@ interface TableBodyRowProps {
   showIndex: boolean;
   /** Id of the first visible data column — its cells carry no separator. */
   anchorDataColumnId?: string;
+  /** Row activation handler — null when rows are not actionable. */
+  onRowPress: ((row: unknown) => void) | null;
   className?: string;
 }
 
@@ -25,6 +27,7 @@ export function TableBodyRow({
   enableRowSelection,
   showIndex,
   anchorDataColumnId,
+  onRowPress,
   className,
 }: TableBodyRowProps) {
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLTableRowElement>) => {
@@ -38,25 +41,51 @@ export function TableBodyRow({
       event.preventDefault();
       const prev = tr.previousElementSibling as HTMLElement | null;
       prev?.focus();
+    } else if (event.key === "Enter" && onRowPress) {
+      event.preventDefault();
+      onRowPress(row.original);
     } else if (event.key === "Enter") {
       const link = tr.querySelector("a");
       link?.click();
     }
-  }, []);
+  }, [onRowPress, row.original]);
 
   return (
     <tr
       tabIndex={0}
       onKeyDown={handleKeyDown}
+      onClick={
+        onRowPress
+          ? (event) => {
+              // Interactive cell content owns its clicks — never swallow them
+              // into a row activation.
+              if ((event.target as HTMLElement).closest("a, [role='button'], [data-copy]"))
+                return;
+              onRowPress(row.original);
+            }
+          : undefined
+      }
       className={twMerge(
         "w-full block border-b border-border",
         "hover:bg-card transition-colors",
         "focus-visible:outline-none focus-visible:bg-muted focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
+        onRowPress && "cursor-pointer",
         row.getIsSelected() && "bg-accent",
         className,
       )}
     >
       {row.getVisibleCells().map((cell) => {
+        const isSelectionColumn = cell.column.id === "selection";
+        if (isSelectionColumn) {
+          return (
+            <td key={cell.id} className="relative p-2" style={{ width: cell.column.getSize() }}>
+              <Checkbox
+                isSelected={row.getIsSelected()}
+                onChange={() => row.toggleSelected()}
+              />
+            </td>
+          );
+        }
         const isIndexColumn = cell.column.id === "index";
         const columnConfig = columns.find((col) => col.id === cell.column.id);
         // The first data cell (after the index column, when present) carries no
@@ -99,9 +128,6 @@ export function TableBodyRow({
         return isIndexColumn ? (
           <th key={cell.id} className="relative p-2" style={style}>
             <div className="flex items-center gap-1 text-sm text-muted-foreground tabular-nums justify-between">
-              {enableRowSelection && (
-                <Checkbox isSelected={row.getIsSelected()} onChange={() => row.toggleSelected()} />
-              )}
               <span>{rowIndex + 1}</span>
             </div>
           </th>

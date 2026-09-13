@@ -5,6 +5,7 @@ import {
   UIEvent,
   useRef,
 } from "react";
+import { Icon } from "../Icon";
 import { Tooltip } from "../Tooltip";
 import { useCopyToClipboard } from "./useCopyToClipboard";
 import { useMiddleEllipsis } from "./useMiddleEllipsis";
@@ -26,7 +27,17 @@ const spanCx = "truncate overflow-hidden whitespace-nowrap block min-w-0 w-full"
 // text; on a w-full element the negative margin overflows the container and
 // clips on the right — keep the highlight within the text box instead.
 const copyCx =
-  "hover:bg-accent transition-colors rounded cursor-pointer";
+  "hover:bg-accent transition-colors rounded cursor-pointer group/copy";
+
+// Hover/focus-revealed copy affordance — a small icon at the trailing edge
+// that makes the click-to-copy behavior discoverable. The whole glyph
+// (backdrop included) fades as one; when hidden, nothing is painted over the
+// text. pointer-events-none so the whole span remains the click target.
+const CopyGlyph = () => (
+  <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 bg-background/80 opacity-0 transition-opacity group-hover/copy:opacity-100 group-focus-within/copy:opacity-100">
+    <Icon icon="Copy" size="xs" />
+  </span>
+);
 
 const leftStyle: CSSProperties = { direction: "rtl", textAlign: "left" };
 
@@ -79,6 +90,7 @@ const RightEllipsis = ({ children, copyValue }: { children: ReactNode; copyValue
         tabIndex={isCopyable ? 0 : undefined}
       >
         {children}
+        {isCopyable && !isCopied && <CopyGlyph />}
         {isCopied && <CopiedOverlay />}
       </span>
     </Tooltip>
@@ -109,6 +121,7 @@ const LeftEllipsis = ({ children, copyValue }: { children: ReactNode; copyValue?
         tabIndex={isCopyable ? 0 : undefined}
       >
         <bdi>{children}</bdi>
+        {isCopyable && !isCopied && <CopyGlyph />}
         {isCopied && <CopiedOverlay />}
       </span>
     </Tooltip>
@@ -144,6 +157,7 @@ const MiddleEllipsisString = ({ text, copyValue }: { text: string; copyValue?: s
         tabIndex={isCopyable ? 0 : undefined}
       >
         {displayed}
+        {isCopyable && !isCopied && <CopyGlyph />}
         {isCopied && <CopiedOverlay />}
       </span>
     </Tooltip>

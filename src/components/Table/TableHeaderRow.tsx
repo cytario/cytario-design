@@ -22,10 +22,37 @@ export function TableHeaderRow({
   enableRowSelection,
   showFilters,
 }: TableHeaderRowProps) {
+
   return (
     <tr key={headerGroup.id} className="w-full block">
       {headerGroup.headers.map((header) => {
         const columnConfig = columns.find((col) => col.id === header.id);
+
+        const isSelectionColumn = header.id === "selection";
+        if (isSelectionColumn) {
+          return (
+            <th
+              key={header.id}
+              className="relative p-2"
+              style={{
+                width: header.getSize(),
+                minWidth: header.getSize(),
+                maxWidth: header.getSize(),
+              }}
+            >
+              {enableRowSelection && (
+                <Checkbox
+                  isSelected={header.getContext().table.getIsAllRowsSelected()}
+                  isIndeterminate={
+                    header.getContext().table.getIsSomeRowsSelected() &&
+                    !header.getContext().table.getIsAllRowsSelected()
+                  }
+                  onChange={() => header.getContext().table.toggleAllRowsSelected()}
+                />
+              )}
+            </th>
+          );
+        }
 
         const isIndexColumn = header.id === "index";
 
@@ -75,18 +102,7 @@ export function TableHeaderRow({
               isSorted === "asc" ? "ascending" : isSorted === "desc" ? "descending" : undefined
             }
           >
-            {isIndexColumn ? (
-              enableRowSelection && (
-                <Checkbox
-                  isSelected={header.getContext().table.getIsAllRowsSelected()}
-                  isIndeterminate={
-                    header.getContext().table.getIsSomeRowsSelected() &&
-                    !header.getContext().table.getIsAllRowsSelected()
-                  }
-                  onChange={() => header.getContext().table.toggleAllRowsSelected()}
-                />
-              )
-            ) : (
+            {isIndexColumn ? null : (
               <div className="flex flex-col gap-1 pb-2">
                 <div className="flex items-center justify-between gap-1">
                   {header.column.getCanSort() ? (
