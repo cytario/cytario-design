@@ -1,50 +1,27 @@
 import { Checkbox } from "../Form/Checkbox";
-import { IconButton } from "../IconButton";
 import { TruncatedText } from "../TruncatedText";
-import { HeaderGroup, VisibilityState, flexRender } from "@tanstack/react-table";
+import { HeaderGroup, flexRender } from "@tanstack/react-table";
 import { twMerge } from "tailwind-merge";
 
 import { ColumnFilterInput } from "./ColumnFilterInput";
 import { ColumnResizeHandle } from "./ColumnResizeHandle";
 import { ColumnSortButton } from "./ColumnSortButton";
-import { TableMenu } from "./TableMenu";
 import { ColumnConfig } from "./types";
 
 interface TableHeaderRowProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   headerGroup: HeaderGroup<any>;
   columns: ColumnConfig[];
-  tableId: string;
-  toggleableColumns: ColumnConfig[];
-  columnVisibility: VisibilityState;
-  toggleColumn: (columnId: string) => void;
   enableRowSelection: boolean;
-  hasFilters: boolean;
-  onClearAllFilters: () => void;
   showFilters: boolean;
-  /** Whether the leading index column exists. When false, the
-   *  column-picker menu and clear-all-filters action — otherwise hosted in
-   *  the index column's header — anchor to the first visible column. */
-  showIndex: boolean;
 }
 
 export function TableHeaderRow({
   headerGroup,
   columns,
-  tableId,
-  toggleableColumns,
-  columnVisibility,
-  toggleColumn,
   enableRowSelection,
-  hasFilters,
-  onClearAllFilters,
   showFilters,
-  showIndex,
 }: TableHeaderRowProps) {
-  // Without an index column, its header chrome (selection checkbox, column
-  // picker, clear-all-filters) needs a host: the first visible data column.
-  const firstDataHeader = showIndex ? null : headerGroup.headers.find((h) => h.id !== "index");
-  const isMenuHost = (headerId: string) => !showIndex && headerId === firstDataHeader?.id;
   return (
     <tr key={headerGroup.id} className="w-full block">
       {headerGroup.headers.map((header) => {
@@ -56,15 +33,6 @@ export function TableHeaderRow({
 
         const baseClass = "relative pl-4 pr-4 group/header text-sm align-top";
         const indexClass = "text-right tabular-nums text-center p-1 px-2";
-        // Floating column separator, same as body cells — a 1px line in the
-        // middle 60% of the header cell, never touching the header border.
-        const separator =
-          !isIndexColumn && header.id !== firstDataHeader?.id ? (
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-y-[20%] left-0 w-px bg-border"
-            />
-          ) : null;
 
         const alignClasses: Record<string, string> = {
           left: "text-left",
@@ -107,60 +75,20 @@ export function TableHeaderRow({
               isSorted === "asc" ? "ascending" : isSorted === "desc" ? "descending" : undefined
             }
           >
-            {separator}
             {isIndexColumn ? (
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-1">
-                  {enableRowSelection && (
-                    <Checkbox
-                      isSelected={header.getContext().table.getIsAllRowsSelected()}
-                      isIndeterminate={
-                        header.getContext().table.getIsSomeRowsSelected() &&
-                        !header.getContext().table.getIsAllRowsSelected()
-                      }
-                      onChange={() => header.getContext().table.toggleAllRowsSelected()}
-                    />
-                  )}
-                  <TableMenu
-                    toggleableColumns={toggleableColumns}
-                    columnVisibility={columnVisibility}
-                    toggleColumn={toggleColumn}
-                    tableId={tableId}
-                  />
-                </div>
-                {hasFilters && (
-                  <IconButton
-                    icon="FilterX"
-                    size="sm"
-                    variant="secondary"
-                    onPress={onClearAllFilters}
-                    label="Clear all filters"
-                  />
-                )}
-              </div>
+              enableRowSelection && (
+                <Checkbox
+                  isSelected={header.getContext().table.getIsAllRowsSelected()}
+                  isIndeterminate={
+                    header.getContext().table.getIsSomeRowsSelected() &&
+                    !header.getContext().table.getIsAllRowsSelected()
+                  }
+                  onChange={() => header.getContext().table.toggleAllRowsSelected()}
+                />
+              )
             ) : (
               <div className="flex flex-col gap-1 pb-2">
-                {isMenuHost(header.id) && (
-                  <div className="flex items-center gap-1">
-                    {enableRowSelection && (
-                      <Checkbox
-                        isSelected={header.getContext().table.getIsAllRowsSelected()}
-                        isIndeterminate={
-                          header.getContext().table.getIsSomeRowsSelected() &&
-                          !header.getContext().table.getIsAllRowsSelected()
-                        }
-                        onChange={() => header.getContext().table.toggleAllRowsSelected()}
-                      />
-                    )}
-                    <TableMenu
-                      toggleableColumns={toggleableColumns}
-                      columnVisibility={columnVisibility}
-                      toggleColumn={toggleColumn}
-                      tableId={tableId}
-                    />
-                  </div>
-                )}
-                <div className="flex items-center gap-1">
+                <div className="flex items-center justify-between gap-1">
                   {header.column.getCanSort() ? (
                     // Sortable Header
                     <button
@@ -190,15 +118,6 @@ export function TableHeaderRow({
                         </TruncatedText>
                       </div>
                     </div>
-                  )}
-                  {isMenuHost(header.id) && hasFilters && (
-                    <IconButton
-                      icon="FilterX"
-                      size="sm"
-                      variant="ghost"
-                      onPress={onClearAllFilters}
-                      label="Clear all filters"
-                    />
                   )}
                   {showFilters &&
                     header.column.getCanFilter() &&

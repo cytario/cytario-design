@@ -18,8 +18,8 @@ export const ColumnSortButton = ({ header }: { header: Header<unknown, unknown> 
   const cx = getStyle(sortDirection);
 
   return sortDirection === "desc" ? (
-    <Icon icon="ChevronUp" size="xs" className={cx} />
+    <Icon icon="ArrowDown" size="xs" className={cx} />
   ) : (
-    <Icon icon="ChevronDown" size="xs" className={cx} />
+    <Icon icon="ArrowUp" size="xs" className={cx} />
   );
 };
