@@ -91,7 +91,7 @@ export const JobsList: Story = {
   ),
 };
 
-// --- showIndex opt-out (C-503) ---
+// --- showIndex opt-out ---
 
 export const JobsListNoIndex: Story = {
   name: "Jobs List (no line numbers)",

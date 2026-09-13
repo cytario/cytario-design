@@ -11,7 +11,7 @@ interface TableBodyRowProps {
   rowIndex: number;
   columns: ColumnConfig[];
   enableRowSelection: boolean;
-  /** Whether the leading index column exists (C-503). */
+  /** Whether the leading index column exists. */
   showIndex: boolean;
   className?: string;
 }

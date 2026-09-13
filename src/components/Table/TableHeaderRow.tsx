@@ -22,7 +22,7 @@ interface TableHeaderRowProps {
   hasFilters: boolean;
   onClearAllFilters: () => void;
   showFilters: boolean;
-  /** Whether the leading index column exists (C-503). When false, the
+  /** Whether the leading index column exists. When false, the
    *  column-picker menu and clear-all-filters action — otherwise hosted in
    *  the index column's header — anchor to the first visible column. */
   showIndex: boolean;
