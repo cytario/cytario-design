@@ -25,7 +25,7 @@ export function Switch({
 }: SwitchProps) {
   return (
     <SwitchField {...props}>
-      <SwitchButton className="relative cursor-pointer">
+      <SwitchButton className="relative cursor-pointer flex items-center gap-2">
         {({ isSelected, isFocusVisible }) => (
           <>
             {/* Track */}
@@ -57,7 +57,7 @@ export function Switch({
                 )}
               />
             </div>
-            {children && <span>{children}</span>}
+            {children && <span className="flex items-center">{children}</span>}
           </>
         )}
       </SwitchButton>

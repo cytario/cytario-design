@@ -1,39 +1,25 @@
 import { Checkbox } from "../Form/Checkbox";
-import { IconButton } from "../IconButton";
 import { TruncatedText } from "../TruncatedText";
-import { HeaderGroup, VisibilityState, flexRender } from "@tanstack/react-table";
+import { HeaderGroup, flexRender } from "@tanstack/react-table";
 import { twMerge } from "tailwind-merge";
 
 import { ColumnFilterInput } from "./ColumnFilterInput";
 import { ColumnResizeHandle } from "./ColumnResizeHandle";
 import { ColumnSortButton } from "./ColumnSortButton";
-import { TableMenu } from "./TableMenu";
 import { ColumnConfig } from "./types";
 
 interface TableHeaderRowProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   headerGroup: HeaderGroup<any>;
   columns: ColumnConfig[];
-  tableId: string;
-  toggleableColumns: ColumnConfig[];
-  columnVisibility: VisibilityState;
-  toggleColumn: (columnId: string) => void;
   enableRowSelection: boolean;
-  hasFilters: boolean;
-  onClearAllFilters: () => void;
   showFilters: boolean;
 }
 
 export function TableHeaderRow({
   headerGroup,
   columns,
-  tableId,
-  toggleableColumns,
-  columnVisibility,
-  toggleColumn,
   enableRowSelection,
-  hasFilters,
-  onClearAllFilters,
   showFilters,
 }: TableHeaderRowProps) {
   return (
@@ -90,79 +76,61 @@ export function TableHeaderRow({
             }
           >
             {isIndexColumn ? (
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-1">
-                  {enableRowSelection && (
-                    <Checkbox
-                      isSelected={header.getContext().table.getIsAllRowsSelected()}
-                      isIndeterminate={
-                        header.getContext().table.getIsSomeRowsSelected() &&
-                        !header.getContext().table.getIsAllRowsSelected()
-                      }
-                      onChange={() => header.getContext().table.toggleAllRowsSelected()}
-                    />
-                  )}
-                  <TableMenu
-                    toggleableColumns={toggleableColumns}
-                    columnVisibility={columnVisibility}
-                    toggleColumn={toggleColumn}
-                    tableId={tableId}
-                  />
-                </div>
-                {hasFilters && (
-                  <IconButton
-                    icon="FilterX"
-                    size="sm"
-                    variant="secondary"
-                    onPress={onClearAllFilters}
-                    label="Clear all filters"
-                  />
-                )}
-              </div>
+              enableRowSelection && (
+                <Checkbox
+                  isSelected={header.getContext().table.getIsAllRowsSelected()}
+                  isIndeterminate={
+                    header.getContext().table.getIsSomeRowsSelected() &&
+                    !header.getContext().table.getIsAllRowsSelected()
+                  }
+                  onChange={() => header.getContext().table.toggleAllRowsSelected()}
+                />
+              )
             ) : (
-              <div className="flex flex-col gap-2 pb-2">
-                {header.column.getCanSort() ? (
-                  // Sortable Header
-                  <button
-                    type="button"
-                    className={twMerge(
-                      tableHeadCx,
-                      tableHeadToggleCx,
-                      isRight && "flex-row-reverse",
-                      isSorted && "text-foreground",
-                    )}
-                    onClick={header.column.getToggleSortingHandler() ?? undefined}
-                  >
-                    <div className="min-w-0">
-                      <TruncatedText>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </TruncatedText>
-                    </div>
+              <div className="flex flex-col gap-1 pb-2">
+                <div className="flex items-center justify-between gap-1">
+                  {header.column.getCanSort() ? (
+                    // Sortable Header
+                    <button
+                      type="button"
+                      className={twMerge(
+                        tableHeadCx,
+                        tableHeadToggleCx,
+                        isRight && "flex-row-reverse",
+                        isSorted && "text-foreground",
+                      )}
+                      onClick={header.column.getToggleSortingHandler() ?? undefined}
+                    >
+                      <div className="min-w-0">
+                        <TruncatedText>
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                        </TruncatedText>
+                      </div>
 
-                    <ColumnSortButton header={header} />
-                  </button>
-                ) : (
-                  // Non-Sortable Header
-                  <div className={tableHeadCx}>
-                    <div className="min-w-0">
-                      <TruncatedText>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </TruncatedText>
+                      <ColumnSortButton header={header} />
+                    </button>
+                  ) : (
+                    // Non-Sortable Header
+                    <div className={tableHeadCx}>
+                      <div className="min-w-0">
+                        <TruncatedText>
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                        </TruncatedText>
+                      </div>
                     </div>
-                  </div>
-                )}
-
-                {showFilters &&
-                  header.column.getCanFilter() &&
-                  columnConfig?.enableColumnFilter && (
-                    <ColumnFilterInput
-                      column={header.column}
-                      filterType={columnConfig.filterType ?? "text"}
-                      filterPlaceholder={columnConfig.filterPlaceholder}
-                      filterOptions={columnConfig.filterOptions}
-                      filterRender={columnConfig.filterRender}
-                    />
                   )}
+                  {showFilters &&
+                    header.column.getCanFilter() &&
+                    columnConfig?.enableColumnFilter && (
+                      <ColumnFilterInput
+                        column={header.column}
+                        filterType={columnConfig.filterType ?? "text"}
+                        filterPlaceholder={columnConfig.filterPlaceholder}
+                        filterOptions={columnConfig.filterOptions}
+                        filterRender={columnConfig.filterRender}
+                      />
+                    )}
+                </div>
               </div>
             )}
 

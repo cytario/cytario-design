@@ -47,6 +47,7 @@ import {
   FolderPlus,
   FolderTree,
   Fullscreen,
+  Funnel,
   Grid2x2,
   Grid3x3,
   Hand,
@@ -165,6 +166,7 @@ export type IconName =
   | "FolderPlus"
   | "FolderTree"
   | "Fullscreen"
+  | "Funnel"
   | "Github"
   | "Grid2x2"
   | "Grid3x3"
@@ -286,6 +288,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   FolderPlus,
   FolderTree,
   Fullscreen,
+  Funnel,
   Github: GithubIcon as unknown as LucideIcon,
   Grid2x2,
   Grid3x3,

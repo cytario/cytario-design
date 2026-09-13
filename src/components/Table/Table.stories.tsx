@@ -90,3 +90,20 @@ export const JobsList: Story = {
     />
   ),
 };
+
+// --- showIndex opt-out ---
+
+export const JobsListNoIndex: Story = {
+  name: "Jobs List (no line numbers)",
+  parameters: { docs: { description: { story: "Same table with `showIndex={false}` — the line-number column is omitted and the column-picker menu anchors to the first column header." } } },
+  render: () => (
+    <Table
+      columns={columns}
+      data={data}
+      cellRenderers={cellRenderers}
+      tableId="storybook-jobs-noindex"
+      ariaLabel="Jobs"
+      showIndex={false}
+    />
+  ),
+};

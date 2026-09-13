@@ -10,10 +10,12 @@ import {
 import { ReactNode, useCallback, useMemo, useRef } from "react";
 
 import { EmptyState } from "../EmptyState";
+import { IconButton } from "../IconButton";
 
 import { NoFilterResults } from "./NoFilterResults";
 import { TableBodyRow } from "./TableBodyRow";
 import { TableHeaderRow } from "./TableHeaderRow";
+import { TableMenu } from "./TableMenu";
 import { CellRenderers, TableProps } from "./types";
 import { useColumnFilters } from "./useColumnFilters";
 import { useColumnVisibility } from "./useColumnVisibility";
@@ -41,6 +43,7 @@ export function Table<TData extends object>({
   getRowId,
   showFilters = true,
   defaultSorting,
+  showIndex = true,
 }: TableProps<TData>) {
   const { columnSizing, setColumnSizing } = useColumnWidths(columns, tableId);
   const anchorColumnId = columns.find((c) => c.anchor)?.id ?? columns[0]?.id;
@@ -99,8 +102,8 @@ export function Table<TData extends object>({
       } as ColumnDef<TData>;
     });
 
-    return [indexColumn, ...dataColumns];
-  }, [columns, cellRenderers, indexColumnSize]);
+    return showIndex ? [indexColumn, ...dataColumns] : dataColumns;
+  }, [columns, cellRenderers, indexColumnSize, showIndex]);
 
   const table = useReactTable({
     data,
@@ -159,6 +162,11 @@ export function Table<TData extends object>({
   const filteredCount = table.getRowModel().rows.length;
   const totalCount = data.length;
   const isFiltered = filteredCount !== totalCount;
+  // The first visible data column — cells in it carry no floating separator
+  // (a leading separator would sit on the row's left edge).
+  const firstVisibleColumnId = table
+    .getVisibleLeafColumns()
+    .find((c) => c.id !== "index")?.id;
 
   return (
     <>
@@ -167,10 +175,39 @@ export function Table<TData extends object>({
         {isFiltered ? `Showing ${filteredCount} of ${totalCount} rows` : ""}
       </div>
 
-      {/* Sticky header — sticks vertically, scrolls horizontally (hidden scrollbar) */}
+      {/* Table controls, top-right above the table: the column picker
+          (TableMenu) and the clear-all-filters action. Keeping them out of
+          the header row leaves it visually quiet (react-data-table default
+          look); a right-aligned row above the table mirrors their placement
+          there. */}
+      {(toggleableColumns.length > 0 || columnFilters.length > 0) && (
+        <div className="flex items-center justify-end gap-1 pb-1">
+          {columnFilters.length > 0 && (
+            <IconButton
+              icon="FilterX"
+              size="sm"
+              variant="ghost"
+              onPress={resetFilters}
+              label="Clear all filters"
+            />
+          )}
+          {toggleableColumns.length > 0 && (
+            <TableMenu
+              toggleableColumns={toggleableColumns}
+              columnVisibility={columnVisibility}
+              toggleColumn={toggleColumn}
+              tableId={tableId}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Sticky header — sticks vertically, scrolls horizontally (hidden
+          scrollbar). The pb-1.5 gives the header a slight gap above the
+          content rows instead of the border touching the first row. */}
       <div
         ref={headerRef}
-        className="sticky top-0 z-10 bg-white border-b border-border overflow-x-auto"
+        className="sticky top-0 z-10 bg-white border-b border-border pb-1.5 overflow-x-auto"
         style={{ scrollbarWidth: "none" }}
         onScroll={handleHeaderScroll}
       >
@@ -181,13 +218,7 @@ export function Table<TData extends object>({
                 key={headerGroup.id}
                 headerGroup={headerGroup}
                 columns={columns}
-                tableId={tableId}
-                toggleableColumns={toggleableColumns}
-                columnVisibility={columnVisibility}
-                toggleColumn={toggleColumn}
                 enableRowSelection={!!enableRowSelection}
-                hasFilters={columnFilters.length > 0}
-                onClearAllFilters={resetFilters}
                 showFilters={showFilters}
               />
             ))}
@@ -201,13 +232,13 @@ export function Table<TData extends object>({
           <tbody>
             {data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + 1}>
+                <td colSpan={columns.length + (showIndex ? 1 : 0)}>
                   <EmptyState icon="Inbox" title="No results" />
                 </td>
               </tr>
             ) : table.getRowModel().rows.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + 1}>
+                <td colSpan={columns.length + (showIndex ? 1 : 0)}>
                   <NoFilterResults tableId={tableId} />
                 </td>
               </tr>
@@ -221,6 +252,8 @@ export function Table<TData extends object>({
                     rowIndex={index}
                     columns={columns}
                     enableRowSelection={!!enableRowSelection}
+                    showIndex={showIndex}
+                    anchorDataColumnId={firstVisibleColumnId}
                   />
                 ))
             )}

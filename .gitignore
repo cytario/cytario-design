@@ -24,3 +24,4 @@ coverage/
 
 # Local issue tracking
 ISSUES.md
+debug-storybook.log

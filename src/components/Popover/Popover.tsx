@@ -28,16 +28,26 @@ export interface PopoverTriggerProps {
   children: React.ReactNode;
   /** Additional CSS classes for the trigger wrapper */
   className?: string;
+  /** Accessible label for the trigger button. */
+  "aria-label"?: string;
 }
 
 /** Wraps its child in an AriaButton so it can toggle the parent Popover. */
-export function PopoverTrigger({ children, className }: PopoverTriggerProps) {
+export function PopoverTrigger({
+  children,
+  className,
+  "aria-label": ariaLabel,
+}: PopoverTriggerProps) {
   const cx = `
     inline-flex items-center bg-transparent border-none p-0 outline-none cursor-pointer
     focus-visible:ring-2 focus-visible:ring-ring focus-visible:rounded-sm
   `;
 
-  return <AriaButton className={twMerge(cx, className)}>{children}</AriaButton>;
+  return (
+    <AriaButton aria-label={ariaLabel} className={twMerge(cx, className)}>
+      {children}
+    </AriaButton>
+  );
 }
 
 export interface PopoverContentProps {
