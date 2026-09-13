@@ -75,4 +75,9 @@ export interface TableProps<TData extends object> {
   /** Sorting used when the viewer has no persisted preference — defaults to
    *  the anchor column ascending. */
   defaultSorting?: SortingState;
+  /** Whether to render the leading index (line-number) column. Defaults to
+   *  true (historical behavior). When false, the column-picker menu and the
+   *  clear-all-filters action — which otherwise live in the index column's
+   *  header — anchor to the first visible column header instead. */
+  showIndex?: boolean;
 }

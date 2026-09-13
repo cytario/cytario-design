@@ -121,4 +121,33 @@ describe("Table", () => {
       screen.getByRole("button", { name: "Clear all filters" }),
     ).toBeTruthy();
   });
+
+  it("hides the index column when showIndex is false and keeps the column-picker reachable", async () => {
+    render(
+      <Table
+        columns={columns}
+        data={data}
+        cellRenderers={cellRenderers}
+        tableId="dt-noindex"
+        ariaLabel="Indexless table"
+        showIndex={false}
+      />,
+    );
+    // No line numbers render anywhere.
+    for (const n of ["1", "2", "3"]) {
+      expect(screen.queryByText(new RegExp(`^${n}$`))).toBeNull();
+    }
+    // Data still renders, and the header labels are intact.
+    expect(await screen.findAllByText(/^(Aaa|Bbb|Ccc)$/)).toHaveLength(3);
+    expect(screen.getByText("Name")).toBeTruthy();
+    // The column-picker menu (hosted by the index column historically)
+    // is anchored to the first visible column header instead.
+    expect(screen.getByRole("button", { name: "Column settings" })).toBeTruthy();
+  });
+
+  it("shows the index column by default", async () => {
+    renderTable("dt-withindex");
+    expect(screen.getByText("1")).toBeTruthy();
+    expect(screen.getByText("3")).toBeTruthy();
+  });
 });

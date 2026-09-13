@@ -22,6 +22,10 @@ interface TableHeaderRowProps {
   hasFilters: boolean;
   onClearAllFilters: () => void;
   showFilters: boolean;
+  /** Whether the leading index column exists (C-503). When false, the
+   *  column-picker menu and clear-all-filters action — otherwise hosted in
+   *  the index column's header — anchor to the first visible column. */
+  showIndex: boolean;
 }
 
 export function TableHeaderRow({
@@ -35,7 +39,12 @@ export function TableHeaderRow({
   hasFilters,
   onClearAllFilters,
   showFilters,
+  showIndex,
 }: TableHeaderRowProps) {
+  // Without an index column, its header chrome (selection checkbox, column
+  // picker, clear-all-filters) needs a host: the first visible data column.
+  const firstDataHeader = showIndex ? null : headerGroup.headers.find((h) => h.id !== "index");
+  const isMenuHost = (headerId: string) => !showIndex && headerId === firstDataHeader?.id;
   return (
     <tr key={headerGroup.id} className="w-full block">
       {headerGroup.headers.map((header) => {
@@ -121,6 +130,26 @@ export function TableHeaderRow({
               </div>
             ) : (
               <div className="flex flex-col gap-2 pb-2">
+                {isMenuHost(header.id) && (
+                  <div className="flex items-center gap-1">
+                    {enableRowSelection && (
+                      <Checkbox
+                        isSelected={header.getContext().table.getIsAllRowsSelected()}
+                        isIndeterminate={
+                          header.getContext().table.getIsSomeRowsSelected() &&
+                          !header.getContext().table.getIsAllRowsSelected()
+                        }
+                        onChange={() => header.getContext().table.toggleAllRowsSelected()}
+                      />
+                    )}
+                    <TableMenu
+                      toggleableColumns={toggleableColumns}
+                      columnVisibility={columnVisibility}
+                      toggleColumn={toggleColumn}
+                      tableId={tableId}
+                    />
+                  </div>
+                )}
                 {header.column.getCanSort() ? (
                   // Sortable Header
                   <button
@@ -163,6 +192,15 @@ export function TableHeaderRow({
                       filterRender={columnConfig.filterRender}
                     />
                   )}
+                {isMenuHost(header.id) && hasFilters && (
+                  <IconButton
+                    icon="FilterX"
+                    size="sm"
+                    variant="secondary"
+                    onPress={onClearAllFilters}
+                    label="Clear all filters"
+                  />
+                )}
               </div>
             )}
 

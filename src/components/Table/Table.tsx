@@ -41,6 +41,7 @@ export function Table<TData extends object>({
   getRowId,
   showFilters = true,
   defaultSorting,
+  showIndex = true,
 }: TableProps<TData>) {
   const { columnSizing, setColumnSizing } = useColumnWidths(columns, tableId);
   const anchorColumnId = columns.find((c) => c.anchor)?.id ?? columns[0]?.id;
@@ -99,8 +100,8 @@ export function Table<TData extends object>({
       } as ColumnDef<TData>;
     });
 
-    return [indexColumn, ...dataColumns];
-  }, [columns, cellRenderers, indexColumnSize]);
+    return showIndex ? [indexColumn, ...dataColumns] : dataColumns;
+  }, [columns, cellRenderers, indexColumnSize, showIndex]);
 
   const table = useReactTable({
     data,
@@ -189,6 +190,7 @@ export function Table<TData extends object>({
                 hasFilters={columnFilters.length > 0}
                 onClearAllFilters={resetFilters}
                 showFilters={showFilters}
+                showIndex={showIndex}
               />
             ))}
           </thead>
@@ -201,13 +203,13 @@ export function Table<TData extends object>({
           <tbody>
             {data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + 1}>
+                <td colSpan={columns.length + (showIndex ? 1 : 0)}>
                   <EmptyState icon="Inbox" title="No results" />
                 </td>
               </tr>
             ) : table.getRowModel().rows.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + 1}>
+                <td colSpan={columns.length + (showIndex ? 1 : 0)}>
                   <NoFilterResults tableId={tableId} />
                 </td>
               </tr>
@@ -221,6 +223,7 @@ export function Table<TData extends object>({
                     rowIndex={index}
                     columns={columns}
                     enableRowSelection={!!enableRowSelection}
+                    showIndex={showIndex}
                   />
                 ))
             )}
