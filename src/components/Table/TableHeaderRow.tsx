@@ -56,6 +56,15 @@ export function TableHeaderRow({
 
         const baseClass = "relative pl-4 pr-4 group/header text-sm align-top";
         const indexClass = "text-right tabular-nums text-center p-1 px-2";
+        // Floating column separator, same as body cells — a 1px line in the
+        // middle 60% of the header cell, never touching the header border.
+        const separator =
+          !isIndexColumn && header.id !== firstDataHeader?.id ? (
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-[20%] left-0 w-px bg-border"
+            />
+          ) : null;
 
         const alignClasses: Record<string, string> = {
           left: "text-left",
@@ -98,6 +107,7 @@ export function TableHeaderRow({
               isSorted === "asc" ? "ascending" : isSorted === "desc" ? "descending" : undefined
             }
           >
+            {separator}
             {isIndexColumn ? (
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-1">
@@ -129,7 +139,7 @@ export function TableHeaderRow({
                 )}
               </div>
             ) : (
-              <div className="flex flex-col gap-2 pb-2">
+              <div className="flex flex-col gap-1 pb-2">
                 {isMenuHost(header.id) && (
                   <div className="flex items-center gap-1">
                     {enableRowSelection && (
@@ -150,57 +160,58 @@ export function TableHeaderRow({
                     />
                   </div>
                 )}
-                {header.column.getCanSort() ? (
-                  // Sortable Header
-                  <button
-                    type="button"
-                    className={twMerge(
-                      tableHeadCx,
-                      tableHeadToggleCx,
-                      isRight && "flex-row-reverse",
-                      isSorted && "text-foreground",
-                    )}
-                    onClick={header.column.getToggleSortingHandler() ?? undefined}
-                  >
-                    <div className="min-w-0">
-                      <TruncatedText>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </TruncatedText>
-                    </div>
+                <div className="flex items-center gap-1">
+                  {header.column.getCanSort() ? (
+                    // Sortable Header
+                    <button
+                      type="button"
+                      className={twMerge(
+                        tableHeadCx,
+                        tableHeadToggleCx,
+                        isRight && "flex-row-reverse",
+                        isSorted && "text-foreground",
+                      )}
+                      onClick={header.column.getToggleSortingHandler() ?? undefined}
+                    >
+                      <div className="min-w-0">
+                        <TruncatedText>
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                        </TruncatedText>
+                      </div>
 
-                    <ColumnSortButton header={header} />
-                  </button>
-                ) : (
-                  // Non-Sortable Header
-                  <div className={tableHeadCx}>
-                    <div className="min-w-0">
-                      <TruncatedText>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </TruncatedText>
+                      <ColumnSortButton header={header} />
+                    </button>
+                  ) : (
+                    // Non-Sortable Header
+                    <div className={tableHeadCx}>
+                      <div className="min-w-0">
+                        <TruncatedText>
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                        </TruncatedText>
+                      </div>
                     </div>
-                  </div>
-                )}
-
-                {showFilters &&
-                  header.column.getCanFilter() &&
-                  columnConfig?.enableColumnFilter && (
-                    <ColumnFilterInput
-                      column={header.column}
-                      filterType={columnConfig.filterType ?? "text"}
-                      filterPlaceholder={columnConfig.filterPlaceholder}
-                      filterOptions={columnConfig.filterOptions}
-                      filterRender={columnConfig.filterRender}
+                  )}
+                  {isMenuHost(header.id) && hasFilters && (
+                    <IconButton
+                      icon="FilterX"
+                      size="sm"
+                      variant="ghost"
+                      onPress={onClearAllFilters}
+                      label="Clear all filters"
                     />
                   )}
-                {isMenuHost(header.id) && hasFilters && (
-                  <IconButton
-                    icon="FilterX"
-                    size="sm"
-                    variant="secondary"
-                    onPress={onClearAllFilters}
-                    label="Clear all filters"
-                  />
-                )}
+                  {showFilters &&
+                    header.column.getCanFilter() &&
+                    columnConfig?.enableColumnFilter && (
+                      <ColumnFilterInput
+                        column={header.column}
+                        filterType={columnConfig.filterType ?? "text"}
+                        filterPlaceholder={columnConfig.filterPlaceholder}
+                        filterOptions={columnConfig.filterOptions}
+                        filterRender={columnConfig.filterRender}
+                      />
+                    )}
+                </div>
               </div>
             )}
 

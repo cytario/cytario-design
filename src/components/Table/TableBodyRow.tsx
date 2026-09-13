@@ -13,6 +13,8 @@ interface TableBodyRowProps {
   enableRowSelection: boolean;
   /** Whether the leading index column exists. */
   showIndex: boolean;
+  /** Id of the first visible data column — its cells carry no separator. */
+  anchorDataColumnId?: string;
   className?: string;
 }
 
@@ -22,6 +24,7 @@ export function TableBodyRow({
   columns,
   enableRowSelection,
   showIndex,
+  anchorDataColumnId,
   className,
 }: TableBodyRowProps) {
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLTableRowElement>) => {
@@ -56,6 +59,10 @@ export function TableBodyRow({
       {row.getVisibleCells().map((cell) => {
         const isIndexColumn = cell.column.id === "index";
         const columnConfig = columns.find((col) => col.id === cell.column.id);
+        // The first data cell (after the index column, when present) carries no
+        // leading separator — it would sit on the row's left edge.
+        const isFirstDataCell =
+          cell.column.id === anchorDataColumnId;
 
         const isRight = columnConfig?.align === "right";
         const alignClass = isRight
@@ -64,7 +71,7 @@ export function TableBodyRow({
             ? "text-center"
             : "text-left";
         const cxCell = twMerge(
-          "px-4 py-2",
+          "relative px-4 py-2",
           isIndexColumn ? "text-right" : alignClass,
           columnConfig?.monospace && "font-mono font-light",
           (isRight || isIndexColumn) && "tabular-nums",
@@ -90,7 +97,7 @@ export function TableBodyRow({
           columnConfig?.copyable && typeof rawValue === "string" ? rawValue : undefined;
 
         return isIndexColumn ? (
-          <th key={cell.id} className="p-2" style={style}>
+          <th key={cell.id} className="relative p-2" style={style}>
             <div className="flex items-center gap-1 text-sm text-muted-foreground tabular-nums justify-between">
               {enableRowSelection && (
                 <Checkbox isSelected={row.getIsSelected()} onChange={() => row.toggleSelected()} />
@@ -100,6 +107,16 @@ export function TableBodyRow({
           </th>
         ) : (
           <td key={cell.id} className={cxCell} style={style}>
+            {/* Floating column separator (react-data-table default look): a
+                1px line in the middle 60% of the cell, never touching the
+                horizontal row lines. Rendered on every cell that follows
+                another visible cell so it never appears on the first. */}
+            {!isFirstDataCell && (
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-[20%] left-0 w-px bg-border"
+              />
+            )}
             <TruncatedText ellipsis={columnConfig?.ellipsis} copyValue={copyValue}>
               {content}
             </TruncatedText>

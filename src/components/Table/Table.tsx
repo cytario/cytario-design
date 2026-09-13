@@ -160,6 +160,11 @@ export function Table<TData extends object>({
   const filteredCount = table.getRowModel().rows.length;
   const totalCount = data.length;
   const isFiltered = filteredCount !== totalCount;
+  // The first visible data column — cells in it carry no floating separator
+  // (a leading separator would sit on the row's left edge).
+  const firstVisibleColumnId = table
+    .getVisibleLeafColumns()
+    .find((c) => c.id !== "index")?.id;
 
   return (
     <>
@@ -224,6 +229,7 @@ export function Table<TData extends object>({
                     columns={columns}
                     enableRowSelection={!!enableRowSelection}
                     showIndex={showIndex}
+                    anchorDataColumnId={firstVisibleColumnId}
                   />
                 ))
             )}

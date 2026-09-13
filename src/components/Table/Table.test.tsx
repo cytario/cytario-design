@@ -87,7 +87,9 @@ describe("Table", () => {
 
   it("narrows rows via a text column filter and announces the count", async () => {
     renderTable("dt-filter");
-    const input = screen.getByLabelText("Filter by Name");
+    // The filter input lives in a popover opened from the funnel icon.
+    await userEvent.click(screen.getByRole("button", { name: "Filter by Name" }));
+    const input = await screen.findByRole("textbox", { name: "Filter by Name" });
     await userEvent.type(input, "aa");
     await waitFor(() => expect(screen.getByText("Aaa")).toBeTruthy());
     expect(screen.queryByText("Bbb")).toBeNull();
@@ -112,14 +114,20 @@ describe("Table", () => {
 
   it("renders the filter empty state when active filters exclude every row", async () => {
     renderTable("dt-filtered-empty");
-    const input = screen.getByLabelText("Filter by Name");
+    await userEvent.click(screen.getByRole("button", { name: "Filter by Name" }));
+    const input = await screen.findByRole("textbox", { name: "Filter by Name" });
     await userEvent.type(input, "zzz");
     await waitFor(() =>
       expect(screen.getByText("No results match your filters")).toBeTruthy(),
     );
-    expect(
-      screen.getByRole("button", { name: "Clear all filters" }),
-    ).toBeTruthy();
+    // Close the popover (Escape) — the clear-all-filters action lives behind
+    // it and is only reachable with the popover closed.
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /clear all filters/i }),
+      ).toBeTruthy(),
+    );
   });
 
   it("hides the index column when showIndex is false and keeps the column-picker reachable", async () => {
@@ -149,5 +157,17 @@ describe("Table", () => {
     renderTable("dt-withindex");
     expect(screen.getByText("1")).toBeTruthy();
     expect(screen.getByText("3")).toBeTruthy();
+  });
+
+  it("shows the active dot on the filter trigger while a filter is set", async () => {
+    renderTable("dt-filter-dot");
+    await userEvent.click(screen.getByRole("button", { name: "Filter by Name" }));
+    const input = await screen.findByRole("textbox", { name: "Filter by Name" });
+    await userEvent.type(input, "aa");
+    await waitFor(() => expect(screen.getByText("Aaa")).toBeTruthy());
+    await userEvent.keyboard("{Escape}");
+    // The funnel trigger carries the small active indicator while filtering.
+    const trigger = await screen.findByRole("button", { name: "Filter by Name" });
+    expect(trigger.querySelector("span[aria-hidden=\"true\"]")).toBeTruthy();
   });
 });
