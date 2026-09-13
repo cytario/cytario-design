@@ -62,7 +62,8 @@ export function Table<TData extends object>({
     tableId,
   });
 
-  const indexColumnSize = enableRowSelection ? 80 : 48;
+  const SELECTION_COLUMN_SIZE = 48;
+  const indexColumnSize = 48;
 
   const columnDefs: ColumnDef<TData>[] = useMemo(() => {
     const indexColumn: ColumnDef<TData> = {
@@ -75,6 +76,20 @@ export function Table<TData extends object>({
       size: indexColumnSize,
       minSize: indexColumnSize,
       maxSize: indexColumnSize,
+    };
+
+    // Dedicated leading selection column (the react-data-table pattern):
+    // whenever row selection is on, a fixed-width system column carries the
+    // per-row checkbox, independent of the index column.
+    const selectionColumn: ColumnDef<TData> = {
+      id: "selection",
+      header: "",
+      enableResizing: false,
+      enableSorting: false,
+      enableColumnFilter: false,
+      size: SELECTION_COLUMN_SIZE,
+      minSize: SELECTION_COLUMN_SIZE,
+      maxSize: SELECTION_COLUMN_SIZE,
     };
 
     const dataColumns = columns.map((colConfig) => {
@@ -102,8 +117,11 @@ export function Table<TData extends object>({
       } as ColumnDef<TData>;
     });
 
-    return showIndex ? [indexColumn, ...dataColumns] : dataColumns;
-  }, [columns, cellRenderers, indexColumnSize, showIndex]);
+    const leading: ColumnDef<TData>[] = [];
+    if (enableRowSelection) leading.push(selectionColumn);
+    if (showIndex) leading.push(indexColumn);
+    return [...leading, ...dataColumns];
+  }, [columns, cellRenderers, indexColumnSize, showIndex, enableRowSelection]);
 
   const table = useReactTable({
     data,
@@ -232,13 +250,13 @@ export function Table<TData extends object>({
           <tbody>
             {data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + (showIndex ? 1 : 0)}>
+                <td colSpan={columns.length + (enableRowSelection ? 1 : 0) + (showIndex ? 1 : 0)}>
                   <EmptyState icon="Inbox" title="No results" />
                 </td>
               </tr>
             ) : table.getRowModel().rows.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + (showIndex ? 1 : 0)}>
+                <td colSpan={columns.length + (enableRowSelection ? 1 : 0) + (showIndex ? 1 : 0)}>
                   <NoFilterResults tableId={tableId} />
                 </td>
               </tr>

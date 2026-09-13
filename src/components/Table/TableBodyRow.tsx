@@ -57,6 +57,17 @@ export function TableBodyRow({
       )}
     >
       {row.getVisibleCells().map((cell) => {
+        const isSelectionColumn = cell.column.id === "selection";
+        if (isSelectionColumn) {
+          return (
+            <td key={cell.id} className="relative p-2" style={{ width: cell.column.getSize() }}>
+              <Checkbox
+                isSelected={row.getIsSelected()}
+                onChange={() => row.toggleSelected()}
+              />
+            </td>
+          );
+        }
         const isIndexColumn = cell.column.id === "index";
         const columnConfig = columns.find((col) => col.id === cell.column.id);
         // The first data cell (after the index column, when present) carries no
@@ -99,9 +110,6 @@ export function TableBodyRow({
         return isIndexColumn ? (
           <th key={cell.id} className="relative p-2" style={style}>
             <div className="flex items-center gap-1 text-sm text-muted-foreground tabular-nums justify-between">
-              {enableRowSelection && (
-                <Checkbox isSelected={row.getIsSelected()} onChange={() => row.toggleSelected()} />
-              )}
               <span>{rowIndex + 1}</span>
             </div>
           </th>
