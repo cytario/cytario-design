@@ -104,8 +104,9 @@ describe("TruncatedText", () => {
       const { container } = render(
         <TruncatedText copyValue={LONG}>Short</TruncatedText>,
       );
-      // The copy glyph svg is present but visually hidden until hover/focus.
-      const glyph = container.querySelector("svg.opacity-0.lucide-copy");
+      // The glyph (backdrop + icon) is present but visually hidden until
+      // hover/focus — the wrapper span carries the fade.
+      const glyph = container.querySelector("span.opacity-0 svg.lucide-copy");
       expect(glyph).not.toBeNull();
     });
 

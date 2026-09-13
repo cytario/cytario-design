@@ -30,16 +30,12 @@ const copyCx =
   "hover:bg-accent transition-colors rounded cursor-pointer group/copy";
 
 // Hover/focus-revealed copy affordance — a small icon at the trailing edge
-// that makes the click-to-copy behavior discoverable. Sits over the text
-// (never the container) so it doesn't stretch cells; pointer-events-none so
-// the whole span remains the click target.
+// that makes the click-to-copy behavior discoverable. The whole glyph
+// (backdrop included) fades as one; when hidden, nothing is painted over the
+// text. pointer-events-none so the whole span remains the click target.
 const CopyGlyph = () => (
-  <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 bg-background/80">
-    <Icon
-      icon="Copy"
-      size="xs"
-      className="opacity-0 transition-opacity group-hover/copy:opacity-100 group-focus-within/copy:opacity-100"
-    />
+  <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 bg-background/80 opacity-0 transition-opacity group-hover/copy:opacity-100 group-focus-within/copy:opacity-100">
+    <Icon icon="Copy" size="xs" />
   </span>
 );
 
