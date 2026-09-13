@@ -41,6 +41,7 @@ export function Table<TData extends object>({
   rowSelection,
   onRowSelectionChange,
   getRowId,
+  onRowPress,
   showFilters = true,
   defaultSorting,
   showIndex = true,
@@ -272,6 +273,7 @@ export function Table<TData extends object>({
                     enableRowSelection={!!enableRowSelection}
                     showIndex={showIndex}
                     anchorDataColumnId={firstVisibleColumnId}
+                    onRowPress={onRowPress ? (row) => onRowPress(row as TData) : null}
                   />
                 ))
             )}

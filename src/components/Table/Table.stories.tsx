@@ -132,13 +132,15 @@ export const Playground: Story = {
     enableRowSelection: true,
     showIndex: false,
     showFilters: true,
+    onRowPress: undefined,
   },
   argTypes: {
     enableRowSelection: { control: "boolean", description: "Dedicated selection column with per-row checkboxes + select-all" },
     showIndex: { control: "boolean", description: "Line-number column" },
     showFilters: { control: "boolean", description: "Per-column filter triggers (funnel popovers)" },
+    onRowPress: { action: "rowPress", description: "Row activation — toggling this in the args table wires rows as actionable (pointer cursor, Enter/Space activation)" },
   },
-  render: ({ enableRowSelection, showIndex, showFilters }) => {
+  render: ({ enableRowSelection, showIndex, showFilters, onRowPress }) => {
     function SelectionPlayground() {
       const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
       const selectedCount = Object.keys(rowSelection).length;
@@ -156,6 +158,7 @@ export const Playground: Story = {
             rowSelection={rowSelection}
             onRowSelectionChange={setRowSelection}
             getRowId={(row) => row.id}
+            onRowPress={onRowPress}
           />
           {enableRowSelection && selectedCount > 0 && (
             <SelectionFooter

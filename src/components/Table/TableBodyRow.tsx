@@ -15,6 +15,8 @@ interface TableBodyRowProps {
   showIndex: boolean;
   /** Id of the first visible data column — its cells carry no separator. */
   anchorDataColumnId?: string;
+  /** Row activation handler — null when rows are not actionable. */
+  onRowPress: ((row: unknown) => void) | null;
   className?: string;
 }
 
@@ -25,6 +27,7 @@ export function TableBodyRow({
   enableRowSelection,
   showIndex,
   anchorDataColumnId,
+  onRowPress,
   className,
 }: TableBodyRowProps) {
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLTableRowElement>) => {
@@ -38,20 +41,35 @@ export function TableBodyRow({
       event.preventDefault();
       const prev = tr.previousElementSibling as HTMLElement | null;
       prev?.focus();
+    } else if (event.key === "Enter" && onRowPress) {
+      event.preventDefault();
+      onRowPress(row.original);
     } else if (event.key === "Enter") {
       const link = tr.querySelector("a");
       link?.click();
     }
-  }, []);
+  }, [onRowPress, row.original]);
 
   return (
     <tr
       tabIndex={0}
       onKeyDown={handleKeyDown}
+      onClick={
+        onRowPress
+          ? (event) => {
+              // Interactive cell content owns its clicks — never swallow them
+              // into a row activation.
+              if ((event.target as HTMLElement).closest("a, [role='button'], [data-copy]"))
+                return;
+              onRowPress(row.original);
+            }
+          : undefined
+      }
       className={twMerge(
         "w-full block border-b border-border",
         "hover:bg-card transition-colors",
         "focus-visible:outline-none focus-visible:bg-muted focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
+        onRowPress && "cursor-pointer",
         row.getIsSelected() && "bg-accent",
         className,
       )}
