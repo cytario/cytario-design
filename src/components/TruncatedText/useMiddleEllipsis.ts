@@ -6,41 +6,53 @@ const ELLIPSIS = "…";
  * Binary-search for the longest `start…end` that fits within the element.
  * Uses actual DOM measurement (scrollWidth vs clientWidth) instead of canvas,
  * so results are pixel-perfect regardless of font, letter-spacing, or rendering.
+ *
+ * Measurement happens on a detached clone of the element — mutating the live
+ * span's textContent would destroy React-rendered siblings (the copy glyph,
+ * the "Copied" overlay) between renders.
  */
 function computeTruncated(el: HTMLElement, text: string): string {
-  el.textContent = text;
-  if (el.scrollWidth <= el.clientWidth) return text;
+  const probe = el.cloneNode(false) as HTMLElement;
+  probe.style.position = "absolute";
+  probe.style.visibility = "hidden";
+  probe.style.whiteSpace = "nowrap";
+  probe.style.width = "max-content";
+  el.parentElement?.appendChild(probe);
+  try {
+    // Measure against the clone of the container: shrink it to the live
+    // element's width so the fits test matches the real layout box.
+    probe.style.width = `${el.clientWidth}px`;
+    probe.textContent = text;
+    if (probe.scrollWidth <= probe.clientWidth) return text;
 
-  let lo = 0;
-  let hi = text.length;
+    let lo = 0;
+    let hi = text.length;
 
-  while (lo < hi) {
-    const mid = Math.ceil((lo + hi) / 2);
-    const startLen = Math.ceil(mid / 2);
-    const endLen = Math.floor(mid / 2);
-    el.textContent =
-      text.slice(0, startLen) + ELLIPSIS + (endLen > 0 ? text.slice(text.length - endLen) : "");
+    while (lo < hi) {
+      const mid = Math.ceil((lo + hi) / 2);
+      const startLen = Math.ceil(mid / 2);
+      const endLen = Math.floor(mid / 2);
+      probe.textContent =
+        text.slice(0, startLen) + ELLIPSIS + (endLen > 0 ? text.slice(text.length - endLen) : "");
 
-    if (el.scrollWidth <= el.clientWidth) {
-      lo = mid;
-    } else {
-      hi = mid - 1;
+      if (probe.scrollWidth <= probe.clientWidth) {
+        lo = mid;
+      } else {
+        hi = mid - 1;
+      }
     }
-  }
 
-  if (lo === 0) return ELLIPSIS;
+    if (lo === 0) return ELLIPSIS;
 
-  const startLen = Math.ceil(lo / 2);
-  const endLen = Math.floor(lo / 2);
+    const startLen = Math.ceil(lo / 2);
+    const endLen = Math.floor(lo / 2);
 
-  const result =
-    endLen === 0
+    return endLen === 0
       ? text.slice(0, startLen) + ELLIPSIS
       : text.slice(0, startLen) + ELLIPSIS + text.slice(text.length - endLen);
-
-  // Ensure the DOM shows the final result immediately, before React re-renders.
-  el.textContent = result;
-  return result;
+  } finally {
+    probe.remove();
+  }
 }
 
 /**
