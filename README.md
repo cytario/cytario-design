@@ -118,6 +118,8 @@ Both colors have a full 50--900 scale defined in `src/styles/theme.css` for use 
 | `npm run dev` | Start Storybook dev server on port 6006 |
 | `npm run build` | Build static Storybook site to `storybook-static/` |
 | `npm run validate:tokens` | Verify dark-theme invariant in token CSS |
+| `npm run build:css` | Build the Tailwind stylesheet to `dist/index.css` |
+| `npm run watch:css` | Rebuild `dist/index.css` on change (keeps running) |
 | `npm test` | Run Vitest test suite (watch mode) |
 | `npx vitest run` | Run tests once (CI mode) |
 | `npm run lint` | Lint `src/` with ESLint |
