@@ -255,3 +255,10 @@ export type { FormWizardProgressProps } from "./components/FormWizard";
 
 export { FormWizardNav } from "./components/FormWizard";
 export type { FormWizardNavProps } from "./components/FormWizard";
+
+export { LogPane } from "./components/LogPane";
+export type {
+  LogPaneProps,
+  LogPaneLine,
+  LogPaneSize,
+} from "./components/LogPane";
