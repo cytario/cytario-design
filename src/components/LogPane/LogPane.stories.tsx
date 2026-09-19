@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "storybook/react";
-import { expect, within } from "storybook/test";
+import { expect, userEvent, within } from "storybook/test";
 import { LogPane } from "./LogPane";
 
 const meta: Meta<typeof LogPane> = {
@@ -136,5 +136,30 @@ export const ColorInteraction: Story = {
 
     // No escape byte survives into the rendered text.
     await expect(pane.textContent).not.toContain("\u001b");
+  },
+};
+
+export const ControlsInteraction: Story = {
+  name: "Scroll to bottom and copy",
+  parameters: { chromatic: { disableSnapshot: true } },
+  args: {
+    label: "Container log",
+    lines: Array.from({ length: 60 }, (_, i) => ({
+      message: `\u001b[36mcytario.worker\u001b[0m - \u001b[33mstep ${i + 1}/60\u001b[0m`,
+    })),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const pane = canvas.getByRole("region", { name: "Container log" });
+
+    await userEvent.click(
+      canvas.getByRole("button", { name: "Scroll to bottom" }),
+    );
+    await expect(pane.scrollTop).toBeGreaterThan(0);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Copy log" }));
+    // The copy is announced in the status region; the button's accessible
+    // name is left alone so it stays a stable target.
+    await expect(canvas.getByRole("status").textContent).toBe("Log copied");
   },
 };
