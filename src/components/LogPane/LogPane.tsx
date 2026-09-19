@@ -66,6 +66,9 @@ export function LogPane({
 }: LogPaneProps) {
   if (lines.length === 0) return null;
 
+  // Fixed dark surface in both app themes: the ANSI palette is
+  // contrast-calibrated for slate-900, so the pane deliberately does not
+  // follow the light/dark theme.
   const surfaceCx = twMerge(
     [
       "rounded-md border border-slate-800 bg-slate-900 text-slate-100",
