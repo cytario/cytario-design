@@ -1,8 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 import { LogPane } from "./LogPane";
 
 const line = (message: string) => ({ message });
+
+/** Stands in for the clipboard, which jsdom does not implement. */
+const stubClipboard = (writeText: (text: string) => Promise<void>) => {
+  Object.defineProperty(navigator, "clipboard", {
+    configurable: true,
+    value: { writeText },
+  });
+};
 
 describe("LogPane", () => {
   it("renders a single line's text", () => {
@@ -163,7 +172,83 @@ describe("LogPane", () => {
   });
 
   it("renders no markup for an unstyled segment", () => {
-    const { container } = render(<LogPane lines={[line("plain text")]} />);
-    expect(container.querySelector("span")).toBeNull();
+    render(<LogPane lines={[line("plain text")]} />);
+    const pane = screen.getByRole("region", { name: "Log output" });
+    expect(pane.querySelector("span")).toBeNull();
+    expect(pane.textContent).toBe("plain text");
+  });
+
+  it("offers copy and scroll-to-bottom controls", () => {
+    render(<LogPane lines={[line("a"), line("b")]} />);
+    expect(screen.getByRole("button", { name: "Copy log" })).toBeDefined();
+    expect(
+      screen.getByRole("button", { name: "Scroll to bottom" }),
+    ).toBeDefined();
+  });
+
+  it("hides the controls until the cursor is over the pane", () => {
+    render(<LogPane lines={[line("a")]} />);
+    // The button sits inside a Tooltip wrapper, so walk up to the control row.
+    const controls = screen
+      .getByRole("button", { name: "Copy log" })
+      .closest("div[class*='absolute']")!;
+    // Hidden by default, revealed by the pane's hover / focus-within state.
+    expect(controls.className).toContain("opacity-0");
+    expect(controls.className).toContain("group-hover:opacity-100");
+    expect(controls.className).toContain("group-focus-within:opacity-100");
+    // An invisible control must not be clickable where it cannot be seen.
+    expect(controls.className).toContain("pointer-events-none");
+    expect(controls.className).toContain("group-hover:pointer-events-auto");
+    // The pane is the group the reveal is keyed on.
+    const pane = screen.getByRole("region", { name: "Log output" });
+    expect(pane.parentElement!.className).toContain("group");
+  });
+
+  it("copies the raw log lines, escape sequences included", async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    stubClipboard(writeText);
+
+    render(<LogPane lines={[line("\u001b[36mfirst\u001b[0m"), line("second")]} />);
+    await user.click(screen.getByRole("button", { name: "Copy log" }));
+
+    // The raw bytes, so the log keeps its colors wherever it is pasted back.
+    expect(writeText).toHaveBeenCalledWith("\u001b[36mfirst\u001b[0m\nsecond");
+  });
+
+  it("announces the copy to screen readers", async () => {
+    const user = userEvent.setup();
+    stubClipboard(vi.fn().mockResolvedValue(undefined));
+
+    render(<LogPane lines={[line("hello")]} />);
+    expect(screen.getByRole("status").textContent).toBe("");
+    await user.click(screen.getByRole("button", { name: "Copy log" }));
+    expect(await screen.findByText("Log copied")).toBeDefined();
+  });
+
+  it("fails silently when the clipboard rejects", async () => {
+    const user = userEvent.setup();
+    stubClipboard(vi.fn().mockRejectedValue(new Error("denied")));
+
+    render(<LogPane lines={[line("hello")]} />);
+    await user.click(screen.getByRole("button", { name: "Copy log" }));
+    expect(
+      screen.getByRole("region", { name: "Log output" }).textContent,
+    ).toBe("hello");
+  });
+
+  it("scrolls the pane to its bottom", async () => {
+    const user = userEvent.setup();
+    render(<LogPane lines={[line("a"), line("b")]} />);
+    const pane = screen.getByRole("region", { name: "Log output" });
+
+    // jsdom does no layout, so stand in for the measurement the real pane has.
+    Object.defineProperty(pane, "scrollHeight", {
+      configurable: true,
+      value: 4000,
+    });
+
+    await user.click(screen.getByRole("button", { name: "Scroll to bottom" }));
+    expect(pane.scrollTop).toBe(4000);
   });
 });
