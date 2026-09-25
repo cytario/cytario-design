@@ -121,12 +121,14 @@ describe("Table", () => {
       expect(screen.getByText("No results match your filters")).toBeTruthy(),
     );
     // Close the popover (Escape) — the clear-all-filters action lives behind
-    // it and is only reachable with the popover closed.
+    // it and is only reachable with the popover closed. Two carry the label
+    // now that the body table is exposed (not aria-hidden): the top-right
+    // control and the one inside the filter empty state.
     await userEvent.keyboard("{Escape}");
     await waitFor(() =>
       expect(
-        screen.getByRole("button", { name: /clear all filters/i }),
-      ).toBeTruthy(),
+        screen.getAllByRole("button", { name: /clear all filters/i }).length,
+      ).toBeGreaterThan(0),
     );
   });
 
