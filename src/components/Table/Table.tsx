@@ -4,26 +4,37 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
   getFacetedUniqueValues,
+  getGroupedRowModel,
+  getExpandedRowModel,
   ColumnDef,
+  type ExpandedState,
   type Row,
 } from "@tanstack/react-table";
-import { ReactNode, useCallback, useMemo, useRef } from "react";
+import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
 import { EmptyState } from "../EmptyState";
 import { IconButton } from "../IconButton";
 
 import { NoFilterResults } from "./NoFilterResults";
 import { TableBodyRow } from "./TableBodyRow";
+import { TableGroupRow } from "./TableGroupRow";
 import { TableHeaderRow } from "./TableHeaderRow";
 import { TableMenu } from "./TableMenu";
-import { CellRenderers, TableProps } from "./types";
+import { CellRenderers, ColumnConfig, ExpandedRowsState, GroupRowContext, TableProps } from "./types";
 import { useColumnFilters } from "./useColumnFilters";
 import { useColumnVisibility } from "./useColumnVisibility";
 import { useColumnWidths } from "./useColumnWidths";
 import { useTableSorting } from "./useTableSorting";
 
 // Re-export types for external use
-export type { ColumnConfig, TableProps, CellRenderers } from "./types";
+export type {
+  ColumnConfig,
+  TableProps,
+  CellRenderers,
+  ExpandedRowsState,
+  GroupCellRenderers,
+  GroupRowContext,
+} from "./types";
 
 function booleanSortingFn<TData>(rowA: Row<TData>, rowB: Row<TData>, columnId: string): number {
   const a = rowA.getValue<boolean>(columnId) ? 1 : 0;
@@ -45,6 +56,11 @@ export function Table<TData extends object>({
   showFilters = true,
   defaultSorting,
   showIndex = true,
+  groupBy,
+  groupCellRenderers,
+  defaultExpandedGroups = false,
+  expandedGroups: expandedGroupsProp,
+  onExpandedGroupsChange,
 }: TableProps<TData>) {
   const { columnSizing, setColumnSizing } = useColumnWidths(columns, tableId);
   const anchorColumnId = columns.find((c) => c.anchor)?.id ?? columns[0]?.id;
@@ -62,6 +78,51 @@ export function Table<TData extends object>({
   const { columnFilters, setColumnFilters, resetFilters } = useColumnFilters({
     tableId,
   });
+
+  // Grouping is opt-in. The expanded state is keyed by TanStack's group row
+  // ids (`${columnId}:${value}`); `defaultExpandedGroups` seeds it as the
+  // boolean shorthand TanStack reads for "everything open". Controlled
+  // expansion requires `onExpandedGroupsChange` — without it the Table owns
+  // the state, so a passed `expandedGroups` is ignored rather than producing
+  // a table whose toggles silently do nothing.
+  const isGrouped = !!groupBy;
+  const grouping = useMemo(() => (groupBy ? [groupBy] : []), [groupBy]);
+  const [internalExpanded, setInternalExpanded] = useState<ExpandedState>(() =>
+    isGrouped && defaultExpandedGroups ? true : {},
+  );
+  const isControlled = isGrouped && !!onExpandedGroupsChange;
+  const expandedState: ExpandedState = useMemo(
+    () => (isControlled ? expandedGroupsProp ?? {} : isGrouped ? internalExpanded : {}),
+    [isControlled, expandedGroupsProp, isGrouped, internalExpanded],
+  );
+  const setExpandedState = useCallback(
+    (updater: ExpandedState | ((prev: ExpandedState) => ExpandedState)) => {
+      setInternalExpanded((prev) =>
+        typeof updater === "function" ? updater(prev) : updater,
+      );
+    },
+    [],
+  );
+  // Translate TanStack's updater (whose ExpandedState type includes the
+  // `true` shorthand) into the public Record form once, here — consumers
+  // never see TanStack's raw updater shapes. `true` only ever enters as
+  // initial state (`defaultExpandedGroups`); the internal path hands the
+  // raw updater to TanStack's own state setter, which understands `true`,
+  // while the public callback only ever sees Records.
+  const applyExpandedChange = useCallback(
+    (updater: ExpandedState | ((prev: ExpandedState) => ExpandedState)) => {
+      if (onExpandedGroupsChange) {
+        const resolve = (prev: ExpandedRowsState): ExpandedRowsState => {
+          const next = typeof updater === "function" ? updater(prev) : updater;
+          return next === true ? prev : (next as ExpandedRowsState);
+        };
+        onExpandedGroupsChange(resolve);
+      } else {
+        setExpandedState(updater);
+      }
+    },
+    [onExpandedGroupsChange, setExpandedState],
+  );
 
   const SELECTION_COLUMN_SIZE = 48;
   const indexColumnSize = 48;
@@ -108,6 +169,10 @@ export function Table<TData extends object>({
         enableSorting: colConfig.enableSorting ?? false,
         enableColumnFilter: colConfig.enableColumnFilter ?? false,
         ...(colConfig.filterFn && { filterFn: colConfig.filterFn }),
+        // TanStack groups by a column's `accessorFn`/`accessorKey` value and
+        // only renders the group's own cell in the grouping column; the other
+        // cells fall to `getValue` on the group row. An explicit
+        // `getGroupingValue` is not needed — the accessor key is the value.
         sortingFn:
           colConfig.sortingFn === "boolean"
             ? booleanSortingFn
@@ -131,6 +196,14 @@ export function Table<TData extends object>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    ...(isGrouped && {
+      getGroupedRowModel: getGroupedRowModel(),
+      getExpandedRowModel: getExpandedRowModel(),
+      // Filters rebuild the grouped row model; without this the expanded
+      // state auto-resets to {} on every filter change, collapsing groups
+      // under a header that still reads "expanded".
+      autoResetExpanded: false,
+    }),
     enableSortingRemoval: false,
     enableColumnResizing: true,
     columnResizeMode: "onChange",
@@ -140,16 +213,18 @@ export function Table<TData extends object>({
       sorting,
       columnVisibility,
       columnFilters,
+      ...(isGrouped && { grouping, expanded: expandedState }),
       ...(enableRowSelection && { rowSelection }),
     },
+    ...(isGrouped && { onExpandedChange: applyExpandedChange }),
     onColumnSizingChange: setColumnSizing,
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
-    ...(enableRowSelection && {
-      onRowSelectionChange: onRowSelectionChange,
-      getRowId: getRowId as (row: TData) => string,
-    }),
+    // `getRowId` is a row-identity concern (selection keys, and the ids an
+    // expandable detail row is keyed by), not a selection-only option.
+    ...(getRowId && { getRowId: getRowId as (row: TData) => string }),
+    ...(enableRowSelection && { onRowSelectionChange: onRowSelectionChange }),
   });
 
   const headerRef = useRef<HTMLDivElement>(null);
@@ -178,7 +253,14 @@ export function Table<TData extends object>({
     });
   }, []);
 
-  const filteredCount = table.getRowModel().rows.length;
+  const rowModel = table.getRowModel();
+  // The leaf rows currently in the body — what the filtered-count
+  // announcement sees. Read from the filtered row model each render:
+  // TanStack memoizes that accessor internally, so it is cheap and stays
+  // correct across a filter change. A grouped model's own rows include the
+  // group rows, so take the leaves (collapsed or not) instead.
+  const visibleRows = table.getFilteredRowModel().rows.map((row) => row.original);
+  const filteredCount = visibleRows.length;
   const totalCount = data.length;
   const isFiltered = filteredCount !== totalCount;
   // The first visible data column — cells in it carry no floating separator
@@ -186,6 +268,23 @@ export function Table<TData extends object>({
   const firstVisibleColumnId = table
     .getVisibleLeafColumns()
     .find((c) => c.id !== "index")?.id;
+
+  const colSpan = columns.length + (enableRowSelection ? 1 : 0) + (showIndex ? 1 : 0);
+
+  const groupContext = (row: Row<TData>, groupColumnId: string): GroupRowContext<TData> => ({
+    value: row.getGroupingValue(groupColumnId),
+    columnId: groupColumnId,
+    rows: row.getLeafRows().map((r) => r.original),
+    count: row.getLeafRows().length,
+    isExpanded: row.getIsExpanded(),
+    toggleExpanded: () => row.toggleExpanded(),
+    depth: row.depth,
+  });
+
+  // A singleton group renders as its leaf's plain row, and the grouped row
+  // model ALSO lists that leaf as its own entry — collect the ones already
+  // rendered so the flat pass skips them.
+  const singletonLeafIds = new Set<string>();
 
   return (
     <>
@@ -195,10 +294,7 @@ export function Table<TData extends object>({
       </div>
 
       {/* Table controls, top-right above the table: the column picker
-          (TableMenu) and the clear-all-filters action. Keeping them out of
-          the header row leaves it visually quiet (react-data-table default
-          look); a right-aligned row above the table mirrors their placement
-          there. */}
+          (TableMenu) and the clear-all-filters action. */}
       {(toggleableColumns.length > 0 || columnFilters.length > 0) && (
         <div className="flex items-center justify-end gap-1 pb-1">
           {columnFilters.length > 0 && (
@@ -245,26 +341,71 @@ export function Table<TData extends object>({
         </table>
       </div>
 
-      {/* Scrollable body — horizontal scrollbar visible */}
+      {/* Scrollable body — horizontal scrollbar visible. Not aria-hidden: the
+          rows are the table's real content, and a row's interactive controls
+          must stay reachable. Labelled separately from the header table so
+          assistive tech announces the two split-region tables distinctly. */}
       <div ref={bodyRef} className="overflow-x-auto" onScroll={handleBodyScroll}>
-        <table className="min-w-full" aria-hidden="true">
+        <table className="min-w-full" aria-label={ariaLabel ? `${ariaLabel} rows` : undefined}>
           <tbody>
             {data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + (enableRowSelection ? 1 : 0) + (showIndex ? 1 : 0)}>
+                <td colSpan={colSpan}>
                   <EmptyState icon="Inbox" title="No results" />
                 </td>
               </tr>
-            ) : table.getRowModel().rows.length === 0 ? (
+            ) : rowModel.rows.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + (enableRowSelection ? 1 : 0) + (showIndex ? 1 : 0)}>
+                <td colSpan={colSpan}>
                   <NoFilterResults tableId={tableId} />
                 </td>
               </tr>
             ) : (
-              table
-                .getRowModel()
-                .rows.map((row, index) => (
+              rowModel.rows.map((row, index) => {
+                if (isGrouped && row.getIsGrouped()) {
+                  const groupColumnId = row.groupingColumnId ?? groupBy!;
+                  const leaves = row.getLeafRows();
+                  // A group with exactly one leaf row has nothing to roll up,
+                  // so it renders as a plain row: the leaf's own cells, no
+                  // toggle, no group styling. This is what keeps a row the
+                  // consumer did not mean to group (an ungroupable value)
+                  // reading as a standalone row rather than acquiring a
+                  // header of its own.
+                  if (leaves.length === 1) {
+                    const leaf = leaves[0]!;
+                    // The grouped model flattens a group's subrows into the
+                    // row list, so this leaf ALSO appears as its own entry —
+                    // record it so the flat pass below does not render it a
+                    // second time.
+                    singletonLeafIds.add(String(leaf.id));
+                    return (
+                      <TableBodyRow
+                        key={row.id}
+                        row={leaf}
+                        rowIndex={index}
+                        columns={columns}
+                        enableRowSelection={!!enableRowSelection}
+                        showIndex={showIndex}
+                        anchorDataColumnId={firstVisibleColumnId}
+                        onRowPress={onRowPress ? (row) => onRowPress(row as TData) : null}
+                      />
+                    );
+                  }
+                  return (
+                    <TableGroupRow
+                      key={row.id}
+                      row={row}
+                      columns={columns}
+                      groupColumnId={groupColumnId}
+                      context={groupContext(row, groupColumnId)}
+                      renderers={groupCellRenderers}
+                      anchorDataColumnId={firstVisibleColumnId}
+                    />
+                  );
+                }
+                // A leaf already rendered as its singleton group's row.
+                if (singletonLeafIds.has(String(row.id))) return null;
+                return (
                   <TableBodyRow
                     key={row.id}
                     row={row}
@@ -275,7 +416,8 @@ export function Table<TData extends object>({
                     anchorDataColumnId={firstVisibleColumnId}
                     onRowPress={onRowPress ? (row) => onRowPress(row as TData) : null}
                   />
-                ))
+                );
+              })
             )}
           </tbody>
         </table>

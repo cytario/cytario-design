@@ -25,3 +25,6 @@ coverage/
 # Local issue tracking
 ISSUES.md
 debug-storybook.log
+
+# Local git worktrees (e.g. wt/)
+wt/
