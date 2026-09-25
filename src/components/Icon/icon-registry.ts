@@ -25,12 +25,14 @@ import {
   Circle,
   CircleDashed,
   CircleDot,
+  CircleHelp,
   CircleSlash,
   Clock,
   Cloud,
   Columns2,
   Columns3,
   Copy,
+  Cpu,
   CreditCard,
   Crosshair,
   Database,
@@ -45,6 +47,7 @@ import {
   FileSpreadsheet,
   FilterX,
   Folder,
+  FolderOpen,
   FolderPlus,
   FolderTree,
   Fullscreen,
@@ -75,12 +78,14 @@ import {
   MoreVertical,
   Move,
   Network,
+  Package,
   PanelLeftClose,
   PanelLeftOpen,
   PanelRightClose,
   PanelRightOpen,
   Pencil,
   Pentagon,
+  Play,
   Plug,
   Plus,
   Power,
@@ -88,6 +93,7 @@ import {
   RefreshCw,
   RotateCcw,
   RotateCw,
+  Save,
   ScrollText,
   Search,
   SearchX,
@@ -146,12 +152,14 @@ export type IconName =
   | "Circle"
   | "CircleDashed"
   | "CircleDot"
+  | "CircleHelp"
   | "CircleSlash"
   | "Clock"
   | "Cloud"
   | "Columns2"
   | "Columns3"
   | "Copy"
+  | "Cpu"
   | "CreditCard"
   | "Crosshair"
   | "Database"
@@ -166,6 +174,7 @@ export type IconName =
   | "FileSpreadsheet"
   | "FilterX"
   | "Folder"
+  | "FolderOpen"
   | "FolderPlus"
   | "FolderTree"
   | "Fullscreen"
@@ -198,12 +207,14 @@ export type IconName =
   | "MoreVertical"
   | "Move"
   | "Network"
+  | "Package"
   | "PanelLeftClose"
   | "PanelLeftOpen"
   | "PanelRightClose"
   | "PanelRightOpen"
   | "Pencil"
   | "Pentagon"
+  | "Play"
   | "Plug"
   | "Plus"
   | "Power"
@@ -211,6 +222,7 @@ export type IconName =
   | "RefreshCw"
   | "RotateCcw"
   | "RotateCw"
+  | "Save"
   | "ScrollText"
   | "Search"
   | "SearchX"
@@ -270,12 +282,14 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   Circle,
   CircleDashed,
   CircleDot,
+  CircleHelp,
   CircleSlash: CircleSlash,
   Clock,
   Cloud,
   Columns2,
   Columns3,
   Copy,
+  Cpu,
   CreditCard: CreditCard,
   Crosshair,
   Database: Database,
@@ -290,6 +304,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   FileSpreadsheet,
   FilterX,
   Folder,
+  FolderOpen,
   FolderPlus,
   FolderTree,
   Fullscreen,
@@ -322,12 +337,14 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   MoreVertical,
   Move,
   Network: Network,
+  Package,
   PanelLeftClose,
   PanelLeftOpen,
   PanelRightClose,
   PanelRightOpen,
   Pencil,
   Pentagon,
+  Play,
   Plug,
   Plus,
   Power: Power,
@@ -335,6 +352,7 @@ export const iconRegistry: Record<IconName, LucideIcon> = {
   RefreshCw: RefreshCw,
   RotateCcw,
   RotateCw,
+  Save,
   ScrollText: ScrollText,
   Search,
   SearchX,
