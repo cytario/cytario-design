@@ -85,6 +85,9 @@ export type {
   TableProps,
   ColumnConfig,
   CellRenderers,
+  ExpandedRowsState,
+  GroupCellRenderers,
+  GroupRowContext,
   SelectionFooterProps,
 } from "./components/Table";
 

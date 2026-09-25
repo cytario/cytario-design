@@ -1,5 +1,12 @@
 export { Table } from "./Table";
-export type { ColumnConfig, TableProps, CellRenderers } from "./types";
+export type {
+  ColumnConfig,
+  TableProps,
+  CellRenderers,
+  ExpandedRowsState,
+  GroupCellRenderers,
+  GroupRowContext,
+} from "./types";
 export { useColumnFilters } from "./useColumnFilters";
 export { useColumnVisibility } from "./useColumnVisibility";
 export { useColumnWidths } from "./useColumnWidths";
