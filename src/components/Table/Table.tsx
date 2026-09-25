@@ -146,10 +146,8 @@ export function Table<TData extends object>({
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
-    ...(enableRowSelection && {
-      onRowSelectionChange: onRowSelectionChange,
-      getRowId: getRowId as (row: TData) => string,
-    }),
+    ...(getRowId && { getRowId: getRowId as (row: TData) => string }),
+    ...(enableRowSelection && { onRowSelectionChange: onRowSelectionChange }),
   });
 
   const headerRef = useRef<HTMLDivElement>(null);
