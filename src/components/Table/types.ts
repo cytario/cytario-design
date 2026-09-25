@@ -1,8 +1,12 @@
-import type { ColumnDefBase, FilterFn, OnChangeFn, RowSelectionState, SortingState } from "@tanstack/react-table";
+import type { FilterFn, OnChangeFn, RowSelectionState, SortingState } from "@tanstack/react-table";
 import { ReactNode } from "react";
 
-// Behavior props aligned with TanStack naming
-type ColumnBehavior = Pick<ColumnDefBase<unknown>, "enableResizing">;
+// Behavior props aligned with TanStack naming. Spelled out rather than picked
+// from TanStack's `ColumnDefBase`, so this one does not pull a TanStack type
+// onto the public surface for a single boolean.
+type ColumnBehavior = {
+  enableResizing?: boolean;
+};
 
 // Sorting props (built-in algorithm names only; with typed data, custom
 // SortingAccessor functions are no longer needed)

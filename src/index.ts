@@ -90,6 +90,19 @@ export type {
   GroupRowContext,
   SelectionFooterProps,
 } from "./components/Table";
+// The TanStack types the Table's own props and hooks are typed in. Re-exported
+// so consumers type their table state against the design system rather than
+// reaching past it for `@tanstack/react-table`.
+export type {
+  FilterFn,
+  OnChangeFn,
+  RowSelectionState,
+  SortingState,
+  ColumnFiltersState,
+  ColumnSizingState,
+  VisibilityState,
+} from "./components/Table";
+export { filterFns } from "./components/Table";
 
 export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";
