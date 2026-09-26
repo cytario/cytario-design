@@ -9,6 +9,7 @@ import {
   ColumnDef,
   type ExpandedState,
   type Row,
+  type RowSelectionState,
 } from "@tanstack/react-table";
 import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
@@ -73,6 +74,11 @@ export function Table<TData extends object>({
     [defaultSorting, anchorColumnId],
   );
   const { sorting, setSorting } = useTableSorting(tableId, effectiveDefaultSorting);
+  // Selection falls back to internal state when the consumer does not control
+  // it, exactly like the other table state — TanStack reads `state.rowSelection`
+  // on every select-all and cannot take `undefined`.
+  const [internalRowSelection, setInternalRowSelection] = useState<RowSelectionState>({});
+  const effectiveRowSelection = rowSelection ?? internalRowSelection;
   const { columnVisibility, setColumnVisibility, toggleableColumns, toggleColumn } =
     useColumnVisibility(columns, tableId);
   const { columnFilters, setColumnFilters, resetFilters } = useColumnFilters({
@@ -199,6 +205,11 @@ export function Table<TData extends object>({
     ...(isGrouped && {
       getGroupedRowModel: getGroupedRowModel(),
       getExpandedRowModel: getExpandedRowModel(),
+      // TanStack's default ('reorder') moves the grouping column to the front of
+      // the order, which shoves the leading system columns (selection, index)
+      // out of first place. The consumer already places the grouping column
+      // where it belongs, so leave the order alone.
+      groupedColumnMode: false,
       // Filters rebuild the grouped row model; without this the expanded
       // state auto-resets to {} on every filter change, collapsing groups
       // under a header that still reads "expanded".
@@ -214,7 +225,7 @@ export function Table<TData extends object>({
       columnVisibility,
       columnFilters,
       ...(isGrouped && { grouping, expanded: expandedState }),
-      ...(enableRowSelection && { rowSelection }),
+      ...(enableRowSelection && { rowSelection: effectiveRowSelection }),
     },
     ...(isGrouped && { onExpandedChange: applyExpandedChange }),
     onColumnSizingChange: setColumnSizing,
@@ -224,7 +235,9 @@ export function Table<TData extends object>({
     // `getRowId` is a row-identity concern (selection keys, and the ids an
     // expandable detail row is keyed by), not a selection-only option.
     ...(getRowId && { getRowId: getRowId as (row: TData) => string }),
-    ...(enableRowSelection && { onRowSelectionChange: onRowSelectionChange }),
+    ...(enableRowSelection && {
+      onRowSelectionChange: onRowSelectionChange ?? setInternalRowSelection,
+    }),
   });
 
   const headerRef = useRef<HTMLDivElement>(null);
@@ -400,6 +413,7 @@ export function Table<TData extends object>({
                       context={groupContext(row, groupColumnId)}
                       renderers={groupCellRenderers}
                       anchorDataColumnId={firstVisibleColumnId}
+                      enableRowSelection={!!enableRowSelection}
                     />
                   );
                 }

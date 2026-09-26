@@ -1,5 +1,6 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
 import { describe, expect, it, beforeEach } from "vitest";
 
 import { Table, type CellRenderers, type ColumnConfig, type GroupCellRenderers } from "./Table";
@@ -199,5 +200,140 @@ describe("Table grouping", () => {
       ).toBe("false"),
     );
     expect(screen.queryByText("Aaa")).not.toBeInTheDocument();
+  });
+
+  it("keeps the grouping column where the consumer put it, not hoisted to front", async () => {
+    // TanStack's default groupedColumnMode is 'reorder', which moves the
+    // grouping column to the front of the order — pushing the leading system
+    // columns (selection, index) out of first place.
+    render(
+      <Table
+        columns={columns}
+        data={data}
+        cellRenderers={cellRenderers}
+        tableId="grouped-order"
+        ariaLabel="Grouped order table"
+        groupBy="batch"
+        enableRowSelection
+        rowSelection={{}}
+        onRowSelectionChange={() => {}}
+        defaultExpandedGroups
+      />,
+    );
+    await screen.findByRole("button", { name: /group b1$/ });
+
+    // The selection column leads, then the index column, then the consumer's
+    // own column order — with the grouping column last, where it was declared.
+    const headers = screen.getAllByRole("columnheader");
+    expect(headers[0]!.querySelector("input[type=checkbox]")).not.toBeNull();
+    expect(headers[1]!.textContent).toBe("");
+    expect(headers[2]!.textContent).toBe("Name");
+    expect(headers[4]!.textContent).toBe("Batch");
+
+    // Every row agrees with that grid, so a checkbox never lands mid-row.
+    for (const row of Array.from(document.querySelectorAll("tbody tr"))) {
+      const first = row.querySelector("td, th")!;
+      expect(first.querySelector("input[type=checkbox]")).not.toBeNull();
+    }
+  });
+
+  it("pins the system column widths on a group row, so its grid aligns with a leaf", async () => {
+    render(
+      <Table
+        columns={columns}
+        data={data}
+        cellRenderers={cellRenderers}
+        tableId="grouped-system-width"
+        ariaLabel="Grouped width table"
+        groupBy="batch"
+        enableRowSelection
+        rowSelection={{}}
+        onRowSelectionChange={() => {}}
+        defaultExpandedGroups
+      />,
+    );
+    const groupRow = (await screen.findByRole("button", { name: /group b1$/ })).closest("tr")!;
+    const leafRow = screen.getByText("Aaa").closest("tr")!;
+
+    // An auto-width system cell on the group row would shift every column
+    // after it out of line with the leaf rows.
+    for (const [groupIndex, systemCell] of Array.from(
+      groupRow.querySelectorAll("td, th"),
+    ).entries()) {
+      const width = (systemCell as HTMLElement).style.width;
+      const leafWidth = (leafRow.querySelectorAll("td, th")[groupIndex] as HTMLElement).style
+        .width;
+      expect(width).toBe(leafWidth);
+      expect(width).not.toBe("");
+    }
+  });
+
+  it("gives the group its own tri-state checkbox that selects its leaves", async () => {
+    const user = userEvent.setup();
+    // b1 has two leaves; b2 also has two; solo is a singleton (no group row).
+    function Selectable() {
+      const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+      return (
+        <Table
+          columns={columns}
+          data={data}
+          cellRenderers={cellRenderers}
+          tableId="grouped-select"
+          ariaLabel="Grouped select table"
+          groupBy="batch"
+          enableRowSelection
+          rowSelection={rowSelection}
+          onRowSelectionChange={(updater) =>
+            setRowSelection((prev) =>
+              typeof updater === "function" ? updater(prev) : updater,
+            )
+          }
+          defaultExpandedGroups
+        />
+      );
+    }
+    render(<Selectable />);
+
+    // Selecting one leaf leaves the group's own box indeterminate...
+    await user.click(screen.getAllByRole("checkbox", { name: "Select row" })[0]!);
+    await waitFor(() =>
+      expect(
+        (screen.getByRole("checkbox", { name: "Select all rows in b1" }) as HTMLInputElement)
+          .indeterminate,
+      ).toBe(true),
+    );
+
+    // ...and the group box then toggles every leaf beneath it at once.
+    // (Re-query after each click: React replaces the input on re-render.)
+    await user.click(screen.getByRole("checkbox", { name: "Select all rows in b1" }));
+    await waitFor(() =>
+      expect(
+        (screen.getByRole("checkbox", { name: "Select all rows in b1" }) as HTMLInputElement)
+          .checked,
+      ).toBe(true),
+    );
+
+    // Only b1's own two leaves are selected — b2's and the singleton's are not.
+    const checkedLeaves = screen
+      .getAllByRole("checkbox", { name: "Select row" })
+      .filter((box) => (box as HTMLInputElement).checked);
+    expect(checkedLeaves).toHaveLength(2);
+  });
+
+  it("supports selection without a controlled rowSelection", async () => {
+    // A consumer may leave selection uncontrolled; TanStack still reads
+    // `state.rowSelection` on every select-all and cannot take undefined.
+    render(
+      <Table
+        columns={columns}
+        data={data}
+        cellRenderers={cellRenderers}
+        tableId="grouped-uncontrolled-selection"
+        ariaLabel="Uncontrolled selection table"
+        enableRowSelection
+        getRowId={(row) => row.id}
+      />,
+    );
+    expect(await screen.findByRole("checkbox", { name: "Select all rows" })).toBeInTheDocument();
   });
 });

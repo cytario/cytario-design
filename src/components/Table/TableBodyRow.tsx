@@ -82,6 +82,7 @@ export function TableBodyRow({
               <Checkbox
                 isSelected={row.getIsSelected()}
                 onChange={() => row.toggleSelected()}
+                aria-label="Select row"
               />
             </td>
           );
