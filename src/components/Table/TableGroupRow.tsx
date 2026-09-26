@@ -1,3 +1,4 @@
+import { Checkbox } from "../Form/Checkbox";
 import { Row } from "@tanstack/react-table";
 import { KeyboardEvent, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
@@ -15,6 +16,8 @@ interface TableGroupRowProps<TData> {
   renderers?: GroupCellRenderers<TData>;
   /** Id of the first visible data column — its cell carries no separator. */
   anchorDataColumnId?: string;
+  /** Whether rows carry a selection checkbox; the group's selects its leaves. */
+  enableRowSelection: boolean;
 }
 
 /**
@@ -32,6 +35,7 @@ export function TableGroupRow<TData>({
   context,
   renderers,
   anchorDataColumnId,
+  enableRowSelection,
 }: TableGroupRowProps<TData>) {
   const isExpanded = row.getIsExpanded();
 
@@ -77,11 +81,36 @@ export function TableGroupRow<TData>({
     >
       {row.getVisibleCells().map((cell) => {
         const columnId = cell.column.id;
+        // The system columns keep their fixed width here, or the group row's
+        // grid drifts out of line with the leaf rows beneath it.
+        const systemStyle = {
+          width: cell.column.getSize(),
+          minWidth: cell.column.getSize(),
+          maxWidth: cell.column.getSize(),
+        };
 
-        // System columns (selection/index) are empty on a group row — a group
-        // is not selectable and carries no line number of its own.
-        if (columnId === "selection" || columnId === "index") {
-          return <td key={cell.id} className="relative p-2" aria-hidden="true" />;
+        // The group carries its own tri-state checkbox: it selects the leaves
+        // beneath it (TanStack's `toggleSelected` cascades to sub-rows) and
+        // reports their collective state. It is a real control, not the leaf
+        // rows' checkbox repeated.
+        if (columnId === "selection") {
+          return (
+            <td key={cell.id} className="relative p-2" style={systemStyle}>
+              {enableRowSelection && (
+                <Checkbox
+                  isSelected={row.getIsAllSubRowsSelected()}
+                  isIndeterminate={row.getIsSomeSelected()}
+                  onChange={() => row.toggleSelected()}
+                  aria-label={`Select all rows in ${String(context.value ?? "")}`}
+                />
+              )}
+            </td>
+          );
+        }
+
+        // The index column is a line number, which a group has none of.
+        if (columnId === "index") {
+          return <td key={cell.id} className="relative p-2" style={systemStyle} aria-hidden="true" />;
         }
 
         const columnConfig = columns.find((c) => c.id === columnId);

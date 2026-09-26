@@ -48,6 +48,7 @@ export function TableHeaderRow({
                     !header.getContext().table.getIsAllRowsSelected()
                   }
                   onChange={() => header.getContext().table.toggleAllRowsSelected()}
+                  aria-label="Select all rows"
                 />
               )}
             </th>

@@ -283,11 +283,19 @@ export const GroupedJobs: Story = {
     docs: {
       description: {
         story:
-          "Grouping by a column, the ag-grid shape: the group renders as an ordinary row in the column grid (here the batch's size and its status roll-up, from `groupCellRenderers`) and its leaf rows stay intact beneath it — the same columns, the same cells. The grouping column's cell is the expand toggle, and on a group row it also carries the batch's Relaunch action (in the Duration column, where a leaf row has a duration of its own). A job with no batch of its own (the older failures) gets its own one-row group, which the Table renders as a plain row.",
+          "Grouping by a column, the ag-grid shape: the group renders as an ordinary row in the column grid (here the batch's size and its status roll-up, from `groupCellRenderers`) and its leaf rows stay intact beneath it — the same columns, the same cells. The grouping column's cell is the expand toggle, and on a group row it also carries the batch's Relaunch action (in the Duration column, where a leaf row has a duration of its own). A job with no batch of its own (the older failures) gets its own one-row group, which the Table renders as a plain row. With `enableRowSelection`, a group row carries a tri-state checkbox that selects its whole batch.",
       },
     },
   },
-  render: () => (
+  args: {
+    enableRowSelection: true,
+    showIndex: false,
+  },
+  argTypes: {
+    enableRowSelection: { control: "boolean", description: "Dedicated selection column with per-row checkboxes + select-all (group rows toggle their whole batch)" },
+    showIndex: { control: "boolean", description: "Line-number column" },
+  },
+  render: ({ enableRowSelection, showIndex }) => (
     <Table
       columns={batchJobColumns}
       data={[...batchJobs, ...olderJobs]}
@@ -358,7 +366,8 @@ export const GroupedJobs: Story = {
       tableId="storybook-jobs-grouped"
       ariaLabel="Jobs grouped by batch"
       getRowId={(row) => row.id}
-      showIndex={false}
+      showIndex={showIndex}
+      enableRowSelection={enableRowSelection}
       groupBy="batchKey"
       defaultExpandedGroups
     />
