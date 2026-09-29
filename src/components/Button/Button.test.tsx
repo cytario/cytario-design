@@ -133,4 +133,17 @@ describe("Button", () => {
     expect(button).toBeDefined();
     expect(button.className).toContain("bg-muted");
   });
+
+  it("renders primary and secondary with token-driven borders", () => {
+    render(
+      <>
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+      </>,
+    );
+    const primary = screen.getByRole("button", { name: "Primary" });
+    const secondary = screen.getByRole("button", { name: "Secondary" });
+    expect(primary.className).toContain("border-primary-border");
+    expect(secondary.className).toContain("border-secondary-border");
+  });
 });

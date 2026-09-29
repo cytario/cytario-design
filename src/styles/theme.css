@@ -121,6 +121,11 @@
     --color-alpha-black06: rgba(0, 0, 0, 0.06);
     --color-alpha-white10: rgba(255, 255, 255, 0.1);
     --color-alpha-white06: rgba(255, 255, 255, 0.06);
+    /* Brand teal washes for dark secondary-button states (hover/pressed) —
+       color-mix of teal-500 over dark surfaces; used via --color-secondary-*/
+    --color-alpha-teal12: color-mix(in srgb, var(--color-teal-500) 12%, transparent);
+    --color-alpha-teal20: color-mix(in srgb, var(--color-teal-500) 20%, transparent);
+    --color-transparent: transparent;
 
     /* ---- Primitives: spacing ---- */
     --spacing-1: 4px;
@@ -157,10 +162,17 @@
     --color-primary-foreground: var(--color-white);
     --color-primary-hover: var(--color-purple-800);
     --color-primary-pressed: var(--color-purple-900);
+    --color-primary-border: var(--color-purple-700);
+    /* brand-text: readable brand purple for TEXT/ICON use. On light surfaces
+       this is the brand purple itself (purple-700, 10.32:1 on white); dark
+       overrides it to a light violet (#be86e8) — see the dark block. Use for
+       link/heading/step-number accents that must stay readable on any theme. */
+    --color-brand-text: var(--color-purple-700);
     --color-secondary: var(--color-teal-300);
     --color-secondary-foreground: var(--color-teal-950);
     --color-secondary-hover: var(--color-teal-400);
     --color-secondary-pressed: var(--color-teal-500);
+    --color-secondary-border: var(--color-teal-300);
     --color-destructive: var(--color-rose-600);
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
@@ -247,14 +259,34 @@
     --color-ring: var(--color-teal-400);
     --color-overlay: var(--color-alpha-white10);
     --color-backdrop: var(--color-alpha-black60);
-    --color-primary: var(--color-purple-700);
+    /* Dark primary button fill: purple-500 (not light's purple-700), so the
+       button reads against dark surfaces (the site's brand canvas #160A24 is
+       even darker than slate-900 — values below are checked against both).
+       Dark-mode hover/pressed invert direction vs light: hover goes LIGHTER
+       (purple-400), pressed DARKER-than-rest (purple-600) — on dark surfaces a
+       darker hover would be an invisible state change. Measured: white on
+       purple-500/400/600 = 7.54 / 4.80 / 8.99; fill boundary vs slate-900 =
+       2.37 / 3.72 / 1.99 and vs #160A24 = 2.52 / 3.97 / 2.12 (the dark block
+       also carries a purple-300 fill border below so 1.4.11 holds at rest). */
+    --color-primary: var(--color-purple-500);
     --color-primary-foreground: var(--color-white);
-    --color-primary-hover: var(--color-purple-800);
-    --color-primary-pressed: var(--color-purple-900);
-    --color-secondary: var(--color-teal-300);
-    --color-secondary-foreground: var(--color-teal-950);
-    --color-secondary-hover: var(--color-teal-400);
-    --color-secondary-pressed: var(--color-teal-500);
+    --color-primary-hover: var(--color-purple-400);
+    --color-primary-pressed: var(--color-purple-600);
+    --color-primary-border: var(--color-purple-300);
+    /* brand-text: the on-dark readable brand purple (the missing semantic the
+       dark-first assessment §4 item 1 identified). #be86e8 = 7.04:1 on the
+       site canvas #160A24 and 6.60:1 on slate-900 (AA+AAA text). */
+    --color-brand-text: var(--color-purple-300);
+    /* Dark secondary button: OUTLINE treatment (transparent fill, teal-300
+       text, teal-500 border) — the site's approved outline treatment; a teal
+       fill on dark canvas reads heavier than the primary. States are teal
+       washes (12%/20% alpha of teal-500 — measured: teal-300 text on those
+       washes over #160A24 = 8.96 / 7.71, over slate-900 = 8.14 / 6.94). */
+    --color-secondary: var(--color-transparent);
+    --color-secondary-foreground: var(--color-teal-300);
+    --color-secondary-hover: var(--color-alpha-teal12);
+    --color-secondary-pressed: var(--color-alpha-teal20);
+    --color-secondary-border: var(--color-teal-500);
     --color-destructive: var(--color-rose-600);
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
@@ -516,10 +548,13 @@
   --color-primary-foreground: var(--color-primary-foreground);
   --color-primary-hover: var(--color-primary-hover);
   --color-primary-pressed: var(--color-primary-pressed);
+  --color-primary-border: var(--color-primary-border);
+  --color-brand-text: var(--color-brand-text);
   --color-secondary: var(--color-secondary);
   --color-secondary-foreground: var(--color-secondary-foreground);
   --color-secondary-hover: var(--color-secondary-hover);
   --color-secondary-pressed: var(--color-secondary-pressed);
+  --color-secondary-border: var(--color-secondary-border);
   --color-destructive: var(--color-destructive);
   --color-destructive-foreground: var(--color-destructive-foreground);
   --color-destructive-hover: var(--color-destructive-hover);
