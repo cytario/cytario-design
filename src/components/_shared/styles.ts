@@ -21,11 +21,13 @@ export type ButtonVariant =
 export const variantStyles: Record<ButtonVariant, string> = {
   primary: `
     bg-primary text-primary-foreground
+    border border-primary-border
     hover:bg-primary-hover
     pressed:bg-primary-pressed
   `,
   secondary: `
     bg-secondary text-secondary-foreground
+    border border-secondary-border
     hover:bg-secondary-hover
     pressed:bg-secondary-pressed
   `,
