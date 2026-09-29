@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import {
+  Button as AriaButton,
   Menu as AriaMenu,
   MenuTrigger,
   Popover,
@@ -72,7 +73,7 @@ export function useContextMenu({
   // The anchor point in viewport coords; null when closed.
   const popoverId = useId();
   const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
-  const anchorRef = useRef<HTMLSpanElement>(null);
+  const anchorRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
   const isOpen = anchor !== null;
 
@@ -130,11 +131,13 @@ export function useContextMenu({
     >
       {/* Hidden anchor: MenuTrigger positions the popover at this element, which
           we move to the cursor. We open programmatically (controlled isOpen),
-          never by pressing it. */}
-      <span
+          never by pressing it. An AriaButton (not a plain element) satisfies
+          MenuTrigger's PressResponder, else it warns "rendered without a
+          pressable child" on every mount; pointer-events-none keeps it inert. */}
+      <AriaButton
         ref={anchorRef}
         aria-hidden
-        tabIndex={-1}
+        excludeFromTabOrder
         className="pointer-events-none fixed h-0 w-0"
         style={{ left: anchor?.x ?? 0, top: anchor?.y ?? 0 }}
       />
