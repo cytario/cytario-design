@@ -112,6 +112,33 @@ export const Disabled: Story = {
   args: { isDisabled: true, children: "Disabled" },
 };
 
+// --- Dark-theme hero pair (not expressible by the variant grid: the light/
+// dark token split changes what primary/secondary render as) ---
+
+export const DarkTheme: Story = {
+  render: () => (
+    <div
+      data-theme="dark"
+      className="rounded-lg p-8 flex flex-wrap items-center gap-4"
+      style={{ background: "#160A24" }}
+    >
+      <p
+        className="basis-full text-xs font-semibold uppercase tracking-wider"
+        style={{ color: "var(--color-brand-text)" }}
+      >
+        dark theme — site canvas #160A24 (primary: white on purple-500 = 7.54:1;
+        secondary: teal-300 on canvas = 10.51:1, teal-500 border = 7.81:1)
+      </p>
+      <Button variant="primary" size="lg">
+        Try the open-source viewer
+      </Button>
+      <Button variant="secondary" size="lg">
+        Request a demo
+      </Button>
+    </div>
+  ),
+};
+
 // --- Interaction test ---
 
 export const ClickInteraction: Story = {
