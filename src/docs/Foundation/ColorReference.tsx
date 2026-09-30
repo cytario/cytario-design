@@ -148,12 +148,6 @@ const SECTIONS: Section[] = [
     test: (n) => n === "overlay" || n === "backdrop",
   },
   {
-    key: "progress",
-    label: "Progress",
-    desc: "Progress-bar track and fill, plus per-status fills.",
-    test: (n) => n.startsWith("progress-"),
-  },
-  {
     key: "other",
     label: "Other",
     desc: "Semantic tokens not covered by a section above (dark-mode surfaces, ink/hairline ramp, links, selection, …). If a token lands here, consider giving it a proper section.",

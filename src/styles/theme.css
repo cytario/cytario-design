@@ -188,11 +188,6 @@
     --color-info-surface: var(--color-blue-50);
     --color-info-surface-foreground: var(--color-blue-700);
     --color-info-border: var(--color-blue-200);
-    --color-progress-track: var(--color-slate-200);
-    --color-progress-fill: #6b2695;
-    --color-progress-fill-success: var(--color-green-500);
-    --color-progress-fill-warning: var(--color-amber-500);
-    --color-progress-fill-danger: var(--color-rose-500);
 
     --logo-fill: var(--color-primary);
     --logo-highlight: var(--color-teal-500);
@@ -262,11 +257,6 @@
     --color-info-surface: var(--color-blue-900);
     --color-info-surface-foreground: var(--color-blue-200);
     --color-info-border: var(--color-blue-800);
-    --color-progress-track: var(--color-slate-700);
-    --color-progress-fill: #9b4fcb;
-    --color-progress-fill-success: var(--color-green-400);
-    --color-progress-fill-warning: var(--color-amber-400);
-    --color-progress-fill-danger: var(--color-rose-400);
 
     --logo-fill: var(--color-primary-foreground);
     --logo-highlight: var(--color-teal-500);
@@ -497,9 +487,4 @@
   --color-info-surface: var(--color-info-surface);
   --color-info-surface-foreground: var(--color-info-surface-foreground);
   --color-info-border: var(--color-info-border);
-  --color-progress-track: var(--color-progress-track);
-  --color-progress-fill: var(--color-progress-fill);
-  --color-progress-fill-success: var(--color-progress-fill-success);
-  --color-progress-fill-warning: var(--color-progress-fill-warning);
-  --color-progress-fill-danger: var(--color-progress-fill-danger);
 }

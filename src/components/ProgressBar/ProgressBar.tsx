@@ -27,11 +27,10 @@ export interface ProgressBarProps {
 }
 
 const fillStyles: Record<ProgressBarVariant, string> = {
-  brand: "bg-progress-fill",
-  success: "bg-progress-fill-success",
-  warning: "bg-progress-fill-warning",
-  danger: "bg-progress-fill-danger",
-  neutral: "bg-muted-foreground",
+  brand: "bg-primary",
+  success: "bg-success",
+  warning: "bg-warning",
+  danger: "bg-destructive",
 };
 
 const sizeStyles: Record<ProgressBarSize, string> = {
@@ -70,7 +69,7 @@ export function ProgressBar({
         aria-valuemax={100}
         aria-label={label ?? "Progress"}
         className={twMerge(
-          "w-full rounded-full bg-progress-track",
+          "w-full rounded-full bg-muted",
           sizeStyles[size],
         )}
       >
