@@ -6,7 +6,7 @@ import { PaletteScales, SemanticTokens } from "./ColorReference";
 
 # Colors
 
-The cytario color system has **two tiers**. **Semantic tokens** (`--color-background`, `--color-primary`) express *intent* and adapt automatically across light and dark — build UI with these. **Primitives** (`--color-purple-700`, `--color-slate-100`) are the raw palette the semantic tokens are built from; treat them as reference, not values to use directly.
+The cytario color system has **two tiers**. **Semantic tokens** (`--color-background`, `--color-primary`) express *intent* and adapt automatically across light and dark — build UI with these. **Primitives** (`--color-purple-700`, `--color-dusk-100`) are the raw palette the semantic tokens are built from; treat them as reference, not values to use directly.
 
 Every swatch is generated from the token stylesheets (`npm run generate:tokens`, refreshed on every dev/build start) and resolved under both themes, so this page can't drift from the code.
 
@@ -24,7 +24,7 @@ What you build with. Each token maps a purpose to a palette value, so code refer
 
 ## Primitives (palette)
 
-The raw source palette: brand hues, the slate neutral ramp, status hues, plus base black/white and alpha scrims. These are theme-invariant — light and dark resolve identically — so each is shown once.
+The raw source palette: brand hues, the dusk neutral ramp, status hues, plus base black/white and alpha scrims. These are theme-invariant — light and dark resolve identically — so each is shown once.
 
 > **Primitives are not an API.** Using a primitive directly in a component (`--color-purple-700`, a hex literal) is a bug — it can't respond to theme and bypasses the semantic layer. Reach for a semantic token above; if none fits, that's a gap to raise with the design-system team.
 

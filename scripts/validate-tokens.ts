@@ -66,7 +66,7 @@ const PAIRS: Array<[string, string, number, string]> = [
   ["info-surface-foreground", "info-surface", 4.5, "text"],
   // ring doubles as link/tab text, so it must clear AA text, not just UI.
   ["ring", "background", 4.5, "text"],
-  ...["purple", "teal", "slate", "rose", "green", "amber"].flatMap(
+  ...["purple", "teal", "dusk", "rose", "green", "amber"].flatMap(
     (h): Array<[string, string, number, string]> => [
       [`badge-${h}-text`, `badge-${h}-bg`, 4.5, "text"],
     ],

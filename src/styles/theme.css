@@ -69,23 +69,23 @@
     --color-rose-800: #9f1239;
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
-    /* Neutral ramp — purple-tinted slate. One OKLCH line: hue 299 (matches
-      the brand purple), chroma = Tailwind slate chroma × 1.256, Tailwind lightness
+    /* Neutral ramp — purple-tinted dusk ramp. One OKLCH line: hue 299 (matches
+      the brand purple), chroma = Tailwind slate chroma (pre-tint reference) × 1.256, Tailwind lightness
        curve with the dark end compressed through the relaunch anchors
        (700/800/900) and 600/950 smoothed onto it. Tinting the primitives
        (not adding parallel tokens) keeps the semantic → primitive hierarchy
        intact and carries both themes. */
-    --color-slate-50: #faf9fc;
-    --color-slate-100: #f5f3fa;
-    --color-slate-200: #e9e5f1;
-    --color-slate-300: #d6d0e4;
-    --color-slate-400: #a499bb;
-    --color-slate-500: #776b90;
-    --color-slate-600: #4c4161;
-    --color-slate-700: #251543;
-    --color-slate-800: #1d1032;
-    --color-slate-900: #160a24;
-    --color-slate-950: #0e041d;
+    --color-dusk-50: #faf9fc;
+    --color-dusk-100: #f5f3fa;
+    --color-dusk-200: #e9e5f1;
+    --color-dusk-300: #d6d0e4;
+    --color-dusk-400: #a499bb;
+    --color-dusk-500: #776b90;
+    --color-dusk-600: #4c4161;
+    --color-dusk-700: #251543;
+    --color-dusk-800: #1d1032;
+    --color-dusk-900: #160a24;
+    --color-dusk-950: #0e041d;
     --color-amber-50: #fffbeb;
     --color-amber-100: #fef3c7;
     --color-amber-200: #fde68a;
@@ -137,14 +137,14 @@
 
     /* ---- Light-mode semantic tokens ---- */
     --color-background: var(--color-white);
-    --color-foreground: var(--color-slate-900);
-    --color-card: var(--color-slate-50);
-    --color-muted: var(--color-slate-100);
-    --color-muted-foreground: var(--color-slate-600);
-    --color-accent: var(--color-slate-200);
-    --color-accent-foreground: var(--color-slate-900);
-    --color-accent-pressed: var(--color-slate-300);
-    --color-border: var(--color-slate-200);
+    --color-foreground: var(--color-dusk-900);
+    --color-card: var(--color-dusk-50);
+    --color-muted: var(--color-dusk-100);
+    --color-muted-foreground: var(--color-dusk-600);
+    --color-accent: var(--color-dusk-200);
+    --color-accent-foreground: var(--color-dusk-900);
+    --color-accent-pressed: var(--color-dusk-300);
+    --color-border: var(--color-dusk-200);
     /* ring doubles as the focus indicator and the interactive teal text
        accent (links, selected tab labels). Teal-700 on white is 4.88:1 —
        clears AA text (4.5:1), where teal-600 (3.3:1) only cleared UI 3:1
@@ -175,7 +175,7 @@
     --color-success-surface-foreground: var(--color-green-700);
     --color-success-border: var(--color-green-200);
     --color-warning: var(--color-amber-500);
-    --color-warning-foreground: var(--color-slate-900);
+    --color-warning-foreground: var(--color-dusk-900);
     --color-warning-hover: var(--color-amber-400);
     --color-warning-pressed: var(--color-amber-300);
     --color-warning-surface: var(--color-amber-50);
@@ -208,15 +208,15 @@
 
   [data-theme="dark"] {
     /* ---- Dark-mode semantic token overrides (primitives are inherited from :root) ---- */
-    --color-background: var(--color-slate-900);
-    --color-foreground: var(--color-slate-100);
-    --color-card: var(--color-slate-800);
-    --color-muted: var(--color-slate-700);
-    --color-muted-foreground: var(--color-slate-400);
-    --color-accent: var(--color-slate-800);
-    --color-accent-foreground: var(--color-slate-100);
-    --color-accent-pressed: var(--color-slate-700);
-    --color-border: var(--color-slate-500);
+    --color-background: var(--color-dusk-900);
+    --color-foreground: var(--color-dusk-100);
+    --color-card: var(--color-dusk-800);
+    --color-muted: var(--color-dusk-700);
+    --color-muted-foreground: var(--color-dusk-400);
+    --color-accent: var(--color-dusk-800);
+    --color-accent-foreground: var(--color-dusk-100);
+    --color-accent-pressed: var(--color-dusk-700);
+    --color-border: var(--color-dusk-500);
     /* 10.5:1 on the tinted canvas — same interactive-accent token as light. */
     --color-ring: var(--color-teal-300);
     --color-overlay: var(--color-alpha-white10);
@@ -244,7 +244,7 @@
     --color-success-surface-foreground: var(--color-green-200);
     --color-success-border: var(--color-green-800);
     --color-warning: var(--color-amber-500);
-    --color-warning-foreground: var(--color-slate-900);
+    --color-warning-foreground: var(--color-dusk-900);
     --color-warning-hover: var(--color-amber-400);
     --color-warning-pressed: var(--color-amber-300);
     --color-warning-surface: var(--color-amber-900);
@@ -394,17 +394,17 @@
   --color-rose-800: var(--color-rose-800);
   --color-rose-900: var(--color-rose-900);
   --color-rose-950: var(--color-rose-950);
-  --color-slate-50: var(--color-slate-50);
-  --color-slate-100: var(--color-slate-100);
-  --color-slate-200: var(--color-slate-200);
-  --color-slate-300: var(--color-slate-300);
-  --color-slate-400: var(--color-slate-400);
-  --color-slate-500: var(--color-slate-500);
-  --color-slate-600: var(--color-slate-600);
-  --color-slate-700: var(--color-slate-700);
-  --color-slate-800: var(--color-slate-800);
-  --color-slate-900: var(--color-slate-900);
-  --color-slate-950: var(--color-slate-950);
+  --color-dusk-50: var(--color-dusk-50);
+  --color-dusk-100: var(--color-dusk-100);
+  --color-dusk-200: var(--color-dusk-200);
+  --color-dusk-300: var(--color-dusk-300);
+  --color-dusk-400: var(--color-dusk-400);
+  --color-dusk-500: var(--color-dusk-500);
+  --color-dusk-600: var(--color-dusk-600);
+  --color-dusk-700: var(--color-dusk-700);
+  --color-dusk-800: var(--color-dusk-800);
+  --color-dusk-900: var(--color-dusk-900);
+  --color-dusk-950: var(--color-dusk-950);
   --color-amber-50: var(--color-amber-50);
   --color-amber-100: var(--color-amber-100);
   --color-amber-200: var(--color-amber-200);
