@@ -319,7 +319,8 @@
  * a halo ring painted as a conic-gradient mask-composited to the element's
  * border shape, spun by animating a registered custom property of <angle>
  * syntax — @property makes the angle interpolable, so the keyframe spin is
- * smooth. Brand purple + teal, theme-reactive via tokens; dark surfaces are
+ * smooth. Brand purple + the interactive teal accent (the ring token),
+ * theme-reactive via tokens; dark surfaces are
  * where it shines (fluorescence-of-data accent). Unregistering browsers show
  * a static ring. The halo sits 2px outside the element (inset:-2px + padding
  * + xor mask), so it never covers content or the focus ring. */
@@ -341,7 +342,7 @@
     from var(--glow-angle),
     transparent 0%,
     var(--color-primary) 7%,
-    var(--color-link) 13%,
+    var(--color-ring) 13%,
     transparent 20%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
