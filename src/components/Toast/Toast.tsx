@@ -48,8 +48,8 @@ const variantConfig: Record<
   },
   error: {
     icon: XCircle,
-    containerClass: "bg-destructive-surface border-destructive-border text-destructive",
-    iconClass: "text-destructive",
+    containerClass: "bg-destructive-surface border-destructive-border text-destructive-text",
+    iconClass: "text-destructive-text",
   },
   info: {
     icon: Info,

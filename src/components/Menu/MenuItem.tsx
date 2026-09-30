@@ -47,7 +47,7 @@ export function MenuItem({
         "hover:bg-muted",
         "disabled:opacity-50 disabled:pointer-events-none",
         isDanger
-          ? "text-destructive"
+          ? "text-destructive-text"
           : "text-foreground",
         className,
       ]

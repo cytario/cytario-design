@@ -119,8 +119,7 @@ export const DarkTheme: Story = {
   render: () => (
     <div
       data-theme="dark"
-      className="rounded-lg p-8 flex flex-wrap items-center gap-4"
-      style={{ background: "#160A24" }}
+      className="rounded-lg p-8 flex flex-wrap items-center gap-4 bg-canvas-1 border border-hairline"
     >
       <p
         className="basis-full text-xs font-semibold uppercase tracking-wider"

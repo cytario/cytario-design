@@ -44,9 +44,7 @@ const viewerTokenOverrides: React.CSSProperties = {
   "--color-muted": "#4b5563",
   "--color-foreground": "#f3f4f6",
   "--color-muted-foreground": "#9ca3af",
-  "--color-muted-foreground": "#6b7280",
   "--color-border": "#374151",
-  "--color-border": "#4b5563",
   "--color-ring": "#35b7b8",
 } as React.CSSProperties;
 
@@ -298,7 +296,7 @@ function PathologyViewer() {
         style={{ backgroundColor: "#1f2937" }}
       >
         {/* Logo */}
-        <span className="text-sm font-bold tracking-wide text-[#35b7b8]">
+        <span className="text-sm font-bold tracking-wide text-teal-300">
           cytario
         </span>
 
@@ -368,7 +366,7 @@ function PathologyViewer() {
         </div>
 
         {/* Avatar */}
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#5c2483] text-xs font-semibold text-white">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-500 text-xs font-semibold text-white">
           ML
         </div>
       </div>

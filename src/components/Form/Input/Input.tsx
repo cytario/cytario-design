@@ -124,7 +124,7 @@ export function Input({
         <Text
           slot="errorMessage"
           role="alert"
-          className="text-sm text-destructive"
+          className="text-sm text-destructive-text"
         >
           {errorMessage}
         </Text>
