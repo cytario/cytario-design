@@ -18,7 +18,6 @@ const SCALE_GROUPS = [
   "green",
   "teal",
   "blue",
-  "purple",
 ];
 // Base primitives (black + white), shown atop the scales.
 const BASE_GROUPS = ["black", "white"];
@@ -147,18 +146,6 @@ const SECTIONS: Section[] = [
     label: "Overlay & backdrop",
     desc: "Scrims — overlay sits on dropdowns/tooltips, backdrop dims behind modal dialogs.",
     test: (n) => n === "overlay" || n === "backdrop",
-  },
-  {
-    key: "badge",
-    label: "Badge",
-    desc: "Compact label colors keyed by palette hue (decorative), as background + text pairs.",
-    test: (n) => n.startsWith("badge-"),
-  },
-  {
-    key: "delta",
-    label: "Delta",
-    desc: "Trend display (up / down / flat). Convention: increase = rose, decrease = green.",
-    test: (n) => n.startsWith("delta-"),
   },
   {
     key: "progress",
