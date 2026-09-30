@@ -7,9 +7,22 @@ import { Meta } from "@storybook/addon-docs/blocks";
   <img
     src="logos/cytario-logo-purple-tagline.svg"
     alt="cytario"
+    className="intro-logo intro-logo-light"
+    style={{ maxWidth: 280, marginBottom: 32 }}
+  />
+  <img
+    src="logos/cytario-logo-white-tagline.svg"
+    alt="cytario"
+    className="intro-logo intro-logo-dark"
     style={{ maxWidth: 280, marginBottom: 32 }}
   />
 </div>
+
+<style>{`
+  .intro-logo-dark { display: none; }
+  [data-theme="dark"] .intro-logo-dark { display: inline-block; }
+  [data-theme="dark"] .intro-logo-light { display: none; }
+`}</style>
 
 # cytario design system
 

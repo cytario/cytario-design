@@ -46,8 +46,8 @@ export const darkTheme = create({
   base: "dark",
   brandImage: "assets/logos/cytario-logo-white.svg",
 
-  colorPrimary: "#9b4fcb",
-  colorSecondary: "#9b4fcb",
+  colorPrimary: "#b87ddb",
+  colorSecondary: "#b87ddb",
 
   appBg: "#111827",
   appContentBg: "#1f2937",
@@ -59,7 +59,7 @@ export const darkTheme = create({
   textMutedColor: "#9ca3af",
 
   barTextColor: "#9ca3af",
-  barSelectedColor: "#9b4fcb",
+  barSelectedColor: "#b87ddb",
   barHoverColor: "#b87ddb",
   barBg: "#1f2937",
 
