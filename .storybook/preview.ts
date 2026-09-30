@@ -127,8 +127,6 @@ const preview: Preview = {
             "*",
           ],
           "Compositions",
-          "Patterns",
-          "Guidelines",
           "*",
         ],
       },
