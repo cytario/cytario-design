@@ -75,11 +75,3 @@ export const InInstructionList: Story = {
     </ol>
   ),
 };
-
-export const Playground: Story = {
-  args: {
-    variant: "default",
-    children: "Playground link",
-    href: "#",
-  },
-};

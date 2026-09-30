@@ -17,99 +17,7 @@ const meta: Meta<typeof Banner> = {
 export default meta;
 type Story = StoryObj<typeof Banner>;
 
-// --- Variant stories ---
-
-export const Info: Story = {
-  args: {
-    variant: "info",
-    children: "No cost data available for this period.",
-  },
-};
-
-export const Warning: Story = {
-  args: {
-    variant: "warning",
-    title: "Month-to-date",
-    children:
-      "Data through Feb 15, 2026. Figures will change as the month progresses.",
-  },
-};
-
-export const Danger: Story = {
-  args: {
-    variant: "danger",
-    children: "Failed to load data for the selected period.",
-  },
-};
-
-export const Success: Story = {
-  args: {
-    variant: "success",
-    children: "All data connections are healthy.",
-  },
-};
-
-// --- With title ---
-
-export const WithTitle: Story = {
-  args: {
-    variant: "warning",
-    title: "Month-to-date",
-    children:
-      "Data through Feb 15, 2026. Figures will change as the month progresses.",
-  },
-};
-
-// --- Dismissible ---
-
-export const Dismissible: Story = {
-  args: {
-    variant: "info",
-    dismissible: true,
-    children: "This banner can be dismissed.",
-    onDismiss: fn(),
-  },
-};
-
-export const DismissibleWarning: Story = {
-  args: {
-    variant: "warning",
-    title: "Month-to-date",
-    dismissible: true,
-    children: "Data through Feb 15, 2026.",
-    onDismiss: fn(),
-  },
-};
-
-// --- Dapanoskop usage ---
-
-export const MtdBanner: Story = {
-  name: "dapanoskop: MTD Warning",
-  args: {
-    variant: "warning",
-    title: "Month-to-date",
-    children:
-      "Data through Feb 15, 2026. Figures will change as the month progresses and may not be comparable to full-month periods.",
-  },
-};
-
-export const DataLoadError: Story = {
-  name: "dapanoskop: Data Load Error",
-  args: {
-    variant: "danger",
-    children: "Failed to load data for January 2026.",
-  },
-};
-
-export const NoDataAvailable: Story = {
-  name: "dapanoskop: No Data",
-  args: {
-    variant: "info",
-    children: "No cost data available.",
-  },
-};
-
-// --- All variants ---
+// --- The canonical visual reference ---
 
 const variants = ["info", "warning", "danger", "success"] as const;
 
@@ -125,13 +33,24 @@ export const AllVariants: Story = {
   ),
 };
 
-// --- Interaction test ---
+// --- With title ---
 
-export const DismissInteraction: Story = {
+export const WithTitle: Story = {
+  args: {
+    variant: "warning",
+    title: "Month-to-date",
+    children:
+      "Data through Feb 15, 2026. Figures will change as the month progresses.",
+  },
+};
+
+// --- Dismissible (also the dismiss interaction test) ---
+
+export const Dismissible: Story = {
   args: {
     variant: "info",
     dismissible: true,
-    children: "Dismiss me!",
+    children: "This banner can be dismissed.",
     onDismiss: fn(),
   },
   play: async ({ canvasElement, args }) => {

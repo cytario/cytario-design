@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, userEvent, within } from "storybook/test";
-import { Grid2x2, Grid3x3, List, Square } from "lucide-react";
 import { ToggleButton } from "./ToggleButton";
 
 const meta: Meta<typeof ToggleButton> = {
@@ -15,6 +14,7 @@ const meta: Meta<typeof ToggleButton> = {
       control: "select",
       options: ["xs", "sm", "md", "lg"],
     },
+    defaultSelected: { control: "boolean" },
     isDisabled: { control: "boolean" },
     isSquare: { control: "boolean" },
   },
@@ -26,85 +26,26 @@ const meta: Meta<typeof ToggleButton> = {
 export default meta;
 type Story = StoryObj<typeof ToggleButton>;
 
-// --- Variant stories ---
+// --- The canonical visual reference: each variant resting and selected ---
 
-export const Default: Story = {
-  args: { variant: "default", children: "Default Toggle" },
-};
-
-export const Primary: Story = {
-  args: { variant: "primary", children: "Primary Toggle" },
-};
-
-export const Outlined: Story = {
-  args: { variant: "outlined", children: "Outlined Toggle" },
-};
-
-export const OutlinedSelected: Story = {
-  args: {
-    variant: "outlined",
-    defaultSelected: true,
-    children: "Outlined Selected",
-  },
-};
-
-export const SquareOutlined: Story = {
-  args: {
-    variant: "outlined",
-    isSquare: true,
-    size: "md",
-    children: "A",
-  },
-};
-
-export const Selected: Story = {
-  args: { variant: "default", defaultSelected: true, children: "Selected" },
-};
-
-export const PrimarySelected: Story = {
-  args: { variant: "primary", defaultSelected: true, children: "Active" },
-};
-
-export const ExtraSmall: Story = {
-  args: { size: "xs", children: "Extra Small" },
-};
-
-export const Small: Story = {
-  args: { size: "sm", children: "Small" },
-};
-
-export const Large: Story = {
-  args: { size: "lg", children: "Large" },
-};
-
-export const Disabled: Story = {
-  args: { isDisabled: true, children: "Disabled" },
-};
+const variants = ["default", "primary", "outlined"] as const;
 
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-        <ToggleButton variant="default">Default</ToggleButton>
-        <ToggleButton variant="default" defaultSelected>
-          Default Selected
-        </ToggleButton>
-      </div>
-      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-        <ToggleButton variant="primary">Primary</ToggleButton>
-        <ToggleButton variant="primary" defaultSelected>
-          Primary Selected
-        </ToggleButton>
-      </div>
-      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-        <ToggleButton variant="outlined">Outlined</ToggleButton>
-        <ToggleButton variant="outlined" defaultSelected>
-          Outlined Selected
-        </ToggleButton>
-      </div>
+      {variants.map((variant) => (
+        <div key={variant} style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          <ToggleButton variant={variant}>{variant}</ToggleButton>
+          <ToggleButton variant={variant} defaultSelected>
+            {variant} selected
+          </ToggleButton>
+        </div>
+      ))}
     </div>
   ),
 };
+
+// --- Square icon toggles (segmented-style group) ---
 
 export const ToggleGroup: Story = {
   render: () => (
@@ -125,6 +66,8 @@ export const ToggleGroup: Story = {
   ),
 };
 
+// --- Interaction test ---
+
 export const ToggleInteraction: Story = {
   args: { variant: "primary", children: "Click to toggle" },
   play: async ({ canvasElement }) => {
@@ -143,6 +86,8 @@ export const ToggleInteraction: Story = {
     await expect(button).toHaveAttribute("aria-pressed", "false");
   },
 };
+
+// --- Playground (sizes, disabled, square live here) ---
 
 export const Playground: Story = {
   args: {

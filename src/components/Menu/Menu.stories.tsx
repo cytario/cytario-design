@@ -340,17 +340,6 @@ export const ItemsWithEndContent: Story = {
   },
 };
 
-export const Playground: Story = {
-  args: {
-    items: [
-      { id: "edit", label: "Edit", icon: Edit },
-      { id: "copy", label: "Copy", icon: Copy },
-      { id: "delete", label: "Delete", icon: Trash2, isDanger: true },
-    ],
-    children: <Button>Open Menu</Button>,
-  },
-};
-
 // --- Checkbox menu items ---
 
 export const ColumnVisibility: Story = {

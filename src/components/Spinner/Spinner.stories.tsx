@@ -15,23 +15,7 @@ const meta: Meta<typeof Spinner> = {
 export default meta;
 type Story = StoryObj<typeof Spinner>;
 
-export const Default: Story = {};
-
-export const Small: Story = {
-  args: { size: "sm" },
-};
-
-export const Medium: Story = {
-  args: { size: "md" },
-};
-
-export const Large: Story = {
-  args: { size: "lg" },
-};
-
-export const WithLabel: Story = {
-  args: { "aria-label": "Loading content" },
-};
+// --- The canonical visual reference: every size in one row ---
 
 export const AllSizes: Story = {
   render: () => (
@@ -42,3 +26,11 @@ export const AllSizes: Story = {
     </div>
   ),
 };
+
+export const WithLabel: Story = {
+  args: { "aria-label": "Loading content" },
+};
+
+// --- Playground (size lives here) ---
+
+export const Playground: Story = {};

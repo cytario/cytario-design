@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { expect, within } from "storybook/test";
-import { Plus, Download, UserPlus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 import { Button } from "../Button";
 import { Badge } from "../Badge";
@@ -16,13 +16,7 @@ const meta: Meta<typeof SectionHeader> = {
 export default meta;
 type Story = StoryObj<typeof SectionHeader>;
 
-// --- Basic stories ---
-
-export const Default: Story = {
-  args: {
-    title: "Recently Viewed",
-  },
-};
+// --- With actions (interaction-tested) ---
 
 export const WithActions: Story = {
   args: {
@@ -35,7 +29,17 @@ export const WithActions: Story = {
       </Button>
     </SectionHeader>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const heading = canvas.getByRole("heading", { level: 2 });
+    const button = canvas.getByRole("button", { name: "Add Connection" });
+
+    await expect(heading).toHaveTextContent("Storage Connections");
+    await expect(button).toBeInTheDocument();
+  },
 };
+
+// --- With count badge ---
 
 export const WithCount: Story = {
   args: {
@@ -46,58 +50,4 @@ export const WithCount: Story = {
       <Badge color="slate">142 results</Badge>
     </SectionHeader>
   ),
-};
-
-// --- Real-world usage from cytario-web admin/users screen ---
-
-export const AdminUsers: Story = {
-  name: "Admin: Users",
-  args: {
-    title: "Users",
-  },
-  render: (args) => (
-    <SectionHeader {...args}>
-      <Button variant="secondary" size="sm" iconLeft={Download}>
-        Export CSV
-      </Button>
-      <Button variant="primary" size="sm" iconLeft={UserPlus}>
-        Invite User
-      </Button>
-    </SectionHeader>
-  ),
-};
-
-// --- Interaction test ---
-
-export const RendersHeading: Story = {
-  args: {
-    title: "My Section",
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const heading = canvas.getByRole("heading", { level: 2 });
-
-    await expect(heading).toHaveTextContent("My Section");
-  },
-};
-
-export const RendersActions: Story = {
-  args: {
-    title: "With Actions",
-  },
-  render: (args) => (
-    <SectionHeader {...args}>
-      <Button variant="primary" size="sm">
-        Action
-      </Button>
-    </SectionHeader>
-  ),
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const heading = canvas.getByRole("heading", { level: 2 });
-    const button = canvas.getByRole("button", { name: "Action" });
-
-    await expect(heading).toHaveTextContent("With Actions");
-    await expect(button).toBeInTheDocument();
-  },
 };

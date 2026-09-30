@@ -9,7 +9,7 @@ const meta: Meta<typeof Breadcrumbs> = {
 export default meta;
 type Story = StoryObj<typeof Breadcrumbs>;
 
-// --- Real-world usage stories (from cytario-web) ---
+// --- Real-world usage (from cytario-web) ---
 
 export const BucketNavigation: Story = {
   name: "Bucket Navigation",
@@ -30,24 +30,11 @@ export const BucketNavigation: Story = {
   },
 };
 
-// --- Generic stories ---
+// --- Depth extremes ---
 
-export const Default: Story = {
+export const SingleItem: Story = {
   args: {
-    items: [
-      { id: "home", label: "Home", href: "#" },
-      { id: "products", label: "Products", href: "#" },
-      { id: "current", label: "Current Page" },
-    ],
-  },
-};
-
-export const TwoLevels: Story = {
-  args: {
-    items: [
-      { id: "home", label: "Home", href: "#" },
-      { id: "current", label: "Current Page" },
-    ],
+    items: [{ id: "home", label: "Home" }],
   },
 };
 
@@ -63,11 +50,7 @@ export const ManyLevels: Story = {
   },
 };
 
-export const SingleItem: Story = {
-  args: {
-    items: [{ id: "home", label: "Home" }],
-  },
-};
+// --- Truncation ---
 
 export const LongFilenameTruncation: Story = {
   name: "Long Filename (Truncated)",
@@ -88,14 +71,4 @@ export const LongFilenameTruncation: Story = {
       </div>
     ),
   ],
-};
-
-export const Playground: Story = {
-  args: {
-    items: [
-      { id: "home", label: "Home", href: "#" },
-      { id: "section", label: "Section", href: "#" },
-      { id: "page", label: "Page" },
-    ],
-  },
 };

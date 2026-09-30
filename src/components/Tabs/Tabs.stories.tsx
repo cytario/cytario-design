@@ -26,75 +26,34 @@ const meta: Meta<typeof Tabs> = {
 export default meta;
 type Story = StoryObj<typeof Tabs>;
 
-// --- Default (underline) ---
+// --- The canonical visual reference: every variant × size ---
 
-export const Default: Story = {
-  args: {
-    variant: "underline",
-    size: "md",
-  },
-  render: (args) => (
-    <Tabs {...args}>
-      <TabList aria-label="Features">
-        <Tab id="overview">Overview</Tab>
-        <Tab id="features">Features</Tab>
-        <Tab id="pricing">Pricing</Tab>
-      </TabList>
-      <TabPanel id="overview">Overview content goes here.</TabPanel>
-      <TabPanel id="features">Features content goes here.</TabPanel>
-      <TabPanel id="pricing">Pricing content goes here.</TabPanel>
-    </Tabs>
-  ),
-};
+const variants = ["underline", "pills"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
-// --- Pills variant ---
-
-export const Pills: Story = {
-  args: {
-    variant: "pills",
-    size: "md",
-  },
-  render: (args) => (
-    <Tabs {...args}>
-      <TabList aria-label="Views">
-        <Tab id="grid">Grid</Tab>
-        <Tab id="list">List</Tab>
-        <Tab id="board">Board</Tab>
-      </TabList>
-      <TabPanel id="grid">Grid view content.</TabPanel>
-      <TabPanel id="list">List view content.</TabPanel>
-      <TabPanel id="board">Board view content.</TabPanel>
-    </Tabs>
-  ),
-};
-
-// --- Sizes ---
-
-export const Small: Story = {
-  args: { variant: "underline", size: "sm" },
-  render: (args) => (
-    <Tabs {...args}>
-      <TabList aria-label="Sizes">
-        <Tab id="one">Tab One</Tab>
-        <Tab id="two">Tab Two</Tab>
-      </TabList>
-      <TabPanel id="one">Small tab content.</TabPanel>
-      <TabPanel id="two">Second tab content.</TabPanel>
-    </Tabs>
-  ),
-};
-
-export const Large: Story = {
-  args: { variant: "underline", size: "lg" },
-  render: (args) => (
-    <Tabs {...args}>
-      <TabList aria-label="Sizes">
-        <Tab id="one">Tab One</Tab>
-        <Tab id="two">Tab Two</Tab>
-      </TabList>
-      <TabPanel id="one">Large tab content.</TabPanel>
-      <TabPanel id="two">Second tab content.</TabPanel>
-    </Tabs>
+export const AllVariants: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+      {variants.map((variant) =>
+        sizes.map((size) => (
+          <div key={`${variant}-${size}`}>
+            <p className="mb-2 text-sm font-semibold text-muted-foreground">
+              {variant} / {size}
+            </p>
+            <Tabs variant={variant} size={size}>
+              <TabList aria-label={`${variant} ${size}`}>
+                <Tab id="a">Alpha</Tab>
+                <Tab id="b">Beta</Tab>
+                <Tab id="c">Gamma</Tab>
+              </TabList>
+              <TabPanel id="a">Alpha content.</TabPanel>
+              <TabPanel id="b">Beta content.</TabPanel>
+              <TabPanel id="c">Gamma content.</TabPanel>
+            </Tabs>
+          </div>
+        )),
+      )}
+    </div>
   ),
 };
 
@@ -168,37 +127,6 @@ export const Controlled: Story = {
       </div>
     );
   },
-};
-
-// --- All variants grid ---
-
-const variants = ["underline", "pills"] as const;
-const sizes = ["sm", "md", "lg"] as const;
-
-export const AllVariants: Story = {
-  render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-      {variants.map((variant) =>
-        sizes.map((size) => (
-          <div key={`${variant}-${size}`}>
-            <p className="mb-2 text-sm font-semibold text-muted-foreground">
-              {variant} / {size}
-            </p>
-            <Tabs variant={variant} size={size}>
-              <TabList aria-label={`${variant} ${size}`}>
-                <Tab id="a">Alpha</Tab>
-                <Tab id="b">Beta</Tab>
-                <Tab id="c">Gamma</Tab>
-              </TabList>
-              <TabPanel id="a">Alpha content.</TabPanel>
-              <TabPanel id="b">Beta content.</TabPanel>
-              <TabPanel id="c">Gamma content.</TabPanel>
-            </Tabs>
-          </div>
-        )),
-      )}
-    </div>
-  ),
 };
 
 // --- Interaction test ---

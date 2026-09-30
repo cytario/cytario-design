@@ -29,6 +29,8 @@ const meta: Meta<typeof TruncatedText> = {
 export default meta;
 type Story = StoryObj<typeof TruncatedText>;
 
+// --- The canonical visual reference: all three modes ---
+
 export const AllModes: Story = {
   render: (args) => (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -37,19 +39,6 @@ export const AllModes: Story = {
       <TruncatedText {...args} ellipsis="middle" />
     </div>
   ),
-};
-
-export const Left: Story = {
-  args: { ellipsis: "left" },
-};
-
-export const Middle: Story = {
-  args: { ellipsis: "middle" },
-};
-
-// Rest the cursor on the truncated text — full value follows the cursor.
-export const Right: Story = {
-  args: { ellipsis: "right" },
 };
 
 // Click (or Tab + Enter) to copy; tooltip still only shows when truncated.
