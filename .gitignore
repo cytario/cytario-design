@@ -28,3 +28,6 @@ debug-storybook.log
 
 # Local git worktrees (e.g. wt/)
 wt/
+
+# Generated token catalog (npm run generate:tokens)
+src/docs/Foundation/token-catalog.generated.ts
