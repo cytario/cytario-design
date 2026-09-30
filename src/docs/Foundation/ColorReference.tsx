@@ -11,14 +11,7 @@ import { TOKEN_CATALOG, type TokenRow } from "./token-catalog.generated";
 
 // Stepped hue scales, each its own gallery.
 // slate (neutral) first, then hue scales by wavelength: red → violet.
-const SCALE_GROUPS = [
-  "slate",
-  "rose",
-  "amber",
-  "green",
-  "teal",
-  "blue",
-];
+const SCALE_GROUPS = ["slate", "rose", "amber", "green", "teal", "blue"];
 // Base primitives (black + white), shown atop the scales.
 const BASE_GROUPS = ["black", "white"];
 // Alpha scrims/overlays — their own gallery (rendered over a checkerboard).
@@ -203,13 +196,13 @@ function ColorSwatchPrimitive({
       <div
         className={`h-18 overflow-hidden rounded-lg border border-[rgba(128,128,128,0.35)] ${
           checkered
-            ? "bg-[length:12px_12px] bg-[conic-gradient(#cbd5e1_25%,#fff_0_50%,#cbd5e1_0_75%,#fff_0)]"
+            ? "bg-size-[12px_12px] bg-[conic-gradient(#cbd5e1_25%,#fff_0_50%,#cbd5e1_0_75%,#fff_0)]"
             : ""
         }`}
       >
         <div className="h-full w-full" style={{ background: color }} />
       </div>
-      <code className="mt-1.5 font-mono text-[11px] break-words">
+      <code className="mt-1.5 font-mono text-[11px] wrap-break-word">
         {name.replace("--color-", "")}
       </code>
       <span className="font-mono text-[10px] opacity-60">{color}</span>
@@ -237,10 +230,10 @@ function ColorSwatchSemantic({
         style={{ background: color }}
       />
       <div className="min-w-0">
-        <code className="cr-swatch-name font-mono text-xs! wrap-break-word">
+        <code className="cr-swatch-name block font-mono text-sm! leading-none wrap-break-word">
           {name.replace("--color-", "")}
         </code>
-        <span className="cr-swatch-value block font-mono text-xs! opacity-60">
+        <span className="cr-swatch-value block font-mono text-sm! leading-none opacity-60">
           {mapsTo ? `→ ${mapsTo}` : color}
         </span>
       </div>
