@@ -27,20 +27,20 @@ cytario uses a **4px base unit** spacing scale. Every margin, padding, and gap i
       alignItems: "center",
       gap: 16,
       padding: "12px 0",
-      borderBottom: "1px solid #f3f4f6",
+      borderBottom: "1px solid var(--color-border)",
     }}>
-      <code style={{ fontSize: 12, width: 130, flexShrink: 0, color: "#6b7280" }}>
+      <code style={{ fontSize: 12, width: 130, flexShrink: 0, color: "var(--color-muted-foreground)" }}>
         --spacing-{token}
       </code>
       <span style={{ width: 48, flexShrink: 0, fontSize: 13, fontWeight: 600 }}>{value}</span>
       <div style={{
         width: parseInt(value),
         height: 24,
-        background: "#35b7b8",
+        background: "var(--color-link)",
         borderRadius: 4,
         flexShrink: 0,
       }} />
-      <span style={{ fontSize: 13, color: "#6b7280" }}>{desc}</span>
+      <span style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>{desc}</span>
     </div>
   ))}
 </div>
@@ -50,7 +50,7 @@ cytario uses a **4px base unit** spacing scale. Every margin, padding, and gap i
 ## Visual reference
 
 <div style={{
-  background: "#f9fafb",
+  background: "var(--color-muted)",
   borderRadius: 12,
   padding: 32,
   marginTop: 16,
@@ -75,7 +75,7 @@ cytario uses a **4px base unit** spacing scale. Every margin, padding, and gap i
           borderRadius: 4,
         }} />
         <p style={{ margin: "8px 0 0", fontSize: 11, fontWeight: 600 }}>{token}</p>
-        <p style={{ margin: "2px 0 0", fontSize: 10, color: "#6b7280" }}>{value}px</p>
+        <p style={{ margin: "2px 0 0", fontSize: 10, color: "var(--color-muted-foreground)" }}>{value}px</p>
       </div>
     ))}
   </div>
@@ -100,11 +100,11 @@ Rounded corners follow their own token scale, separate from spacing.
       <div style={{
         width: 64,
         height: 64,
-        background: "#5c2483",
+        background: "var(--color-primary)",
         borderRadius: value,
       }} />
       <p style={{ margin: "8px 0 0", fontSize: 11, fontWeight: 600 }}>{token}</p>
-      <p style={{ margin: "2px 0 0", fontSize: 10, color: "#6b7280" }}>{value}</p>
+      <p style={{ margin: "2px 0 0", fontSize: 10, color: "var(--color-muted-foreground)" }}>{value}</p>
     </div>
   ))}
 </div>

@@ -13,45 +13,18 @@ cytario uses **Montserrat** as its primary typeface. It is a geometric sans-seri
 
 <div
   style={{
-    background: "#f9fafb",
+    background: "var(--color-muted)",
     borderRadius: 12,
     padding: 32,
     marginTop: 16,
     marginBottom: 32,
   }}
 >
-  <p
-    style={{
-      fontFamily: "'Montserrat', system-ui, sans-serif",
-      fontSize: 36,
-      fontWeight: 700,
-      margin: "0 0 8px",
-      color: "#111827",
-    }}
-  >
-    Montserrat
-  </p>
-  <p
-    style={{
-      fontFamily: "'Montserrat', system-ui, sans-serif",
-      fontSize: 16,
-      margin: 0,
-      color: "#6b7280",
-    }}
-  >
-    ABCDEFGHIJKLMNOPQRSTUVWXYZ
-    <br />
-    abcdefghijklmnopqrstuvwxyz
-    <br />
-    0123456789 !@#$%^&amp;*()
-  </p>
+  <p style={{ fontFamily: "'Montserrat', system-ui, sans-serif", fontSize: 36, fontWeight: 700, margin: "0 0 8px", color: "var(--color-foreground)" }}>Montserrat</p>
+  <p style={{ fontFamily: "'Montserrat', system-ui, sans-serif", fontSize: 16, margin: 0, color: "var(--color-muted-foreground)" }}>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz<br />0123456789 !@#$%^&amp;*()</p>
 </div>
 
-<p style={{ fontSize: 13, color: "#6b7280" }}>
-  Token: <code>font-family: "Montserrat", system-ui, sans-serif</code>
-  <br />
-  Fallback stack: system-ui ensures readable text if the web font fails to load.
-</p>
+<p style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>Token: <code>font-family: "Montserrat", system-ui, sans-serif</code><br />Fallback stack: system-ui ensures readable text if the web font fails to load.</p>
 
 ---
 
