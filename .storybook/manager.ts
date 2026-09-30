@@ -2,7 +2,9 @@ import { addons } from "storybook/manager-api";
 import { lightTheme, darkTheme } from "./theme";
 
 addons.setConfig({
-  theme: lightTheme,
+  // Dark-first: the manager chrome starts dark, matching the default
+  // preview globals (see preview.ts initialGlobals).
+  theme: darkTheme,
 });
 
 addons.register("cytario-theme-switcher", (api) => {
