@@ -10,8 +10,8 @@ import { TOKEN_CATALOG, type TokenRow } from "./token-catalog.generated";
  */
 
 // Stepped hue scales, each its own gallery.
-// slate (neutral) first, then hue scales by wavelength: red → violet.
-const SCALE_GROUPS = ["slate", "rose", "amber", "green", "teal", "blue"];
+// dusk (neutral) first, then hue scales by wavelength: red → violet.
+const SCALE_GROUPS = ["dusk", "rose", "amber", "green", "teal", "blue"];
 // Base primitives (black + white), shown atop the scales.
 const BASE_GROUPS = ["black", "white"];
 // Alpha scrims/overlays — their own gallery (rendered over a checkerboard).

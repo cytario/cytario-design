@@ -13,7 +13,7 @@ interface ColumnFilterInputProps {
   filterPlaceholder?: string;
   filterOptions?: { label: string; value: string }[];
   /** Render a custom option for non-"All" values. The "All" option is
-   *  always rendered as a slate Badge automatically. */
+   *  always rendered as a dusk Badge automatically. */
   filterRender?: (option: { label: string; value: string }) => ReactNode;
 }
 
