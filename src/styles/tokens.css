@@ -145,9 +145,4 @@
   --color-info-surface: var(--color-info-surface);
   --color-info-surface-foreground: var(--color-info-surface-foreground);
   --color-info-border: var(--color-info-border);
-  --color-progress-track: var(--color-progress-track);
-  --color-progress-fill: var(--color-progress-fill);
-  --color-progress-fill-success: var(--color-progress-fill-success);
-  --color-progress-fill-warning: var(--color-progress-fill-warning);
-  --color-progress-fill-danger: var(--color-progress-fill-danger);
 }
