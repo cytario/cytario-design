@@ -80,17 +80,23 @@
     --color-rose-800: #9f1239;
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
-    --color-slate-50: #f8fafc;
-    --color-slate-100: #f1f5f9;
-    --color-slate-200: #e2e8f0;
-    --color-slate-300: #cbd5e1;
-    --color-slate-400: #94a3b8;
-    --color-slate-500: #64748b;
-    --color-slate-600: #475569;
-    --color-slate-700: #334155;
-    --color-slate-800: #1e293b;
-    --color-slate-900: #0f172a;
-    --color-slate-950: #020617;
+    /* Neutral ramp — purple-tinted slate. One OKLCH line: hue 299 (matches
+       purple-700), chroma = Tailwind slate chroma × 1.256, Tailwind lightness
+       curve with the dark end compressed through the relaunch anchors
+       (700/800/900) and 600/950 smoothed onto it. Tinting the primitives
+       (not adding parallel tokens) keeps the semantic → primitive hierarchy
+       intact and carries both themes. */
+    --color-slate-50: #faf9fc;
+    --color-slate-100: #f5f3fa;
+    --color-slate-200: #e9e5f1;
+    --color-slate-300: #d6d0e4;
+    --color-slate-400: #a499bb;
+    --color-slate-500: #776b90;
+    --color-slate-600: #4c4161;
+    --color-slate-700: #251543;
+    --color-slate-800: #1d1032;
+    --color-slate-900: #160a24;
+    --color-slate-950: #0e041d;
     --color-amber-50: #fffbeb;
     --color-amber-100: #fef3c7;
     --color-amber-200: #fde68a;
@@ -196,7 +202,7 @@
     --color-delta-decrease-text: var(--color-green-700);
     --color-delta-decrease-icon: var(--color-green-500);
     --color-delta-flat-bg: var(--color-slate-100);
-    --color-delta-flat-text: var(--color-slate-500);
+    --color-delta-flat-text: var(--color-slate-600);
     --color-delta-flat-icon: var(--color-slate-400);
     --color-progress-track: var(--color-slate-200);
     --color-progress-fill: var(--color-purple-600);
@@ -243,14 +249,14 @@
     --color-accent: var(--color-slate-800);
     --color-accent-foreground: var(--color-slate-100);
     --color-accent-pressed: var(--color-slate-700);
-    --color-border: var(--color-slate-700);
+    --color-border: var(--color-slate-500);
     --color-ring: var(--color-teal-400);
     --color-overlay: var(--color-alpha-white10);
     --color-backdrop: var(--color-alpha-black60);
-    --color-primary: var(--color-purple-700);
+    --color-primary: var(--color-purple-500);
     --color-primary-foreground: var(--color-white);
-    --color-primary-hover: var(--color-purple-800);
-    --color-primary-pressed: var(--color-purple-900);
+    --color-primary-hover: var(--color-purple-400);
+    --color-primary-pressed: var(--color-purple-600);
     --color-secondary: var(--color-teal-300);
     --color-secondary-foreground: var(--color-teal-950);
     --color-secondary-hover: var(--color-teal-400);
