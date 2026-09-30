@@ -107,13 +107,12 @@ export { filterFns } from "./components/Table";
 export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";
 
-export { ToastProvider, useToast, createToastBridge } from "./components/Toast";
+export { ToastProvider, useToast } from "./components/Toast";
 export type {
   ToastData,
   ToastVariant,
   ToastPlacement,
   ToastContextValue,
-  ToastBridge,
   ToastProviderProps,
 } from "./components/Toast";
 
