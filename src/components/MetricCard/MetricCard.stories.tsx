@@ -45,6 +45,11 @@ export const Small: Story = {
 export const Medium: Story = {
   args: {
     size: "md",
+    label: "Total Spend",
+    value: "$22,100",
+  },
+};
+
 // --- Grid composition ---
 
 export const MetricCardRow: Story = {
