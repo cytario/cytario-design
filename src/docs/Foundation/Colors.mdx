@@ -36,14 +36,14 @@ The raw source palette: brand hues, the slate neutral ramp, status hues, plus ba
 
 | Combination | Contrast ratio | WCAG AA (normal) | WCAG AA (large) |
 | --- | --- | --- | --- |
-| Purple 700 on white | 8.5:1 | Pass | Pass |
-| Teal 500 on white | 2.8:1 | Fail | Fail |
-| Teal 700 on white | 4.6:1 | Pass (large) | Pass |
-| White on purple 700 | 8.5:1 | Pass | Pass |
-| Slate 900 on white | 17.9:1 | Pass | Pass |
-| Slate 600 on white | 6.7:1 | Pass | Pass |
+| Purple 700 on white | 10.32:1 | Pass | Pass |
+| Teal 500 on white | 2.44:1 | Fail | Fail |
+| Teal 700 on white | 4.88:1 | Pass | Pass |
+| White on purple 700 | 10.32:1 | Pass | Pass |
+| Slate 900 on white | 19.04:1 | Pass | Pass |
+| Slate 600 on white | 9.39:1 | Pass | Pass |
 
-**Key rule:** Teal-500 does not meet WCAG AA contrast on white backgrounds for normal text. Use **teal-700** or darker for text. Teal-500 is suitable for large text, icons, and non-text decorative elements.
+**Key rule:** Teal-500 does not meet WCAG AA contrast on white for normal *or* large text (2.44:1 is below even the 3:1 large-text bar), and it fails 1.4.11 for meaningful icons — a focus ring in teal-500 is not reliably visible, which is why `--color-ring` resolves to teal-600 in light mode. Use **teal-700** or darker for text. Reserve teal-500 for non-text decorative elements only.
 
 **Avoid washed-out teal on solid fills.** A mid-teal fill (teal-600 / teal-700) paired with white text is the only way to hold AA contrast with a light label — but it reads muted and washed out, draining the brand vibrancy. Don't reach for it. For a solid teal surface (buttons, badges), use a **light teal fill (teal-300) with dark ink (teal-950)** instead: it keeps the teal lively *and* clears AA (8.6:1). This is exactly how the **Secondary** button is built. Reserve vivid teal-500 for accents, icons, and focus rings where no foreground text sits on top.
 
