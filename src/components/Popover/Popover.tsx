@@ -71,7 +71,7 @@ export function PopoverContent({
 }: PopoverContentProps) {
   const cx = `
     z-50
-    bg-background
+    bg-card
     border border-border
     rounded-md shadow-lg
     entering:animate-in entering:fade-in entering:duration-300

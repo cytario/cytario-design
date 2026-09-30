@@ -51,7 +51,7 @@ export function Dialog({
         className={[
           "w-full mx-4",
           sizeStyles[size],
-          "bg-background rounded-lg shadow-xl max-h-[85vh] flex flex-col",
+          "bg-card border border-border rounded-lg shadow-xl max-h-[85vh] flex flex-col",
           "entering:animate-in entering:zoom-in-95 entering:fade-in",
           "exiting:animate-out exiting:zoom-out-95 exiting:fade-out",
           className,

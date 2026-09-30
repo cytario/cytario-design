@@ -134,8 +134,8 @@
     --color-canvas-2: #12081e;
     --color-surface-1: #1d1032;
     --color-surface-2: #251543;
-    --color-hairline: #3a2a52;
-    --color-hairline-strong: #4e3a70;
+    --color-hairline: #715da8;
+    --color-hairline-strong: #8673c2;
     --color-ink-hi: #f2ecfa;
     --color-ink-body: #c7b6e2;
     --color-ink-dim: #a795c6;
@@ -293,7 +293,9 @@
     --color-accent: var(--color-surface-2);
     --color-accent-foreground: var(--color-ink-hi);
     --color-accent-pressed: var(--color-surface-1);
-    /* border → hairline #3A2A52 (spec resting-border role). */
+    /* border → hairline #715DA8 (resting borders/separators; ≥3:1 on all
+       dark surfaces per WCAG 1.4.11 — the old #3A2A52 was 1.48:1 on
+       canvas-1, making separators and dots nearly invisible). */
     --color-border: var(--color-hairline);
     --color-ring: var(--color-teal-400);
     --color-overlay: var(--color-alpha-white10);
