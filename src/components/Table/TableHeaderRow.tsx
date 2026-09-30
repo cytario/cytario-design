@@ -9,7 +9,7 @@ import { ColumnSortButton } from "./ColumnSortButton";
 import { ColumnConfig } from "./types";
 
 interface TableHeaderRowProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   headerGroup: HeaderGroup<any>;
   columns: ColumnConfig[];
   enableRowSelection: boolean;

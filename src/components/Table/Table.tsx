@@ -335,7 +335,7 @@ export function Table<TData extends object>({
           content rows instead of the border touching the first row. */}
       <div
         ref={headerRef}
-        className="sticky top-0 z-10 bg-white border-b border-border pb-1.5 overflow-x-auto"
+        className="sticky top-0 z-10 bg-card border-b border-border pb-1.5 overflow-x-auto"
         style={{ scrollbarWidth: "none" }}
         onScroll={handleHeaderScroll}
       >

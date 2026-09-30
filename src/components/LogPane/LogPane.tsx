@@ -1,3 +1,7 @@
+/* LogPane is a deliberately always-dark ANSI terminal surface — raw slate
+   steps are contrast-calibrated against slate-900 and do not follow the
+   theme. Blocked on an always-dark semantic surface token (slice 2). */
+/* eslint-disable no-restricted-syntax */
 import type React from "react";
 import type { CSSProperties } from "react";
 import { useCallback, useRef, useState } from "react";
