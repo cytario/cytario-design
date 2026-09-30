@@ -57,8 +57,10 @@ const variantStyles: Record<
       "pressed:bg-muted",
     ].join(" "),
     selected: [
-      "bg-slate-800 text-primary-foreground",
-      "border border-slate-800",
+      // Inverted chip: bg-foreground flips per theme so the selected state
+      // stays visible on dark surfaces (raw slate-800 was invisible there).
+      "bg-foreground text-background",
+      "border border-foreground",
     ].join(" "),
   },
 };
