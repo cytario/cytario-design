@@ -35,6 +35,9 @@ export interface ButtonBaseProps {
   isLoading?: boolean;
   iconLeft?: IconValue;
   iconRight?: IconValue;
+  /** Adds a slowly rotating brand-glow halo around the edge (conic-gradient
+   * ring, CSS-only; dark surfaces are where it reads best) */
+  glow?: boolean;
   className?: string;
 }
 
@@ -48,6 +51,7 @@ function ButtonBase({
   variant = "primary",
   size = "md",
   isLoading = false,
+  glow = false,
   isDisabled,
   iconLeft,
   iconRight,
@@ -60,6 +64,7 @@ function ButtonBase({
 } & Record<string, unknown>) {
   const cx = twMerge(
     buttonBaseClass,
+    glow && "glow-edge",
     isLoading ? "pointer-events-none" : "",
     variantStyles[variant],
     sizeStyles[size],
