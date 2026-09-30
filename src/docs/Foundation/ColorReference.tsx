@@ -230,12 +230,10 @@ function ColorSwatchPrimitive({
 function ColorSwatchSemantic({
   name,
   color,
-  onDark,
   mapsTo,
 }: {
   name: string;
   color: string;
-  onDark?: boolean;
   mapsTo?: string;
 }) {
   return (
@@ -245,18 +243,10 @@ function ColorSwatchSemantic({
         style={{ background: color }}
       />
       <div className="min-w-0">
-        <code
-          className={`font-mono text-xs! wrap-break-word ${
-            onDark ? "text-foreground!" : ""
-          }`}
-        >
+        <code className="cr-swatch-name font-mono text-xs! wrap-break-word">
           {name.replace("--color-", "")}
         </code>
-        <span
-          className={`block font-mono text-xs! opacity-60 ${
-            onDark ? "text-foreground!" : ""
-          }`}
-        >
+        <span className="cr-swatch-value block font-mono text-xs! opacity-60">
           {mapsTo ? `→ ${mapsTo}` : color}
         </span>
       </div>
@@ -283,7 +273,6 @@ function SectionGallery({
           key={r.name}
           name={r.name}
           color={theme === "dark" ? r.dark : r.light}
-          onDark={theme === "dark"}
           mapsTo={theme === "dark" ? r.mapsToDark : r.mapsToLight}
         />
       ))}
@@ -376,44 +365,50 @@ export function SemanticTokens() {
     tokens: semantic.filter((r) => sectionOf(r.name)?.key === s.key),
   })).filter((g) => g.tokens.length > 0);
 
-  const themeView = (theme: "light" | "dark") => {
-    // The docs theme pins a fixed dark color on headings/paragraphs; the
-    // important modifier is what lets the dark panel's light text win.
-    const fg = theme === "dark" ? "text-foreground!" : "";
-    return (
-      <div
-        data-theme={theme}
-        className={`min-w-0 flex-1 rounded-lg py-3 ${
-          // Match vertical padding so columns align at the top in side-by-side;
-          // only the tinted dark panel gets horizontal inset (light stays flush-left).
-          theme === "dark" ? "bg-background px-4" : ""
-        }`}
-      >
-        {selected === "side-by-side" && (
-          <p className={`text-xs font-bold tracking-wider uppercase ${fg}`}>
-            {theme}
-          </p>
-        )}
-        {sections.map(({ section, tokens }) => (
-          <section key={section.key} className="mb-2">
-            <h4 className={`mt-3 ${fg}`}>{section.label}</h4>
-            <p className={`mt-0.5 max-w-140 text-xs opacity-70 ${fg}`}>
-              {section.desc}
-            </p>
-            <SectionGallery tokens={tokens} theme={theme} />
-          </section>
-        ))}
-      </div>
-    );
-  };
+  // Storybook's docs theme pins font-size and color directly on headings,
+  // paragraphs, and code (unlayered CSS) — plain Tailwind utilities lose to
+  // it. These rules re-assert the panel's own typography and make the dark
+  // column's text follow the semantic foreground token.
+  const themeCss = `
+    .cr-panel :where(p) { font-size: 12px !important; }
+    .cr-panel[data-theme="dark"] :where(h4, p, code, span) {
+      color: var(--color-foreground) !important;
+    }
+  `;
 
-  if (selected === "side-by-side") {
-    return (
-      <div className="flex flex-row items-start gap-4">
-        {themeView("light")}
-        {themeView("dark")}
-      </div>
-    );
-  }
-  return themeView(selected === "dark" ? "dark" : "light");
+  const themeView = (theme: "light" | "dark") => (
+    <div
+      data-theme={theme}
+      className={`cr-panel min-w-0 flex-1 rounded-lg py-3 ${
+        // Match vertical padding so columns align at the top in side-by-side;
+        // only the tinted dark panel gets horizontal inset (light stays flush-left).
+        theme === "dark" ? "bg-background px-4" : ""
+      }`}
+    >
+      {selected === "side-by-side" && (
+        <p className="text-xs font-bold tracking-wider uppercase">{theme}</p>
+      )}
+      {sections.map(({ section, tokens }) => (
+        <section key={section.key} className="mb-2">
+          <h4 className="mt-3">{section.label}</h4>
+          <p className="mt-0.5 max-w-140 text-xs opacity-70">{section.desc}</p>
+          <SectionGallery tokens={tokens} theme={theme} />
+        </section>
+      ))}
+    </div>
+  );
+
+  return (
+    <>
+      <style>{themeCss}</style>
+      {selected === "side-by-side" ? (
+        <div className="flex flex-row items-start gap-4">
+          {themeView("light")}
+          {themeView("dark")}
+        </div>
+      ) : (
+        themeView(selected === "dark" ? "dark" : "light")
+      )}
+    </>
+  );
 }
