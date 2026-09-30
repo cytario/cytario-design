@@ -9,46 +9,30 @@
  * 2. WCAG contrast gate: the semantic text/background and border/background
  *    pairs must clear AA in both themes (4.5:1 text, 3:1 UI boundaries).
  *
+ * Shares the token parser with the generated docs catalog — the CI gate and
+ * the Colors page can never disagree about what the tokens are.
+ *
  * Run: npm run validate:tokens
  */
 
-import { readFileSync } from "node:fs";
-import { join, dirname, } from "node:path";
-import { fileURLToPath } from "node:url";
 import { wcagContrast } from "culori";
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { parseTokenCatalog } from "./lib/token-catalog.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const THEME_CSS = join(__dirname, "..", "src", "styles", "theme.css");
 
 const css = readFileSync(THEME_CSS, "utf-8");
-
-function extractBlock(selector: string): Map<string, string> {
-  const re = new RegExp(
-    selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*\\{([^}]*)\\}",
-    "g",
-  );
-  const vars = new Map<string, string>();
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(css)) !== null) {
-    for (const line of m[1].split("\n")) {
-      const decl = line.match(/^\s*(--color-[a-z0-9-]+)\s*:\s*([^;]+);/);
-      if (decl) vars.set(decl[1], decl[2].trim());
-    }
-  }
-  return vars;
-}
-
-const lightVars = extractBlock(":root");
-const darkVars = extractBlock('[data-theme="dark"]');
+const { lightRaw, darkRaw, rows } = parseTokenCatalog(css);
 
 // --- 1. dark-parity check ---------------------------------------------------
 
-const lightSemantic = new Set(
-  [...lightVars.entries()]
-    .filter(([, v]) => v.startsWith("var("))
-    .map(([k]) => k),
-);
-const missing = [...lightSemantic].filter((v) => !darkVars.has(v));
+const lightSemantic = [...lightRaw.entries()]
+  .filter(([, v]) => v.startsWith("var("))
+  .map(([k]) => k);
+const missing = lightSemantic.filter((v) => !darkRaw.has(v));
 
 if (missing.length > 0) {
   console.error(
@@ -58,20 +42,11 @@ if (missing.length > 0) {
   process.exit(1);
 }
 
-console.error(`✓ All ${lightSemantic.size} :root semantic color tokens have dark-mode overrides.`);
+console.error(
+  `✓ All ${lightSemantic.length} :root semantic color tokens have dark-mode overrides.`,
+);
 
 // --- 2. WCAG contrast gate --------------------------------------------------
-
-/** Resolve a var() chain down to a leaf color value (any CSS color syntax). */
-function resolve(vars: Map<string, string>, name: string): string | null {
-  let value = vars.get(name);
-  for (let i = 0; i < 10 && value; i++) {
-    const m = value.match(/^var\(\s*(--color-[a-z0-9-]+)\s*\)$/);
-    if (!m) break;
-    value = vars.get(m[1]);
-  }
-  return value || null;
-}
 
 // [foreground, background, minimum ratio, kind]
 const PAIRS: Array<[string, string, number, string]> = [
@@ -89,7 +64,8 @@ const PAIRS: Array<[string, string, number, string]> = [
   ["warning-surface-foreground", "warning-surface", 4.5, "text"],
   ["info-foreground", "info", 4.5, "text"],
   ["info-surface-foreground", "info-surface", 4.5, "text"],
-  ["ring", "background", 3, "ui"],
+  // ring doubles as link/tab text, so it must clear AA text, not just UI.
+  ["ring", "background", 4.5, "text"],
   ...["purple", "teal", "slate", "rose", "green", "amber"].flatMap(
     (h): Array<[string, string, number, string]> => [
       [`badge-${h}-text`, `badge-${h}-bg`, 4.5, "text"],
@@ -108,20 +84,22 @@ const PAIRS: Array<[string, string, number, string]> = [
 // boundaries only — the focus ring above is gated). The accepted fill
 // compromises are documented inline in theme.css.
 
+const byName = new Map(rows.map((r) => [r.name, r]));
 let failures = 0;
 let checked = 0;
 
-for (const [theme, overrides] of [
-  ["light", lightVars],
-  ["dark", darkVars],
+for (const [theme, key] of [
+  ["light", "light"],
+  ["dark", "dark"],
 ] as const) {
-  const vars = new Map([...lightVars, ...overrides]);
   for (const [fgName, bgName, min, kind] of PAIRS) {
-    const fg = resolve(vars, `--color-${fgName}`);
-    const bg = resolve(vars, `--color-${bgName}`);
+    const fg = byName.get(`--color-${fgName}`)?.[key];
+    const bg = byName.get(`--color-${bgName}`)?.[key];
     const ratio = fg && bg ? wcagContrast(fg, bg) : undefined;
-    if (fg === null || bg === null || ratio === undefined || Number.isNaN(ratio)) {
-      console.error(`⚠ ${theme}: cannot resolve ${fgName}/${bgName} (${fg ?? "—"} / ${bg ?? "—"}) — skipped`);
+    if (fg === undefined || bg === undefined || ratio === undefined) {
+      console.error(
+        `⚠ ${theme}: cannot resolve ${fgName}/${bgName} (${fg ?? "—"} / ${bg ?? "—"}) — skipped`,
+      );
       continue;
     }
     checked++;
@@ -135,7 +113,9 @@ for (const [theme, overrides] of [
 }
 
 if (failures > 0) {
-  console.error(`✗ ${failures} contrast failure(s) across ${checked} checked pairs.`);
+  console.error(
+    `✗ ${failures} contrast failure(s) across ${checked} checked pairs.`,
+  );
   process.exit(1);
 }
 

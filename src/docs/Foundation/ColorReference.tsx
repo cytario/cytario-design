@@ -1,22 +1,13 @@
 import { useEffect, useState } from "react";
 import { addons } from "storybook/preview-api";
+import { TOKEN_CATALOG, type TokenRow } from "./token-catalog.generated";
 
 /**
- * Live color-token reference. Reads every `--color-*` custom property straight
- * from the loaded token stylesheet (`theme.css` — `:root` for light,
- * `[data-theme="dark"]` for dark) and resolves each under both themes.
- * Nothing is hardcoded, so this view cannot drift from the tokens.
+ * Live color-token reference. Renders the build-time token catalog — generated
+ * from `theme.css` (the same source Tailwind compiles) by
+ * `scripts/generate-token-catalog.ts`, refreshed on every dev/build start, so
+ * this view cannot drift from the tokens.
  */
-
-interface TokenRow {
-  name: string;
-  /** Resolved value as hex/rgba, e.g. "#5c2483". */
-  light: string;
-  dark: string;
-  /** Primitive this token aliases per theme, e.g. "purple-700" (undefined for primitives). */
-  mapsToLight?: string;
-  mapsToDark?: string;
-}
 
 // Stepped hue scales, each its own gallery.
 // slate (neutral) first, then hue scales by wavelength: red → violet.
@@ -36,106 +27,8 @@ const ALPHA_GROUP = "alpha";
 // Everything primitive — excluded from the Semantic section.
 const PALETTE_GROUPS = [...SCALE_GROUPS, ...BASE_GROUPS, ALPHA_GROUP];
 
-function rgbToHex(rgb: string): string {
-  // Preserve alpha colors (scrims) verbatim — they read better as rgba.
-  if (rgb.startsWith("rgba") && !/,\s*1\)$/.test(rgb)) return rgb;
-  const m = rgb.match(/[\d.]+/g);
-  if (!m) return rgb;
-  const [r, g, b] = m.map(Number);
-  const h = (n: number) => Math.round(n).toString(16).padStart(2, "0");
-  return `#${h(r)}${h(g)}${h(b)}`;
-}
-
-/** Raw declared values per theme (e.g. "var(--color-white)" or "#f8fafc"). */
-function collectDeclaredTokens(): {
-  light: Map<string, string>;
-  dark: Map<string, string>;
-} {
-  const light = new Map<string, string>();
-  const dark = new Map<string, string>();
-
-  // Token rules live inside `@layer cytario-design { :root { … } }` and may be
-  // reached through `@import`, so walk grouping rules and imported sheets too.
-  const walk = (rules: CSSRuleList) => {
-    for (const rule of Array.from(rules)) {
-      if (rule instanceof CSSStyleRule) {
-        const target =
-          rule.selectorText === ":root"
-            ? light
-            : rule.selectorText === '[data-theme="dark"]'
-              ? dark
-              : null;
-        if (target) {
-          for (const prop of Array.from(rule.style)) {
-            if (prop.startsWith("--color-"))
-              target.set(prop, rule.style.getPropertyValue(prop).trim());
-          }
-        }
-      } else if (rule instanceof CSSImportRule && rule.styleSheet) {
-        try {
-          walk(rule.styleSheet.cssRules);
-        } catch {
-          /* cross-origin — skip */
-        }
-      } else if ("cssRules" in rule) {
-        walk((rule as CSSGroupingRule).cssRules);
-      }
-    }
-  };
-
-  for (const sheet of Array.from(document.styleSheets)) {
-    try {
-      walk(sheet.cssRules);
-    } catch {
-      continue; // cross-origin sheet — skip
-    }
-  }
-  return { light, dark };
-}
-
-/** If a token's declared value is a single `var(--color-X)`, return "X". */
-function aliasOf(rawValue: string | undefined): string | undefined {
-  const m = rawValue?.match(/^var\(\s*--color-([a-z0-9-]+)\s*\)$/);
-  return m ? m[1] : undefined;
-}
-
-function makeProbeHost(theme: "light" | "dark"): HTMLDivElement {
-  const el = document.createElement("div");
-  el.setAttribute("data-theme", theme);
-  el.style.cssText = "position:absolute;visibility:hidden;pointer-events:none;";
-  document.body.appendChild(el);
-  return el;
-}
-
-function resolveUnder(host: HTMLDivElement, token: string): string {
-  const probe = document.createElement("div");
-  probe.style.color = `var(${token})`;
-  host.appendChild(probe);
-  const value = getComputedStyle(probe).color;
-  host.removeChild(probe);
-  return rgbToHex(value);
-}
-
-function useTokens(): TokenRow[] | null {
-  const [rows, setRows] = useState<TokenRow[] | null>(null);
-  useEffect(() => {
-    const declared = collectDeclaredTokens();
-    const names = [...declared.light.keys()].sort();
-    const lightHost = makeProbeHost("light");
-    const darkHost = makeProbeHost("dark");
-    const resolved = names.map((name) => ({
-      name,
-      light: resolveUnder(lightHost, name),
-      dark: resolveUnder(darkHost, name),
-      mapsToLight: aliasOf(declared.light.get(name)),
-      mapsToDark: aliasOf(declared.dark.get(name) ?? declared.light.get(name)),
-    }));
-    document.body.removeChild(lightHost);
-    document.body.removeChild(darkHost);
-    setRows(resolved);
-  }, []);
-  return rows;
-}
+/** Static catalog from the generated module (sorted by token name). */
+const rows: TokenRow[] = TOKEN_CATALOG;
 
 /**
  * Read Storybook's `theme` global from a docs component. Preview hooks
@@ -273,6 +166,12 @@ const SECTIONS: Section[] = [
     desc: "Progress-bar track and fill, plus per-status fills.",
     test: (n) => n.startsWith("progress-"),
   },
+  {
+    key: "other",
+    label: "Other",
+    desc: "Semantic tokens not covered by a section above (dark-mode surfaces, ink/hairline ramp, links, selection, …). If a token lands here, consider giving it a proper section.",
+    test: () => true,
+  },
 ];
 
 const sectionOf = (name: string): Section | undefined =>
@@ -303,78 +202,83 @@ function withinSection(a: TokenRow, b: TokenRow): number {
   return an.localeCompare(bn);
 }
 
-function Swatch({
+/**
+ * Primitive swatch — vertical: color box on top, name + resolved hex below.
+ * `checkered` draws the transparency grid so translucent tokens (scrims) read.
+ * The token color itself is runtime data, so it stays an inline style; Tailwind
+ * cannot emit classnames for values it cannot see at build time.
+ */
+function ColorSwatchPrimitive({
+  name,
+  color,
+  checkered,
+}: {
+  name: string;
+  color: string;
+  checkered?: boolean;
+}) {
+  return (
+    <div className="flex w-18 flex-col">
+      <div
+        className={`h-18 overflow-hidden rounded-lg border border-[rgba(128,128,128,0.35)] ${
+          checkered
+            ? "bg-[length:12px_12px] bg-[conic-gradient(#cbd5e1_25%,#fff_0_50%,#cbd5e1_0_75%,#fff_0)]"
+            : ""
+        }`}
+      >
+        <div className="h-full w-full" style={{ background: color }} />
+      </div>
+      <code className="mt-1.5 font-mono text-[11px] break-words">
+        {name.replace("--color-", "")}
+      </code>
+      <span className="font-mono text-[10px] opacity-60">{color}</span>
+    </div>
+  );
+}
+
+/**
+ * Semantic swatch — horizontal: color box on the left, name and the primitive
+ * it maps to on the right, giving long property-agnostic names room to wrap.
+ */
+function ColorSwatchSemantic({
   name,
   color,
   onDark,
-  checkered,
   mapsTo,
 }: {
   name: string;
   color: string;
   onDark?: boolean;
-  /** Show a checkerboard behind the swatch so translucent colors read. */
-  checkered?: boolean;
-  /** Primitive this token aliases, e.g. "purple-700". When set, the card shows
-      "→ primitive" instead of the resolved hex (the value lives on the primitive). */
   mapsTo?: string;
 }) {
-  const boxStyle: React.CSSProperties = checkered
-    ? {
-        backgroundColor: "#fff",
-        backgroundImage: `linear-gradient(${color}, ${color}), conic-gradient(#cbd5e1 25%, #0000 0 50%, #cbd5e1 0 75%, #0000 0)`,
-        backgroundSize: "100% 100%, 12px 12px",
-      }
-    : { background: color };
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: 72 }}>
+    <div className="flex w-full items-start gap-2.5">
       <div
-        style={{
-          height: 72,
-          borderRadius: 8,
-          border: "1px solid rgba(128,128,128,0.35)",
-          ...boxStyle,
-        }}
+        className="h-8 w-8 shrink-0 rounded-sm border border-[rgba(128,128,128,0.35)]"
+        style={{ background: color }}
       />
-      <code
-        style={{
-          fontFamily: "ui-monospace, monospace",
-          fontSize: 11,
-          marginTop: 6,
-          wordBreak: "break-word",
-          color: onDark ? "#e5e7eb" : "inherit",
-        }}
-      >
-        {name.replace("--color-", "")}
-      </code>
-      <span
-        style={{
-          fontFamily: "ui-monospace, monospace",
-          fontSize: 10,
-          opacity: 0.6,
-          color: onDark ? "#e5e7eb" : "inherit",
-        }}
-      >
-        {mapsTo ? `→ ${mapsTo}` : color}
-      </span>
+      <div className="min-w-0">
+        <code
+          className={`font-mono text-xs! wrap-break-word ${
+            onDark ? "text-foreground!" : ""
+          }`}
+        >
+          {name.replace("--color-", "")}
+        </code>
+        <span
+          className={`block font-mono text-xs! opacity-60 ${
+            onDark ? "text-foreground!" : ""
+          }`}
+        >
+          {mapsTo ? `→ ${mapsTo}` : color}
+        </span>
+      </div>
     </div>
   );
 }
 
 function Gallery({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 16,
-        marginTop: 12,
-        marginBottom: 24,
-      }}
-    >
-      {children}
-    </div>
-  );
+  return <div className="mt-3 mb-6 flex flex-wrap gap-4">{children}</div>;
 }
 
 /** A section's swatches in a single gallery, ordered solid → foreground → states → surface set. */
@@ -388,7 +292,7 @@ function SectionGallery({
   return (
     <Gallery>
       {[...tokens].sort(withinSection).map((r) => (
-        <Swatch
+        <ColorSwatchSemantic
           key={r.name}
           name={r.name}
           color={theme === "dark" ? r.dark : r.light}
@@ -402,8 +306,6 @@ function SectionGallery({
 
 /** Palette scales — primitives, identical across themes, so a single gallery. */
 export function PaletteScales() {
-  const rows = useTokens();
-  if (!rows) return <p>Reading tokens…</p>;
   // Base primitives (black, white) in one gallery.
   const baseRows = BASE_GROUPS.flatMap((group) =>
     rows
@@ -418,21 +320,30 @@ export function PaletteScales() {
   return (
     <>
       {baseRows.length > 0 && (
-        <section style={{ marginBottom: 16 }}>
+        <section className="mb-4">
           <h3>Base</h3>
           <Gallery>
             {baseRows.map((r) => (
-              <Swatch key={r.name} name={r.name} color={r.light} />
+              <ColorSwatchPrimitive
+                key={r.name}
+                name={r.name}
+                color={r.light}
+              />
             ))}
           </Gallery>
         </section>
       )}
       {alphaRows.length > 0 && (
-        <section style={{ marginBottom: 16 }}>
+        <section className="mb-4">
           <h3>Alpha</h3>
           <Gallery>
             {alphaRows.map((r) => (
-              <Swatch key={r.name} name={r.name} color={r.light} checkered />
+              <ColorSwatchPrimitive
+                key={r.name}
+                name={r.name}
+                color={r.light}
+                checkered
+              />
             ))}
           </Gallery>
         </section>
@@ -443,11 +354,15 @@ export function PaletteScales() {
           .sort((a, b) => stepOf(a.name) - stepOf(b.name));
         if (groupRows.length === 0) return null;
         return (
-          <section key={group} style={{ marginBottom: 16 }}>
-            <h3 style={{ textTransform: "capitalize" }}>{group}</h3>
+          <section key={group} className="mb-4">
+            <h3 className="capitalize">{group}</h3>
             <Gallery>
               {groupRows.map((r) => (
-                <Swatch key={r.name} name={r.name} color={r.light} />
+                <ColorSwatchPrimitive
+                  key={r.name}
+                  name={r.name}
+                  color={r.light}
+                />
               ))}
             </Gallery>
           </section>
@@ -463,11 +378,9 @@ export function PaletteScales() {
  */
 export function SemanticTokens() {
   const selected = useThemeGlobal();
-  const rows = useTokens();
-  if (!rows) return <p>Reading tokens…</p>;
   // Grouped into explicit sections (neutral chrome → brand roles → status hues →
-  // plumbing → decorative). Tokens not matching any section are dropped from the
-  // semantic view (primitives are already excluded by PALETTE_GROUPS).
+  // plumbing → decorative). Tokens not matching any section land in the
+  // "Other" catch-all at the end.
   const semantic = rows.filter(
     (r) => !PALETTE_GROUPS.includes(groupOf(r.name)),
   );
@@ -477,48 +390,27 @@ export function SemanticTokens() {
   })).filter((g) => g.tokens.length > 0);
 
   const themeView = (theme: "light" | "dark") => {
-    // Explicit fg — the docs theme styles headings/paragraphs with a fixed dark
-    // color that would otherwise override the dark panel's inherited light text.
-    const fg = theme === "dark" ? "#e5e7eb" : "inherit";
+    // The docs theme pins a fixed dark color on headings/paragraphs; the
+    // important modifier is what lets the dark panel's light text win.
+    const fg = theme === "dark" ? "text-foreground!" : "";
     return (
       <div
         data-theme={theme}
-        style={{
-          flex: 1,
-          minWidth: 0,
+        className={`min-w-0 flex-1 rounded-lg py-3 ${
           // Match vertical padding so columns align at the top in side-by-side;
           // only the tinted dark panel gets horizontal inset (light stays flush-left).
-          padding: theme === "dark" ? "12px 16px" : "12px 0",
-          borderRadius: 8,
-          background: theme === "dark" ? "#0f172a" : "transparent",
-          color: fg,
-        }}
+          theme === "dark" ? "bg-background px-4" : ""
+        }`}
       >
         {selected === "side-by-side" && (
-          <p
-            style={{
-              fontSize: 12,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              color: fg,
-            }}
-          >
+          <p className={`text-xs font-bold tracking-wider uppercase ${fg}`}>
             {theme}
           </p>
         )}
         {sections.map(({ section, tokens }) => (
-          <section key={section.key} style={{ marginBottom: 8 }}>
-            <h4 style={{ margin: "12px 0 0", color: fg }}>{section.label}</h4>
-            <p
-              style={{
-                fontSize: 12,
-                opacity: 0.7,
-                margin: "2px 0 0",
-                maxWidth: 560,
-                color: fg,
-              }}
-            >
+          <section key={section.key} className="mb-2">
+            <h4 className={`mt-3 ${fg}`}>{section.label}</h4>
+            <p className={`mt-0.5 max-w-140 text-xs opacity-70 ${fg}`}>
               {section.desc}
             </p>
             <SectionGallery tokens={tokens} theme={theme} />
@@ -530,14 +422,7 @@ export function SemanticTokens() {
 
   if (selected === "side-by-side") {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-start",
-          gap: 16,
-        }}
-      >
+      <div className="flex flex-row items-start gap-4">
         {themeView("light")}
         {themeView("dark")}
       </div>
