@@ -38,7 +38,6 @@ src/
   docs/               # MDX documentation pages
     Introduction.mdx
     Foundation/       # Logo, Colors, Typography, Spacing
-    Guidelines/       # BrandGuidelines, ApprovedClaims
 ```
 
 ## Commands
@@ -122,7 +121,7 @@ Stories are CSF3 and exist to document a component, not to enumerate every prop 
 cytario operates in the medical device space (digital pathology). Key implications:
 
 - **SOUP (IEC 62304)**: Runtime dependencies (react, react-aria-components) are SOUP when consumed in the medical device. Dev dependencies (storybook, vitest) are not.
-- **Claims governance**: `src/docs/Guidelines/ApprovedClaims.mdx` is the authoritative source for marketing claims. EU MDR Article 7 treats advertising as labeling — claims must map to regulatory submissions.
+- **Claims governance**: the marketing-claims doc (`src/docs/Guidelines/ApprovedClaims.mdx`) was removed in the C-613 overhaul. EU MDR Article 7 still treats advertising as labeling — claims must map to regulatory submissions. Recover the content from git history (or the #58 branch) before making marketing claims.
 - **Accessibility**: WCAG 2.2 AA is required. Every component must pass addon-a11y (axe-core) checks. Teal-500 on white fails contrast for normal text.
 
 ## CI/CD
