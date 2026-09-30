@@ -475,6 +475,53 @@
   }
 }
 
+/* Glowing rotating edge (Button/ButtonLink glow prop, Card glow prop):
+ * a halo ring painted as a conic-gradient mask-composited to the element's
+ * border shape, spun by animating a registered custom property of <angle>
+ * syntax — @property makes the angle interpolable, so the keyframe spin is
+ * smooth. Brand purple + teal, theme-reactive via tokens; dark surfaces are
+ * where it shines (fluorescence-of-data accent). Unregistering browsers show
+ * a static ring. The halo sits 2px outside the element (inset:-2px + padding
+ * + xor mask), so it never covers content or the focus ring. */
+@property --glow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.glow-edge {
+  position: relative;
+}
+.glow-edge::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    transparent 0%,
+    var(--color-primary) 7%,
+    var(--color-link) 13%,
+    transparent 20%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: glow-edge-spin 2.5s linear infinite;
+  pointer-events: none;
+}
+@keyframes glow-edge-spin {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glow-edge::before {
+    animation: none;
+  }
+}
+
 @keyframes fade-in {
   from {
     filter: blur(12px);
