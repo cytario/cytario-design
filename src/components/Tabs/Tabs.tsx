@@ -196,9 +196,9 @@ function getTabVariantStyles(
       // Color states
       state.isSelected
         ? [
-            "text-teal-700 font-semibold",
+            "text-ring font-semibold",
             // Bottom indicator via pseudo-element
-            "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-0.5 after:bg-teal-600",
+            "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-0.5 after:bg-ring",
           ].join(" ")
         : state.isPressed
           ? "text-foreground bg-muted"

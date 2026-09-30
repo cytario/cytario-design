@@ -8,7 +8,7 @@ import { PaletteScales, SemanticTokens } from "./ColorReference";
 
 The cytario color system has **two tiers**. **Semantic tokens** (`--color-background`, `--color-primary`) express *intent* and adapt automatically across light and dark — build UI with these. **Primitives** (`--color-purple-700`, `--color-slate-100`) are the raw palette the semantic tokens are built from; treat them as reference, not values to use directly.
 
-Every swatch is read live from the token stylesheets and resolved under both themes, so this page can't drift from the code.
+Every swatch is generated from the token stylesheets (`npm run generate:tokens`, refreshed on every dev/build start) and resolved under both themes, so this page can't drift from the code.
 
 cytario's identity is carried by purple and teal — the **Primary** (purple) and **Secondary** (teal) sections in the semantic tokens below. Token names follow the shadcn/ui convention (`background`/`foreground`, `primary`, `destructive`, …) so they map to clean, property-agnostic Tailwind utilities (`bg-background`, `text-destructive`).
 
@@ -43,7 +43,7 @@ The raw source palette: brand hues, the slate neutral ramp, status hues, plus ba
 | Slate 900 on white | 19.04:1 | Pass | Pass |
 | Slate 600 on white | 9.39:1 | Pass | Pass |
 
-**Key rule:** Teal-500 does not meet WCAG AA contrast on white for normal *or* large text (2.44:1 is below even the 3:1 large-text bar), and it fails 1.4.11 for meaningful icons — a focus ring in teal-500 is not reliably visible, which is why `--color-ring` resolves to teal-600 in light mode. Use **teal-700** or darker for text. Reserve teal-500 for non-text decorative elements only.
+**Key rule:** Teal-500 does not meet WCAG AA contrast on white for normal *or* large text (2.44:1 is below even the 3:1 large-text bar), and it fails 1.4.11 for meaningful icons. Use **teal-700** or darker for text — it is also what `--color-ring` resolves to in light mode, since the focus ring doubles as the link/tab text accent and must clear AA text, not just UI. Reserve teal-500 for non-text decorative elements only.
 
 **Avoid washed-out teal on solid fills.** A mid-teal fill (teal-600 / teal-700) paired with white text is the only way to hold AA contrast with a light label — but it reads muted and washed out, draining the brand vibrancy. Don't reach for it. For a solid teal surface (buttons, badges), use a **light teal fill (teal-300) with dark ink (teal-950)** instead: it keeps the teal lively *and* clears AA (8.6:1). This is exactly how the **Secondary** button is built. Reserve vivid teal-500 for accents, icons, and focus rings where no foreground text sits on top.
 
