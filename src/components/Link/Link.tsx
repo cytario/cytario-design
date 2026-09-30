@@ -13,10 +13,7 @@ export interface LinkProps extends Omit<AriaLinkProps, "className"> {
 }
 
 const variantStyles: Record<LinkVariant, string> = {
-  default: [
-    "text-teal-700 underline",
-    "hover:text-teal-800",
-  ].join(" "),
+  default: ["text-link underline", "hover:text-link-hover"].join(" "),
   subtle: [
     "text-muted-foreground no-underline",
     "hover:underline hover:text-foreground",

@@ -186,6 +186,23 @@
     --color-secondary-hover: var(--color-teal-400);
     --color-secondary-pressed: var(--color-teal-500);
     --color-secondary-border: var(--color-teal-300);
+    /* link: teal for links/selected-tab text. Dark uses teal-300 (the spec's
+       teal-bright: 10.51 on canvas-1); teal-700 is a light-only value (3.9 on
+       canvas-1 — fails AA as text). */
+    --color-link: var(--color-teal-700);
+    --color-link-hover: var(--color-teal-800);
+    /* selected: strong fill marking the selected control (ToggleButton
+       outlined). Light keeps the dark neutral fill; dark raises to the
+       spec's highest surface (slate-800 is invisible on canvas-1). */
+    --color-selected: var(--color-slate-800);
+    --color-selected-foreground: var(--color-white);
+    /* destructive-text: readable danger/red text (error messages, required
+       markers, danger menu items, InlineConfirmation). Dark uses the surface
+       ramp like Banner does — rose-600 is a fill value (4.05 on canvas-1,
+       fails AA as text); rose-200 on the surface ramp is 12+. Light keeps
+       rose-600 (4.5+ on the light surfaces it appears on). */
+    --color-destructive-text: var(--color-rose-600);
+    --color-destructive-text-hover: var(--color-rose-700);
     --color-destructive: var(--color-rose-600);
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
@@ -309,6 +326,18 @@
     --color-secondary-hover: var(--color-alpha-teal12);
     --color-secondary-pressed: var(--color-alpha-teal20);
     --color-secondary-border: var(--color-teal-500);
+    /* link → teal-300 (DESIGN_SPEC teal-bright: 10.51 on canvas-1, 9.89 on
+       surface-1); hover steps lighter. */
+    --color-link: var(--color-teal-300);
+    --color-link-hover: var(--color-teal-200);
+    /* selected → surface-2 #251543 (raised, visible on canvas-1);
+       foreground → ink-hi (muted text 8.85 on surface-2). */
+    --color-selected: var(--color-surface-2);
+    --color-selected-foreground: var(--color-ink-hi);
+    /* destructive-text → rose-200: the surface-foreground ramp (matches
+       --color-destructive-surface-foreground); 12+:1 on the dark surfaces. */
+    --color-destructive-text: var(--color-rose-200);
+    --color-destructive-text-hover: var(--color-rose-100);
     --color-destructive: var(--color-rose-600);
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
@@ -613,6 +642,12 @@
   --color-secondary-hover: var(--color-secondary-hover);
   --color-secondary-pressed: var(--color-secondary-pressed);
   --color-secondary-border: var(--color-secondary-border);
+  --color-link: var(--color-link);
+  --color-link-hover: var(--color-link-hover);
+  --color-selected: var(--color-selected);
+  --color-selected-foreground: var(--color-selected-foreground);
+  --color-destructive-text: var(--color-destructive-text);
+  --color-destructive-text-hover: var(--color-destructive-text-hover);
   --color-destructive: var(--color-destructive);
   --color-destructive-foreground: var(--color-destructive-foreground);
   --color-destructive-hover: var(--color-destructive-hover);

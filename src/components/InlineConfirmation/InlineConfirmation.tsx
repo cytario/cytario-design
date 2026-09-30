@@ -28,7 +28,7 @@ const variantStyles = {
     container:
       "border-t border-destructive-border bg-destructive-surface -mx-6 px-6 -mb-4 pb-4 pt-4 mt-4",
     message:
-      "text-sm font-semibold text-destructive",
+      "text-sm font-semibold text-destructive-text",
     buttonDivider: "border-t border-destructive-border",
     confirmVariant: "destructive" as const,
   },
@@ -55,7 +55,7 @@ export function InlineConfirmation({
         {message}
       </p>
       {description && (
-        <p className="text-sm text-muted-foreground mb-4">
+        <p className="text-sm text-destructive-surface-foreground mb-4">
           {description}
         </p>
       )}

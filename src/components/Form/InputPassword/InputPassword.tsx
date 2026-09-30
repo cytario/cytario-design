@@ -70,7 +70,7 @@ export const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
           >
             {label}
             {isRequired && (
-              <span aria-hidden="true" className="ml-0.5 text-destructive">
+              <span aria-hidden="true" className="ml-0.5 text-destructive-text">
                 *
               </span>
             )}
@@ -126,7 +126,7 @@ export const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
         )}
 
         {isInvalid && (
-          <p id={errId} role="alert" className="text-sm text-destructive">
+          <p id={errId} role="alert" className="text-sm text-destructive-text">
             {errorMessage}
           </p>
         )}

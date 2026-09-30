@@ -135,7 +135,7 @@ const usersRenderers: CellRenderers<UserRow> = {
     <a
       href="#"
       onClick={(e) => e.preventDefault()}
-      className="font-medium text-teal-700 hover:underline no-underline"
+      className="font-medium text-link hover:underline no-underline"
     >
       {user.name}
     </a>
@@ -245,7 +245,7 @@ function AdminUsersPage() {
         <div className="flex items-center gap-3">
           <Logo color="#ffffff" scale={0.8} />
           <span className="text-sm text-slate-400">Admin</span>
-          <span className="text-sm text-slate-500">/</span>
+          <span className="text-sm text-muted-foreground">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
         </div>
       </header>
@@ -307,7 +307,7 @@ function AdminUsersEmpty() {
         <div className="flex items-center gap-3">
           <Logo color="#ffffff" scale={0.8} />
           <span className="text-sm text-slate-400">Admin</span>
-          <span className="text-sm text-slate-500">/</span>
+          <span className="text-sm text-muted-foreground">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
         </div>
       </header>
@@ -349,7 +349,7 @@ function AdminUsersWithSelection() {
         <div className="flex items-center gap-3">
           <Logo color="#ffffff" scale={0.8} />
           <span className="text-sm text-slate-400">Admin</span>
-          <span className="text-sm text-slate-500">/</span>
+          <span className="text-sm text-muted-foreground">/</span>
           <span className="text-sm font-medium text-slate-300">Users</span>
         </div>
       </header>

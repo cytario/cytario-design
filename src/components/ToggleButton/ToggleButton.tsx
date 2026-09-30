@@ -57,8 +57,8 @@ const variantStyles: Record<
       "pressed:bg-muted",
     ].join(" "),
     selected: [
-      "bg-slate-800 text-primary-foreground",
-      "border border-slate-800",
+      "bg-selected text-selected-foreground",
+      "border border-selected",
     ].join(" "),
   },
 };

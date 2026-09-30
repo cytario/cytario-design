@@ -84,7 +84,7 @@ export function Slider({
             <p
               className={twMerge(
                 "text-xs text-muted-foreground",
-                errorMessage && "text-destructive",
+                errorMessage && "text-destructive-text",
               )}
             >
               {errorMessage ?? description}

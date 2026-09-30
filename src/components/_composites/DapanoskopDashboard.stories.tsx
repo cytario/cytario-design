@@ -95,12 +95,12 @@ const workloadColumns: ColumnConfig[] = [
 const workloadRenderers: CellRenderers<Workload> = {
   name: (wl) =>
     wl.name === "Untagged" ? (
-      <span className="font-medium text-destructive">{wl.name}</span>
+      <span className="font-medium text-destructive-text">{wl.name}</span>
     ) : (
       <a
         href="#"
         onClick={(e) => e.preventDefault()}
-        className="text-primary hover:underline no-underline"
+        className="text-brand-text hover:underline no-underline"
       >
         {wl.name}
       </a>
@@ -180,7 +180,7 @@ function CostCenterSummaryCard({ cc }: { cc: CostCenter }) {
             <a
               href="#"
               onClick={(e) => e.preventDefault()}
-              className="font-semibold text-lg text-primary hover:underline no-underline"
+              className="font-semibold text-lg text-brand-text hover:underline no-underline"
             >
               {cc.name}
             </a>

@@ -66,7 +66,7 @@ export function FormWizardProgress({ labels }: FormWizardProgressProps) {
                       ? "bg-primary text-primary-foreground"
                       : "",
                     isCurrent
-                      ? "border-2 border-primary bg-background text-primary"
+                      ? "border-2 border-primary bg-background text-brand-text"
                       : "",
                     isFuture
                       ? "border-2 border-border bg-background text-muted-foreground"

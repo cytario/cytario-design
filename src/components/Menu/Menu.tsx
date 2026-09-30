@@ -89,7 +89,7 @@ export function Menu({
                   "focus:bg-muted",
                   "hover:bg-muted",
                   "disabled:opacity-50 disabled:pointer-events-none",
-                  item.isDanger ? "text-destructive" : "text-foreground",
+                  item.isDanger ? "text-destructive-text" : "text-foreground",
                 ]
                   .filter(Boolean)
                   .join(" ")}

@@ -25,7 +25,7 @@ export function Label({ isRequired, children, className, ...props }: LabelProps)
       {isRequired && (
         <span
           aria-hidden="true"
-          className="ml-0.5 text-destructive"
+          className="ml-0.5 text-destructive-text"
         >
           *
         </span>
