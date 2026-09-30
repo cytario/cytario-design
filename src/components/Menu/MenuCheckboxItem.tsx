@@ -43,7 +43,7 @@ export function MenuCheckboxItem({
         <>
           <span className="flex items-center justify-center w-4 h-4 shrink-0">
             {isSelected && (
-              <Check size={14} className="text-primary" aria-hidden="true" />
+              <Check size={14} className="text-brand-text" aria-hidden="true" />
             )}
           </span>
           <span className="flex-1">{children}</span>

@@ -167,7 +167,15 @@
     --color-accent: var(--color-slate-200);
     --color-accent-foreground: var(--color-slate-900);
     --color-accent-pressed: var(--color-slate-300);
-    --color-border: var(--color-slate-200);
+    /* border → slate-500 (#64748b), 4.76:1 on white / 4.55:1 on the slate-50
+       card. slate-200 was 1.23:1, so separators (Menu/Popover/Dialog dividers),
+       input + checkbox/radio/switch outlines, and card/table borders were
+       nearly invisible in light mode — the same failure class the dark block
+       fixed by repointing to --color-hairline (3.27:1). slate-300 (1.42:1) and
+       slate-400 (2.56:1) still fail the 3:1 non-text minimum (WCAG 1.4.11), so
+       slate-500 is the lightest existing neutral that makes the light theme
+       genuinely visible and matches dark's passing weight. */
+    --color-border: var(--color-slate-500);
     --color-ring: var(--color-teal-500);
     --color-overlay: var(--color-alpha-black80);
     --color-backdrop: var(--color-alpha-black40);

@@ -138,7 +138,7 @@ export function Select({
                   cursor-pointer outline-none
                   hover:bg-muted
                   focus-visible:bg-muted
-                  selected:text-primary selected:font-medium
+                  selected:text-brand-text selected:font-medium
                 `,
                 sizeStyles[size],
               )}
@@ -149,7 +149,7 @@ export function Select({
                     {renderItem ? renderItem(item) : item.name}
                   </span>
                   {isSelected && (
-                    <Check className="h-4 w-4 shrink-0 text-primary" />
+                    <Check className="h-4 w-4 shrink-0 text-brand-text" />
                   )}
                 </>
               )}
