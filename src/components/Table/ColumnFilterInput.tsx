@@ -19,7 +19,7 @@ interface ColumnFilterInputProps {
 
 const ALL_KEY = "__all__";
 const ALL_OPTION: SelectItem = { id: ALL_KEY, name: "All" };
-const AllPill = () => <Badge color="slate">All</Badge>;
+const AllPill = () => <Badge color="neutral">All</Badge>;
 
 /**
  * Column filter (react-data-table default look): a small ghost funnel button

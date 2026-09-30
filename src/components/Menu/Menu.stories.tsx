@@ -136,7 +136,7 @@ export const WithSections: Story = {
               href="https://example.com"
               target="_blank"
               endContent={
-                <Badge color="teal" size="sm">
+                <Badge color="secondary" size="sm">
                   New
                 </Badge>
               }

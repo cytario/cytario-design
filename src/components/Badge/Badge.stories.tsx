@@ -23,12 +23,12 @@ export default meta;
 type Story = StoryObj<typeof Badge>;
 
 const colors = [
-  "purple",
-  "teal",
-  "rose",
-  "slate",
-  "green",
-  "amber",
+  "primary",
+  "secondary",
+  "destructive",
+  "neutral",
+  "success",
+  "warning",
 ] as const;
 
 const sizes = ["xs", "sm", "md", "lg"] as const;
@@ -72,13 +72,13 @@ export const AllVariants: Story = {
 };
 
 export const Playground: Story = {
-  args: { color: "slate", size: "sm", children: "Badge" },
+  args: { color: "neutral", size: "sm", children: "Badge" },
 };
 
 export const WithIcon: Story = {
-  args: { color: "teal", icon: Cloud, children: "AWS" },
+  args: { color: "secondary", icon: Cloud, children: "AWS" },
 };
 
 export const Count: Story = {
-  args: { color: "slate", children: 1234 },
+  args: { color: "neutral", children: 1234 },
 };
