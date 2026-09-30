@@ -127,6 +127,19 @@
     --color-alpha-teal20: color-mix(in srgb, var(--color-teal-500) 20%, transparent);
     --color-transparent: transparent;
 
+    /* Relaunch brand canvas — dark-first palette from
+       cytario-com DESIGN_SPEC.md §1 (all ratios measured against canvas-1).
+       These are the raw primitives; the dark semantic layer repoints to them. */
+    --color-canvas-1: #160a24;
+    --color-canvas-2: #12081e;
+    --color-surface-1: #1d1032;
+    --color-surface-2: #251543;
+    --color-hairline: #3a2a52;
+    --color-hairline-strong: #4e3a70;
+    --color-ink-hi: #f2ecfa;
+    --color-ink-body: #c7b6e2;
+    --color-ink-dim: #a795c6;
+
     /* ---- Primitives: spacing ---- */
     --spacing-1: 4px;
     --spacing-2: 8px;
@@ -247,15 +260,24 @@
 
   [data-theme="dark"] {
     /* ---- Dark-mode semantic token overrides (primitives are inherited from :root) ---- */
-    --color-background: var(--color-slate-900);
-    --color-foreground: var(--color-slate-100);
-    --color-card: var(--color-slate-800);
-    --color-muted: var(--color-slate-700);
-    --color-muted-foreground: var(--color-slate-400);
-    --color-accent: var(--color-slate-800);
-    --color-accent-foreground: var(--color-slate-100);
-    --color-accent-pressed: var(--color-slate-700);
-    --color-border: var(--color-slate-700);
+    /* Brand canvas repoint (DESIGN_SPEC §1): background → canvas-1 #160A24,
+       foreground → ink-hi #F2ECFA (16.46 AAA on canvas-1). */
+    --color-background: var(--color-canvas-1);
+    --color-foreground: var(--color-ink-hi);
+    /* card → surface-1 #1D1032 (raised cards; white 17.91 / muted 9.57 on it). */
+    --color-card: var(--color-surface-1);
+    /* muted → surface-2 #251543 — the spec's highest surface (hover, diagram
+       nodes); muted text on it 8.85. */
+    --color-muted: var(--color-surface-2);
+    /* muted-foreground → ink-dim #A795C6 (7.03 AAA on canvas-1). */
+    --color-muted-foreground: var(--color-ink-dim);
+    /* accent → surface-2: hover/selected wash per the spec surface ladder
+       (canvas-1 < surface-1 < surface-2). */
+    --color-accent: var(--color-surface-2);
+    --color-accent-foreground: var(--color-ink-hi);
+    --color-accent-pressed: var(--color-surface-1);
+    /* border → hairline #3A2A52 (spec resting-border role). */
+    --color-border: var(--color-hairline);
     --color-ring: var(--color-teal-400);
     --color-overlay: var(--color-alpha-white10);
     --color-backdrop: var(--color-alpha-black60);
@@ -321,9 +343,9 @@
     --color-delta-decrease-bg: var(--color-green-900);
     --color-delta-decrease-text: var(--color-green-300);
     --color-delta-decrease-icon: var(--color-green-400);
-    --color-delta-flat-bg: var(--color-slate-800);
-    --color-delta-flat-text: var(--color-slate-400);
-    --color-delta-flat-icon: var(--color-slate-500);
+    --color-delta-flat-bg: var(--color-surface-1);
+    --color-delta-flat-text: var(--color-ink-dim);
+    --color-delta-flat-icon: var(--color-hairline-strong);
     --color-progress-track: var(--color-slate-700);
     --color-progress-fill: var(--color-purple-400);
     --color-progress-fill-success: var(--color-green-400);
@@ -333,8 +355,8 @@
     --color-badge-purple-text: var(--color-purple-200);
     --color-badge-teal-bg: var(--color-teal-800);
     --color-badge-teal-text: var(--color-teal-200);
-    --color-badge-slate-bg: var(--color-slate-800);
-    --color-badge-slate-text: var(--color-slate-200);
+    --color-badge-slate-bg: var(--color-surface-1);
+    --color-badge-slate-text: var(--color-ink-body);
     --color-badge-rose-bg: var(--color-rose-800);
     --color-badge-rose-text: var(--color-rose-200);
     --color-badge-green-bg: var(--color-green-800);
@@ -357,6 +379,31 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+  }
+
+  /* Prose / Tailwind Typography: the plugin hardcodes a light-assumed gray
+     palette (--tw-prose-body defaults to gray-700) with no dark adaptation,
+     which made Prose illegible in dark mode. Map its color channels to the
+     semantic tokens so .prose follows the active theme (invert keeps the
+     plugin's own --tw-prose-invert-* channels, untouched below). */
+  .prose {
+    --tw-prose-body: var(--color-foreground);
+    --tw-prose-headings: var(--color-foreground);
+    --tw-prose-lead: var(--color-muted-foreground);
+    --tw-prose-links: var(--color-brand-text);
+    --tw-prose-bold: var(--color-foreground);
+    --tw-prose-counters: var(--color-muted-foreground);
+    --tw-prose-bullets: var(--color-muted-foreground);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-foreground);
+    --tw-prose-quote-borders: var(--color-border);
+    --tw-prose-captions: var(--color-muted-foreground);
+    --tw-prose-code: var(--color-foreground);
+    --tw-prose-kbd: var(--color-foreground);
+    --tw-prose-pre-code: var(--color-foreground);
+    --tw-prose-pre-bg: var(--color-card);
+    --tw-prose-th-borders: var(--color-border);
+    --tw-prose-td-borders: var(--color-border);
   }
 }
 
@@ -443,6 +490,17 @@
   /* Tooltip must paint above React Aria overlays (Menu, Dialog, Popover),
    * which useOverlayPosition forces to zIndex 100000. */
   --z-index-tooltip: 100001;
+
+  /* Relaunch brand canvas + ink ramp (DESIGN_SPEC §1 dark-first palette). */
+  --color-canvas-1: var(--color-canvas-1);
+  --color-canvas-2: var(--color-canvas-2);
+  --color-surface-1: var(--color-surface-1);
+  --color-surface-2: var(--color-surface-2);
+  --color-hairline: var(--color-hairline);
+  --color-hairline-strong: var(--color-hairline-strong);
+  --color-ink-hi: var(--color-ink-hi);
+  --color-ink-body: var(--color-ink-body);
+  --color-ink-dim: var(--color-ink-dim);
 
   /* Color Primitives */
   --color-purple-50: var(--color-purple-50);
