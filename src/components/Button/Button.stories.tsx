@@ -131,10 +131,10 @@ export const GlowEdge: Story = {
   render: () => (
     <div
       data-theme="dark"
-      className="rounded-lg p-8 flex flex-wrap items-center gap-6 bg-canvas-1 border border-hairline"
+      className="rounded-lg p-8 flex flex-wrap items-center gap-6 bg-dusk-900 border border-dusk-500"
     >
       <p className="basis-full text-xs font-semibold uppercase tracking-wider"
-        style={{ color: "var(--color-brand-text)" }}>
+        style={{ color: "var(--color-ring)" }}>
         glow — rotating conic-gradient halo (best on dark surfaces)
       </p>
       <Button glow variant="primary" size="lg">
