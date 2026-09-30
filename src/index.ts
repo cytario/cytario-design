@@ -224,13 +224,6 @@ export type { BadgeProps, BadgeColor, BadgeSize } from "./components/Badge";
 export { Card } from "./components/Card";
 export type { CardProps } from "./components/Card";
 
-export { DeltaIndicator } from "./components/DeltaIndicator";
-export type {
-  DeltaIndicatorProps,
-  DeltaFormat,
-  DeltaMode,
-} from "./components/DeltaIndicator";
-
 export { ProgressBar } from "./components/ProgressBar";
 export type {
   ProgressBarProps,

@@ -46,7 +46,7 @@ export const UserProfileMenu: Story = {
           <MenuSection aria-label="User identity">
             <MenuHeader>
               <div className="flex items-center gap-3 px-3 py-2">
-                <div className="flex size-8 items-center justify-center rounded-full bg-badge-purple-bg text-badge-purple-text">
+                <div className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
                   <User className="size-4" />
                 </div>
                 <div className="flex flex-col">
@@ -186,7 +186,7 @@ export const WithEndContent: Story = {
             id="download"
             icon={Download}
             endContent={
-              <Badge color="purple" size="sm">
+              <Badge color="primary" size="sm">
                 Pro
               </Badge>
             }
@@ -330,7 +330,7 @@ export const ItemsWithEndContent: Story = {
         label: "Export",
         icon: Download,
         endContent: (
-          <Badge color="purple" size="sm">
+          <Badge color="primary" size="sm">
             Pro
           </Badge>
         ),
