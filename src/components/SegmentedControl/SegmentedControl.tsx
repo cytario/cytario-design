@@ -79,10 +79,17 @@ export function SegmentedControl({
         defaultSelectedKeys={isNoneMode ? undefined : defaultSelectedKeys}
         onSelectionChange={isNoneMode ? undefined : onSelectionChange}
         className={twMerge(
-          "inline-flex items-center rounded-lg border border-border bg-muted p-0.5 gap-0.5",
+          // sc-glide: the group carries a CSS-anchor glide indicator (see
+          // theme.css) — selected item is the anchor, the indicator slides
+          // between items. The indicator div itself carries no Tailwind
+          // classes; it is fully styled via .sc-glide-indicator.
+          "sc-glide inline-flex items-center rounded-lg border border-border bg-muted p-0.5 gap-0.5",
           className,
         )}
       >
+        {selectionMode === "single" && (
+          <div aria-hidden="true" className="sc-glide-indicator" />
+        )}
         {children}
       </AriaToggleButtonGroup>
     </SegmentedControlContext.Provider>
@@ -112,6 +119,8 @@ export function SegmentedControlItem({
         twMerge(
           // Base layout
           "inline-flex items-center justify-center",
+          // Paint above the glide indicator (an absolutely positioned sibling)
+          "relative z-10",
           "rounded-md",
           "font-medium",
           "outline-none transition-colors cursor-pointer",
@@ -125,9 +134,11 @@ export function SegmentedControlItem({
           // Size
           sizeStyles[size],
 
-          // Selected state
+          // Selected state: the glide indicator (sc-glide-indicator in the
+          // group) paints the selected background, so the item only swaps
+          // text weight/color. Hover/pressed states stay per-item.
           isSelected
-            ? "bg-background text-foreground shadow-sm font-semibold"
+            ? "text-foreground font-semibold"
             : isPressed
               ? "bg-card text-foreground"
               : isHovered

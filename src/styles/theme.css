@@ -281,6 +281,40 @@
   color: var(--color-white);
 }
 
+/* SegmentedControl glide indicator: the selected item is the anchor; the
+ * indicator is absolutely positioned to it via anchor()/anchor-size() and
+ * transitions between resolved values as selection moves between items —
+ * a sliding highlight with no JS measurement. Browsers without CSS anchor
+ * positioning keep the per-item background (the rules below only add the
+ * gliding track). Only one item is selected at a time (selectionMode
+ * single), so the anchor-name is unique per group. */
+.sc-glide {
+  position: relative;
+}
+.sc-glide > [data-selected] {
+  anchor-name: --sc-selected;
+}
+.sc-glide-indicator {
+  position: absolute;
+  position-anchor: --sc-selected;
+  left: anchor(--sc-selected left);
+  top: anchor(--sc-selected top);
+  width: anchor-size(--sc-selected width);
+  height: anchor-size(--sc-selected height);
+  background: var(--color-background);
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition:
+    left 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    width 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transitioning a theme change looks broken; color/bg swaps are instant. */
+}
+@media (prefers-reduced-motion: reduce) {
+  .sc-glide-indicator {
+    transition: none;
+  }
+}
+
 @keyframes fade-in {
   from {
     filter: blur(12px);
