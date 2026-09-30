@@ -1,5 +1,5 @@
-/* LogPane is a deliberately always-dark ANSI terminal surface — raw slate
-   steps are contrast-calibrated against slate-900 and do not follow the
+/* LogPane is a deliberately always-dark ANSI terminal surface — raw dusk
+   steps are contrast-calibrated against dusk-900 and do not follow the
    theme. Blocked on an always-dark semantic surface token (slice 2). */
 /* eslint-disable no-restricted-syntax */
 import type React from "react";
@@ -55,9 +55,9 @@ const fixedHeightStyles: Record<LogPaneSize, string> = {
 // colors (text-foreground, hover:bg-muted) are unreadable or invert the pane.
 // The chip keeps the icons legible where they land over log text.
 const controlCx = [
-  "text-slate-300 bg-slate-900/85 hover:bg-slate-600 hover:text-white",
-  "pressed:bg-slate-500 focus-visible:outline-2 focus-visible:outline-offset-1",
-  "focus-visible:outline-slate-300",
+  "text-dusk-300 bg-dusk-900/85 hover:bg-dusk-600 hover:text-white",
+  "pressed:bg-dusk-500 focus-visible:outline-2 focus-visible:outline-offset-1",
+  "focus-visible:outline-dusk-300",
 ].join(" ");
 
 function segmentStyle(style: AnsiStyle): CSSProperties | undefined {
@@ -109,11 +109,11 @@ export function LogPane({
   if (lines.length === 0) return null;
 
   // Fixed dark surface in both app themes: the ANSI palette is
-  // contrast-calibrated for slate-900, so the pane deliberately does not
+  // contrast-calibrated for dusk-900, so the pane deliberately does not
   // follow the light/dark theme.
   const surfaceCx = twMerge(
     [
-      "rounded-md border border-slate-800 bg-slate-900 text-slate-100",
+      "rounded-md border border-dusk-800 bg-dusk-900 text-dusk-100",
       "font-mono text-xs leading-relaxed p-3",
       "whitespace-pre-wrap break-all",
       "overflow-y-auto",

@@ -58,7 +58,7 @@ const variantStyles: Record<
     ].join(" "),
     selected: [
       // Inverted chip: bg-foreground flips per theme so the selected state
-      // stays visible on dark surfaces (raw slate-800 was invisible there).
+      // stays visible on dark surfaces (raw dusk-800 was invisible there).
       "bg-foreground text-background",
       "border border-foreground",
     ].join(" "),

@@ -46,7 +46,7 @@ export const AllVariants: Story = {
       <Prose>{sample}</Prose>
       <Prose size="lg">{sample}</Prose>
       <Prose size="xl">{sample}</Prose>
-      <div className="rounded-lg bg-slate-900 p-8">
+      <div className="rounded-lg bg-dusk-900 p-8">
         <Prose invert>{sample}</Prose>
       </div>
     </div>
