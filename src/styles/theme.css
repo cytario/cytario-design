@@ -110,12 +110,21 @@
     --color-blue-950: #172554;
     --color-white: #ffffff;
     --color-black: #000000;
+    /* Base non-color: the dark secondary outline button's fill (transparent so
+       the page surface shows through; its border/foreground carry the
+       treatment). Defined as a token so the catalog can resolve it. */
+    --color-transparent: transparent;
     --color-alpha-black80: rgba(0, 0, 0, 0.8);
     --color-alpha-black60: rgba(0, 0, 0, 0.6);
     --color-alpha-black40: rgba(0, 0, 0, 0.4);
     --color-alpha-black06: rgba(0, 0, 0, 0.06);
     --color-alpha-white10: rgba(255, 255, 255, 0.1);
     --color-alpha-white06: rgba(255, 255, 255, 0.06);
+    /* Teal washes for the dark secondary outline button (hover/pressed):
+       12%/20% alpha of teal-500 — measured: teal-300 text on those washes
+       over dusk-900 = 8.96 / 7.71. */
+    --color-alpha-teal12: rgba(53, 183, 184, 0.12);
+    --color-alpha-teal20: rgba(53, 183, 184, 0.2);
 
     /* ---- Primitives: spacing ---- */
     --spacing-1: 4px;
@@ -156,10 +165,15 @@
     --color-primary-foreground: var(--color-white);
     --color-primary-hover: #4a1d6a;
     --color-primary-pressed: #3a1754;
+    /* Variant borders: same value as the fill in light (so adding the border
+       is pixel-invisible here); dark overrides them to a lighter rim so the
+       fill edge clears WCAG 1.4.11 against dark surfaces. */
+    --color-primary-border: #5c2483;
     --color-secondary: var(--color-teal-300);
     --color-secondary-foreground: var(--color-teal-950);
     --color-secondary-hover: var(--color-teal-400);
     --color-secondary-pressed: var(--color-teal-500);
+    --color-secondary-border: var(--color-teal-300);
     --color-destructive: var(--color-rose-600);
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
@@ -225,10 +239,18 @@
     --color-primary-foreground: var(--color-white);
     --color-primary-hover: #9b4fcb;
     --color-primary-pressed: #6b2695;
-    --color-secondary: var(--color-teal-300);
-    --color-secondary-foreground: var(--color-teal-950);
-    --color-secondary-hover: var(--color-teal-400);
-    --color-secondary-pressed: var(--color-teal-500);
+    /* purple-300 rim (7.81:1 vs dusk-900) carries 1.4.11 at rest, where the
+       purple-500 fill edge alone is ~2.5:1 against dark surfaces. */
+    --color-primary-border: #b87ddb;
+    /* Dark secondary button: OUTLINE treatment — transparent fill, teal-300
+       text, teal-500 border; a teal fill on dark canvas reads heavier than
+       the primary. Hover/pressed are teal washes (12%/20% alpha of teal-500;
+       teal-300 text on them over dusk-900 = 8.96 / 7.71). */
+    --color-secondary: var(--color-transparent);
+    --color-secondary-foreground: var(--color-teal-300);
+    --color-secondary-hover: var(--color-alpha-teal12);
+    --color-secondary-pressed: var(--color-alpha-teal20);
+    --color-secondary-border: var(--color-teal-500);
     --color-destructive: var(--color-rose-600);
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
@@ -513,6 +535,7 @@
   /* Color Tokens */
   --color-white: var(--color-white);
   --color-black: var(--color-black);
+  --color-transparent: var(--color-transparent);
   --color-alpha-black80: var(--color-alpha-black80);
   --color-alpha-black60: var(--color-alpha-black60);
   --color-alpha-black40: var(--color-alpha-black40);
@@ -535,10 +558,12 @@
   --color-primary-foreground: var(--color-primary-foreground);
   --color-primary-hover: var(--color-primary-hover);
   --color-primary-pressed: var(--color-primary-pressed);
+  --color-primary-border: var(--color-primary-border);
   --color-secondary: var(--color-secondary);
   --color-secondary-foreground: var(--color-secondary-foreground);
   --color-secondary-hover: var(--color-secondary-hover);
   --color-secondary-pressed: var(--color-secondary-pressed);
+  --color-secondary-border: var(--color-secondary-border);
   --color-destructive: var(--color-destructive);
   --color-destructive-foreground: var(--color-destructive-foreground);
   --color-destructive-hover: var(--color-destructive-hover);

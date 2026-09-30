@@ -93,8 +93,16 @@ for (const [theme, key] of [
   ["dark", "dark"],
 ] as const) {
   for (const [fgName, bgName, min, kind] of PAIRS) {
-    const fg = byName.get(`--color-${fgName}`)?.[key];
-    const bg = byName.get(`--color-${bgName}`)?.[key];
+    let fg = byName.get(`--color-${fgName}`)?.[key];
+    let bg = byName.get(`--color-${bgName}`)?.[key];
+    // Outline treatment (dark secondary): the fill token is transparent, so
+    // the text actually sits on the page background showing through. Check
+    // against that instead — comparing fg to a non-color is meaningless. The
+    // hover/pressed washes (12%/20% alpha) stay close to the base surface and
+    // are measured inline in theme.css.
+    if (bg === "transparent") {
+      bg = byName.get("--color-background")?.[key];
+    }
     const ratio = fg && bg ? wcagContrast(fg, bg) : undefined;
     if (fg === undefined || bg === undefined || ratio === undefined) {
       console.error(

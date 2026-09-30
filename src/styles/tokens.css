@@ -111,10 +111,12 @@
   --color-primary-foreground: var(--color-primary-foreground);
   --color-primary-hover: var(--color-primary-hover);
   --color-primary-pressed: var(--color-primary-pressed);
+  --color-primary-border: var(--color-primary-border);
   --color-secondary: var(--color-secondary);
   --color-secondary-foreground: var(--color-secondary-foreground);
   --color-secondary-hover: var(--color-secondary-hover);
   --color-secondary-pressed: var(--color-secondary-pressed);
+  --color-secondary-border: var(--color-secondary-border);
   --color-destructive: var(--color-destructive);
   --color-destructive-foreground: var(--color-destructive-foreground);
   --color-destructive-hover: var(--color-destructive-hover);
