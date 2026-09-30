@@ -36,17 +36,6 @@
 @layer cytario-design {
   :root {
     /* ---- Primitives: color scales ---- */
-    --color-purple-50: #f5f0fa;
-    --color-purple-100: #ead9f5;
-    --color-purple-200: #d4b3eb;
-    --color-purple-300: #b87ddb;
-    --color-purple-400: #9b4fcb;
-    --color-purple-500: #7a2ea8;
-    --color-purple-600: #6b2695;
-    --color-purple-700: #5c2483;
-    --color-purple-800: #4a1d6a;
-    --color-purple-900: #3a1754;
-    --color-purple-950: #2a0f3e;
     --color-teal-50: #edf9f9;
     --color-teal-100: #d0f0f0;
     --color-teal-200: #a1e1e2;
@@ -81,7 +70,7 @@
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
     /* Neutral ramp — purple-tinted slate. One OKLCH line: hue 299 (matches
-       purple-700), chroma = Tailwind slate chroma × 1.256, Tailwind lightness
+      the brand purple), chroma = Tailwind slate chroma × 1.256, Tailwind lightness
        curve with the dark end compressed through the relaunch anchors
        (700/800/900) and 600/950 smoothed onto it. Tinting the primitives
        (not adding parallel tokens) keeps the semantic → primitive hierarchy
@@ -163,10 +152,10 @@
     --color-ring: var(--color-teal-700);
     --color-overlay: var(--color-alpha-black80);
     --color-backdrop: var(--color-alpha-black40);
-    --color-primary: var(--color-purple-700);
+    --color-primary: #5c2483;
     --color-primary-foreground: var(--color-white);
-    --color-primary-hover: var(--color-purple-800);
-    --color-primary-pressed: var(--color-purple-900);
+    --color-primary-hover: #4a1d6a;
+    --color-primary-pressed: #3a1754;
     --color-secondary: var(--color-teal-300);
     --color-secondary-foreground: var(--color-teal-950);
     --color-secondary-hover: var(--color-teal-400);
@@ -199,32 +188,11 @@
     --color-info-surface: var(--color-blue-50);
     --color-info-surface-foreground: var(--color-blue-700);
     --color-info-border: var(--color-blue-200);
-    --color-delta-increase-bg: var(--color-rose-50);
-    --color-delta-increase-text: var(--color-rose-700);
-    --color-delta-increase-icon: var(--color-rose-500);
-    --color-delta-decrease-bg: var(--color-green-50);
-    --color-delta-decrease-text: var(--color-green-700);
-    --color-delta-decrease-icon: var(--color-green-500);
-    --color-delta-flat-bg: var(--color-slate-100);
-    --color-delta-flat-text: var(--color-slate-600);
-    --color-delta-flat-icon: var(--color-slate-400);
     --color-progress-track: var(--color-slate-200);
-    --color-progress-fill: var(--color-purple-600);
+    --color-progress-fill: #6b2695;
     --color-progress-fill-success: var(--color-green-500);
     --color-progress-fill-warning: var(--color-amber-500);
     --color-progress-fill-danger: var(--color-rose-500);
-    --color-badge-purple-bg: var(--color-purple-100);
-    --color-badge-purple-text: var(--color-purple-700);
-    --color-badge-teal-bg: var(--color-teal-100);
-    --color-badge-teal-text: var(--color-teal-800);
-    --color-badge-slate-bg: var(--color-slate-100);
-    --color-badge-slate-text: var(--color-slate-700);
-    --color-badge-rose-bg: var(--color-rose-100);
-    --color-badge-rose-text: var(--color-rose-700);
-    --color-badge-green-bg: var(--color-green-100);
-    --color-badge-green-text: var(--color-green-700);
-    --color-badge-amber-bg: var(--color-amber-100);
-    --color-badge-amber-text: var(--color-amber-800);
 
     --logo-fill: var(--color-primary);
     --logo-highlight: var(--color-teal-500);
@@ -258,10 +226,10 @@
     --color-ring: var(--color-teal-300);
     --color-overlay: var(--color-alpha-white10);
     --color-backdrop: var(--color-alpha-black60);
-    --color-primary: var(--color-purple-500);
+    --color-primary: #7a2ea8;
     --color-primary-foreground: var(--color-white);
-    --color-primary-hover: var(--color-purple-400);
-    --color-primary-pressed: var(--color-purple-600);
+    --color-primary-hover: #9b4fcb;
+    --color-primary-pressed: #6b2695;
     --color-secondary: var(--color-teal-300);
     --color-secondary-foreground: var(--color-teal-950);
     --color-secondary-hover: var(--color-teal-400);
@@ -294,32 +262,11 @@
     --color-info-surface: var(--color-blue-900);
     --color-info-surface-foreground: var(--color-blue-200);
     --color-info-border: var(--color-blue-800);
-    --color-delta-increase-bg: var(--color-rose-900);
-    --color-delta-increase-text: var(--color-rose-300);
-    --color-delta-increase-icon: var(--color-rose-400);
-    --color-delta-decrease-bg: var(--color-green-900);
-    --color-delta-decrease-text: var(--color-green-300);
-    --color-delta-decrease-icon: var(--color-green-400);
-    --color-delta-flat-bg: var(--color-slate-800);
-    --color-delta-flat-text: var(--color-slate-400);
-    --color-delta-flat-icon: var(--color-slate-500);
     --color-progress-track: var(--color-slate-700);
-    --color-progress-fill: var(--color-purple-400);
+    --color-progress-fill: #9b4fcb;
     --color-progress-fill-success: var(--color-green-400);
     --color-progress-fill-warning: var(--color-amber-400);
     --color-progress-fill-danger: var(--color-rose-400);
-    --color-badge-purple-bg: var(--color-purple-800);
-    --color-badge-purple-text: var(--color-purple-200);
-    --color-badge-teal-bg: var(--color-teal-800);
-    --color-badge-teal-text: var(--color-teal-200);
-    --color-badge-slate-bg: var(--color-slate-800);
-    --color-badge-slate-text: var(--color-slate-200);
-    --color-badge-rose-bg: var(--color-rose-800);
-    --color-badge-rose-text: var(--color-rose-200);
-    --color-badge-green-bg: var(--color-green-800);
-    --color-badge-green-text: var(--color-green-200);
-    --color-badge-amber-bg: var(--color-amber-800);
-    --color-badge-amber-text: var(--color-amber-200);
 
     --logo-fill: var(--color-primary-foreground);
     --logo-highlight: var(--color-teal-500);
@@ -400,7 +347,7 @@
 
 /**
  * Tailwind v4 @theme inline — maps every color token to itself via var() so
- * that utilities like bg-primary, text-muted-foreground, bg-badge-purple-bg
+ * that utilities like bg-primary, text-muted-foreground, bg-primary
  * resolve at runtime and stay theme-reactive (dark mode just works).
  */
 @theme inline {
@@ -424,17 +371,6 @@
   --z-index-tooltip: 100001;
 
   /* Color Primitives */
-  --color-purple-50: var(--color-purple-50);
-  --color-purple-100: var(--color-purple-100);
-  --color-purple-200: var(--color-purple-200);
-  --color-purple-300: var(--color-purple-300);
-  --color-purple-400: var(--color-purple-400);
-  --color-purple-500: var(--color-purple-500);
-  --color-purple-600: var(--color-purple-600);
-  --color-purple-700: var(--color-purple-700);
-  --color-purple-800: var(--color-purple-800);
-  --color-purple-900: var(--color-purple-900);
-  --color-purple-950: var(--color-purple-950);
   --color-teal-50: var(--color-teal-50);
   --color-teal-100: var(--color-teal-100);
   --color-teal-200: var(--color-teal-200);
@@ -561,30 +497,9 @@
   --color-info-surface: var(--color-info-surface);
   --color-info-surface-foreground: var(--color-info-surface-foreground);
   --color-info-border: var(--color-info-border);
-  --color-delta-increase-bg: var(--color-delta-increase-bg);
-  --color-delta-increase-text: var(--color-delta-increase-text);
-  --color-delta-increase-icon: var(--color-delta-increase-icon);
-  --color-delta-decrease-bg: var(--color-delta-decrease-bg);
-  --color-delta-decrease-text: var(--color-delta-decrease-text);
-  --color-delta-decrease-icon: var(--color-delta-decrease-icon);
-  --color-delta-flat-bg: var(--color-delta-flat-bg);
-  --color-delta-flat-text: var(--color-delta-flat-text);
-  --color-delta-flat-icon: var(--color-delta-flat-icon);
   --color-progress-track: var(--color-progress-track);
   --color-progress-fill: var(--color-progress-fill);
   --color-progress-fill-success: var(--color-progress-fill-success);
   --color-progress-fill-warning: var(--color-progress-fill-warning);
   --color-progress-fill-danger: var(--color-progress-fill-danger);
-  --color-badge-purple-bg: var(--color-badge-purple-bg);
-  --color-badge-purple-text: var(--color-badge-purple-text);
-  --color-badge-teal-bg: var(--color-badge-teal-bg);
-  --color-badge-teal-text: var(--color-badge-teal-text);
-  --color-badge-slate-bg: var(--color-badge-slate-bg);
-  --color-badge-slate-text: var(--color-badge-slate-text);
-  --color-badge-rose-bg: var(--color-badge-rose-bg);
-  --color-badge-rose-text: var(--color-badge-rose-text);
-  --color-badge-green-bg: var(--color-badge-green-bg);
-  --color-badge-green-text: var(--color-badge-green-text);
-  --color-badge-amber-bg: var(--color-badge-amber-bg);
-  --color-badge-amber-text: var(--color-badge-amber-text);
 }

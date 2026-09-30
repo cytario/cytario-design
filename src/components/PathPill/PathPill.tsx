@@ -2,11 +2,11 @@ import { twMerge } from "tailwind-merge";
 import { Badge, type BadgeColor } from "../Badge";
 
 const hashColors = [
-  "purple",
-  "teal",
-  "rose",
-  "green",
-  "amber",
+  "primary",
+  "secondary",
+  "destructive",
+  "success",
+  "warning",
 ] as const satisfies BadgeColor[];
 
 export function pillColorFromName(name = ""): BadgeColor {
