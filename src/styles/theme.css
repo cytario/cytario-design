@@ -156,7 +156,11 @@
     --color-accent-foreground: var(--color-slate-900);
     --color-accent-pressed: var(--color-slate-300);
     --color-border: var(--color-slate-200);
-    --color-ring: var(--color-teal-600);
+    /* ring doubles as the focus indicator and the interactive teal text
+       accent (links, selected tab labels). Teal-700 on white is 4.88:1 —
+       clears AA text (4.5:1), where teal-600 (3.3:1) only cleared UI 3:1
+       and teal-300, secondary's fill, is 1.9:1 and must never be text. */
+    --color-ring: var(--color-teal-700);
     --color-overlay: var(--color-alpha-black80);
     --color-backdrop: var(--color-alpha-black40);
     --color-primary: var(--color-purple-700);
@@ -250,7 +254,8 @@
     --color-accent-foreground: var(--color-slate-100);
     --color-accent-pressed: var(--color-slate-700);
     --color-border: var(--color-slate-500);
-    --color-ring: var(--color-teal-400);
+    /* 10.5:1 on the tinted canvas — same interactive-accent token as light. */
+    --color-ring: var(--color-teal-300);
     --color-overlay: var(--color-alpha-white10);
     --color-backdrop: var(--color-alpha-black60);
     --color-primary: var(--color-purple-500);
