@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { addons } from "storybook/preview-api";
 import { TOKEN_CATALOG, type TokenRow } from "./token-catalog.generated";
+import { useCopyToClipboard } from "../../components/TruncatedText/useCopyToClipboard";
 
 /**
  * Live color-token reference. Renders the build-time token catalog — generated
@@ -181,6 +182,7 @@ function withinSection(a: TokenRow, b: TokenRow): number {
  * `checkered` draws the transparency grid so translucent tokens (scrims) read.
  * The token color itself is runtime data, so it stays an inline style; Tailwind
  * cannot emit classnames for values it cannot see at build time.
+ * Clicking copies the resolved hex (value flashes "copied").
  */
 function ColorSwatchPrimitive({
   name,
@@ -191,8 +193,14 @@ function ColorSwatchPrimitive({
   color: string;
   checkered?: boolean;
 }) {
+  const { handleClick, isCopied } = useCopyToClipboard(color);
   return (
-    <div className="flex w-18 flex-col">
+    <button
+      type="button"
+      onClick={handleClick}
+      title={`Copy ${color}`}
+      className="flex w-18 cursor-pointer flex-col text-left"
+    >
       <div
         className={`h-18 overflow-hidden rounded-lg border border-[rgba(128,128,128,0.35)] ${
           checkered
@@ -205,14 +213,18 @@ function ColorSwatchPrimitive({
       <code className="mt-1.5 font-mono text-[11px] wrap-break-word">
         {name.replace("--color-", "")}
       </code>
-      <span className="font-mono text-[10px] opacity-60">{color}</span>
-    </div>
+      <span className="font-mono text-[10px] opacity-60">
+        {isCopied ? "copied ✓" : color}
+      </span>
+    </button>
   );
 }
 
 /**
  * Semantic swatch — horizontal: color box on the left, name and the primitive
  * it maps to on the right, giving long property-agnostic names room to wrap.
+ * Clicking copies the resolved hex for the active theme (the value flashes
+ * "copied" in place of the → mapping).
  */
 function ColorSwatchSemantic({
   name,
@@ -223,8 +235,14 @@ function ColorSwatchSemantic({
   color: string;
   mapsTo?: string;
 }) {
+  const { handleClick, isCopied } = useCopyToClipboard(color);
   return (
-    <div className="flex w-full items-start gap-2.5">
+    <button
+      type="button"
+      onClick={handleClick}
+      title={`Copy ${color}`}
+      className="flex w-full cursor-pointer items-start gap-2.5 text-left"
+    >
       <div
         className="h-8 w-8 shrink-0 rounded-sm border border-[rgba(128,128,128,0.35)]"
         style={{ background: color }}
@@ -234,10 +252,10 @@ function ColorSwatchSemantic({
           {name.replace("--color-", "")}
         </code>
         <span className="cr-swatch-value block font-mono text-sm! leading-none opacity-60">
-          {mapsTo ? `→ ${mapsTo}` : color}
+          {isCopied ? "copied ✓" : mapsTo ? `→ ${mapsTo}` : color}
         </span>
       </div>
-    </div>
+    </button>
   );
 }
 
