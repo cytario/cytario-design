@@ -9,6 +9,10 @@ import {
 import { twMerge } from "tailwind-merge";
 import { Icon, type IconValue } from "../Icon";
 import { popoverStyles } from "./menuStyles";
+import {
+  TriggerThemeProvider,
+  useTriggerTheme,
+} from "../Popover/useTriggerTheme";
 
 export interface MenuItemData {
   id: string;
@@ -20,7 +24,6 @@ export interface MenuItemData {
   /** Link target, e.g. "_blank" for external links */
   target?: string;
   isDisabled?: boolean;
-  isDanger?: boolean;
   /** Optional end content rendered after the label (e.g. badge, shortcut hint) */
   endContent?: React.ReactNode;
 }
@@ -30,49 +33,55 @@ export interface MenuProps {
   items?: MenuItemData[];
   /** Menu content for composition mode — MenuSection, MenuItem, MenuSeparator */
   content?: React.ReactNode;
-  /** Trigger element (typically a Button or IconButton) */
+  /** The element that toggles the menu (button, icon button, …). */
   children: React.ReactNode;
-  /** Called when any MenuItem is activated (receives the item key) */
-  onAction?: (key: string) => void;
-  /** Selection mode: "none" (default), "single", or "multiple" for checkbox-style items */
-  selectionMode?: "none" | "single" | "multiple";
-  /** Currently selected keys (controlled) */
-  selectedKeys?: Selection;
-  /** Default selected keys (uncontrolled) */
-  defaultSelectedKeys?: Selection;
+  /** Called when any item is activated */
+  onAction?: (key: React.Key) => void;
+  /** Selection mode for checkbox-style menus */
+  selectionMode?: "single" | "multiple" | "none";
+  /** Controlled selection */
+  selectedKeys?: Iterable<React.Key>;
+  /** Default selection (uncontrolled) */
+  defaultSelectedKeys?: Iterable<React.Key>;
   /** Called when selection changes */
   onSelectionChange?: (keys: Selection) => void;
-  /** Additional CSS classes for the menu popover */
+  /** Additional classes for the popover chrome */
   className?: string;
 }
 
-export function Menu({
-  items,
-  content,
-  children,
-  onAction,
-  selectionMode,
-  selectedKeys,
-  defaultSelectedKeys,
-  onSelectionChange,
-  className,
-}: MenuProps) {
+/**
+ * The trigger + portaled popover. Rendered inside TriggerThemeProvider so
+ * the popover can pick up the themed DOM context the menu was mounted in
+ * (React-Aria renders the popover outside this subtree; the data-theme it
+ * carries is what keeps its tokens correct in themed containers such as
+ * Storybook's side-by-side view).
+ */
+function MenuBody({ className, children, ...props }: MenuProps) {
+  const triggerTheme = useTriggerTheme();
   const selectionProps =
-    selectionMode && selectionMode !== "none"
-      ? { selectionMode, selectedKeys, defaultSelectedKeys, onSelectionChange }
+    props.selectionMode && props.selectionMode !== "none"
+      ? {
+          selectionMode: props.selectionMode,
+          selectedKeys: props.selectedKeys,
+          defaultSelectedKeys: props.defaultSelectedKeys,
+          onSelectionChange: props.onSelectionChange,
+        }
       : {};
 
   return (
     <MenuTrigger>
       {children}
-      <Popover className={twMerge(popoverStyles, className)}>
-        {items ? (
+      <Popover
+        data-theme={triggerTheme}
+        className={twMerge(popoverStyles, className)}
+      >
+        {props.items ? (
           <AriaMenu
-            items={items}
+            items={props.items}
             onAction={(key) => {
-              const item = items.find((i) => i.id === key);
+              const item = props.items?.find((i) => i.id === key);
               item?.onAction?.();
-              onAction?.(key as string);
+              props.onAction?.(key);
             }}
             {...selectionProps}
             className="outline-none"
@@ -106,14 +115,22 @@ export function Menu({
           </AriaMenu>
         ) : (
           <AriaMenu
-            onAction={(key) => onAction?.(key as string)}
+            onAction={(key) => props.onAction?.(key)}
             {...selectionProps}
             className="outline-none"
           >
-            {content}
+            {props.content}
           </AriaMenu>
         )}
       </Popover>
     </MenuTrigger>
+  );
+}
+
+export function Menu(props: MenuProps) {
+  return (
+    <TriggerThemeProvider>
+      <MenuBody {...props} />
+    </TriggerThemeProvider>
   );
 }
