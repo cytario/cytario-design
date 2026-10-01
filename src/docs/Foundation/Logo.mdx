@@ -26,9 +26,9 @@ import { Logo } from "@cytario/design";
 The logo uses `--logo-fill` and `--logo-highlight` CSS variables that switch automatically with `[data-theme="dark"]`. No prop needed — the logo adapts to its context.
 
 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginTop: 24 }}>
-  <div style={{ border: "1px solid #e5e7eb", borderRadius: 12, padding: 48, textAlign: "center", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
-    <Logo scale={3} />
-    <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14 }}>light theme</p>
+  <div data-theme="light" style={{ border: "1px solid #e5e7eb", borderRadius: 12, padding: 48, textAlign: "center", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <Logo scale={3} color="#5c2483" />
+    <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14, color: "#111827" }}>light theme</p>
     <p style={{ margin: "4px 0 0", fontSize: 13, color: "#6b7280" }}>Purple wordmark + teal accent</p>
   </div>
   <div data-theme="dark" style={{ border: "1px solid #1e293b", borderRadius: 12, padding: 48, textAlign: "center", background: "#0f172a", display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -65,9 +65,9 @@ Pass `color` and `highlightColor` to override the theme-driven values. Set both 
     <Logo scale={2} color="#ffffff" highlightColor="#ffffff" />
     <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14, color: "#fff" }}>Monochrome white</p>
   </div>
-  <div style={{ border: "1px solid #e5e7eb", borderRadius: 12, padding: 48, textAlign: "center", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
+  <div data-theme="light" style={{ border: "1px solid #e5e7eb", borderRadius: 12, padding: 48, textAlign: "center", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
     <Logo scale={2} color="#000000" highlightColor="#000000" />
-    <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14 }}>Monochrome black</p>
+    <p style={{ margin: "16px 0 0", fontWeight: 600, fontSize: 14, color: "#111827" }}>Monochrome black</p>
   </div>
 </div>
 
