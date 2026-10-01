@@ -98,6 +98,11 @@ const preview: Preview = {
                 flex: 1,
                 padding: "1rem",
                 backgroundColor: "var(--color-background)",
+                // Re-declare color on the panel: inherited text colors arrive
+                // as resolved values from the (light) root context in
+                // side-by-side mode; re-resolving var() here makes the panel's
+                // own dark tokens drive its contents.
+                color: "var(--color-foreground)",
                 borderRadius: "8px",
               },
             },
@@ -125,6 +130,11 @@ const preview: Preview = {
                 flex: 1,
                 padding: "1rem",
                 backgroundColor: "var(--color-background)",
+                // Re-declare color on the panel: inherited text colors arrive
+                // as resolved values from the (light) root context in
+                // side-by-side mode; re-resolving var() here makes the panel's
+                // own dark tokens drive its contents.
+                color: "var(--color-foreground)",
                 borderRadius: "8px",
               },
             },
