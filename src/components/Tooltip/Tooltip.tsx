@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { useTriggerTheme, TriggerThemeProvider } from "../Popover/useTriggerTheme";
 
 // Use useLayoutEffect on client, useEffect on server to avoid SSR warning
 const useIsomorphicLayoutEffect =
@@ -55,7 +56,7 @@ const tooltipCx = [
  * Keep tooltip content short — it is a glance affordance, not a reading
  * surface; the underlying value must stay accessible on the trigger itself.
  */
-export function Tooltip({ content, children }: TooltipProps) {
+function TooltipInner({ content, children }: TooltipProps) {
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState<Coords>({ x: 0, y: 0 });
   const [adjustedCoords, setAdjustedCoords] = useState<Coords>({ x: 0, y: 0 });
@@ -172,11 +173,16 @@ export function Tooltip({ content, children }: TooltipProps) {
     };
   }, []);
 
+  // Descendant of TriggerThemeProvider (see Tooltip below): the portaled
+  // tooltip carries this theme so its tokens match the trigger's context.
+  const triggerTheme = useTriggerTheme();
+
   const tooltipContent =
     isVisible && content != null ? (
       <div
         ref={tooltipRef}
         role="tooltip"
+        data-theme={triggerTheme}
         className={tooltipCx}
         style={{ left: adjustedCoords.x, top: adjustedCoords.y }}
       >
@@ -185,17 +191,30 @@ export function Tooltip({ content, children }: TooltipProps) {
     ) : null;
 
   return (
-    <span
-      style={{ display: "contents" }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={hideTooltip}
-      onFocus={handleFocus}
-      onBlur={hideTooltip}
-      onKeyDown={handleKeyDown}
-    >
-      {children}
+      <span
+        style={{ display: "contents" }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={hideTooltip}
+        onFocus={handleFocus}
+        onBlur={hideTooltip}
+        onKeyDown={handleKeyDown}
+      >
+        {children}
       {typeof window !== "undefined" &&
         createPortal(tooltipContent, document.body)}
-    </span>
+      </span>
+  );
+}
+
+/**
+ * Tooltip with theme capture: the tooltip content portals to document.body,
+ * escaping any themed container. The provider captures the trigger's DOM
+ * context; TooltipInner applies it as data-theme on the portaled tooltip.
+ */
+export function Tooltip(props: TooltipProps) {
+  return (
+    <TriggerThemeProvider>
+      <TooltipInner {...props} />
+    </TriggerThemeProvider>
   );
 }
