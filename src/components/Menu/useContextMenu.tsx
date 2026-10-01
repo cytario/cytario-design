@@ -15,6 +15,7 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { popoverStyles } from "./menuStyles";
+import { TriggerThemeProvider, useTriggerTheme } from "../Popover/useTriggerTheme";
 
 export interface UseContextMenuProps {
   /** Menu body — compose `MenuItem` / `MenuSeparator` / `MenuSection`. */
@@ -122,7 +123,72 @@ export function useContextMenu({
     };
   }, [isOpen, close]);
 
+  // Renders inside TriggerThemeProvider (below): the popover carries the
+  // themed DOM context of wherever the consumer renders this menu.
   const menu = (
+    <TriggerThemeProvider>
+    <ContextMenuPopover
+      isOpen={isOpen}
+      close={close}
+      anchor={anchor}
+      anchorRef={anchorRef}
+      popoverRef={popoverRef}
+      popoverId={popoverId}
+      content={content}
+      label={label}
+      onAction={onAction}
+      className={className}
+    />
+    </TriggerThemeProvider>
+  );
+
+  return {
+    targetProps: { onContextMenu },
+    triggerProps: {
+      onPress,
+      onClick: (e: React.MouseEvent) => {
+        e.preventDefault();
+      },
+      "aria-haspopup": "menu",
+      "aria-expanded": isOpen,
+      "aria-controls": isOpen ? popoverId : undefined,
+    },
+    menu,
+    isOpen,
+    close,
+  };
+}
+
+/**
+ * The hidden cursor anchor + portaled menu, rendered inside
+ * TriggerThemeProvider so the popover carries the themed DOM context of
+ * wherever the consumer mounts it.
+ */
+function ContextMenuPopover({
+  isOpen,
+  close,
+  anchor,
+  anchorRef,
+  popoverRef,
+  popoverId,
+  content,
+  label,
+  onAction,
+  className,
+}: {
+  isOpen: boolean;
+  close: () => void;
+  anchor: { x: number; y: number } | null;
+  anchorRef: React.RefObject<HTMLButtonElement | null>;
+  popoverRef: React.RefObject<HTMLDivElement | null>;
+  popoverId: string;
+  content: React.ReactNode;
+  label: string;
+  onAction?: (key: string) => void;
+  className?: string;
+}) {
+  const triggerTheme = useTriggerTheme();
+  return (
     <MenuTrigger
       isOpen={isOpen}
       onOpenChange={(open) => {
@@ -146,6 +212,7 @@ export function useContextMenu({
         triggerRef={anchorRef}
         placement="bottom start"
         ref={popoverRef}
+        data-theme={triggerTheme}
         className={twMerge(popoverStyles, className)}
       >
         <AriaMenu
@@ -163,20 +230,4 @@ export function useContextMenu({
       </Popover>
     </MenuTrigger>
   );
-
-  return {
-    targetProps: { onContextMenu },
-    triggerProps: {
-      onPress,
-      onClick: (e: React.MouseEvent) => {
-        e.preventDefault();
-      },
-      "aria-haspopup": "menu",
-      "aria-expanded": isOpen,
-      "aria-controls": isOpen ? popoverId : undefined,
-    },
-    menu,
-    isOpen,
-    close,
-  };
 }
