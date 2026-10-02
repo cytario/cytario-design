@@ -17,7 +17,7 @@ describe("Badge", () => {
   it("applies the default neutral color", () => {
     const { container } = render(<Badge>Default</Badge>);
     expect(container.firstElementChild?.className).toContain(
-      "bg-muted text-muted-foreground",
+      "bg-muted text-foreground",
     );
   });
 

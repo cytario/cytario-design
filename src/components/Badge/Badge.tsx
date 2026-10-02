@@ -26,7 +26,7 @@ export interface BadgeProps extends Omit<
 const colorStyles: Record<BadgeColor, string> = {
   primary: "bg-primary text-primary-foreground",
   secondary: "bg-secondary text-secondary-foreground",
-  neutral: "bg-muted text-muted-foreground",
+  neutral: "bg-muted text-foreground",
   destructive: "bg-destructive-surface text-destructive-surface-foreground",
   success: "bg-success-surface text-success-surface-foreground",
   warning: "bg-warning-surface text-warning-surface-foreground",

@@ -252,13 +252,14 @@
        (SegmentedControl, Tabs, ProgressBar) get the same lift — the selected
        pill (background dusk-900) still reads inside the brighter track. */
     --color-muted: var(--color-dusk-600);
-    /* muted-foreground follows the muted lift: dusk-400 was tuned against
-       the old dusk-700 panel (6.2:1) and the bare canvas (7.1:1); on the new
-       dusk-600 panel it drops to 3.5:1 — under AA. dusk-300 keeps the muted
-       tier readable on every muted surface (6.26:1) and lifts quiet text on
-       the canvas to 12.7:1. Supersedes the earlier "keep dusk-400" call,
-       which predated the muted repoint. */
-    --color-muted-foreground: var(--color-dusk-300);
+    /* Quiet ink for text on the canvas and cards: dusk-400 (7.1:1 on the
+       canvas, 6.7:1 on card) — still AAA, one rung under the dusk-200 body
+       tier, and less prone to halation than dusk-300. It is NOT the ink for
+       muted fills: dusk-400 on the dusk-600 muted panel is 3.5:1, under AA,
+       so on-muted consumers (Badge neutral, Tabs/SegmentedControl track
+       labels) pair the fill with foreground (8.2:1) — gated as the
+       foreground/muted pair in validate-tokens. */
+    --color-muted-foreground: var(--color-dusk-400);
     --color-accent: var(--color-dusk-500);
     /* White on the dusk-500 hover surface (4.89:1) — mid-tone fill takes the
        white label, same as primary; dusk-200 misses at 3.95:1. Pressed is the
@@ -438,9 +439,13 @@
     var(--color-ring) 13%,
     transparent 20%
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   mask-composite: exclude;
   animation: glow-edge-spin 2.5s linear infinite;
   pointer-events: none;

@@ -86,11 +86,13 @@ Text on the dusk-900 canvas follows a deliberate anti-halation hierarchy:
 | Tier | Token | Value | On canvas |
 |---|---|---|---|
 | body | `--color-foreground` | dusk-200 | 15.4:1 |
-| muted | `--color-muted-foreground` | dusk-300 | 12.7:1 |
+| muted | `--color-muted-foreground` | dusk-400 | 7.1:1 |
 | surfaces | `--color-muted` / `card` | dusk-600 / dusk-800 | 2.0 / 1.1:1 |
 
 Do **not** use dusk-100 as body ink (halation) and do not brighten past
-dusk-200 for large surfaces of text.
+dusk-200 for large surfaces of text. Text on `muted` fills pairs with
+`foreground` (8.2:1), never `muted-foreground` (3.5:1, under AA) — gated by
+`validate-tokens` as the `foreground`/`muted` pair.
 
 ## Design token pipeline
 

@@ -143,7 +143,7 @@ export function SegmentedControlItem({
               ? "bg-card text-foreground"
               : isHovered
                 ? "bg-card text-foreground"
-                : "bg-transparent text-muted-foreground",
+                : "bg-transparent text-foreground",
 
           className,
         )
