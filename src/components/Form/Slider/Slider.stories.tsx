@@ -133,3 +133,28 @@ export const Invalid: Story = {
     output: (v: number) => `${v} GiB`,
   },
 };
+
+export const InlineWithLabel: Story = {
+  name: "Inline with external label",
+  render: () => {
+    const [value, setValue] = useState(8);
+    return (
+      <div className="flex w-full max-w-md items-center gap-3">
+        <span className="shrink-0 text-sm font-medium text-foreground">
+          Channels
+        </span>
+        <Slider
+          aria-label="Channels"
+          inline
+          minValue={1}
+          maxValue={16}
+          step={1}
+          value={value}
+          onChange={setValue}
+          output={(v) => `${v}`}
+          className="flex-1"
+        />
+      </div>
+    );
+  },
+};
