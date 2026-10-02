@@ -183,7 +183,7 @@ function ContextMenuPopover({
   popoverRef: React.RefObject<HTMLDivElement | null>;
   popoverId: string;
   content: React.ReactNode;
-  label: string;
+  label: string | undefined;
   onAction?: (key: string) => void;
   className?: string;
 }) {
