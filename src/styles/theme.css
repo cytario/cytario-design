@@ -502,6 +502,26 @@
   }
 }
 
+/* Dot's ripple: an expanding ring of the dot's own fill color, fading to
+ * transparent. Reads currentColor so one keyframe serves every variant. */
+@keyframes dot-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0.5rem transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes dot-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+}
+
 /**
  * Tailwind v4 @theme inline — maps every color token to itself via var() so
  * that utilities like bg-primary, text-muted-foreground, bg-primary
@@ -516,6 +536,7 @@
   --animate-fade-in: fade-in 0.3s ease-in forwards;
   --animate-pulse-once: pulse-once 0.1s ease-in-out 1 forwards;
   --animate-progress-bar: progress-bar 1.5s ease-in-out infinite;
+  --animate-dot-pulse: dot-pulse 1.6s ease-out infinite;
 
   /* Radii */
   --radius-sm: 0.25rem;

@@ -13,6 +13,7 @@
   --animate-fade-in: fade-in 0.3s ease-in forwards;
   --animate-pulse-once: pulse-once 0.1s ease-in-out 1 forwards;
   --animate-progress-bar: progress-bar 1.5s ease-in-out infinite;
+  --animate-dot-pulse: dot-pulse 1.6s ease-out infinite;
 
   /* Radii */
   --radius-sm: 0.25rem;
