@@ -236,11 +236,26 @@
        hover/selected text never out-brightens the body. */
     --color-foreground: var(--color-dusk-200);
     --color-card: var(--color-dusk-800);
-    --color-muted: var(--color-dusk-700);
-    --color-muted-foreground: var(--color-dusk-400);
-    --color-accent: var(--color-dusk-800);
-    --color-accent-foreground: var(--color-dusk-200);
-    --color-accent-pressed: var(--color-dusk-700);
+    /* muted dusk-700 → dusk-600: as a fill it sat at 1.15:1 on the canvas —
+       the neutral button read as floating label text. 2.03:1 keeps the quiet
+       character while making the solid shape visible. This also reorders the
+       surface ladder so hover/pressed step LIGHTER on dark (was inverted):
+       muted 600 → accent (hover) 500 → accent-pressed 400. All track consumers
+       (SegmentedControl, Tabs, ProgressBar) get the same lift — the selected
+       pill (background dusk-900) still reads inside the brighter track. */
+    --color-muted: var(--color-dusk-600);
+    /* muted-foreground follows the muted lift: dusk-400 was tuned against
+       the old dusk-700 panel (6.2:1) and the bare canvas (7.1:1); on the new
+       dusk-600 panel it drops to 3.5:1 — under AA. dusk-300 keeps the muted
+       tier readable on every muted surface (6.26:1) and lifts quiet text on
+       the canvas to 12.7:1. Supersedes the earlier "keep dusk-400" call,
+       which predated the muted repoint. */
+    --color-muted-foreground: var(--color-dusk-300);
+    --color-accent: var(--color-dusk-500);
+    /* White on the dusk-500 hover surface (4.89:1) — mid-tone fill takes the
+       white label, same as primary; dusk-200 misses at 3.95:1. */
+    --color-accent-foreground: var(--color-white);
+    --color-accent-pressed: var(--color-dusk-400);
     --color-border: var(--color-dusk-500);
     /* 10.5:1 on the tinted canvas — same interactive-accent token as light. */
     --color-ring: var(--color-teal-300);
