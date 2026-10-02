@@ -39,7 +39,7 @@ const variantStyles: Record<
       "hover:bg-accent",
       "pressed:bg-accent",
     ].join(" "),
-    selected: "bg-accent text-foreground",
+    selected: "bg-accent text-accent-foreground",
   },
   primary: {
     base: [
