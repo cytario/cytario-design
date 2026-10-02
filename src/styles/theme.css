@@ -147,6 +147,11 @@
     --border-radius-full: 9999px;
 
     /* ---- Light-mode semantic tokens ---- */
+    /* UA chrome (native scrollbars, form controls, selection background)
+       follows the theme. The scrollbar thumb rides the quiet-ink token so it
+       re-resolves per theme; the track stays clear for an overlay look. */
+    color-scheme: light;
+    scrollbar-color: var(--color-muted-foreground) transparent;
     --color-background: var(--color-white);
     --color-foreground: var(--color-dusk-900);
     --color-card: var(--color-dusk-50);
@@ -228,6 +233,9 @@
 
   [data-theme="dark"] {
     /* ---- Dark-mode semantic token overrides (primitives are inherited from :root) ---- */
+    /* scrollbar-color above rides a var() and re-resolves here; only the
+       scheme keyword itself needs the dark override. */
+    color-scheme: dark;
     --color-background: var(--color-dusk-900);
     /* Body ink on dark steps one rung down from the brightest: dusk-100
        (17.3:1) caused halation — bright text blooming on the near-black
