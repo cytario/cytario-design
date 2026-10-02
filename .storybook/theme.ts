@@ -50,8 +50,8 @@ export const darkTheme = create({
   colorSecondary: "#b87ddb",
 
   // Chrome surfaces follow the dusk ramp (the brand palette) instead of
-  // Storybook's default slate: appBg = dusk-950 (deepest), appContentBg /
-  // appPreviewBg = dusk-900 (the brand canvas #160a24), barBg = dusk-800.
+  // Storybook's default slate: appBg = dusk-950 (the brand canvas #0e041d),
+  // appContentBg / appPreviewBg = dusk-900 (the card tier), barBg = dusk-800.
   // Border/input tones use dusk-600/dusk-500; brand-text purple carries
   // selection.
   appBg: "#0e041d",

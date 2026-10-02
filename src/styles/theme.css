@@ -74,7 +74,7 @@
        scripts/lib/dusk-ramp.ts is the source of truth; these hex values are
        generated from it (byte-stable roundtrip) and gated by
        `npm run validate:tokens` — hand-edits that fall off the line fail CI.
-       dusk-700/800/900 carry the brand-canvas ladder. Tinting the primitives
+       dusk-800/900/950 carry the brand-canvas ladder. Tinting the primitives
        (not adding parallel tokens) keeps the semantic → primitive hierarchy
        intact and carries both themes. */
     --color-dusk-50: #faf9fc;
@@ -124,7 +124,7 @@
     --color-alpha-white06: rgba(255, 255, 255, 0.06);
     /* Teal washes for the dark secondary outline button (hover/pressed):
        12%/20% alpha of teal-500 — measured: teal-300 text on those washes
-       over dusk-900 = 8.96 / 7.71. */
+       over dusk-950 = 9.59 / 8.26. */
     --color-alpha-teal12: rgba(53, 183, 184, 0.12);
     --color-alpha-teal20: rgba(53, 183, 184, 0.2);
 
@@ -236,24 +236,24 @@
     /* scrollbar-color above rides a var() and re-resolves here; only the
        scheme keyword itself needs the dark override. */
     color-scheme: dark;
-    --color-background: var(--color-dusk-900);
+    --color-background: var(--color-dusk-950);
     /* Body ink on dark steps one rung down from the brightest: dusk-100
-       (17.3:1) caused halation — bright text blooming on the near-black
-       canvas. dusk-200 (15.4:1) is still AAA with a clear tier above
-       muted-foreground (dusk-400, 7.1:1). accent-foreground follows so
+       (18.1:1) caused halation — bright text blooming on the near-black
+       canvas. dusk-200 (16.1:1) is still AAA with a clear tier above
+       muted-foreground (dusk-400, 7.5:1). accent-foreground follows so
        hover/selected text never out-brightens the body. */
     --color-foreground: var(--color-dusk-200);
-    --color-card: var(--color-dusk-800);
-    /* muted dusk-700 → dusk-600: as a fill it sat at 1.15:1 on the canvas —
-       the neutral button read as floating label text. 2.03:1 keeps the quiet
-       character while making the solid shape visible. This also reorders the
-       surface ladder so hover/pressed step LIGHTER on dark (was inverted):
-       muted 600 → accent (hover) 500 → accent-pressed 400. All track consumers
-       (SegmentedControl, Tabs, ProgressBar) get the same lift — the selected
-       pill (background dusk-900) still reads inside the brighter track. */
+    --color-card: var(--color-dusk-900);
+    /* Quiet fill, held at dusk-600 while the canvas stepped down to 950:
+       2.12:1 on the canvas (2.03:1 on the dusk-900 card) keeps the solid
+       shape visible — at dusk-700 the fill drops to 1.2:1 and the neutral
+       button reads as floating label text. Hover/pressed step LIGHTER on
+       dark: muted 600 → accent (hover) 500 → accent-pressed 700. Track
+       consumers (SegmentedControl, Tabs, ProgressBar) keep the lift; the
+       selected pill (background dusk-950) still reads inside the track. */
     --color-muted: var(--color-dusk-600);
-    /* Quiet ink for text on the canvas and cards: dusk-400 (7.1:1 on the
-       canvas, 6.7:1 on card) — still AAA, one rung under the dusk-200 body
+    /* Quiet ink for text on the canvas and cards: dusk-400 (7.5:1 on the
+       canvas, 7.1:1 on card) — still AAA, one rung under the dusk-200 body
        tier, and less prone to halation than dusk-300. It is NOT the ink for
        muted fills: dusk-400 on the dusk-600 muted panel is 3.5:1, under AA,
        so on-muted consumers (Badge neutral, Tabs/SegmentedControl track
@@ -269,7 +269,7 @@
     --color-accent-foreground: var(--color-white);
     --color-accent-pressed: var(--color-dusk-700);
     --color-border: var(--color-dusk-500);
-    /* 10.5:1 on the tinted canvas — same interactive-accent token as light. */
+    /* 11.0:1 on the tinted canvas — same interactive-accent token as light. */
     --color-ring: var(--color-teal-300);
     --color-overlay: var(--color-alpha-white10);
     --color-backdrop: var(--color-alpha-black60);
@@ -283,7 +283,7 @@
     /* Dark secondary button: OUTLINE treatment — transparent fill, teal-300
        text, teal-500 border; a teal fill on dark canvas reads heavier than
        the primary. Hover/pressed are teal washes (12%/20% alpha of teal-500;
-       teal-300 text on them over dusk-900 = 8.96 / 7.71). */
+       teal-300 text on them over dusk-950 = 9.59 / 8.26). */
     --color-secondary: var(--color-transparent);
     --color-secondary-foreground: var(--color-teal-300);
     --color-secondary-hover: var(--color-alpha-teal12);
@@ -351,7 +351,7 @@
 
 /* Prose / Tailwind Typography: the plugin hardcodes a light-assumed gray
    palette (--tw-prose-body defaults to gray-700 ≈ dusk-600 — fine on white,
-   but dark-gray-on-dusk-900 illegible in dark mode) with no dark
+   but dark-gray-on-dusk-950 illegible in dark mode) with no dark
    adaptation. Map its color channels to the semantic tokens so .prose
    follows the active theme (the plugin's own --tw-prose-invert-* channels
    stay untouched — prose-invert keeps working on top of these). */
