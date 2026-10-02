@@ -46,7 +46,10 @@ export const AllVariants: Story = {
       <Prose>{sample}</Prose>
       <Prose size="lg">{sample}</Prose>
       <Prose size="xl">{sample}</Prose>
-      <div className="rounded-lg bg-dusk-900 p-8">
+      {/* Fixed dark surface — must declare its theme so the prose token
+          mapping (var(--color-foreground) et al.) resolves dark ink. Without
+          it, the light-theme page renders dusk-900 text on dusk-900. */}
+      <div data-theme="dark" className="rounded-lg bg-dusk-900 p-8">
         <Prose invert>{sample}</Prose>
       </div>
     </div>
