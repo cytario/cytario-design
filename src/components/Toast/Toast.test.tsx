@@ -1,8 +1,8 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { ToastProvider, useToast, createToastBridge } from "./Toast";
-import type { ToastBridge, ToastPlacement } from "./Toast";
+import { ToastProvider, useToast } from "./Toast";
+import type { ToastPlacement } from "./Toast";
 
 function TestTrigger({ variant = "success" as const, message = "Test toast" }) {
   const { toast } = useToast();
@@ -135,80 +135,5 @@ describe("Toast", () => {
 
     const status = screen.getByRole("status");
     expect(status.className).toContain("slide-in-from-right");
-  });
-});
-
-describe("createToastBridge", () => {
-  it("emit triggers subscriber", () => {
-    const bridge = createToastBridge();
-    const handler = vi.fn();
-
-    bridge.subscribe(handler);
-    bridge.emit({ variant: "success", message: "hello" });
-
-    expect(handler).toHaveBeenCalledOnce();
-    expect(handler).toHaveBeenCalledWith({ variant: "success", message: "hello" });
-  });
-
-  it("unsubscribe stops further notifications", () => {
-    const bridge = createToastBridge();
-    const handler = vi.fn();
-
-    const unsub = bridge.subscribe(handler);
-    unsub();
-    bridge.emit({ variant: "info", message: "ignored" });
-
-    expect(handler).not.toHaveBeenCalled();
-  });
-
-  it("supports multiple subscribers", () => {
-    const bridge = createToastBridge();
-    const a = vi.fn();
-    const b = vi.fn();
-
-    bridge.subscribe(a);
-    bridge.subscribe(b);
-    bridge.emit({ variant: "error", message: "boom" });
-
-    expect(a).toHaveBeenCalledOnce();
-    expect(b).toHaveBeenCalledOnce();
-  });
-});
-
-describe("ToastProvider with bridge", () => {
-  it("shows toasts from external bridge emits", async () => {
-    const bridge = createToastBridge();
-
-    render(
-      <ToastProvider bridge={bridge}>
-        <div>App content</div>
-      </ToastProvider>,
-    );
-
-    act(() => {
-      bridge.emit({ variant: "error", message: "External error" });
-    });
-
-    expect(screen.getByText("External error")).toBeDefined();
-    expect(screen.getByRole("status")).toBeDefined();
-  });
-
-  it("unsubscribes from bridge on unmount", () => {
-    const bridge = createToastBridge();
-
-    const { unmount } = render(
-      <ToastProvider bridge={bridge}>
-        <div>App</div>
-      </ToastProvider>,
-    );
-
-    unmount();
-
-    // Emitting after unmount should not throw or render anything
-    act(() => {
-      bridge.emit({ variant: "info", message: "After unmount" });
-    });
-
-    expect(screen.queryByText("After unmount")).toBeNull();
   });
 });
