@@ -220,7 +220,7 @@ function getTabVariantStyles(
         ? "text-foreground bg-card shadow-none"
         : state.isHovered
           ? "text-foreground bg-accent"
-          : "text-muted-foreground bg-transparent",
+          : "text-foreground bg-transparent",
   ];
 }
 

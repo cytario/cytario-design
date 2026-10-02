@@ -57,7 +57,7 @@ console.error(
 const PAIRS: Array<[string, string, number, string]> = [
   ["foreground", "background", 4.5, "text"],
   ["muted-foreground", "background", 4.5, "text"],
-  ["muted-foreground", "muted", 4.5, "text"],
+  ["foreground", "muted", 4.5, "text"],
   ["accent-foreground", "accent", 4.5, "text"],
   ["primary-foreground", "primary", 4.5, "text"],
   ["secondary-foreground", "secondary", 4.5, "text"],
