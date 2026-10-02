@@ -27,6 +27,7 @@ const rows: TokenRow[] = TOKEN_CATALOG;
  * Read Storybook's `theme` global from a docs component. Preview hooks
  * (useGlobals) only work inside decorators/stories, so subscribe to the addons
  * channel instead and seed the initial value from the URL's `globals` param.
+ * Default mirrors preview.ts initialGlobals: dark.
  */
 function useThemeGlobal(): string {
   const [theme, setTheme] = useState(() => {
@@ -37,9 +38,9 @@ function useThemeGlobal(): string {
         .split(";")
         .map((s) => s.split(":"))
         .find(([k]) => k === "theme");
-      return entry?.[1] || "light";
+      return entry?.[1] || "dark";
     } catch {
-      return "light";
+      return "dark";
     }
   });
   useEffect(() => {
@@ -199,10 +200,10 @@ function ColorSwatchPrimitive({
       type="button"
       onClick={handleClick}
       title={`Copy ${color}`}
-      className="flex w-18 cursor-pointer flex-col text-left"
+      className="flex cursor-pointer flex-col text-left"
     >
       <div
-        className={`h-18 overflow-hidden rounded-lg border border-[rgba(128,128,128,0.35)] ${
+        className={`h-14 w-full overflow-hidden rounded-lg border border-[rgba(128,128,128,0.35)] ${
           checkered
             ? "bg-size-[12px_12px] bg-[conic-gradient(#cbd5e1_25%,#fff_0_50%,#cbd5e1_0_75%,#fff_0)]"
             : ""
@@ -210,7 +211,7 @@ function ColorSwatchPrimitive({
       >
         <div className="h-full w-full" style={{ background: color }} />
       </div>
-      <code className="mt-1.5 font-mono text-[11px] wrap-break-word">
+      <code className="mt-1 font-mono text-[11px] wrap-break-word">
         {name.replace("--color-", "")}
       </code>
       <span className="font-mono text-[10px] opacity-60">
@@ -221,10 +222,10 @@ function ColorSwatchPrimitive({
 }
 
 /**
- * Semantic swatch — horizontal: color box on the left, name and the primitive
- * it maps to on the right, giving long property-agnostic names room to wrap.
- * Clicking copies the resolved hex for the active theme (the value flashes
- * "copied" in place of the → mapping).
+ * Semantic swatch — color box on top, name and the primitive it maps to below,
+ * in a grid cell so sections read as compact tiles rather than one long row
+ * per token. Clicking copies the resolved hex for the active theme (the value
+ * flashes "copied" in place of the → mapping).
  */
 function ColorSwatchSemantic({
   name,
@@ -241,26 +242,30 @@ function ColorSwatchSemantic({
       type="button"
       onClick={handleClick}
       title={`Copy ${color}`}
-      className="flex w-full cursor-pointer items-start gap-2.5 text-left"
+      className="flex cursor-pointer flex-col text-left"
     >
       <div
-        className="h-8 w-8 shrink-0 rounded-sm border border-[rgba(128,128,128,0.35)]"
+        className="h-10 w-full rounded-md border border-[rgba(128,128,128,0.35)]"
         style={{ background: color }}
       />
-      <div className="min-w-0">
-        <code className="cr-swatch-name block font-mono text-sm! leading-none wrap-break-word">
-          {name.replace("--color-", "")}
-        </code>
-        <span className="cr-swatch-value block font-mono text-sm! leading-none opacity-60">
-          {isCopied ? "copied ✓" : mapsTo ? `→ ${mapsTo}` : color}
-        </span>
-      </div>
+      <code className="cr-swatch-name mt-1 block font-mono text-xs! leading-none wrap-break-word">
+        {name.replace("--color-", "")}
+      </code>
+      <span className="cr-swatch-value block font-mono text-[10px] leading-none opacity-60">
+        {isCopied ? "copied ✓" : mapsTo ? `→ ${mapsTo}` : color}
+      </span>
     </button>
   );
 }
 
 function Gallery({ children }: { children: React.ReactNode }) {
-  return <div className="mt-3 mb-6 flex flex-wrap gap-4">{children}</div>;
+  // Compact grid: swatches tile horizontally, wrapping; tighter gaps than a
+  // one-per-row list to keep the page scannable.
+  return (
+    <div className="mt-3 mb-6 grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-x-3 gap-y-4">
+      {children}
+    </div>
+  );
 }
 
 /** A section's swatches in a single gallery, ordered solid → foreground → states → surface set. */
