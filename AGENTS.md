@@ -304,4 +304,5 @@ keep them on the persistent home volume.
 - Storybook sidebar icon colors are controlled via CSS in `.storybook/manager-head.html`, not via the theme API
 - Never hand-edit a `--color-dusk-*` value — the OKLCH table in `scripts/lib/dusk-ramp.ts` is the source of truth and the validator will fail the build
 - Never use a solid fill token (`text-primary`, `text-success`, …) as text or icon color on a tinted `-surface` — use `-{variant}-surface-foreground`
+- Never put raw DOM or interactive components directly inside a `MenuSection` — collection branch children render through react-aria's fake collection-document portal (no `createTextNode`) and crash the host app. Host non-item content in a `MenuHeader` (a leaf whose content renders in the real DOM)
 - Start Storybook with `npm run dev` (regenerates the token catalog); `npx storybook dev` leaves the Colors page 404ing
