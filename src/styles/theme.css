@@ -253,9 +253,12 @@
     --color-muted-foreground: var(--color-dusk-300);
     --color-accent: var(--color-dusk-500);
     /* White on the dusk-500 hover surface (4.89:1) — mid-tone fill takes the
-       white label, same as primary; dusk-200 misses at 3.95:1. */
+       white label, same as primary; dusk-200 misses at 3.95:1. Pressed is the
+       deepest state (dusk-700, white 16.57:1): rest 600 → hover 500 (lighter)
+       → pressed 700 keeps the state direction legible — dusk-400 (the old
+       value) would drop white to 2.67:1. */
     --color-accent-foreground: var(--color-white);
-    --color-accent-pressed: var(--color-dusk-400);
+    --color-accent-pressed: var(--color-dusk-700);
     --color-border: var(--color-dusk-500);
     /* 10.5:1 on the tinted canvas — same interactive-accent token as light. */
     --color-ring: var(--color-teal-300);

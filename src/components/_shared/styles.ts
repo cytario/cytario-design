@@ -56,7 +56,7 @@ export const variantStyles: Record<ButtonVariant, string> = {
     pressed:bg-info-pressed
   `,
   neutral: `
-    bg-muted text-foreground
+    bg-muted text-accent-foreground
     hover:bg-accent
     pressed:bg-accent-pressed
   `,
