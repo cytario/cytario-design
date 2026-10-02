@@ -221,6 +221,9 @@ export type {
 export { Badge } from "./components/Badge";
 export type { BadgeProps, BadgeColor, BadgeSize } from "./components/Badge";
 
+export { Dot } from "./components/Dot";
+export type { DotProps, DotColor, DotSize } from "./components/Dot";
+
 export { Card } from "./components/Card";
 export type { CardProps } from "./components/Card";
 
