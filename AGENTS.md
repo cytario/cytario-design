@@ -69,7 +69,8 @@ co-occur in that phenomenon:
 
 - **Purple dusk** — the quiet half. The neutral ramp (`dusk-*`, the tinted
   successor of Tailwind's slate) and the dark canvas are drawn from deep violet
-  horizons. `dusk-900` **is** the brand canvas `#160a24`.
+  horizons. `dusk-950` **is** the brand canvas `#0e041d`, with `dusk-900`
+  as the card tier.
 - **Teal aurora** — deliberately brighter, almost arctic ice, so it stands out
   against the dusk and carries every interactive accent (`ring`, links,
   secondary).
@@ -81,13 +82,13 @@ teal-300/teal-700 split per theme. Both have full 50-950 scales in
 
 ### Dark-mode ink ladder
 
-Text on the dusk-900 canvas follows a deliberate anti-halation hierarchy:
+Text on the dusk-950 canvas follows a deliberate anti-halation hierarchy:
 
 | Tier | Token | Value | On canvas |
 |---|---|---|---|
-| body | `--color-foreground` | dusk-200 | 15.4:1 |
-| muted | `--color-muted-foreground` | dusk-400 | 7.1:1 |
-| surfaces | `--color-muted` / `card` | dusk-600 / dusk-800 | 2.0 / 1.1:1 |
+| body | `--color-foreground` | dusk-200 | 16.1:1 |
+| muted | `--color-muted-foreground` | dusk-400 | 7.5:1 |
+| surfaces | `--color-muted` / `card` | dusk-600 / dusk-900 | 2.1 / 1.05:1 |
 
 Do **not** use dusk-100 as body ink (halation) and do not brighten past
 dusk-200 for large surfaces of text. Text on `muted` fills pairs with
