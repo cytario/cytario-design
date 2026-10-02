@@ -2,6 +2,8 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -27,26 +29,62 @@ const TriggerThemeContext = createContext<"light" | "dark" | undefined>(
   undefined,
 );
 
+/* Providers mount in the hundreds (one per overlay trigger), so they share
+ * a single MutationObserver instead of one per provider. It only needs to
+ * notice that SOME data-theme attribute flipped — each listener then
+ * re-resolves its own nearest themed ancestor. */
+const themeChangeListeners = new Set<() => void>();
+let themeObserver: MutationObserver | null = null;
+
+function observeThemeChanges() {
+  if (themeObserver || typeof MutationObserver === "undefined") return;
+  themeObserver = new MutationObserver(() => {
+    for (const listener of themeChangeListeners) listener();
+  });
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+    subtree: true,
+  });
+}
+
 /**
  * Wraps a trigger (+ its overlay) and captures the themed DOM context. Must
  * wrap BOTH the trigger and the overlay element whose `data-theme` comes
  * from `useTriggerTheme` — the hook only sees providers above its consumer.
  */
-export function TriggerThemeProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function TriggerThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<"light" | "dark" | undefined>(() =>
     rootTheme(),
   );
+  const spanRef = useRef<HTMLSpanElement | null>(null);
+
+  const resolveTheme = useCallback(() => {
+    const next = themeOf(spanRef.current) ?? rootTheme();
+    setTheme((prev) => (prev === next ? prev : next));
+  }, []);
 
   // Callback refs fire synchronously when the element (re)attaches — also on
   // HMR remounts — resolving the nearest data-theme ancestor directly.
-  const captureRef = useCallback((el: HTMLSpanElement | null) => {
-    const next = themeOf(el) ?? rootTheme();
-    setTheme((prev) => (prev === next ? prev : next));
-  }, []);
+  const captureRef = useCallback(
+    (el: HTMLSpanElement | null) => {
+      spanRef.current = el;
+      resolveTheme();
+    },
+    [resolveTheme],
+  );
+
+  // The capture ref only fires on (re)attach — it cannot see a data-theme
+  // flip while the span stays attached, e.g. an app-level theme switch
+  // restyling the document root with every overlay already mounted. Listen
+  // for attribute flips so open overlays follow the theme live.
+  useEffect(() => {
+    themeChangeListeners.add(resolveTheme);
+    observeThemeChanges();
+    return () => {
+      themeChangeListeners.delete(resolveTheme);
+    };
+  }, [resolveTheme]);
 
   return (
     <TriggerThemeContext.Provider value={theme}>

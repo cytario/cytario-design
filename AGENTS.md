@@ -162,7 +162,10 @@ table, then regenerate the hex; never edit a `--color-dusk-*` value directly.**
   (`src/components/Popover/useTriggerTheme.tsx`) captures the trigger's themed
   DOM context via a callback ref and exposes the value; overlay components
   (Menu, Popover, Select, Tooltip, useContextMenu) stamp it as `data-theme`
-  on the portaled element. New overlay components must do the same.
+  on the portaled element. New overlay components must do the same. The
+  provider re-resolves when any `data-theme` attribute in the document flips
+  (one shared MutationObserver), so open overlays follow an app-level theme
+  switch live instead of keeping the theme captured at mount.
 - **MDX pages**: JSX text nodes stay **inline** in their tags. Multi-line text
   inside a JSX `<p>` makes MDX wrap it in a markdown paragraph — duplicated
   content, `<p>`-in-`<p>`, and (in dark mode) the inner copy renders
