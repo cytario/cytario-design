@@ -180,6 +180,7 @@
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
     --color-destructive-pressed: var(--color-rose-800);
+    --color-destructive-rim: var(--color-rose-600);
     --color-destructive-surface: var(--color-rose-50);
     --color-destructive-surface-foreground: var(--color-rose-700);
     --color-destructive-border: var(--color-rose-200);
@@ -187,6 +188,7 @@
     --color-success-foreground: var(--color-white);
     --color-success-hover: var(--color-green-800);
     --color-success-pressed: var(--color-green-900);
+    --color-success-rim: var(--color-green-700);
     --color-success-surface: var(--color-green-50);
     --color-success-surface-foreground: var(--color-green-700);
     --color-success-border: var(--color-green-200);
@@ -194,6 +196,7 @@
     --color-warning-foreground: var(--color-dusk-900);
     --color-warning-hover: var(--color-amber-400);
     --color-warning-pressed: var(--color-amber-300);
+    --color-warning-rim: var(--color-amber-500);
     --color-warning-surface: var(--color-amber-50);
     --color-warning-surface-foreground: var(--color-amber-800);
     --color-warning-border: var(--color-amber-200);
@@ -201,6 +204,7 @@
     --color-info-foreground: var(--color-white);
     --color-info-hover: var(--color-blue-700);
     --color-info-pressed: var(--color-blue-800);
+    --color-info-rim: var(--color-blue-600);
     --color-info-surface: var(--color-blue-50);
     --color-info-surface-foreground: var(--color-blue-700);
     --color-info-border: var(--color-blue-200);
@@ -262,6 +266,11 @@
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
     --color-destructive-pressed: var(--color-rose-800);
+    /* Rim on the solid destructive button (rose-400 on the rose-600 fill,
+       1.75:1 boundary) — the primary-button dimensional hairline for the
+       status fills; light keeps border = fill. Distinct from the darker
+       -border inset tone used on banner surfaces and error outlines. */
+    --color-destructive-rim: var(--color-rose-400);
     --color-destructive-surface: var(--color-rose-900);
     --color-destructive-surface-foreground: var(--color-rose-200);
     --color-destructive-border: var(--color-rose-800);
@@ -269,6 +278,7 @@
     --color-success-foreground: var(--color-white);
     --color-success-hover: var(--color-green-800);
     --color-success-pressed: var(--color-green-900);
+    --color-success-rim: var(--color-green-500);
     --color-success-surface: var(--color-green-900);
     --color-success-surface-foreground: var(--color-green-200);
     --color-success-border: var(--color-green-800);
@@ -276,6 +286,7 @@
     --color-warning-foreground: var(--color-dusk-900);
     --color-warning-hover: var(--color-amber-400);
     --color-warning-pressed: var(--color-amber-300);
+    --color-warning-rim: var(--color-amber-300);
     --color-warning-surface: var(--color-amber-900);
     --color-warning-surface-foreground: var(--color-amber-200);
     --color-warning-border: var(--color-amber-800);
@@ -283,6 +294,7 @@
     --color-info-foreground: var(--color-white);
     --color-info-hover: var(--color-blue-700);
     --color-info-pressed: var(--color-blue-800);
+    --color-info-rim: var(--color-blue-400);
     --color-info-surface: var(--color-blue-900);
     --color-info-surface-foreground: var(--color-blue-200);
     --color-info-border: var(--color-blue-800);
@@ -605,6 +617,7 @@
   --color-destructive-surface-foreground: var(
     --color-destructive-surface-foreground
   );
+  --color-destructive-rim: var(--color-destructive-rim);
   --color-destructive-border: var(--color-destructive-border);
   --color-success: var(--color-success);
   --color-success-foreground: var(--color-success-foreground);
@@ -612,6 +625,7 @@
   --color-success-pressed: var(--color-success-pressed);
   --color-success-surface: var(--color-success-surface);
   --color-success-surface-foreground: var(--color-success-surface-foreground);
+  --color-success-rim: var(--color-success-rim);
   --color-success-border: var(--color-success-border);
   --color-warning: var(--color-warning);
   --color-warning-foreground: var(--color-warning-foreground);
@@ -619,6 +633,7 @@
   --color-warning-pressed: var(--color-warning-pressed);
   --color-warning-surface: var(--color-warning-surface);
   --color-warning-surface-foreground: var(--color-warning-surface-foreground);
+  --color-warning-rim: var(--color-warning-rim);
   --color-warning-border: var(--color-warning-border);
   --color-info: var(--color-info);
   --color-info-foreground: var(--color-info-foreground);
@@ -626,5 +641,6 @@
   --color-info-pressed: var(--color-info-pressed);
   --color-info-surface: var(--color-info-surface);
   --color-info-surface-foreground: var(--color-info-surface-foreground);
+  --color-info-rim: var(--color-info-rim);
   --color-info-border: var(--color-info-border);
 }

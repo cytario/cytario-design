@@ -125,6 +125,7 @@
   --color-destructive-surface-foreground: var(
     --color-destructive-surface-foreground
   );
+  --color-destructive-rim: var(--color-destructive-rim);
   --color-destructive-border: var(--color-destructive-border);
   --color-success: var(--color-success);
   --color-success-foreground: var(--color-success-foreground);
@@ -132,6 +133,7 @@
   --color-success-pressed: var(--color-success-pressed);
   --color-success-surface: var(--color-success-surface);
   --color-success-surface-foreground: var(--color-success-surface-foreground);
+  --color-success-rim: var(--color-success-rim);
   --color-success-border: var(--color-success-border);
   --color-warning: var(--color-warning);
   --color-warning-foreground: var(--color-warning-foreground);
@@ -139,6 +141,7 @@
   --color-warning-pressed: var(--color-warning-pressed);
   --color-warning-surface: var(--color-warning-surface);
   --color-warning-surface-foreground: var(--color-warning-surface-foreground);
+  --color-warning-rim: var(--color-warning-rim);
   --color-warning-border: var(--color-warning-border);
   --color-info: var(--color-info);
   --color-info-foreground: var(--color-info-foreground);
@@ -146,5 +149,6 @@
   --color-info-pressed: var(--color-info-pressed);
   --color-info-surface: var(--color-info-surface);
   --color-info-surface-foreground: var(--color-info-surface-foreground);
+  --color-info-rim: var(--color-info-rim);
   --color-info-border: var(--color-info-border);
 }

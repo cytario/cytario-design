@@ -33,21 +33,25 @@ export const variantStyles: Record<ButtonVariant, string> = {
   `,
   destructive: `
     bg-destructive text-destructive-foreground
+    border border-destructive-rim
     hover:bg-destructive-hover
     pressed:bg-destructive-pressed
   `,
   success: `
     bg-success text-success-foreground
+    border border-success-rim
     hover:bg-success-hover
     pressed:bg-success-pressed
   `,
   warning: `
     bg-warning text-warning-foreground
+    border border-warning-rim
     hover:bg-warning-hover
     pressed:bg-warning-pressed
   `,
   info: `
     bg-info text-info-foreground
+    border border-info-rim
     hover:bg-info-hover
     pressed:bg-info-pressed
   `,
