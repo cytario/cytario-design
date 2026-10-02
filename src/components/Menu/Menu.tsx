@@ -1,5 +1,5 @@
 import type React from "react";
-import type { Selection } from "react-aria-components";
+import { type Key, type Selection } from "react-aria-components";
 import {
   MenuTrigger,
   Menu as AriaMenu,
@@ -36,13 +36,13 @@ export interface MenuProps {
   /** The element that toggles the menu (button, icon button, …). */
   children: React.ReactNode;
   /** Called when any item is activated */
-  onAction?: (key: React.Key) => void;
+  onAction?: (key: Key) => void;
   /** Selection mode for checkbox-style menus */
   selectionMode?: "single" | "multiple" | "none";
   /** Controlled selection */
-  selectedKeys?: Iterable<React.Key>;
+  selectedKeys?: Iterable<Key>;
   /** Default selection (uncontrolled) */
-  defaultSelectedKeys?: Iterable<React.Key>;
+  defaultSelectedKeys?: Iterable<Key>;
   /** Called when selection changes */
   onSelectionChange?: (keys: Selection) => void;
   /** Additional classes for the popover chrome */
@@ -98,7 +98,7 @@ function MenuBody({ className, children, ...props }: MenuProps) {
                   "focus:bg-muted",
                   "hover:bg-muted",
                   "disabled:opacity-50 disabled:pointer-events-none",
-                  item.isDanger ? "text-destructive" : "text-foreground",
+                  "text-foreground",
                 ]
                   .filter(Boolean)
                   .join(" ")}

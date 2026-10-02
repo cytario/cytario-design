@@ -31,6 +31,7 @@ const fillStyles: Record<ProgressBarVariant, string> = {
   success: "bg-success",
   warning: "bg-warning",
   danger: "bg-destructive",
+  neutral: "bg-muted-foreground",
 };
 
 const sizeStyles: Record<ProgressBarSize, string> = {
