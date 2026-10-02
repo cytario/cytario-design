@@ -43,18 +43,18 @@ const variantConfig: Record<
 > = {
   success: {
     icon: CheckCircle,
-    containerClass: "bg-success-surface border-success-border text-success",
-    iconClass: "text-success",
+    containerClass: "bg-success-surface border-success-border text-success-surface-foreground",
+    iconClass: "text-success-surface-foreground",
   },
   error: {
     icon: XCircle,
-    containerClass: "bg-destructive-surface border-destructive-border text-destructive",
-    iconClass: "text-destructive",
+    containerClass: "bg-destructive-surface border-destructive-border text-destructive-surface-foreground",
+    iconClass: "text-destructive-surface-foreground",
   },
   info: {
     icon: Info,
-    containerClass: "bg-info-surface border-info-border text-info",
-    iconClass: "text-info",
+    containerClass: "bg-info-surface border-info-border text-info-surface-foreground",
+    iconClass: "text-info-surface-foreground",
   },
 };
 
