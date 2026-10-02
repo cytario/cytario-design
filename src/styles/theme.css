@@ -69,10 +69,12 @@
     --color-rose-800: #9f1239;
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
-    /* Neutral ramp — purple-tinted dusk ramp. One OKLCH line: hue 299 (matches
-      the brand purple), chroma = Tailwind slate chroma (pre-tint reference) × 1.256, Tailwind lightness
-       curve with the dark end compressed through the relaunch anchors
-       (700/800/900) and 600/950 smoothed onto it. Tinting the primitives
+    /* Neutral ramp — purple-tinted dusk ramp, on one OKLCH line (hue 299,
+      the brand purple). The per-step OKLCH parameter table in
+       scripts/lib/dusk-ramp.ts is the source of truth; these hex values are
+       generated from it (byte-stable roundtrip) and gated by
+       `npm run validate:tokens` — hand-edits that fall off the line fail CI.
+       dusk-700/800/900 carry the brand-canvas ladder. Tinting the primitives
        (not adding parallel tokens) keeps the semantic → primitive hierarchy
        intact and carries both themes. */
     --color-dusk-50: #faf9fc;
