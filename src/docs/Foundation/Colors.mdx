@@ -31,6 +31,8 @@ What you build with. Each token maps a purpose to a palette value, so code refer
 
 The raw source palette: brand hues, the dusk neutral ramp, status hues, plus base black/white and alpha scrims. These are theme-invariant — light and dark resolve identically — so each is shown once.
 
+> The **dusk ramp is generated, not hand-picked**: it sits on a single OKLCH line (hue 299, the brand purple). The per-step parameters live in `scripts/lib/dusk-ramp.ts` and are enforced by `npm run validate:tokens` — any value that drifts off the line fails CI. Change the ramp by changing the parameter table, never by editing a hex value.
+
 > **Primitives are not an API.** Using a primitive directly in a component (`--color-purple-700`, a hex literal) is a bug — it can't respond to theme and bypasses the semantic layer. Reach for a semantic token above; if none fits, that's a gap to raise with the design-system team.
 
 <PaletteScales />

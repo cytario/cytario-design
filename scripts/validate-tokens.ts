@@ -8,6 +8,10 @@
  *    counterpart.
  * 2. WCAG contrast gate: the semantic text/background and border/background
  *    pairs must clear AA in both themes (4.5:1 text, 3:1 UI boundaries).
+ * 3. Dusk-ramp drift gate: the checked-in dusk hex values must match the
+ *    canonical OKLCH parameter table (scripts/lib/dusk-ramp.ts) — the ramp's
+ *    source of truth. A hand-edited dusk value that falls off the OKLCH
+ *    line fails here instead of shipping.
  *
  * Shares the token parser with the generated docs catalog — the CI gate and
  * the Colors page can never disagree about what the tokens are.
@@ -15,11 +19,12 @@
  * Run: npm run validate:tokens
  */
 
-import { wcagContrast } from "culori";
+import { wcagContrast, oklch as toOklch } from "culori";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseTokenCatalog } from "./lib/token-catalog.ts";
+import { DUSK_STEPS, DUSK_HUE, duskHex } from "./lib/dusk-ramp.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const THEME_CSS = join(__dirname, "..", "src", "styles", "theme.css");
@@ -128,3 +133,39 @@ if (failures > 0) {
 }
 
 console.error(`✓ ${checked} contrast pairs pass WCAG AA in both themes.`);
+
+// --- 3. dusk-ramp drift gate -------------------------------------------------
+
+// The dusk ramp is one OKLCH line; the parameter table in lib/dusk-ramp.ts is
+// its source of truth. Every checked-in dusk value must (a) byte-match the
+// hex generated from the table and (b) sit on the line's hue. Editing a
+// dusk hex by hand — or drifting the table without regenerating — fails here.
+let rampFailures = 0;
+for (const s of DUSK_STEPS) {
+  const checkedIn = lightRaw.get(`--color-dusk-${s.step}`);
+  const generated = duskHex(s);
+  if (checkedIn !== generated) {
+    rampFailures++;
+    console.error(
+      `✗ dusk-${s.step}: checked-in ${checkedIn ?? "(missing)"} ≠ generated ${generated} — regenerate from scripts/lib/dusk-ramp.ts`,
+    );
+    continue;
+  }
+  // Belt-and-braces: the generated value's own hue must stay near the line.
+  const h = toOklch(generated).h;
+  if (h === undefined || Math.abs(h - DUSK_HUE) > 4) {
+    rampFailures++;
+    console.error(
+      `✗ dusk-${s.step}: hue ${h?.toFixed(1)}° is more than 4° off the OKLCH line (${DUSK_HUE}°) — fix the parameter table`,
+    );
+  }
+}
+if (rampFailures > 0) {
+  console.error(
+    `✗ ${rampFailures} dusk ramp drift failure(s) — the ramp must stay on its OKLCH line (scripts/lib/dusk-ramp.ts is the source of truth).`,
+  );
+  process.exit(1);
+}
+console.error(
+  `✓ dusk ramp on its OKLCH line: ${DUSK_STEPS.length} steps byte-match scripts/lib/dusk-ramp.ts.`,
+);
