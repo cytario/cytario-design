@@ -225,12 +225,17 @@
   [data-theme="dark"] {
     /* ---- Dark-mode semantic token overrides (primitives are inherited from :root) ---- */
     --color-background: var(--color-dusk-900);
-    --color-foreground: var(--color-dusk-100);
+    /* Body ink on dark steps one rung down from the brightest: dusk-100
+       (17.3:1) caused halation — bright text blooming on the near-black
+       canvas. dusk-200 (15.4:1) is still AAA with a clear tier above
+       muted-foreground (dusk-400, 7.1:1). accent-foreground follows so
+       hover/selected text never out-brightens the body. */
+    --color-foreground: var(--color-dusk-200);
     --color-card: var(--color-dusk-800);
     --color-muted: var(--color-dusk-700);
     --color-muted-foreground: var(--color-dusk-400);
     --color-accent: var(--color-dusk-800);
-    --color-accent-foreground: var(--color-dusk-100);
+    --color-accent-foreground: var(--color-dusk-200);
     --color-accent-pressed: var(--color-dusk-700);
     --color-border: var(--color-dusk-500);
     /* 10.5:1 on the tinted canvas — same interactive-accent token as light. */
