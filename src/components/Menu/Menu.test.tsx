@@ -10,6 +10,7 @@ import { MenuSection } from "./MenuSection";
 import { MenuHeader } from "./MenuHeader";
 import { MenuSeparator } from "./MenuSeparator";
 import { Button } from "../Button";
+import { SegmentedControl, SegmentedControlItem } from "../SegmentedControl";
 
 // ─── Data-driven (items prop) ────────────────────────────────────────────────
 
@@ -77,9 +78,7 @@ describe("Menu (items prop)", () => {
     await userEvent.click(screen.getByRole("button", { name: "Actions" }));
     const menuItem = screen.getByRole("menuitem", { name: "Open Keycloak" });
     expect(menuItem.tagName).toBe("A");
-    expect(menuItem.getAttribute("href")).toBe(
-      "https://keycloak.example.com",
-    );
+    expect(menuItem.getAttribute("href")).toBe("https://keycloak.example.com");
   });
 
   it("sets target attribute on menu item with href and target", async () => {
@@ -232,6 +231,39 @@ describe("Menu (composition API)", () => {
     expect(screen.getByText("Dr. Sarah Chen")).toBeDefined();
   });
 
+  // Non-item content (an interactive SegmentedControl) must ride a collection
+  // leaf — raw DOM children of a MenuSection render through react-aria's
+  // collection-document portal, which cannot host text nodes and crashes.
+  it("renders an interactive control in a section via MenuHeader", async () => {
+    render(
+      <Menu
+        content={
+          <MenuSection header="Theme">
+            <MenuHeader className="flex justify-center px-3 py-2">
+              <SegmentedControl
+                aria-label="Color theme"
+                selectionMode="single"
+                selectedKeys={new Set(["dark"])}
+              >
+                <SegmentedControlItem id="light">Light</SegmentedControlItem>
+                <SegmentedControlItem id="dark">Dark</SegmentedControlItem>
+              </SegmentedControl>
+            </MenuHeader>
+            <MenuItem id="logout">Log out</MenuItem>
+          </MenuSection>
+        }
+      >
+        <Button>Actions</Button>
+      </Menu>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Actions" }));
+    expect(
+      screen.getByRole("radiogroup", { name: "Color theme" }),
+    ).toBeDefined();
+    expect(screen.getByRole("menuitem", { name: "Log out" })).toBeDefined();
+  });
+
   it("renders endContent in MenuItem", async () => {
     render(
       <Menu
@@ -272,9 +304,7 @@ describe("Menu (composition API)", () => {
     );
 
     await userEvent.click(screen.getByRole("button", { name: "Actions" }));
-    await userEvent.click(
-      screen.getByRole("menuitem", { name: "Settings" }),
-    );
+    await userEvent.click(screen.getByRole("menuitem", { name: "Settings" }));
     expect(onAction).toHaveBeenCalledTimes(1);
   });
 
@@ -366,10 +396,14 @@ describe("Menu (checkbox items)", () => {
     await userEvent.click(screen.getByRole("button", { name: "Options" }));
 
     expect(
-      screen.getByRole("menuitemcheckbox", { name: "Option A" }).getAttribute("aria-checked"),
+      screen
+        .getByRole("menuitemcheckbox", { name: "Option A" })
+        .getAttribute("aria-checked"),
     ).toBe("true");
     expect(
-      screen.getByRole("menuitemcheckbox", { name: "Option B" }).getAttribute("aria-checked"),
+      screen
+        .getByRole("menuitemcheckbox", { name: "Option B" })
+        .getAttribute("aria-checked"),
     ).toBe("false");
   });
 
@@ -393,7 +427,9 @@ describe("Menu (checkbox items)", () => {
     );
 
     await userEvent.click(screen.getByRole("button", { name: "Options" }));
-    await userEvent.click(screen.getByRole("menuitemcheckbox", { name: "Option B" }));
+    await userEvent.click(
+      screen.getByRole("menuitemcheckbox", { name: "Option B" }),
+    );
 
     expect(onSelectionChange).toHaveBeenCalled();
   });
@@ -413,7 +449,9 @@ describe("Menu (checkbox items)", () => {
     );
 
     await userEvent.click(screen.getByRole("button", { name: "Options" }));
-    const item = screen.getByRole("menuitemcheckbox", { name: "Disabled Option" });
+    const item = screen.getByRole("menuitemcheckbox", {
+      name: "Disabled Option",
+    });
     expect(item.getAttribute("aria-disabled")).toBe("true");
   });
 });

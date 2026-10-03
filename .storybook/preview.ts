@@ -1,7 +1,60 @@
-import { createElement, useEffect } from "react";
+import { createElement, useEffect, useState } from "react";
 import type { Preview } from "storybook/react";
+import { DocsContainer } from "@storybook/addon-docs/blocks";
+import { GLOBALS_UPDATED } from "storybook/internal/core-events";
 import "../src/styles/tailwind.css";
-import { lightTheme } from "./theme";
+import { darkTheme, lightTheme } from "./theme";
+
+/** Reads the theme global for bare MDX docs pages (Introduction, Foundation).
+ * The docs container's context is a DocsContextProps, which has no `globals`
+ * field — the toolbar global has to be read from the iframe URL initially and
+ * then kept current via GLOBALS_UPDATED channel events (same mechanism
+ * addon-docs' internal useGlobals hook uses). Side-by-side renders the docs
+ * chrome light (the story canvas shows both themes). Dark is the default. */
+function initialDocsTheme(): string {
+  const raw = new URLSearchParams(window.location.search).get("globals");
+  const theme = raw?.split(",")?.find((kv) => kv.startsWith("theme:"));
+  const value = theme?.split(":")[1] || "dark";
+  return value === "side-by-side" ? "light" : value;
+}
+
+/**
+ * Docs container for bare MDX pages so they follow the Theme toolbar. It
+ * wraps the default DocsContainer (which supplies the styled-components
+ * ThemeProvider the docs blocks rely on) rather than replacing it, repoints
+ * its Storybook theme, and applies data-theme to the iframe's <html> so body
+ * bg and design tokens flip with the selection.
+ */
+function DocsThemeContainer({
+  channel,
+  children,
+  context,
+}: {
+  channel: { on: Function; off: Function };
+  children: React.ReactNode;
+  context: unknown;
+}) {
+  const [theme, setTheme] = useState(initialDocsTheme);
+
+  useEffect(() => {
+    const onGlobalsUpdated = (changed: { globals: Record<string, string> }) => {
+      const selected = changed.globals?.theme || "dark";
+      setTheme(selected === "side-by-side" ? "light" : selected);
+    };
+    channel.on(GLOBALS_UPDATED, onGlobalsUpdated);
+    return () => channel.off(GLOBALS_UPDATED, onGlobalsUpdated);
+  }, [channel]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  return createElement(
+    DocsContainer,
+    { context, theme: theme === "dark" ? darkTheme : lightTheme },
+    createElement("div", { "data-theme": theme }, children),
+  );
+}
 
 const preview: Preview = {
   globalTypes: {
@@ -20,11 +73,11 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
-    theme: "light",
+    theme: "dark",
   },
   decorators: [
     (Story, context) => {
-      const selectedTheme = context.globals.theme || "light";
+      const selectedTheme = context.globals.theme || "dark";
 
       // Set data-theme on the preview iframe's <html> so body bg responds
       useEffect(() => {
@@ -45,6 +98,11 @@ const preview: Preview = {
                 flex: 1,
                 padding: "1rem",
                 backgroundColor: "var(--color-background)",
+                // Re-declare color on the panel: inherited text colors arrive
+                // as resolved values from the (light) root context in
+                // side-by-side mode; re-resolving var() here makes the panel's
+                // own dark tokens drive its contents.
+                color: "var(--color-foreground)",
                 borderRadius: "8px",
               },
             },
@@ -72,6 +130,11 @@ const preview: Preview = {
                 flex: 1,
                 padding: "1rem",
                 backgroundColor: "var(--color-background)",
+                // Re-declare color on the panel: inherited text colors arrive
+                // as resolved values from the (light) root context in
+                // side-by-side mode; re-resolving var() here makes the panel's
+                // own dark tokens drive its contents.
+                color: "var(--color-foreground)",
                 borderRadius: "8px",
               },
             },
@@ -127,14 +190,16 @@ const preview: Preview = {
             "*",
           ],
           "Compositions",
-          "Patterns",
-          "Guidelines",
           "*",
         ],
       },
     },
     docs: {
-      theme: lightTheme,
+      // Bare MDX pages (Introduction, Foundation) follow the Theme toolbar
+      // via DocsThemeContainer; the default DocsContainer inside it supplies
+      // the styled-components context the docs blocks rely on.
+      container: ({ children, context }: { children: React.ReactNode; context: { channel: { on: Function; off: Function } } }) =>
+        createElement(DocsThemeContainer, { channel: context.channel, context }, children),
     },
     controls: {
       matchers: {

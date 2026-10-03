@@ -112,7 +112,7 @@ const mockUsers: UserRow[] = [
 
 function StatusPill({ enabled }: { enabled: boolean }) {
   return (
-    <Badge color={enabled ? "green" : "slate"} size="sm">
+    <Badge color={enabled ? "success" : "neutral"} size="sm">
       {enabled ? "Active" : "Disabled"}
     </Badge>
   );
@@ -241,12 +241,12 @@ function AdminUsersPage() {
 
   return (
     <div className="min-h-screen bg-card">
-      <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
+      <header className="flex items-center justify-between bg-dusk-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
           <Logo color="#ffffff" scale={0.8} />
-          <span className="text-sm text-slate-400">Admin</span>
-          <span className="text-sm text-slate-500">/</span>
-          <span className="text-sm font-medium text-slate-300">Users</span>
+          <span className="text-sm text-dusk-400">Admin</span>
+          <span className="text-sm text-dusk-500">/</span>
+          <span className="text-sm font-medium text-dusk-300">Users</span>
         </div>
       </header>
 
@@ -303,12 +303,12 @@ function AdminUsersPage() {
 function AdminUsersEmpty() {
   return (
     <div className="min-h-screen bg-card">
-      <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
+      <header className="flex items-center justify-between bg-dusk-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
           <Logo color="#ffffff" scale={0.8} />
-          <span className="text-sm text-slate-400">Admin</span>
-          <span className="text-sm text-slate-500">/</span>
-          <span className="text-sm font-medium text-slate-300">Users</span>
+          <span className="text-sm text-dusk-400">Admin</span>
+          <span className="text-sm text-dusk-500">/</span>
+          <span className="text-sm font-medium text-dusk-300">Users</span>
         </div>
       </header>
 
@@ -345,12 +345,12 @@ function AdminUsersWithSelection() {
 
   return (
     <div className="min-h-screen bg-card">
-      <header className="flex items-center justify-between bg-slate-950 px-4 py-2 text-white">
+      <header className="flex items-center justify-between bg-dusk-950 px-4 py-2 text-white">
         <div className="flex items-center gap-3">
           <Logo color="#ffffff" scale={0.8} />
-          <span className="text-sm text-slate-400">Admin</span>
-          <span className="text-sm text-slate-500">/</span>
-          <span className="text-sm font-medium text-slate-300">Users</span>
+          <span className="text-sm text-dusk-400">Admin</span>
+          <span className="text-sm text-dusk-500">/</span>
+          <span className="text-sm font-medium text-dusk-300">Users</span>
         </div>
       </header>
 

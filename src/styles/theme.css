@@ -36,17 +36,6 @@
 @layer cytario-design {
   :root {
     /* ---- Primitives: color scales ---- */
-    --color-purple-50: #f5f0fa;
-    --color-purple-100: #ead9f5;
-    --color-purple-200: #d4b3eb;
-    --color-purple-300: #b87ddb;
-    --color-purple-400: #9b4fcb;
-    --color-purple-500: #7a2ea8;
-    --color-purple-600: #6b2695;
-    --color-purple-700: #5c2483;
-    --color-purple-800: #4a1d6a;
-    --color-purple-900: #3a1754;
-    --color-purple-950: #2a0f3e;
     --color-teal-50: #edf9f9;
     --color-teal-100: #d0f0f0;
     --color-teal-200: #a1e1e2;
@@ -80,17 +69,25 @@
     --color-rose-800: #9f1239;
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
-    --color-slate-50: #f8fafc;
-    --color-slate-100: #f1f5f9;
-    --color-slate-200: #e2e8f0;
-    --color-slate-300: #cbd5e1;
-    --color-slate-400: #94a3b8;
-    --color-slate-500: #64748b;
-    --color-slate-600: #475569;
-    --color-slate-700: #334155;
-    --color-slate-800: #1e293b;
-    --color-slate-900: #0f172a;
-    --color-slate-950: #020617;
+    /* Neutral ramp — purple-tinted dusk ramp, on one OKLCH line (hue 299,
+      the brand purple). The per-step OKLCH parameter table in
+       scripts/lib/dusk-ramp.ts is the source of truth; these hex values are
+       generated from it (byte-stable roundtrip) and gated by
+       `npm run validate:tokens` — hand-edits that fall off the line fail CI.
+       dusk-800/900/950 carry the brand-canvas ladder. Tinting the primitives
+       (not adding parallel tokens) keeps the semantic → primitive hierarchy
+       intact and carries both themes. */
+    --color-dusk-50: #faf9fc;
+    --color-dusk-100: #f5f3fa;
+    --color-dusk-200: #e9e5f1;
+    --color-dusk-300: #d6d0e4;
+    --color-dusk-400: #a499bb;
+    --color-dusk-500: #776b90;
+    --color-dusk-600: #4c4161;
+    --color-dusk-700: #251543;
+    --color-dusk-800: #1d1032;
+    --color-dusk-900: #160a24;
+    --color-dusk-950: #0e041d;
     --color-amber-50: #fffbeb;
     --color-amber-100: #fef3c7;
     --color-amber-200: #fde68a;
@@ -115,12 +112,21 @@
     --color-blue-950: #172554;
     --color-white: #ffffff;
     --color-black: #000000;
+    /* Base non-color: the dark secondary outline button's fill (transparent so
+       the page surface shows through; its border/foreground carry the
+       treatment). Defined as a token so the catalog can resolve it. */
+    --color-transparent: transparent;
     --color-alpha-black80: rgba(0, 0, 0, 0.8);
     --color-alpha-black60: rgba(0, 0, 0, 0.6);
     --color-alpha-black40: rgba(0, 0, 0, 0.4);
     --color-alpha-black06: rgba(0, 0, 0, 0.06);
     --color-alpha-white10: rgba(255, 255, 255, 0.1);
     --color-alpha-white06: rgba(255, 255, 255, 0.06);
+    /* Teal washes for the dark secondary outline button (hover/pressed):
+       12%/20% alpha of teal-500 — measured: teal-300 text on those washes
+       over dusk-950 = 9.59 / 8.26. */
+    --color-alpha-teal12: rgba(53, 183, 184, 0.12);
+    --color-alpha-teal20: rgba(53, 183, 184, 0.2);
 
     /* ---- Primitives: spacing ---- */
     --spacing-1: 4px;
@@ -141,30 +147,45 @@
     --border-radius-full: 9999px;
 
     /* ---- Light-mode semantic tokens ---- */
+    /* UA chrome (native scrollbars, form controls, selection background)
+       follows the theme. The scrollbar thumb rides the quiet-ink token so it
+       re-resolves per theme; the track stays clear for an overlay look. */
+    color-scheme: light;
+    scrollbar-color: var(--color-muted-foreground) transparent;
     --color-background: var(--color-white);
-    --color-foreground: var(--color-slate-900);
-    --color-card: var(--color-slate-50);
-    --color-muted: var(--color-slate-100);
-    --color-muted-foreground: var(--color-slate-600);
-    --color-accent: var(--color-slate-200);
-    --color-accent-foreground: var(--color-slate-900);
-    --color-accent-pressed: var(--color-slate-300);
-    --color-border: var(--color-slate-200);
-    --color-ring: var(--color-teal-500);
+    --color-foreground: var(--color-dusk-900);
+    --color-card: var(--color-dusk-50);
+    --color-muted: var(--color-dusk-100);
+    --color-muted-foreground: var(--color-dusk-600);
+    --color-accent: var(--color-dusk-200);
+    --color-accent-foreground: var(--color-dusk-900);
+    --color-accent-pressed: var(--color-dusk-300);
+    --color-border: var(--color-dusk-200);
+    /* ring doubles as the focus indicator and the interactive teal text
+       accent (links, selected tab labels). Teal-700 on white is 4.88:1 —
+       clears AA text (4.5:1), where teal-600 (3.3:1) only cleared UI 3:1
+       and teal-300, secondary's fill, is 1.9:1 and must never be text. */
+    --color-ring: var(--color-teal-700);
     --color-overlay: var(--color-alpha-black80);
     --color-backdrop: var(--color-alpha-black40);
-    --color-primary: var(--color-purple-700);
+    --color-primary: #5c2483;
     --color-primary-foreground: var(--color-white);
-    --color-primary-hover: var(--color-purple-800);
-    --color-primary-pressed: var(--color-purple-900);
+    --color-primary-hover: #4a1d6a;
+    --color-primary-pressed: #3a1754;
+    /* Variant borders: same value as the fill in light (so adding the border
+       is pixel-invisible here); dark overrides them to a lighter rim so the
+       fill edge clears WCAG 1.4.11 against dark surfaces. */
+    --color-primary-border: #5c2483;
     --color-secondary: var(--color-teal-300);
     --color-secondary-foreground: var(--color-teal-950);
     --color-secondary-hover: var(--color-teal-400);
     --color-secondary-pressed: var(--color-teal-500);
+    --color-secondary-border: var(--color-teal-300);
     --color-destructive: var(--color-rose-600);
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
     --color-destructive-pressed: var(--color-rose-800);
+    --color-destructive-rim: var(--color-rose-600);
     --color-destructive-surface: var(--color-rose-50);
     --color-destructive-surface-foreground: var(--color-rose-700);
     --color-destructive-border: var(--color-rose-200);
@@ -172,13 +193,15 @@
     --color-success-foreground: var(--color-white);
     --color-success-hover: var(--color-green-800);
     --color-success-pressed: var(--color-green-900);
+    --color-success-rim: var(--color-green-700);
     --color-success-surface: var(--color-green-50);
     --color-success-surface-foreground: var(--color-green-700);
     --color-success-border: var(--color-green-200);
     --color-warning: var(--color-amber-500);
-    --color-warning-foreground: var(--color-slate-900);
+    --color-warning-foreground: var(--color-dusk-900);
     --color-warning-hover: var(--color-amber-400);
     --color-warning-pressed: var(--color-amber-300);
+    --color-warning-rim: var(--color-amber-500);
     --color-warning-surface: var(--color-amber-50);
     --color-warning-surface-foreground: var(--color-amber-800);
     --color-warning-border: var(--color-amber-200);
@@ -186,35 +209,10 @@
     --color-info-foreground: var(--color-white);
     --color-info-hover: var(--color-blue-700);
     --color-info-pressed: var(--color-blue-800);
+    --color-info-rim: var(--color-blue-600);
     --color-info-surface: var(--color-blue-50);
     --color-info-surface-foreground: var(--color-blue-700);
     --color-info-border: var(--color-blue-200);
-    --color-delta-increase-bg: var(--color-rose-50);
-    --color-delta-increase-text: var(--color-rose-700);
-    --color-delta-increase-icon: var(--color-rose-500);
-    --color-delta-decrease-bg: var(--color-green-50);
-    --color-delta-decrease-text: var(--color-green-700);
-    --color-delta-decrease-icon: var(--color-green-500);
-    --color-delta-flat-bg: var(--color-slate-100);
-    --color-delta-flat-text: var(--color-slate-500);
-    --color-delta-flat-icon: var(--color-slate-400);
-    --color-progress-track: var(--color-slate-200);
-    --color-progress-fill: var(--color-purple-600);
-    --color-progress-fill-success: var(--color-green-500);
-    --color-progress-fill-warning: var(--color-amber-500);
-    --color-progress-fill-danger: var(--color-rose-500);
-    --color-badge-purple-bg: var(--color-purple-100);
-    --color-badge-purple-text: var(--color-purple-700);
-    --color-badge-teal-bg: var(--color-teal-100);
-    --color-badge-teal-text: var(--color-teal-800);
-    --color-badge-slate-bg: var(--color-slate-100);
-    --color-badge-slate-text: var(--color-slate-700);
-    --color-badge-rose-bg: var(--color-rose-100);
-    --color-badge-rose-text: var(--color-rose-700);
-    --color-badge-green-bg: var(--color-green-100);
-    --color-badge-green-text: var(--color-green-700);
-    --color-badge-amber-bg: var(--color-amber-100);
-    --color-badge-amber-text: var(--color-amber-800);
 
     --logo-fill: var(--color-primary);
     --logo-highlight: var(--color-teal-500);
@@ -235,30 +233,71 @@
 
   [data-theme="dark"] {
     /* ---- Dark-mode semantic token overrides (primitives are inherited from :root) ---- */
-    --color-background: var(--color-slate-900);
-    --color-foreground: var(--color-slate-100);
-    --color-card: var(--color-slate-800);
-    --color-muted: var(--color-slate-700);
-    --color-muted-foreground: var(--color-slate-400);
-    --color-accent: var(--color-slate-800);
-    --color-accent-foreground: var(--color-slate-100);
-    --color-accent-pressed: var(--color-slate-700);
-    --color-border: var(--color-slate-700);
-    --color-ring: var(--color-teal-400);
+    /* scrollbar-color above rides a var() and re-resolves here; only the
+       scheme keyword itself needs the dark override. */
+    color-scheme: dark;
+    --color-background: var(--color-dusk-950);
+    /* Body ink on dark steps one rung down from the brightest: dusk-100
+       (18.1:1) caused halation — bright text blooming on the near-black
+       canvas. dusk-200 (16.1:1) is still AAA with a clear tier above
+       muted-foreground (dusk-400, 7.5:1). accent-foreground follows so
+       hover/selected text never out-brightens the body. */
+    --color-foreground: var(--color-dusk-200);
+    --color-card: var(--color-dusk-900);
+    /* Quiet fill, held at dusk-600 while the canvas stepped down to 950:
+       2.12:1 on the canvas (2.03:1 on the dusk-900 card) keeps the solid
+       shape visible — at dusk-700 the fill drops to 1.2:1 and the neutral
+       button reads as floating label text. Hover/pressed step LIGHTER on
+       dark: muted 600 → accent (hover) 500 → accent-pressed 700. Track
+       consumers (SegmentedControl, Tabs, ProgressBar) keep the lift; the
+       selected pill (background dusk-950) still reads inside the track. */
+    --color-muted: var(--color-dusk-600);
+    /* Quiet ink for text on the canvas and cards: dusk-400 (7.5:1 on the
+       canvas, 7.1:1 on card) — still AAA, one rung under the dusk-200 body
+       tier, and less prone to halation than dusk-300. It is NOT the ink for
+       muted fills: dusk-400 on the dusk-600 muted panel is 3.5:1, under AA,
+       so on-muted consumers (Badge neutral, Tabs/SegmentedControl track
+       labels) pair the fill with foreground (8.2:1) — gated as the
+       foreground/muted pair in validate-tokens. */
+    --color-muted-foreground: var(--color-dusk-400);
+    --color-accent: var(--color-dusk-500);
+    /* White on the dusk-500 hover surface (4.89:1) — mid-tone fill takes the
+       white label, same as primary; dusk-200 misses at 3.95:1. Pressed is the
+       deepest state (dusk-700, white 16.57:1): rest 600 → hover 500 (lighter)
+       → pressed 700 keeps the state direction legible — dusk-400 (the old
+       value) would drop white to 2.67:1. */
+    --color-accent-foreground: var(--color-white);
+    --color-accent-pressed: var(--color-dusk-700);
+    --color-border: var(--color-dusk-500);
+    /* 11.0:1 on the tinted canvas — same interactive-accent token as light. */
+    --color-ring: var(--color-teal-300);
     --color-overlay: var(--color-alpha-white10);
     --color-backdrop: var(--color-alpha-black60);
-    --color-primary: var(--color-purple-700);
+    --color-primary: #7a2ea8;
     --color-primary-foreground: var(--color-white);
-    --color-primary-hover: var(--color-purple-800);
-    --color-primary-pressed: var(--color-purple-900);
-    --color-secondary: var(--color-teal-300);
-    --color-secondary-foreground: var(--color-teal-950);
-    --color-secondary-hover: var(--color-teal-400);
-    --color-secondary-pressed: var(--color-teal-500);
+    --color-primary-hover: #9b4fcb;
+    --color-primary-pressed: #6b2695;
+    /* purple-300 rim (7.81:1 vs dusk-900) carries 1.4.11 at rest, where the
+       purple-500 fill edge alone is ~2.5:1 against dark surfaces. */
+    --color-primary-border: #b87ddb;
+    /* Dark secondary button: OUTLINE treatment — transparent fill, teal-300
+       text, teal-500 border; a teal fill on dark canvas reads heavier than
+       the primary. Hover/pressed are teal washes (12%/20% alpha of teal-500;
+       teal-300 text on them over dusk-950 = 9.59 / 8.26). */
+    --color-secondary: var(--color-transparent);
+    --color-secondary-foreground: var(--color-teal-300);
+    --color-secondary-hover: var(--color-alpha-teal12);
+    --color-secondary-pressed: var(--color-alpha-teal20);
+    --color-secondary-border: var(--color-teal-500);
     --color-destructive: var(--color-rose-600);
     --color-destructive-foreground: var(--color-white);
     --color-destructive-hover: var(--color-rose-700);
     --color-destructive-pressed: var(--color-rose-800);
+    /* Rim on the solid destructive button (rose-400 on the rose-600 fill,
+       1.75:1 boundary) — the primary-button dimensional hairline for the
+       status fills; light keeps border = fill. Distinct from the darker
+       -border inset tone used on banner surfaces and error outlines. */
+    --color-destructive-rim: var(--color-rose-400);
     --color-destructive-surface: var(--color-rose-900);
     --color-destructive-surface-foreground: var(--color-rose-200);
     --color-destructive-border: var(--color-rose-800);
@@ -266,13 +305,15 @@
     --color-success-foreground: var(--color-white);
     --color-success-hover: var(--color-green-800);
     --color-success-pressed: var(--color-green-900);
+    --color-success-rim: var(--color-green-500);
     --color-success-surface: var(--color-green-900);
     --color-success-surface-foreground: var(--color-green-200);
     --color-success-border: var(--color-green-800);
     --color-warning: var(--color-amber-500);
-    --color-warning-foreground: var(--color-slate-900);
+    --color-warning-foreground: var(--color-dusk-900);
     --color-warning-hover: var(--color-amber-400);
     --color-warning-pressed: var(--color-amber-300);
+    --color-warning-rim: var(--color-amber-300);
     --color-warning-surface: var(--color-amber-900);
     --color-warning-surface-foreground: var(--color-amber-200);
     --color-warning-border: var(--color-amber-800);
@@ -280,35 +321,10 @@
     --color-info-foreground: var(--color-white);
     --color-info-hover: var(--color-blue-700);
     --color-info-pressed: var(--color-blue-800);
+    --color-info-rim: var(--color-blue-400);
     --color-info-surface: var(--color-blue-900);
     --color-info-surface-foreground: var(--color-blue-200);
     --color-info-border: var(--color-blue-800);
-    --color-delta-increase-bg: var(--color-rose-900);
-    --color-delta-increase-text: var(--color-rose-300);
-    --color-delta-increase-icon: var(--color-rose-400);
-    --color-delta-decrease-bg: var(--color-green-900);
-    --color-delta-decrease-text: var(--color-green-300);
-    --color-delta-decrease-icon: var(--color-green-400);
-    --color-delta-flat-bg: var(--color-slate-800);
-    --color-delta-flat-text: var(--color-slate-400);
-    --color-delta-flat-icon: var(--color-slate-500);
-    --color-progress-track: var(--color-slate-700);
-    --color-progress-fill: var(--color-purple-400);
-    --color-progress-fill-success: var(--color-green-400);
-    --color-progress-fill-warning: var(--color-amber-400);
-    --color-progress-fill-danger: var(--color-rose-400);
-    --color-badge-purple-bg: var(--color-purple-800);
-    --color-badge-purple-text: var(--color-purple-200);
-    --color-badge-teal-bg: var(--color-teal-800);
-    --color-badge-teal-text: var(--color-teal-200);
-    --color-badge-slate-bg: var(--color-slate-800);
-    --color-badge-slate-text: var(--color-slate-200);
-    --color-badge-rose-bg: var(--color-rose-800);
-    --color-badge-rose-text: var(--color-rose-200);
-    --color-badge-green-bg: var(--color-green-800);
-    --color-badge-green-text: var(--color-green-200);
-    --color-badge-amber-bg: var(--color-amber-800);
-    --color-badge-amber-text: var(--color-amber-200);
 
     --logo-fill: var(--color-primary-foreground);
     --logo-highlight: var(--color-teal-500);
@@ -331,6 +347,118 @@
 ::selection {
   background: color-mix(in srgb, var(--color-primary) 60%, transparent);
   color: var(--color-white);
+}
+
+/* Prose / Tailwind Typography: the plugin hardcodes a light-assumed gray
+   palette (--tw-prose-body defaults to gray-700 ≈ dusk-600 — fine on white,
+   but dark-gray-on-dusk-950 illegible in dark mode) with no dark
+   adaptation. Map its color channels to the semantic tokens so .prose
+   follows the active theme (the plugin's own --tw-prose-invert-* channels
+   stay untouched — prose-invert keeps working on top of these). */
+.prose {
+  --tw-prose-body: var(--color-foreground);
+  --tw-prose-headings: var(--color-foreground);
+  --tw-prose-lead: var(--color-muted-foreground);
+  --tw-prose-links: var(--color-ring);
+  --tw-prose-bold: var(--color-foreground);
+  --tw-prose-counters: var(--color-muted-foreground);
+  --tw-prose-bullets: var(--color-muted-foreground);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-foreground);
+  --tw-prose-quote-borders: var(--color-border);
+  --tw-prose-captions: var(--color-muted-foreground);
+  --tw-prose-code: var(--color-foreground);
+  --tw-prose-kbd: var(--color-foreground);
+  --tw-prose-pre-code: var(--color-foreground);
+  --tw-prose-pre-bg: var(--color-card);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
+}
+
+/* SegmentedControl glide indicator: the selected item is the anchor; the
+ * indicator is absolutely positioned to it via anchor()/anchor-size() and
+ * transitions between resolved values as selection moves between items —
+ * a sliding highlight with no JS measurement. Browsers without CSS anchor
+ * positioning keep the per-item background (the rules below only add the
+ * gliding track). Only one item is selected at a time (selectionMode
+ * single), so the anchor-name is unique per group. */
+.sc-glide {
+  position: relative;
+}
+.sc-glide > [data-selected] {
+  anchor-name: --sc-selected;
+}
+.sc-glide-indicator {
+  position: absolute;
+  position-anchor: --sc-selected;
+  left: anchor(--sc-selected left);
+  top: anchor(--sc-selected top);
+  width: anchor-size(--sc-selected width);
+  height: anchor-size(--sc-selected height);
+  background: var(--color-background);
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition:
+    left 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    width 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transitioning a theme change looks broken; color/bg swaps are instant. */
+}
+@media (prefers-reduced-motion: reduce) {
+  .sc-glide-indicator {
+    transition: none;
+  }
+}
+
+/* Glowing rotating edge (Button/ButtonLink glow prop, Card glow prop):
+ * a halo ring painted as a conic-gradient mask-composited to the element's
+ * border shape, spun by animating a registered custom property of <angle>
+ * syntax — @property makes the angle interpolable, so the keyframe spin is
+ * smooth. Brand purple + the interactive teal accent (the ring token),
+ * theme-reactive via tokens; dark surfaces are
+ * where it shines (fluorescence-of-data accent). Unregistering browsers show
+ * a static ring. The halo sits 2px outside the element (inset:-2px + padding
+ * + xor mask), so it never covers content or the focus ring. */
+@property --glow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.glow-edge {
+  position: relative;
+}
+.glow-edge::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    transparent 0%,
+    var(--color-primary) 7%,
+    var(--color-ring) 13%,
+    transparent 20%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: glow-edge-spin 2.5s linear infinite;
+  pointer-events: none;
+}
+@keyframes glow-edge-spin {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glow-edge::before {
+    animation: none;
+  }
 }
 
 @keyframes fade-in {
@@ -387,9 +515,29 @@
   }
 }
 
+/* Dot's ripple: an expanding ring of the dot's own fill color, fading to
+ * transparent. Reads currentColor so one keyframe serves every variant. */
+@keyframes dot-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0.5rem transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes dot-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+}
+
 /**
  * Tailwind v4 @theme inline — maps every color token to itself via var() so
- * that utilities like bg-primary, text-muted-foreground, bg-badge-purple-bg
+ * that utilities like bg-primary, text-muted-foreground, bg-primary
  * resolve at runtime and stay theme-reactive (dark mode just works).
  */
 @theme inline {
@@ -401,6 +549,7 @@
   --animate-fade-in: fade-in 0.3s ease-in forwards;
   --animate-pulse-once: pulse-once 0.1s ease-in-out 1 forwards;
   --animate-progress-bar: progress-bar 1.5s ease-in-out infinite;
+  --animate-dot-pulse: dot-pulse 1.6s ease-out infinite;
 
   /* Radii */
   --radius-sm: 0.25rem;
@@ -413,17 +562,6 @@
   --z-index-tooltip: 100001;
 
   /* Color Primitives */
-  --color-purple-50: var(--color-purple-50);
-  --color-purple-100: var(--color-purple-100);
-  --color-purple-200: var(--color-purple-200);
-  --color-purple-300: var(--color-purple-300);
-  --color-purple-400: var(--color-purple-400);
-  --color-purple-500: var(--color-purple-500);
-  --color-purple-600: var(--color-purple-600);
-  --color-purple-700: var(--color-purple-700);
-  --color-purple-800: var(--color-purple-800);
-  --color-purple-900: var(--color-purple-900);
-  --color-purple-950: var(--color-purple-950);
   --color-teal-50: var(--color-teal-50);
   --color-teal-100: var(--color-teal-100);
   --color-teal-200: var(--color-teal-200);
@@ -457,17 +595,17 @@
   --color-rose-800: var(--color-rose-800);
   --color-rose-900: var(--color-rose-900);
   --color-rose-950: var(--color-rose-950);
-  --color-slate-50: var(--color-slate-50);
-  --color-slate-100: var(--color-slate-100);
-  --color-slate-200: var(--color-slate-200);
-  --color-slate-300: var(--color-slate-300);
-  --color-slate-400: var(--color-slate-400);
-  --color-slate-500: var(--color-slate-500);
-  --color-slate-600: var(--color-slate-600);
-  --color-slate-700: var(--color-slate-700);
-  --color-slate-800: var(--color-slate-800);
-  --color-slate-900: var(--color-slate-900);
-  --color-slate-950: var(--color-slate-950);
+  --color-dusk-50: var(--color-dusk-50);
+  --color-dusk-100: var(--color-dusk-100);
+  --color-dusk-200: var(--color-dusk-200);
+  --color-dusk-300: var(--color-dusk-300);
+  --color-dusk-400: var(--color-dusk-400);
+  --color-dusk-500: var(--color-dusk-500);
+  --color-dusk-600: var(--color-dusk-600);
+  --color-dusk-700: var(--color-dusk-700);
+  --color-dusk-800: var(--color-dusk-800);
+  --color-dusk-900: var(--color-dusk-900);
+  --color-dusk-950: var(--color-dusk-950);
   --color-amber-50: var(--color-amber-50);
   --color-amber-100: var(--color-amber-100);
   --color-amber-200: var(--color-amber-200);
@@ -494,6 +632,7 @@
   /* Color Tokens */
   --color-white: var(--color-white);
   --color-black: var(--color-black);
+  --color-transparent: var(--color-transparent);
   --color-alpha-black80: var(--color-alpha-black80);
   --color-alpha-black60: var(--color-alpha-black60);
   --color-alpha-black40: var(--color-alpha-black40);
@@ -516,10 +655,12 @@
   --color-primary-foreground: var(--color-primary-foreground);
   --color-primary-hover: var(--color-primary-hover);
   --color-primary-pressed: var(--color-primary-pressed);
+  --color-primary-border: var(--color-primary-border);
   --color-secondary: var(--color-secondary);
   --color-secondary-foreground: var(--color-secondary-foreground);
   --color-secondary-hover: var(--color-secondary-hover);
   --color-secondary-pressed: var(--color-secondary-pressed);
+  --color-secondary-border: var(--color-secondary-border);
   --color-destructive: var(--color-destructive);
   --color-destructive-foreground: var(--color-destructive-foreground);
   --color-destructive-hover: var(--color-destructive-hover);
@@ -528,6 +669,7 @@
   --color-destructive-surface-foreground: var(
     --color-destructive-surface-foreground
   );
+  --color-destructive-rim: var(--color-destructive-rim);
   --color-destructive-border: var(--color-destructive-border);
   --color-success: var(--color-success);
   --color-success-foreground: var(--color-success-foreground);
@@ -535,6 +677,7 @@
   --color-success-pressed: var(--color-success-pressed);
   --color-success-surface: var(--color-success-surface);
   --color-success-surface-foreground: var(--color-success-surface-foreground);
+  --color-success-rim: var(--color-success-rim);
   --color-success-border: var(--color-success-border);
   --color-warning: var(--color-warning);
   --color-warning-foreground: var(--color-warning-foreground);
@@ -542,6 +685,7 @@
   --color-warning-pressed: var(--color-warning-pressed);
   --color-warning-surface: var(--color-warning-surface);
   --color-warning-surface-foreground: var(--color-warning-surface-foreground);
+  --color-warning-rim: var(--color-warning-rim);
   --color-warning-border: var(--color-warning-border);
   --color-info: var(--color-info);
   --color-info-foreground: var(--color-info-foreground);
@@ -549,31 +693,6 @@
   --color-info-pressed: var(--color-info-pressed);
   --color-info-surface: var(--color-info-surface);
   --color-info-surface-foreground: var(--color-info-surface-foreground);
+  --color-info-rim: var(--color-info-rim);
   --color-info-border: var(--color-info-border);
-  --color-delta-increase-bg: var(--color-delta-increase-bg);
-  --color-delta-increase-text: var(--color-delta-increase-text);
-  --color-delta-increase-icon: var(--color-delta-increase-icon);
-  --color-delta-decrease-bg: var(--color-delta-decrease-bg);
-  --color-delta-decrease-text: var(--color-delta-decrease-text);
-  --color-delta-decrease-icon: var(--color-delta-decrease-icon);
-  --color-delta-flat-bg: var(--color-delta-flat-bg);
-  --color-delta-flat-text: var(--color-delta-flat-text);
-  --color-delta-flat-icon: var(--color-delta-flat-icon);
-  --color-progress-track: var(--color-progress-track);
-  --color-progress-fill: var(--color-progress-fill);
-  --color-progress-fill-success: var(--color-progress-fill-success);
-  --color-progress-fill-warning: var(--color-progress-fill-warning);
-  --color-progress-fill-danger: var(--color-progress-fill-danger);
-  --color-badge-purple-bg: var(--color-badge-purple-bg);
-  --color-badge-purple-text: var(--color-badge-purple-text);
-  --color-badge-teal-bg: var(--color-badge-teal-bg);
-  --color-badge-teal-text: var(--color-badge-teal-text);
-  --color-badge-slate-bg: var(--color-badge-slate-bg);
-  --color-badge-slate-text: var(--color-badge-slate-text);
-  --color-badge-rose-bg: var(--color-badge-rose-bg);
-  --color-badge-rose-text: var(--color-badge-rose-text);
-  --color-badge-green-bg: var(--color-badge-green-bg);
-  --color-badge-green-text: var(--color-badge-green-text);
-  --color-badge-amber-bg: var(--color-badge-amber-bg);
-  --color-badge-amber-text: var(--color-badge-amber-text);
 }

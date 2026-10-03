@@ -40,7 +40,7 @@ const noStyle = (style: AnsiStyle): boolean =>
 export { noStyle };
 
 // Standard and bright halves of the 16-color SGR palette, tuned for a dark
-// surface: every entry clears WCAG AA (4.5:1) against slate-900 (#0f172a).
+// surface: every entry clears WCAG AA (4.5:1) against dusk-900 (#0f172a).
 const PALETTE_16 = [
   "#7d8697", "#ff8b93", "#a8d98a", "#e8cd8a",
   "#7db8f5", "#d79ae8", "#6fc9d4", "#e2e5ea",

@@ -14,23 +14,23 @@ describe("Badge", () => {
     expect(container.firstElementChild?.tagName).toBe("SPAN");
   });
 
-  it("applies the default slate color", () => {
+  it("applies the default neutral color", () => {
     const { container } = render(<Badge>Default</Badge>);
     expect(container.firstElementChild?.className).toContain(
-      "bg-badge-slate-bg",
+      "bg-muted text-foreground",
     );
   });
 
   it("applies the specified color", () => {
-    const { container } = render(<Badge color="purple">Brand</Badge>);
+    const { container } = render(<Badge color="primary">Brand</Badge>);
     expect(container.firstElementChild?.className).toContain(
-      "bg-badge-purple-bg",
+      "bg-primary text-primary-foreground",
     );
   });
 
-  it("always renders a border", () => {
+  it("renders no border (borders dropped with the hue-keyed pairs)", () => {
     const { container } = render(<Badge>Bordered</Badge>);
-    expect(container.firstElementChild?.className).toContain("border");
+    expect(container.firstElementChild?.className).not.toMatch(/\bborder\b/);
   });
 
   it("applies the xs size", () => {

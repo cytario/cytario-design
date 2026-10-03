@@ -4,12 +4,12 @@ import { Icon, type IconValue } from "../Icon";
 import { MetricText } from "../MetricText";
 
 export type BadgeColor =
-  | "purple"
-  | "teal"
-  | "rose"
-  | "slate"
-  | "green"
-  | "amber";
+  | "primary"
+  | "secondary"
+  | "neutral"
+  | "destructive"
+  | "success"
+  | "warning";
 
 export type BadgeSize = "xs" | "sm" | "md" | "lg";
 
@@ -24,13 +24,12 @@ export interface BadgeProps extends Omit<
 }
 
 const colorStyles: Record<BadgeColor, string> = {
-  purple:
-    "bg-badge-purple-bg text-badge-purple-text border-badge-purple-text/20",
-  teal: "bg-badge-teal-bg text-badge-teal-text border-badge-teal-text/20",
-  rose: "bg-badge-rose-bg text-badge-rose-text border-badge-rose-text/20",
-  slate: "bg-badge-slate-bg text-badge-slate-text border-badge-slate-text/20",
-  green: "bg-badge-green-bg text-badge-green-text border-badge-green-text/20",
-  amber: "bg-badge-amber-bg text-badge-amber-text border-badge-amber-text/20",
+  primary: "bg-primary text-primary-foreground",
+  secondary: "bg-secondary text-secondary-foreground",
+  neutral: "bg-muted text-foreground",
+  destructive: "bg-destructive-surface text-destructive-surface-foreground",
+  success: "bg-success-surface text-success-surface-foreground",
+  warning: "bg-warning-surface text-warning-surface-foreground",
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
@@ -42,7 +41,7 @@ const sizeStyles: Record<BadgeSize, string> = {
 
 export function Badge({
   children,
-  color = "slate",
+  color = "neutral",
   size = "sm",
   icon,
   className,
@@ -51,7 +50,7 @@ export function Badge({
   return (
     <MetricText
       className={twMerge(
-        "inline-flex items-center gap-1 rounded-full border",
+        "inline-flex items-center gap-1 rounded-full",
         colorStyles[color],
         sizeStyles[size],
         className,
