@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-export type DescriptionSize = "sm" | "md" | "lg" | "xl";
+export type DescriptionSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 export interface DescriptionProps extends Omit<
   HTMLAttributes<HTMLParagraphElement>,
@@ -17,6 +17,7 @@ export interface DescriptionProps extends Omit<
 }
 
 const sizeClasses: Record<DescriptionSize, string> = {
+  xs: "text-xs",
   sm: "text-sm md:text-base",
   md: "text-base md:text-lg",
   lg: "text-lg md:text-xl",

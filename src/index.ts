@@ -32,6 +32,13 @@ export type { ProseProps } from "./components/Prose";
 export { Description } from "./components/Description";
 export type { DescriptionProps, DescriptionSize } from "./components/Description";
 
+export { Grid } from "./components/Grid";
+export type {
+  GridProps,
+  GridColumns,
+  GridGap,
+} from "./components/Grid";
+
 export { Icon, iconRegistry } from "./components/Icon";
 export type {
   IconProps,
