@@ -57,7 +57,7 @@ export const InParagraph: Story = {
 export const InInstructionList: Story = {
   name: "In Instruction List",
   render: () => (
-    <ol className="list-decimal list-inside space-y-1 text-sm text-slate-700">
+    <ol className="list-decimal list-inside space-y-1 text-sm text-dusk-700">
       <li>
         Download and install{" "}
         <Link

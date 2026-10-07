@@ -1,37 +1,31 @@
 import { Fragment } from "react";
 import type { Meta, StoryObj } from "storybook/react";
-import { Cloud } from "lucide-react";
-import { iconRegistry } from "../Icon";
-import { Badge } from "./Badge";
+import { Dot } from "./Dot";
 
-const iconOptions = [undefined, ...Object.keys(iconRegistry)];
-
-const meta: Meta<typeof Badge> = {
-  title: "Components/Badge",
-  component: Badge,
+const meta: Meta<typeof Dot> = {
+  title: "Components/Dot",
+  component: Dot,
   argTypes: {
     color: { control: "select" },
     size: { control: "select" },
-    icon: { control: "select", options: iconOptions },
-  },
-  args: {
-    children: "Badge",
+    pulse: { control: "boolean" },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Badge>;
+type Story = StoryObj<typeof Dot>;
 
 const colors = [
+  "accent",
   "primary",
-  "secondary",
-  "destructive",
   "neutral",
   "success",
   "warning",
+  "destructive",
+  "info",
 ] as const;
 
-const sizes = ["xs", "sm", "md", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 
 const labelStyle = {
   fontSize: "12px",
@@ -61,9 +55,7 @@ export const AllVariants: Story = {
         <Fragment key={color}>
           <span style={labelStyle}>{color}</span>
           {sizes.map((size) => (
-            <Badge key={`${color}-${size}`} color={color} size={size}>
-              {color}
-            </Badge>
+            <Dot key={`${color}-${size}`} color={color} size={size} />
           ))}
         </Fragment>
       ))}
@@ -72,13 +64,22 @@ export const AllVariants: Story = {
 };
 
 export const Playground: Story = {
-  args: { color: "neutral", size: "sm", children: "Badge" },
+  args: { color: "accent", size: "md" },
 };
 
-export const WithIcon: Story = {
-  args: { color: "secondary", icon: Cloud, children: "AWS" },
-};
-
-export const Count: Story = {
-  args: { color: "neutral", children: 1234 },
+export const Pulse: Story = {
+  render: () => (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "24px",
+        padding: "16px",
+      }}
+    >
+      {colors.map((color) => (
+        <Dot key={color} color={color} size="lg" pulse />
+      ))}
+    </div>
+  ),
 };

@@ -12,6 +12,7 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { type ButtonSize, sizeStyles } from "../../_shared/styles";
+import { useTriggerTheme, TriggerThemeProvider } from "../../Popover/useTriggerTheme";
 import { Label } from "../Label";
 
 export interface SelectItem {
@@ -35,7 +36,7 @@ export interface SelectProps extends Omit<
   renderItem?: (item: SelectItem) => React.ReactNode;
 }
 
-export function Select({
+function SelectInner({
   label,
   items,
   placeholder = "Select an option",
@@ -49,6 +50,9 @@ export function Select({
   ...props
 }: SelectProps) {
   const hasError = Boolean(errorMessage);
+  // Descendant of TriggerThemeProvider (see Select below): the dropdown
+  // popover carries this theme so it resolves the trigger's tokens.
+  const triggerTheme = useTriggerTheme();
 
   return (
     <AriaSelect
@@ -114,6 +118,7 @@ export function Select({
       )}
 
       <Popover
+        data-theme={triggerTheme}
         className={twMerge(
           "w-(--trigger-width)",
           "rounded-md",
@@ -158,5 +163,19 @@ export function Select({
         </ListBox>
       </Popover>
     </AriaSelect>
+  );
+}
+
+/**
+ * Select with theme capture: React-Aria renders the dropdown listbox
+ * popover outside the select's DOM subtree, so it escapes any themed
+ * container. The provider below captures this context; SelectInner applies
+ * it as data-theme on the portaled popover.
+ */
+export function Select(props: SelectProps) {
+  return (
+    <TriggerThemeProvider>
+      <SelectInner {...props} />
+    </TriggerThemeProvider>
   );
 }

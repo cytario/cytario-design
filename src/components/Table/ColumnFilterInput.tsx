@@ -13,13 +13,13 @@ interface ColumnFilterInputProps {
   filterPlaceholder?: string;
   filterOptions?: { label: string; value: string }[];
   /** Render a custom option for non-"All" values. The "All" option is
-   *  always rendered as a slate Badge automatically. */
+   *  always rendered as a dusk Badge automatically. */
   filterRender?: (option: { label: string; value: string }) => ReactNode;
 }
 
 const ALL_KEY = "__all__";
 const ALL_OPTION: SelectItem = { id: ALL_KEY, name: "All" };
-const AllPill = () => <Badge color="slate">All</Badge>;
+const AllPill = () => <Badge color="neutral">All</Badge>;
 
 /**
  * Column filter (react-data-table default look): a small ghost funnel button

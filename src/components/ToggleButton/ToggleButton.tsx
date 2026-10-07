@@ -39,7 +39,7 @@ const variantStyles: Record<
       "hover:bg-accent",
       "pressed:bg-accent",
     ].join(" "),
-    selected: "bg-accent text-foreground",
+    selected: "bg-accent text-accent-foreground",
   },
   primary: {
     base: [
@@ -57,8 +57,10 @@ const variantStyles: Record<
       "pressed:bg-muted",
     ].join(" "),
     selected: [
-      "bg-slate-800 text-primary-foreground",
-      "border border-slate-800",
+      // Inverted chip: bg-foreground flips per theme so the selected state
+      // stays visible on dark surfaces (raw dusk-800 was invisible there).
+      "bg-foreground text-background",
+      "border border-foreground",
     ].join(" "),
   },
 };

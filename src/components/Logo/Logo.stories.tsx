@@ -33,7 +33,7 @@ export const AllVariants: Story = {
 
       {/* Default (theme-driven) on dark background — uses dark theme override */}
       <div data-theme="dark" className="rounded-lg p-8" style={{ background: "#0f172a" }}>
-        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">
+        <p className="text-xs font-semibold text-dusk-400 uppercase tracking-wider mb-4">
           default (theme-driven) — dark background
         </p>
         <Logo />
@@ -49,7 +49,7 @@ export const AllVariants: Story = {
 
       {/* Monochrome white (escape hatch) */}
       <div data-theme="dark" className="rounded-lg p-8" style={{ background: "#0f172a" }}>
-        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">
+        <p className="text-xs font-semibold text-dusk-400 uppercase tracking-wider mb-4">
           monochrome white (escape hatch)
         </p>
         <Logo color="#ffffff" highlightColor="#ffffff" />
