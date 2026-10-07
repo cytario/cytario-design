@@ -7,7 +7,7 @@ const meta: Meta<typeof Description> = {
   argTypes: {
     size: {
       control: "select",
-      options: ["sm", "md", "lg", "xl"],
+      options: ["xs", "sm", "md", "lg", "xl"],
     },
   },
   args: {
@@ -22,6 +22,9 @@ type Story = StoryObj<typeof Description>;
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
+      <Description size="xs">
+        xs — Supporting copy beneath a heading.
+      </Description>
       <Description size="sm">
         sm — Supporting copy beneath a heading.
       </Description>

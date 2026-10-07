@@ -84,6 +84,8 @@ All components follow the same pattern:
 
 1. **Behavior + accessibility**: Wrap a React Aria Component (e.g., `Button`, `TextField`, `Select`, `Table`). **Exception**: `InputPassword` intentionally renders a ref-forwarded native `<input>` (not RAC `TextField`) so it works in server-driven native forms — the cytario-keycloak Keycloakify login theme re-uses it and depends on native DOM events + native form submission. Do not "upgrade" it to RAC.
 2. **Styling**: Tailwind v4 canonical utility classes. Use standard utilities where they exist (`font-semibold`, `text-sm`, `gap-4`, `rounded-md`), including the semantic color utilities generated from the design tokens (`bg-primary`, `text-muted-foreground`, `bg-destructive`, `border-border`). Use arbitrary token syntax (`bg-(--color-badge-purple-bg)`) only for the decorative `badge`/`delta`/`progress` palettes that are deliberately excluded from the `@theme` layer. Never use verbose forms like `[var(--spacing-4)]` or `(number:--font-weight-semibold)`.
+
+   **Shipped utility vocabulary**: every utility class a consumer may rely on must be carried by a real component in `src/components/**` (a component's own strings or its static class maps — this is what makes it ship in the compiled dist). Stories may demo a class, but must never be its sole source: a utility that appears only in `*.stories.tsx` is an accident of the build, not a contract. Plugins consume the design distribution without emitting CSS of their own, so a story-only utility silently fails in their hosts.
 3. **Stories**: CSF3 format, import from `storybook/react` and `storybook/test` (Storybook 10 paths)
 4. **Tests**: Vitest + React Testing Library. Test by user perspective (query by role/label). Do not test React Aria internals.
 

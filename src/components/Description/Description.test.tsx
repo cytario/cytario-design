@@ -24,6 +24,13 @@ describe("Description", () => {
     expect(el.className).toContain("md:text-lg");
   });
 
+  it("applies xs size classes when size=xs", () => {
+    render(<Description size="xs">Body copy</Description>);
+    const el = screen.getByText("Body copy");
+    expect(el.className).toContain("text-xs");
+    expect(el.className).not.toContain("md:text-");
+  });
+
   it("applies sm size classes when size=sm", () => {
     render(<Description size="sm">Body copy</Description>);
     const el = screen.getByText("Body copy");
