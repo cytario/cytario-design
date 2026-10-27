@@ -124,3 +124,28 @@ export const ClickInteraction: Story = {
     await expect(args.onPress).toHaveBeenCalledTimes(1);
   },
 };
+
+// --- Glowing rotating edge (glow prop) ---
+
+export const GlowEdge: Story = {
+  render: () => (
+    <div
+      data-theme="dark"
+      className="rounded-lg p-8 flex flex-wrap items-center gap-6 bg-dusk-900 border border-dusk-500"
+    >
+      <p className="basis-full text-xs font-semibold uppercase tracking-wider"
+        style={{ color: "var(--color-ring)" }}>
+        glow — rotating conic-gradient halo (best on dark surfaces)
+      </p>
+      <Button glow variant="primary" size="lg">
+        Try the open-source viewer
+      </Button>
+      <Button glow variant="secondary" size="lg">
+        Request a demo
+      </Button>
+      <Button glow variant="primary" size="md">
+        Medium
+      </Button>
+    </div>
+  ),
+};

@@ -1,14 +1,19 @@
 {/* Colors.mdx */}
 import { Meta } from "@storybook/addon-docs/blocks";
 import { PaletteScales, SemanticTokens } from "./ColorReference";
+import { AuroraOrigin } from "./AuroraOrigin";
 
 <Meta title="Foundation/Colors" />
 
 # Colors
 
-The cytario color system has **two tiers**. **Semantic tokens** (`--color-background`, `--color-primary`) express *intent* and adapt automatically across light and dark — build UI with these. **Primitives** (`--color-purple-700`, `--color-slate-100`) are the raw palette the semantic tokens are built from; treat them as reference, not values to use directly.
+cytario's palette is anchored in something real: the **polar aurora**. It combines the two things that naturally co-occur in that phenomenon — **purple dusk** and **teal aurora**. The dusk is the quiet half: the neutral ramp and the dark canvas are drawn from deep violet horizons. The teal is intentionally brighter, almost reminding of arctic ice, so it stands out against the dusk and carries every interactive accent. Every token below descends from this pairing.
 
-Every swatch is read live from the token stylesheets and resolved under both themes, so this page can't drift from the code.
+<AuroraOrigin />
+
+The cytario color system has **two tiers**. **Semantic tokens** (`--color-background`, `--color-primary`) express *intent* and adapt automatically across light and dark — build UI with these. **Primitives** (`--color-purple-700`, `--color-dusk-100`) are the raw palette the semantic tokens are built from; treat them as reference, not values to use directly.
+
+Every swatch is generated from the token stylesheets (`npm run generate:tokens`, refreshed on every dev/build start) and resolved under both themes, so this page can't drift from the code.
 
 cytario's identity is carried by purple and teal — the **Primary** (purple) and **Secondary** (teal) sections in the semantic tokens below. Token names follow the shadcn/ui convention (`background`/`foreground`, `primary`, `destructive`, …) so they map to clean, property-agnostic Tailwind utilities (`bg-background`, `text-destructive`).
 
@@ -24,7 +29,9 @@ What you build with. Each token maps a purpose to a palette value, so code refer
 
 ## Primitives (palette)
 
-The raw source palette: brand hues, the slate neutral ramp, status hues, plus base black/white and alpha scrims. These are theme-invariant — light and dark resolve identically — so each is shown once.
+The raw source palette: brand hues, the dusk neutral ramp, status hues, plus base black/white and alpha scrims. These are theme-invariant — light and dark resolve identically — so each is shown once.
+
+> The **dusk ramp is generated, not hand-picked**: it sits on a single OKLCH line (hue 299, the brand purple). The per-step parameters live in `scripts/lib/dusk-ramp.ts` and are enforced by `npm run validate:tokens` — any value that drifts off the line fails CI. Change the ramp by changing the parameter table, never by editing a hex value.
 
 > **Primitives are not an API.** Using a primitive directly in a component (`--color-purple-700`, a hex literal) is a bug — it can't respond to theme and bypasses the semantic layer. Reach for a semantic token above; if none fits, that's a gap to raise with the design-system team.
 
@@ -36,14 +43,14 @@ The raw source palette: brand hues, the slate neutral ramp, status hues, plus ba
 
 | Combination | Contrast ratio | WCAG AA (normal) | WCAG AA (large) |
 | --- | --- | --- | --- |
-| Purple 700 on white | 8.5:1 | Pass | Pass |
-| Teal 500 on white | 2.8:1 | Fail | Fail |
-| Teal 700 on white | 4.6:1 | Pass (large) | Pass |
-| White on purple 700 | 8.5:1 | Pass | Pass |
-| Slate 900 on white | 17.9:1 | Pass | Pass |
-| Slate 600 on white | 6.7:1 | Pass | Pass |
+| Purple 700 on white | 10.32:1 | Pass | Pass |
+| Teal 500 on white | 2.44:1 | Fail | Fail |
+| Teal 700 on white | 4.88:1 | Pass | Pass |
+| White on purple 700 | 10.32:1 | Pass | Pass |
+| Slate 900 on white | 19.04:1 | Pass | Pass |
+| Slate 600 on white | 9.39:1 | Pass | Pass |
 
-**Key rule:** Teal-500 does not meet WCAG AA contrast on white backgrounds for normal text. Use **teal-700** or darker for text. Teal-500 is suitable for large text, icons, and non-text decorative elements.
+**Key rule:** Teal-500 does not meet WCAG AA contrast on white for normal *or* large text (2.44:1 is below even the 3:1 large-text bar), and it fails 1.4.11 for meaningful icons. Use **teal-700** or darker for text — it is also what `--color-ring` resolves to in light mode, since the focus ring doubles as the link/tab text accent and must clear AA text, not just UI. Reserve teal-500 for non-text decorative elements only.
 
 **Avoid washed-out teal on solid fills.** A mid-teal fill (teal-600 / teal-700) paired with white text is the only way to hold AA contrast with a light label — but it reads muted and washed out, draining the brand vibrancy. Don't reach for it. For a solid teal surface (buttons, badges), use a **light teal fill (teal-300) with dark ink (teal-950)** instead: it keeps the teal lively *and* clears AA (8.6:1). This is exactly how the **Secondary** button is built. Reserve vivid teal-500 for accents, icons, and focus rings where no foreground text sits on top.
 
@@ -52,5 +59,7 @@ The raw source palette: brand hues, the slate neutral ramp, status hues, plus ba
 ## Brand governance
 
 **Approved palette:** The purple and teal brand colors were established as part of the cytario corporate design approved on 05.11.2024. Do not introduce new brand colors without approval.
+
+**Reference photography:** The aurora-origin imagery on this page is the palette's reference. Credits — *dusk*: Quang Le, Hanoi/Vietnam; *aurora*: Noel Bauza, nature photographer, France ([noel-bauza-visual.com](https://www.noel-bauza-visual.com)). Do not reuse the photographs outside this documentation without the photographers' permission.
 
 **Color in regulatory contexts:** Regulatory submissions and labels should not rely on color alone to convey meaning (per IEC 62366-1 usability requirements). When color is used in the cytario application UI for diagnostic significance (e.g., annotations, heatmaps), ensure an alternative non-color indicator is also present.

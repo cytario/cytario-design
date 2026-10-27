@@ -46,29 +46,34 @@ export const darkTheme = create({
   base: "dark",
   brandImage: "assets/logos/cytario-logo-white.svg",
 
-  colorPrimary: "#9b4fcb",
-  colorSecondary: "#9b4fcb",
+  colorPrimary: "#b87ddb",
+  colorSecondary: "#b87ddb",
 
-  appBg: "#111827",
-  appContentBg: "#1f2937",
-  appPreviewBg: "#111827",
-  appBorderColor: "#374151",
+  // Chrome surfaces follow the dusk ramp (the brand palette) instead of
+  // Storybook's default slate: appBg = dusk-950 (the brand canvas #0e041d),
+  // appContentBg / appPreviewBg = dusk-900 (the card tier), barBg = dusk-800.
+  // Border/input tones use dusk-600/dusk-500; brand-text purple carries
+  // selection.
+  appBg: "#0e041d",
+  appContentBg: "#160a24",
+  appPreviewBg: "#160a24",
+  appBorderColor: "#4c4161",
 
-  textColor: "#f3f4f6",
-  textInverseColor: "#111827",
-  textMutedColor: "#9ca3af",
+  textColor: "#f5f3fa",
+  textInverseColor: "#160a24",
+  textMutedColor: "#a499bb",
 
-  barTextColor: "#9ca3af",
-  barSelectedColor: "#9b4fcb",
-  barHoverColor: "#b87ddb",
-  barBg: "#1f2937",
+  barTextColor: "#a499bb",
+  barSelectedColor: "#b87ddb",
+  barHoverColor: "#d4b3eb",
+  barBg: "#1d1032",
 
-  inputBg: "#374151",
-  inputBorder: "#4b5563",
-  inputTextColor: "#f3f4f6",
+  inputBg: "#251543",
+  inputBorder: "#4c4161",
+  inputTextColor: "#f5f3fa",
 
-  booleanBg: "#374151",
-  booleanSelectedBg: "#9b4fcb",
+  booleanBg: "#251543",
+  booleanSelectedBg: "#b87ddb",
 });
 
 export default lightTheme;

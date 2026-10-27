@@ -49,7 +49,7 @@ const columns: ColumnConfig[] = [
       { label: "Completed", value: "Completed" },
       { label: "Failed", value: "Failed" },
     ],
-    filterRender: (option) => <Badge color="teal">{option.label}</Badge>,
+    filterRender: (option) => <Badge color="secondary">{option.label}</Badge>,
   },
   { id: "submittedBy", header: "Submitted by", size: 160, enableSorting: true },
   { id: "submittedAt", header: "Submitted", size: 200, enableSorting: true },
@@ -81,7 +81,7 @@ const data: Job[] = [
 
 const cellRenderers: CellRenderers<Job> = {
   application: (row) => row.application,
-  status: (row) => <Badge color="teal">{row.status}</Badge>,
+  status: (row) => <Badge color="secondary">{row.status}</Badge>,
   submittedBy: (row) => row.submittedBy,
   submittedAt: (row) => row.submittedAt,
 };
@@ -275,7 +275,7 @@ const batchJobColumns: ColumnConfig[] = [
 ];
 
 const statusBadgeColor = (status: string) =>
-  status === "Failed" ? "rose" : status === "Running" ? "teal" : status === "Queued" ? "slate" : "green";
+  status === "Failed" ? "destructive" : status === "Running" ? "secondary" : status === "Queued" ? "neutral" : "success";
 
 export const GroupedJobs: Story = {
   name: "Grouped Jobs (grouped by batch)",
@@ -329,10 +329,10 @@ export const GroupedJobs: Story = {
           <span className="flex flex-wrap items-center gap-1">
             {(
               [
-                ["Running", "teal"],
-                ["Completed", "green"],
-                ["Failed", "rose"],
-                ["Queued", "slate"],
+                ["Running", "secondary"],
+                ["Completed", "success"],
+                ["Failed", "destructive"],
+                ["Queued", "neutral"],
               ] as const
             ).map(([status, color]) => {
               const n = group.rows.filter((r) => r.status === status).length;

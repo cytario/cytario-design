@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "storybook/react";
 import { MetricCard } from "./MetricCard";
-import { DeltaIndicator } from "../DeltaIndicator";
 
 const meta: Meta<typeof MetricCard> = {
   title: "Components/MetricCard",
@@ -33,23 +32,6 @@ export const WithSecondary: Story = {
   },
 };
 
-export const WithDelta: Story = {
-  args: {
-    label: "Total Spend",
-    value: "$22,100",
-    secondary: <DeltaIndicator current={22100} previous={20800} label="MoM" />,
-  },
-};
-
-export const AsLink: Story = {
-  args: {
-    label: "Storage Cost",
-    value: "$4,500",
-    href: "#",
-    secondary: <DeltaIndicator current={4500} previous={4200} />,
-  },
-};
-
 // --- Size stories ---
 
 export const Small: Story = {
@@ -68,67 +50,6 @@ export const Medium: Story = {
   },
 };
 
-// --- Dapanoskop usage ---
-
-export const DashboardTotalSpend: Story = {
-  name: "dapanoskop: Total Spend",
-  args: {
-    label: "Total Spend",
-    value: "$22,100",
-    secondary: <DeltaIndicator current={22100} previous={20800} label="MoM" />,
-  },
-};
-
-export const DashboardMom: Story = {
-  name: "dapanoskop: vs Last Month",
-  args: {
-    label: "vs Last Month",
-    value: <DeltaIndicator current={22100} previous={20800} format="combined" />,
-  },
-};
-
-export const DashboardYoy: Story = {
-  name: "dapanoskop: vs Last Year",
-  args: {
-    label: "vs Last Year",
-    value: <DeltaIndicator current={22100} previous={18500} format="combined" />,
-  },
-};
-
-export const DashboardYoyUnavailable: Story = {
-  name: "dapanoskop: vs Last Year (MTD)",
-  args: {
-    label: "vs Last Year",
-    value: (
-      <DeltaIndicator
-        current={0}
-        previous={0}
-        unavailable
-        unavailableText="N/A (MTD)"
-      />
-    ),
-  },
-};
-
-export const StorageCost: Story = {
-  name: "dapanoskop: Storage Cost",
-  args: {
-    label: "Storage Cost",
-    value: "$4,500",
-    href: "#",
-    secondary: <DeltaIndicator current={4500} previous={4200} />,
-  },
-};
-
-export const CostPerTb: Story = {
-  name: "dapanoskop: Cost / TB",
-  args: {
-    size: "sm",
-    label: "Cost / TB",
-    value: "$23.50",
-  },
-};
-
 // --- Grid composition ---
 
 export const MetricCardRow: Story = {
@@ -138,29 +59,15 @@ export const MetricCardRow: Story = {
       <MetricCard
         label="Total Spend"
         value="$22,100"
-        secondary={
-          <DeltaIndicator current={22100} previous={20800} label="MoM" />
-        }
+        secondary="12 workloads across 3 cost centers"
       />
       <MetricCard
         label="vs Last Month"
-        value={
-          <DeltaIndicator
-            current={22100}
-            previous={20800}
-            format="combined"
-          />
-        }
+        value="+$1,300 (+6.2%)"
       />
       <MetricCard
         label="vs Last Year"
-        value={
-          <DeltaIndicator
-            current={22100}
-            previous={18500}
-            format="combined"
-          />
-        }
+        value="+$3,600 (+19.7%)"
       />
     </div>
   ),
@@ -174,7 +81,7 @@ export const StorageMetrics: Story = {
         label="Storage Cost"
         value="$4,500"
         href="#"
-        secondary={<DeltaIndicator current={4500} previous={4200} />}
+        secondary="+$300 vs last month"
       />
       <MetricCard
         label="Total Stored"

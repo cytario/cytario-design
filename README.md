@@ -46,7 +46,7 @@ cytario-design/
       Input/            # Input.tsx, Input.stories.tsx, Input.test.tsx
       Select/           # Select.tsx, Select.stories.tsx, Select.test.tsx
       Table/            # Table.tsx, Table.stories.tsx, Table.test.tsx
-    docs/               # MDX documentation pages (Introduction, Foundation, Guidelines)
+    docs/               # MDX documentation pages (Introduction, Foundation)
 ```
 
 ## Design tokens

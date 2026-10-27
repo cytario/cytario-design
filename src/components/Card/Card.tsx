@@ -8,11 +8,14 @@ export interface CardProps {
   header?: React.ReactNode;
   /** Optional footer content (rendered with top border separator) */
   footer?: React.ReactNode;
+  /** Adds a slowly rotating brand-glow halo around the edge (conic-gradient
+   * ring, CSS-only; dark surfaces are where it reads best) */
+  glow?: boolean;
   /** Merge override */
   className?: string;
 }
 
-export function Card({ children, header, footer, className }: CardProps) {
+export function Card({ children, header, footer, glow = false, className }: CardProps) {
   const cx = twMerge(
     `
       bg-card p-8
@@ -20,6 +23,7 @@ export function Card({ children, header, footer, className }: CardProps) {
       rounded-lg
       shadow-sm
     `,
+    glow && "glow-edge",
     className,
   );
   return (

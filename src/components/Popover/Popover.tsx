@@ -6,6 +6,7 @@ import {
   type PopoverProps as AriaPopoverProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
+import { TriggerThemeProvider, useTriggerTheme } from "./useTriggerTheme";
 
 export interface PopoverProps {
   /** Controls open state (uncontrolled by default via DialogTrigger) */
@@ -19,7 +20,8 @@ export interface PopoverProps {
 export function Popover({ children, isOpen, onOpenChange }: PopoverProps) {
   return (
     <DialogTrigger isOpen={isOpen} onOpenChange={onOpenChange}>
-      {children}
+      {/* Capture the trigger's themed DOM context for the portaled content */}
+      <TriggerThemeProvider>{children}</TriggerThemeProvider>
     </DialogTrigger>
   );
 }
@@ -69,6 +71,10 @@ export function PopoverContent({
   children,
   ...rest
 }: PopoverContentProps) {
+  // React-Aria portals the popover to document.body; carry the trigger's
+  // effective theme onto the portaled element so its semantic tokens match
+  // the context it was opened from (side-by-side story view, nested themes).
+  const triggerTheme = useTriggerTheme();
   const cx = `
     z-50
     bg-background
@@ -86,6 +92,7 @@ export function PopoverContent({
       {...rest}
       placement={placement}
       offset={offsetPx}
+      data-theme={triggerTheme}
       className={twMerge(cx, className)}
     >
       {children}

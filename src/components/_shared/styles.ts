@@ -21,36 +21,42 @@ export type ButtonVariant =
 export const variantStyles: Record<ButtonVariant, string> = {
   primary: `
     bg-primary text-primary-foreground
+    border border-primary-border
     hover:bg-primary-hover
     pressed:bg-primary-pressed
   `,
   secondary: `
     bg-secondary text-secondary-foreground
+    border border-secondary-border
     hover:bg-secondary-hover
     pressed:bg-secondary-pressed
   `,
   destructive: `
     bg-destructive text-destructive-foreground
+    border border-destructive-rim
     hover:bg-destructive-hover
     pressed:bg-destructive-pressed
   `,
   success: `
     bg-success text-success-foreground
+    border border-success-rim
     hover:bg-success-hover
     pressed:bg-success-pressed
   `,
   warning: `
     bg-warning text-warning-foreground
+    border border-warning-rim
     hover:bg-warning-hover
     pressed:bg-warning-pressed
   `,
   info: `
     bg-info text-info-foreground
+    border border-info-rim
     hover:bg-info-hover
     pressed:bg-info-pressed
   `,
   neutral: `
-    bg-muted text-foreground
+    bg-muted text-accent-foreground
     hover:bg-accent
     pressed:bg-accent-pressed
   `,

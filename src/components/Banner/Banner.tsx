@@ -36,28 +36,28 @@ const variantConfig: Record<
     icon: Info,
     containerClass:
       "bg-info-surface border-info-border text-info-surface-foreground",
-    iconClass: "text-info",
+    iconClass: "text-info-surface-foreground",
     role: "status",
   },
   warning: {
     icon: AlertTriangle,
     containerClass:
       "bg-warning-surface border-warning-border text-warning-surface-foreground",
-    iconClass: "text-warning",
+    iconClass: "text-warning-surface-foreground",
     role: "alert",
   },
   danger: {
     icon: AlertCircle,
     containerClass:
       "bg-destructive-surface border-destructive-border text-destructive-surface-foreground",
-    iconClass: "text-destructive",
+    iconClass: "text-destructive-surface-foreground",
     role: "alert",
   },
   success: {
     icon: CheckCircle2,
     containerClass:
       "bg-success-surface border-success-border text-success-surface-foreground",
-    iconClass: "text-success",
+    iconClass: "text-success-surface-foreground",
     role: "status",
   },
 };

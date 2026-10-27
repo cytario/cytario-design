@@ -23,6 +23,16 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
+  features: {
+    // Off for a published design-system portal: no onboarding checklist, no
+    // "what's new in Storybook x.y" toast — visitors are consumers, not new
+    // Storybook users. (The checklist key is sidebarOnboardingChecklist; the
+    // toast is additionally gated by core.disableWhatsNewNotifications.)
+    sidebarOnboardingChecklist: false,
+  },
+  core: {
+    disableWhatsNewNotifications: true,
+  },
   viteFinal: async (config) => {
     const tailwindcss = await import("@tailwindcss/vite");
     config.plugins = config.plugins || [];

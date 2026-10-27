@@ -11,47 +11,12 @@ cytario uses **Montserrat** as its primary typeface. It is a geometric sans-seri
 
 ## Font family
 
-<div
-  style={{
-    background: "#f9fafb",
-    borderRadius: 12,
-    padding: 32,
-    marginTop: 16,
-    marginBottom: 32,
-  }}
->
-  <p
-    style={{
-      fontFamily: "'Montserrat', system-ui, sans-serif",
-      fontSize: 36,
-      fontWeight: 700,
-      margin: "0 0 8px",
-      color: "#111827",
-    }}
-  >
-    Montserrat
-  </p>
-  <p
-    style={{
-      fontFamily: "'Montserrat', system-ui, sans-serif",
-      fontSize: 16,
-      margin: 0,
-      color: "#6b7280",
-    }}
-  >
-    ABCDEFGHIJKLMNOPQRSTUVWXYZ
-    <br />
-    abcdefghijklmnopqrstuvwxyz
-    <br />
-    0123456789 !@#$%^&amp;*()
-  </p>
+<div style={{ background: "var(--color-muted)", borderRadius: 12, padding: 32, marginTop: 16, marginBottom: 32 }}>
+  <p style={{ fontFamily: "'Montserrat', system-ui, sans-serif", fontSize: 36, fontWeight: 700, margin: "0 0 8px", color: "var(--color-foreground)" }}>Montserrat</p>
+  <p style={{ fontFamily: "'Montserrat', system-ui, sans-serif", fontSize: 16, margin: 0, color: "var(--color-muted-foreground)" }}>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz<br />0123456789 !@#$%^&amp;*()</p>
 </div>
 
-<p style={{ fontSize: 13, color: "#6b7280" }}>
-  Token: <code>font-family: "Montserrat", system-ui, sans-serif</code>
-  <br />
-  Fallback stack: system-ui ensures readable text if the web font fails to load.
-</p>
+<p style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>Token: <code>font-family: "Montserrat", system-ui, sans-serif</code><br />Fallback stack: system-ui ensures readable text if the web font fails to load.</p>
 
 ---
 
@@ -69,10 +34,10 @@ See the Tailwind docs for the full reference:
 
 ## Usage guidelines
 
-**Headings** use semibold or bold weight with tight line height. Color: `--color-foreground` (slate-900).
+**Headings** use semibold or bold weight with tight line height. Color: `--color-foreground` (dusk-900).
 
-**Body text** uses regular weight at base size with normal line height. Color: `--color-muted-foreground` (slate-600) for supporting content, `--color-foreground` for main content.
+**Body text** uses regular weight at base size with normal line height. Color: `--color-muted-foreground` (dusk-600) for supporting content, `--color-foreground` for main content.
 
-**Captions and labels** use `text-sm` or `text-xs` at medium weight. Color: `--color-muted-foreground` for least-prominent text — the type hierarchy is two levels (foreground / muted-foreground); the old third tier was dropped because slate-400 fails WCAG AA on white.
+**Captions and labels** use `text-sm` or `text-xs` at medium weight. Color: `--color-muted-foreground` for least-prominent text — the type hierarchy is two levels (foreground / muted-foreground); the old third tier was dropped because dusk-400 fails WCAG AA on white.
 
 **Never** use `font-light` below `text-lg` — it becomes hard to read on lower-resolution screens.
