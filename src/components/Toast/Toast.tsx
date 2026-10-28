@@ -163,44 +163,16 @@ function ToastContainer({
 }
 
 // ---------------------------------------------------------------------------
-// Toast Bridge — allows code outside the React tree to emit toasts
-// ---------------------------------------------------------------------------
-
-export interface ToastBridge {
-  /** Call from anywhere (including outside React) to show a toast. */
-  emit: (toast: Omit<ToastData, "id">) => void;
-  /** Used internally by ToastProvider to subscribe to external emits. */
-  subscribe: (fn: (toast: Omit<ToastData, "id">) => void) => () => void;
-}
-
-export function createToastBridge(): ToastBridge {
-  const listeners = new Set<(toast: Omit<ToastData, "id">) => void>();
-  return {
-    emit: (toast) => {
-      listeners.forEach((fn) => fn(toast));
-    },
-    subscribe: (fn) => {
-      listeners.add(fn);
-      return () => {
-        listeners.delete(fn);
-      };
-    },
-  };
-}
-
-// ---------------------------------------------------------------------------
 // ToastProvider
 // ---------------------------------------------------------------------------
 
 export interface ToastProviderProps {
   children: ReactNode;
-  /** Optional bridge for receiving toasts from outside the React tree. */
-  bridge?: ToastBridge;
   /** Where to display toasts on screen. Defaults to "bottom-right". */
   placement?: ToastPlacement;
 }
 
-export function ToastProvider({ children, bridge, placement = "bottom-right" }: ToastProviderProps) {
+export function ToastProvider({ children, placement = "bottom-right" }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
   const addToast = useCallback((toast: Omit<ToastData, "id">) => {
@@ -211,12 +183,6 @@ export function ToastProvider({ children, bridge, placement = "bottom-right" }: 
   const removeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
-
-  // Subscribe to external bridge emits
-  useEffect(() => {
-    if (!bridge) return;
-    return bridge.subscribe(addToast);
-  }, [bridge, addToast]);
 
   return (
     <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
