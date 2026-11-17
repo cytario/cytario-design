@@ -128,6 +128,11 @@ export type { EmptyStateProps } from "./components/EmptyState";
 
 export { Checkbox } from "./components/Form/Checkbox";
 export type { CheckboxProps } from "./components/Form/Checkbox";
+export { MultiSelectComboBox } from "./components/Form/MultiSelectComboBox";
+export type {
+  MultiSelectComboBoxProps,
+  MultiSelectComboBoxItem,
+} from "./components/Form/MultiSelectComboBox";
 
 export { Switch } from "./components/Form/Switch";
 export type { SwitchProps } from "./components/Form/Switch";
