@@ -134,6 +134,9 @@ export type {
   MultiSelectComboBoxItem,
 } from "./components/Form/MultiSelectComboBox";
 
+export { EmailTokenField } from "./components/Form/EmailTokenField";
+export type { EmailTokenFieldProps } from "./components/Form/EmailTokenField";
+
 export { Switch } from "./components/Form/Switch";
 export type { SwitchProps } from "./components/Form/Switch";
 
