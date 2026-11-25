@@ -1,13 +1,15 @@
 import { Checkbox } from "../Form/Checkbox";
 import { TruncatedText } from "../TruncatedText";
-import { Row, flexRender } from "@tanstack/react-table";
+import { flexRender } from "@tanstack/react-table";
+import type { RowData } from "@tanstack/react-table";
 import { KeyboardEvent, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
+import type { TableRow } from "./features";
 import { ColumnConfig } from "./types";
 
-interface TableBodyRowProps {
-  row: Row<unknown>;
+interface TableBodyRowProps<TData extends RowData> {
+  row: TableRow<TData>;
   rowIndex: number;
   columns: ColumnConfig[];
   enableRowSelection: boolean;
@@ -20,7 +22,7 @@ interface TableBodyRowProps {
   className?: string;
 }
 
-export function TableBodyRow({
+export function TableBodyRow<TData extends RowData>({
   row,
   rowIndex,
   columns,
@@ -29,7 +31,7 @@ export function TableBodyRow({
   anchorDataColumnId,
   onRowPress,
   className,
-}: TableBodyRowProps) {
+}: TableBodyRowProps<TData>) {
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLTableRowElement>) => {
     const tr = event.currentTarget;
 

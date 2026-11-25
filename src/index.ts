@@ -107,7 +107,7 @@ export type {
   SortingState,
   ColumnFiltersState,
   ColumnSizingState,
-  VisibilityState,
+  ColumnVisibilityState,
 } from "./components/Table";
 export { filterFns } from "./components/Table";
 

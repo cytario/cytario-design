@@ -1,14 +1,7 @@
 import {
-  useReactTable,
-  getCoreRowModel,
-  getSortedRowModel,
-  getFilteredRowModel,
-  getFacetedUniqueValues,
-  getGroupedRowModel,
-  getExpandedRowModel,
-  ColumnDef,
+  useTable,
   type ExpandedState,
-  type Row,
+  type RowData,
   type RowSelectionState,
 } from "@tanstack/react-table";
 import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
@@ -16,6 +9,7 @@ import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { EmptyState } from "../EmptyState";
 import { IconButton } from "../IconButton";
 
+import { features, type TableColumnDef, type TableRow } from "./features";
 import { NoFilterResults } from "./NoFilterResults";
 import { TableBodyRow } from "./TableBodyRow";
 import { TableGroupRow } from "./TableGroupRow";
@@ -37,13 +31,13 @@ export type {
   GroupRowContext,
 } from "./types";
 
-function booleanSortingFn<TData>(rowA: Row<TData>, rowB: Row<TData>, columnId: string): number {
+function booleanSortingFn<TData extends RowData>(rowA: TableRow<TData>, rowB: TableRow<TData>, columnId: string): number {
   const a = rowA.getValue<boolean>(columnId) ? 1 : 0;
   const b = rowB.getValue<boolean>(columnId) ? 1 : 0;
   return a - b;
 }
 
-export function Table<TData extends object>({
+export function Table<TData extends RowData>({
   columns,
   data,
   cellRenderers = {} as CellRenderers<TData>,
@@ -133,8 +127,8 @@ export function Table<TData extends object>({
   const SELECTION_COLUMN_SIZE = 48;
   const indexColumnSize = 48;
 
-  const columnDefs: ColumnDef<TData>[] = useMemo(() => {
-    const indexColumn: ColumnDef<TData> = {
+  const columnDefs: TableColumnDef<TData>[] = useMemo(() => {
+    const indexColumn: TableColumnDef<TData> = {
       id: "index",
       header: "",
       cell: (info) => info.row.index + 1,
@@ -149,7 +143,7 @@ export function Table<TData extends object>({
     // Dedicated leading selection column (the react-data-table pattern):
     // whenever row selection is on, a fixed-width system column carries the
     // per-row checkbox, independent of the index column.
-    const selectionColumn: ColumnDef<TData> = {
+    const selectionColumn: TableColumnDef<TData> = {
       id: "selection",
       header: "",
       enableResizing: false,
@@ -179,32 +173,27 @@ export function Table<TData extends object>({
         // only renders the group's own cell in the grouping column; the other
         // cells fall to `getValue` on the group row. An explicit
         // `getGroupingValue` is not needed — the accessor key is the value.
-        sortingFn:
+        sortFn:
           colConfig.sortingFn === "boolean"
             ? booleanSortingFn
             : (colConfig.sortingFn ?? "alphanumeric"),
         size: colConfig.size ?? 150,
         minSize: colConfig.minSize ?? 48,
         maxSize: colConfig.maxSize ?? Number.MAX_SAFE_INTEGER,
-      } as ColumnDef<TData>;
+      } as TableColumnDef<TData>;
     });
 
-    const leading: ColumnDef<TData>[] = [];
+    const leading: TableColumnDef<TData>[] = [];
     if (enableRowSelection) leading.push(selectionColumn);
     if (showIndex) leading.push(indexColumn);
     return [...leading, ...dataColumns];
   }, [columns, cellRenderers, indexColumnSize, showIndex, enableRowSelection]);
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns: columnDefs,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
     ...(isGrouped && {
-      getGroupedRowModel: getGroupedRowModel(),
-      getExpandedRowModel: getExpandedRowModel(),
       // TanStack's default ('reorder') moves the grouping column to the front of
       // the order, which shoves the leading system columns (selection, index)
       // out of first place. The consumer already places the grouping column
@@ -284,7 +273,7 @@ export function Table<TData extends object>({
 
   const colSpan = columns.length + (enableRowSelection ? 1 : 0) + (showIndex ? 1 : 0);
 
-  const groupContext = (row: Row<TData>, groupColumnId: string): GroupRowContext<TData> => ({
+  const groupContext = (row: TableRow<TData>, groupColumnId: string): GroupRowContext<TData> => ({
     value: row.getGroupingValue(groupColumnId),
     columnId: groupColumnId,
     rows: row.getLeafRows().map((r) => r.original),

@@ -1,6 +1,12 @@
-import { Header } from "@tanstack/react-table";
+import type { RowData } from "@tanstack/react-table";
 
-export const ColumnResizeHandle = ({ header }: { header: Header<unknown, unknown> }) => {
+import type { TableHeader } from "./features";
+
+export const ColumnResizeHandle = <TData extends RowData>({
+  header,
+}: {
+  header: TableHeader<TData>;
+}) => {
   return (
     <button
       type="button"

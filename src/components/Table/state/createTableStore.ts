@@ -1,4 +1,4 @@
-import type { ColumnFiltersState, SortingState, VisibilityState } from "@tanstack/react-table";
+import type { ColumnFiltersState, ColumnVisibilityState, SortingState } from "@tanstack/react-table";
 import { createStore } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -9,12 +9,12 @@ export interface TableStore {
 
   columnWidths: Record<string, number>;
   sorting: SortingState;
-  columnVisibility: VisibilityState;
+  columnVisibility: ColumnVisibilityState;
   columnFilters: ColumnFiltersState;
 
   setColumnWidth: (columnId: string, width: number) => void;
   setSorting: (sorting: SortingState) => void;
-  setColumnVisibility: (visibility: VisibilityState) => void;
+  setColumnVisibility: (visibility: ColumnVisibilityState) => void;
   setColumnFilters: (filters: ColumnFiltersState) => void;
 
   reset: () => void;
@@ -45,7 +45,7 @@ export const createTableStore = (tableId: string) =>
 
           setSorting: (sorting: SortingState) => set({ sorting }, false, "setSorting"),
 
-          setColumnVisibility: (columnVisibility: VisibilityState) =>
+          setColumnVisibility: (columnVisibility: ColumnVisibilityState) =>
             set({ columnVisibility }, false, "setColumnVisibility"),
 
           setColumnFilters: (columnFilters: ColumnFiltersState) =>

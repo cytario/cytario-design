@@ -1,5 +1,7 @@
 import { Icon } from "../Icon";
-import { Header, SortDirection } from "@tanstack/react-table";
+import type { RowData, SortDirection } from "@tanstack/react-table";
+
+import type { TableHeader } from "./features";
 
 /** Returns Tailwind classes — visible when sorted, hidden until header hover when unsorted. */
 function getStyle(sortDirection: false | SortDirection) {
@@ -13,7 +15,11 @@ function getStyle(sortDirection: false | SortDirection) {
 }
 
 /** Sort indicator icon for a table column header. Shows on hover when unsorted, always visible when active. */
-export const ColumnSortButton = ({ header }: { header: Header<unknown, unknown> }) => {
+export const ColumnSortButton = <TData extends RowData>({
+  header,
+}: {
+  header: TableHeader<TData>;
+}) => {
   const sortDirection = header.column.getIsSorted();
   const cx = getStyle(sortDirection);
 

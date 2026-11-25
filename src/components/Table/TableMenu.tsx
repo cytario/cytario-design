@@ -1,6 +1,6 @@
 import { IconButton } from "../IconButton";
 import { Menu, MenuCheckboxItem, MenuItem, MenuSeparator } from "../Menu";
-import type { VisibilityState } from "@tanstack/react-table";
+import type { ColumnVisibilityState } from "@tanstack/react-table";
 import type { Selection } from "react-aria-components";
 
 import { useTableStore } from "./state/useTableStore";
@@ -8,7 +8,7 @@ import { ColumnConfig } from "./types";
 
 interface TableMenuProps {
   toggleableColumns: ColumnConfig[];
-  columnVisibility: VisibilityState;
+  columnVisibility: ColumnVisibilityState;
   toggleColumn: (columnId: string) => void;
   tableId: string;
 }

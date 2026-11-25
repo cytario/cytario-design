@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { describe, expect, it, beforeEach } from "vitest";
 
+import type { RowSelectionState } from "@tanstack/react-table";
+
 import { Table, type CellRenderers, type ColumnConfig, type GroupCellRenderers } from "./Table";
 
 interface Job {
@@ -272,7 +274,7 @@ describe("Table grouping", () => {
     const user = userEvent.setup();
     // b1 has two leaves; b2 also has two; solo is a singleton (no group row).
     function Selectable() {
-      const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+      const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
       return (
         <Table
           columns={columns}
