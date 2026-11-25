@@ -19,7 +19,7 @@ export type {
   SortingState,
   ColumnFiltersState,
   ColumnSizingState,
-  VisibilityState,
+  ColumnVisibilityState,
 } from "@tanstack/react-table";
 // `filterFns` ships with TanStack and is the natural companion to a column's
 // `filterFn`; re-exported for the same reason.

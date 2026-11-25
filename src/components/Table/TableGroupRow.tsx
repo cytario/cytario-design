@@ -1,13 +1,14 @@
 import { Checkbox } from "../Form/Checkbox";
-import { Row } from "@tanstack/react-table";
+import type { RowData } from "@tanstack/react-table";
 import { KeyboardEvent, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Icon } from "../Icon";
+import type { TableRow } from "./features";
 import { ColumnConfig, GroupCellRenderers, GroupRowContext } from "./types";
 
-interface TableGroupRowProps<TData> {
-  row: Row<TData>;
+interface TableGroupRowProps<TData extends RowData> {
+  row: TableRow<TData>;
   columns: ColumnConfig[];
   /** The column the table is grouped by — its cell carries the toggle. */
   groupColumnId: string;
@@ -28,7 +29,7 @@ interface TableGroupRowProps<TData> {
  * nothing). The grouping cell is indented by the group's depth so a
  * multi-level grouping reads as a hierarchy.
  */
-export function TableGroupRow<TData>({
+export function TableGroupRow<TData extends RowData>({
   row,
   columns,
   groupColumnId,

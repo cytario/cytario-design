@@ -85,6 +85,30 @@ describe("Table", () => {
     });
   });
 
+  it("applies the column's configured sort algorithm, not TanStack's auto one", async () => {
+    // "10" vs "9" only separates the algorithms: alphanumeric compares
+    // numerically (9 before 10), basic compares as strings ("10" before "9").
+    // An algorithm the table did not register falls back to `auto`, which
+    // reads these as alphanumeric — so only a real `basic` registration can
+    // produce this order.
+    render(
+      <Table
+        columns={[
+          { id: "n", header: "N", size: 100, enableSorting: true, anchor: true, sortingFn: "basic" },
+        ]}
+        data={[{ n: "10" }, { n: "9" }, { n: "100" }]}
+        cellRenderers={{ n: (row) => row.n }}
+        tableId="dt-sortfn"
+        ariaLabel="Sort algorithm table"
+      />,
+    );
+    expect((await screen.findAllByText(/^(9|10|100)$/)).map((c) => c.textContent)).toEqual([
+      "10",
+      "100",
+      "9",
+    ]);
+  });
+
   it("narrows rows via a text column filter and announces the count", async () => {
     renderTable("dt-filter");
     // The filter input lives in a popover opened from the funnel icon.

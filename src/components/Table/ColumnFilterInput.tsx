@@ -4,11 +4,13 @@ import { Icon } from "../Icon";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover";
 import { Input } from "../Form/Input";
 import { Select, type SelectItem } from "../Form/Select";
-import { Column } from "@tanstack/react-table";
+import type { RowData } from "@tanstack/react-table";
 import { type ReactNode, useMemo, useState } from "react";
 
-interface ColumnFilterInputProps {
-  column: Column<unknown, unknown>;
+import type { TableColumn } from "./features";
+
+interface ColumnFilterInputProps<TData extends RowData> {
+  column: TableColumn<TData>;
   filterType: "text" | "select";
   filterPlaceholder?: string;
   filterOptions?: { label: string; value: string }[];
@@ -27,13 +29,13 @@ const AllPill = () => <Badge color="slate">All</Badge>;
  * the filter control in a popover. Nothing filter-shaped renders inline, so
  * the header row stays visually quiet.
  */
-export function ColumnFilterInput({
+export function ColumnFilterInput<TData extends RowData>({
   column,
   filterType,
   filterPlaceholder,
   filterOptions,
   filterRender,
-}: ColumnFilterInputProps) {
+}: ColumnFilterInputProps<TData>) {
   const filterValue = (column.getFilterValue() as string) ?? "";
   const [isOpen, setIsOpen] = useState(false);
 

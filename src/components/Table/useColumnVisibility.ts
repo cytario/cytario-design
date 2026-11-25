@@ -1,4 +1,4 @@
-import type { OnChangeFn, VisibilityState } from "@tanstack/react-table";
+import type { ColumnVisibilityState, OnChangeFn } from "@tanstack/react-table";
 import { useCallback, useMemo } from "react";
 import { useStore } from "zustand";
 
@@ -19,8 +19,8 @@ export function useColumnVisibility(columns: ColumnConfig[], tableId: string) {
   const storedVisibility = useStore(store, (s) => s.columnVisibility);
   const setVisibilityStore = useStore(store, (s) => s.setColumnVisibility);
 
-  const columnVisibility: VisibilityState = useMemo(() => {
-    const vis: VisibilityState = {};
+  const columnVisibility: ColumnVisibilityState = useMemo(() => {
+    const vis: ColumnVisibilityState = {};
     columns.forEach((col) => {
       if (col.anchor) {
         vis[col.id] = true;
@@ -31,10 +31,10 @@ export function useColumnVisibility(columns: ColumnConfig[], tableId: string) {
     return vis;
   }, [columns, storedVisibility]);
 
-  const setColumnVisibility: OnChangeFn<VisibilityState> = useCallback(
+  const setColumnVisibility: OnChangeFn<ColumnVisibilityState> = useCallback(
     (updaterOrValue) => {
       const current = store.getState().columnVisibility;
-      const currentFull: VisibilityState = {};
+      const currentFull: ColumnVisibilityState = {};
       columns.forEach((col) => {
         currentFull[col.id] = current[col.id] ?? col.defaultVisible !== false;
       });

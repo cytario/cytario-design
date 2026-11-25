@@ -1,27 +1,28 @@
 import { Checkbox } from "../Form/Checkbox";
 import { TruncatedText } from "../TruncatedText";
-import { HeaderGroup, flexRender } from "@tanstack/react-table";
+import { flexRender } from "@tanstack/react-table";
+import type { RowData } from "@tanstack/react-table";
 import { twMerge } from "tailwind-merge";
 
 import { ColumnFilterInput } from "./ColumnFilterInput";
 import { ColumnResizeHandle } from "./ColumnResizeHandle";
 import { ColumnSortButton } from "./ColumnSortButton";
+import type { TableHeaderGroup } from "./features";
 import { ColumnConfig } from "./types";
 
-interface TableHeaderRowProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  headerGroup: HeaderGroup<any>;
+interface TableHeaderRowProps<TData extends RowData> {
+  headerGroup: TableHeaderGroup<TData>;
   columns: ColumnConfig[];
   enableRowSelection: boolean;
   showFilters: boolean;
 }
 
-export function TableHeaderRow({
+export function TableHeaderRow<TData extends RowData>({
   headerGroup,
   columns,
   enableRowSelection,
   showFilters,
-}: TableHeaderRowProps) {
+}: TableHeaderRowProps<TData>) {
 
   return (
     <tr key={headerGroup.id} className="w-full block">

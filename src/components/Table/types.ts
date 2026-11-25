@@ -1,5 +1,7 @@
-import type { FilterFn, OnChangeFn, RowSelectionState, SortingState } from "@tanstack/react-table";
+import type { FilterFn, OnChangeFn, RowData, RowSelectionState, SortingState } from "@tanstack/react-table";
 import { ReactNode } from "react";
+
+import type { TableFeatureSet } from "./features";
 
 // Behavior props aligned with TanStack naming. Spelled out rather than picked
 // from TanStack's `ColumnDefBase`, so this one does not pull a TanStack type
@@ -37,7 +39,7 @@ interface ColumnFiltering {
   filterPlaceholder?: string;
   filterOptions?: { label: string; value: string }[];
   filterRender?: (option: { label: string; value: string }) => ReactNode;
-  filterFn?: FilterFn<unknown>;
+  filterFn?: FilterFn<TableFeatureSet, RowData>;
 }
 
 // Visibility props
@@ -99,7 +101,7 @@ export interface GroupRowContext<TData> {
   depth: number;
 }
 
-export interface TableProps<TData extends object> {
+export interface TableProps<TData extends RowData> {
   columns: ColumnConfig[];
   data: TData[];
   cellRenderers?: CellRenderers<TData>;
